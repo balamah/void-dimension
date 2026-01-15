@@ -8,6 +8,7 @@ on: [pull_request, push]
 
 jobs:
   build:
+    name: gradle build
     runs-on: ubuntu-24.04
     steps:
       - name: checkout repository
