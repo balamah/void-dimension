@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "void-dimension:item/shattered_sentinel_master_spawn_egg"
+	}
+}

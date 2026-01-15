@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:throne_room"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 6,
+		"spacing": 25,
+		"salt": 43855099,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 224
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:well"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 4,
+		"spacing": 6,
+		"salt": 32017715,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 125
+			}
+		}
+	}
+}

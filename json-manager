@@ -1,0 +1,194 @@
+#!/bin/bash
+
+# $1 :: action [create, delete, show]
+# $2 :: object [item, block, structure, simpleFeature]
+# $3 :: feature name that matches with texture name
+
+printParameters() {
+	cat "$0" | grep -E '^#\s*\$[0-9@#*!{}].*::' | sed 's/^# //' 
+}
+
+[ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] && printParameters && exit 1
+
+action="$1"
+object="$2"
+itemName="$3"
+
+resourcesDestination="src/main/resources"
+
+modId=$(cat "$resourcesDestination/fabric.mod.json" | jq -r '.id')
+
+assets="assets/$modId"
+data="data/$modId"
+worldgen="data/$modId/worldgen"
+
+itemFiles=("$assets/items/item.json" "$assets/models/item/item.json")
+blockFiles=(
+	"${itemFiles[@]}" "$assets/models/block/block.json"
+	"$assets/blocks/block.json" "$assets/blockstates/blockstate.json"
+)
+
+structureFiles=(
+	"$worldgen/template_pool/structure.json" "$worldgen/structure_set/structure.json"
+	"$worldgen/structure/structure.json"
+)
+
+simpleFeatureFiles=(
+	"$worldgen/configured_feature/simpleFeature.json"
+	"$worldgen/placed_feature/simpleFeature.json"
+)
+
+oreFiles=(
+	"$worldgen/configured_feature/ore.json" "$worldgen/placed_feature/ore.json"
+)
+
+printRecommendation() {
+	# $1 :: string
+
+	[ -z "$1" ] && return 1
+
+	printf "Recommendation: $1\n"
+}
+
+printRecommendations() {
+	# $1 :: name
+	# $2 :: object
+	# $3 :: action
+
+	[ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] && return 1
+
+	name="$1"
+	object="$2"
+	action="$3"
+
+	# Create basic strings for recommendations
+	case "$action" in
+		"create")
+			recommendedAction="place"
+			recommendedConditionalAction="add"
+			;;
+
+		"delete")
+			recommendedAction="delete"
+			recommendedConditionalAction="delete"
+			;;
+
+		*) return 0 ;;
+	esac
+
+	# Get strings of recommendations
+	case "$object" in
+		"structure") string="$recommendedAction nbt file for $name in $resourcesDestination/$data/structure/"				;;
+		"item"|"block") string="$recommendedAction texture for $name in $resourcesDestination/$assets/textures/$object/"	;;
+		*) return 0																											;;
+	esac
+
+	# Create a gap
+	echo
+
+	[[ "$name" == *"spear" ]] && \
+		printRecommendation "$recommendedConditionalAction the $1_in_hand in $resourcesDestination/$data/textures/item"
+
+	printRecommendation "$string"
+}
+
+getFileDestination() {
+	# $1 :: feature name
+	# $2 :: file from $itemFiles, $blockFiles, ...
+
+	[ -z "$1" ] || [ -z "$2" ] && return 1
+
+	echo "$resourcesDestination/$2" | sed "s@[a-zA-Z_]\+\.json\$@$1.json@g"
+}
+
+copyFile() {
+	# $1 :: file
+	# $2 :: destination
+
+	[ -z "$1" ] || [ -z "$2" ] && return 1
+
+	cp "$1" "$2" && echo "Successfully created $2" || echo "Failed to create $2"	
+}
+
+deleteFile() {
+	# $1 :: file
+
+	[ -z "$1" ] && return 1
+
+	rm "$1" && echo "Successfully deleted $1" || echo "Failed to delete $1"	
+}
+
+replace() {
+	# $1 :: sed query
+	# $2 :: file
+
+	[ -z "$1" ] || [ -z "$2" ] && return 1
+
+	sed -i "$1" "$2" || return 0
+}
+
+create() {
+	# $1 :: object [item, block, structure]
+	# $2 :: name that matches with texture name
+	# $@ :: files
+
+	[ -z "$1" ] || [ -z "$2" ] && return 1
+
+	object="$1" && shift
+	name="$1" && shift
+	
+	for i in "$@"; do
+		originalFile=".templates/$i"
+		destination=$(getFileDestination "$name" "$i")
+
+		if [ ! -f "$destination" ]; then
+			copyFile "$originalFile" "$destination"
+		else
+			read -p \
+				 "File $destination exists, overwrite? (y to overwrite) >>> " \
+				 confirmation
+			firstSymbol=$(echo "$confirmation" | awk '{print substr($0,1,1)}')
+
+			[ "$firstSymbol" = 'y' ] && \
+				copyFile "$originalFile" "$destination" || \
+				echo "Skipped $destination creation"
+		fi
+
+		replace "s@future-name@$object/$name@g" "$destination"
+		replace "s@only-name@$name@g" "$destination"
+			
+	done
+
+	printRecommendations "$name" "$object" "create"
+}
+
+delete() {
+	# $1 :: object [item, block]
+	# $2 :: name that matches with texture name
+	# $@ :: files
+
+	[ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] && return 1
+
+	object="$1" && shift
+	name="$1" && shift
+	
+	for i in "$@"; do
+		file=$(getFileDestination "$name" "$i")
+
+		[ -f "$file" ] && deleteFile "$file" || echo "File $file doesn't exist"
+	done
+
+	printRecommendations "$name" "$object" "delete"
+}
+
+# Get object array to get the files for creation or deletion
+arrayName="${object}Files"
+declare -n array="$arrayName"
+
+# Entry point
+case "$action" in
+	 "create") create "$object" "$itemName" "${array[@]}"				;;
+	 "delete") delete "$object" "$itemName" "${array[@]}"				;;
+	 "show") find "$resourcesDestination" -type f -name "*$itemName*"	;;
+	 *) printParameters && exit 1										;;
+esac

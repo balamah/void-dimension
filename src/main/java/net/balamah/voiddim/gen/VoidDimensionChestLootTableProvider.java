@@ -1,0 +1,235 @@
+package net.balamah.voiddim.gen;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
+
+import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.LootPool;
+import net.minecraft.item.Items;
+
+import net.balamah.voiddim.data.loot.ModLootTables;
+import net.balamah.voiddim.block.ModBlocks;
+import net.balamah.voiddim.custom.McGenHelper;
+import net.balamah.voiddim.item.ModItems;
+
+public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableProvider {
+	public VoidDimensionChestLootTableProvider(
+		FabricDataOutput output,
+		CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup
+	) {
+		super(output, registryLookup, LootContextTypes.CHEST);
+	}
+
+	@Override
+	public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> consumer) {
+		LootPool.Builder cobwebPool =
+			McGenHelper.getPool(McGenHelper.constantNumber(2))
+			.with(McGenHelper.getItemEntry(Items.COBWEB, 2, 5));
+
+		LootTable.Builder illusionerChestTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1)).with(ItemEntry.builder(Items.BOW))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1)).with(ItemEntry.builder(Items.SPLASH_POTION))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 2, 4))
+				.with(McGenHelper.getItemEntry(Items.ARROW, 15, 20))
+				.with(McGenHelper.getItemEntry(Items.NETHER_WART, 4, 9))
+			)
+		;
+
+		LootTable.Builder illusionerSecretChestTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(ModItems.VOID_INGOT, 1, 2))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 4, 6))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 4))
+			)
+		;
+
+		LootTable.Builder illusionerKitchenChestTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(4))
+				.with(McGenHelper.getItemEntry(Items.COOKED_CHICKEN, 9, 11))
+				.with(McGenHelper.getItemEntry(Items.COOKED_BEEF, 5, 9))
+				.with(McGenHelper.getItemEntry(Items.PORKCHOP, 9, 11))
+				.with(McGenHelper.getItemEntry(Items.BEETROOT, 12, 18))
+				.with(McGenHelper.getItemEntry(Items.CARROT, 6, 12))
+				.with(McGenHelper.getItemEntry(Items.BAKED_POTATO, 3, 12))
+				.with(McGenHelper.getItemEntry(Items.COAL, 6, 36))
+			)
+		;
+
+		LootTable.Builder illusionerWormChestTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(ModBlocks.CORRUPT_BLOCK, 2, 5))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(Items.COBWEB, 2, 3))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.with(McGenHelper.getItemEntry(Items.EMERALD, 3, 7))
+			)
+		;
+
+		LootTable.Builder illusionerSecretTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1, 3))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(3))
+				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 8, 12))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.with(McGenHelper.getItemEntry(Items.COBWEB, 2, 3))
+			)
+		;
+
+		LootTable.Builder illusionerAltarTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 3, 5))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(Items.REDSTONE, 2, 4))
+			)
+		;
+
+		LootTable.Builder illusionerItemsTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(Items.BOW, 1))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(Items.ARROW, 9, 24))
+			)
+		;
+
+		LootTable.Builder illusionerAlchemyTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(4))
+				.with(McGenHelper.getItemEntry(Items.BLAZE_POWDER, 10, 12))
+				.with(McGenHelper.getItemEntry(Items.NETHER_WART, 15, 26))
+				.with(McGenHelper.getItemEntry(Items.SPLASH_POTION, 1, 2))
+				.with(McGenHelper.getItemEntry(Items.MAGMA_CREAM, 5, 7))
+			)
+		;
+
+		LootTable.Builder abandonedChestTable = LootTable.builder().pool(cobwebPool);
+
+		LootTable.Builder skullTreeChestTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.with(McGenHelper.getItemEntry(Items.BONE, 1, 3))
+				.with(McGenHelper.getItemEntry(Items.COAL, 1))
+				.with(McGenHelper.getItemEntry(Items.COBWEB, 2))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2), 0.10f)
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 1, 2))
+				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 2, 3))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1))
+			)
+		;
+
+		LootTable.Builder failedRailwayChestTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(3))
+				.with(McGenHelper.getItemEntry(Items.RAIL, 3, 6))
+				.with(McGenHelper.getItemEntry(Items.GOLD_NUGGET, 3, 4))
+				.with(McGenHelper.getItemEntry(Items.POWERED_RAIL, 1, 2))
+				.with(McGenHelper.getItemEntry(Items.TNT, 2, 4))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.10f)
+				.with(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
+			)
+		;	
+
+		LootTable.Builder ruinedHouseTable =
+			LootTable.builder()
+			.pool(cobwebPool)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 1, 3))
+				.with(McGenHelper.getItemEntry(Items.GOLD_NUGGET, 2, 4))
+			)
+		;	
+
+		LootTable.Builder abandonedHouseTable =
+			LootTable.builder()
+			.pool(cobwebPool)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(Items.GOLD_NUGGET, 3, 4))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.25f)
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1, 2))
+			)
+		;
+
+		LootTable.Builder normalHouseTable =
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.45f)
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 3))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(Items.IRON_INGOT, 4, 5))
+				.with(McGenHelper.getItemEntry(Items.GOLD_NUGGET, 2, 3))
+			)
+		;
+
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_WORM_ROOM_LOOT, illusionerWormChestTable);
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_KITCHEN_LOOT, illusionerKitchenChestTable);
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_SECRET_LOOT, illusionerSecretTable);
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_ALTAR_LOOT, illusionerAltarTable);
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_ALCHEMY_LOOT, illusionerAlchemyTable);
+		consumer.accept(ModLootTables.ABANDONED_CHEST_LOOT, abandonedChestTable);
+		consumer.accept(ModLootTables.SKULL_TREE_LOOT, skullTreeChestTable);
+		consumer.accept(ModLootTables.FAILED_RAILWAY_LOOT, failedRailwayChestTable);
+		consumer.accept(ModLootTables.RUINED_HOUSE_LOOT, ruinedHouseTable);
+		consumer.accept(ModLootTables.ABANDONED_HOUSE_LOOT, abandonedHouseTable);
+		consumer.accept(ModLootTables.NORMAL_HOUSE_LOOT, normalHouseTable);
+		consumer.accept(
+			ModLootTables.ILLUSIONER_HOUSE_ILLUSIONER_ITEMS_LOOT, illusionerItemsTable
+		);
+
+		consumer.accept(ModLootTables.ILLUSIONER_CHURCH_CHEST_LOOT, illusionerChestTable);
+
+		consumer.accept(
+			ModLootTables.ILLUSIONER_CHURCH_SECRET_CHEST_LOOT, illusionerSecretChestTable
+		);
+	}
+}

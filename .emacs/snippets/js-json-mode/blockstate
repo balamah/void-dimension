@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: blockstate
+# key: blockstate:::
+# --
+
+{
+	"variants": {
+		"": {
+			"model": "learning-fabric:block/$0"
+		}
+	}
+}

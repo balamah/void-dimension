@@ -1,0 +1,19 @@
+{
+	"feature": "void-dimension:void_flower",
+	"placement": [
+		{
+			"type": "rarity_filter",
+			"chance": 8
+		},
+		{
+			"type": "in_square"
+		},
+		{
+			"type": "heightmap",
+			"heightmap": "WORLD_SURFACE_WG"
+		},
+		{
+			"type": "biome"
+		}
+	]
+}

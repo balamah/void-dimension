@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "multi_bench",
+  "key": {
+    "1": "minecraft:string",
+    "2": "#minecraft:wool",
+    "3": "#void-dimension:cross_items"
+  },
+  "pattern": [
+    "112",
+    "121",
+    "213"
+  ],
+  "result": {
+    "count": 1,
+    "id": "void-dimension:wool_prayer_rope"
+  }
+}

@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:ruined_battlefield"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 6,
+		"spacing": 25,
+		"salt": 42009518,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 25
+			}
+		}
+	}
+}

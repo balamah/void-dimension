@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: model-block-item
+# key: model/block-item:::
+# --
+
+{
+	"parent": "learning-fabric:block/pink_garnet_ore_block"
+}

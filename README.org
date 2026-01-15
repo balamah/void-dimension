@@ -1,0 +1,89 @@
+#+TITLE: README
+#+AUTHOR: Balamah
+
+* Table of contents :toc:
+- [[#introduction][Introduction]]
+- [[#setting-up-the-project][Setting up the project]]
+  - [[#dependencies][Dependencies]]
+  - [[#setting-up-in-emacs][Setting up in emacs]]
+- [[#pallete-of-textures][Pallete of textures]]
+- [[#sources][Sources]]
+  - [[#sounds][Sounds]]
+  - [[#textures][Textures]]
+  - [[#blocks][Blocks]]
+- [[#credits][Credits]]
+  - [[#programmers][Programmers]]
+  - [[#builders][Builders]]
+  - [[#3d-modellers][3D modellers]]
+
+* Introduction
+This mod adds a whole new void-based world and new tool material that
+is stronger than netherite.
+
+Package for my classes is =net.balamah.voiddim=
+
+* Setting up the project
+** Dependencies
+To make the project work, you need
+- jdk-openjdk-21
+- gradle
+- unzip
+
+** Setting up in emacs
+If you want to make your project work using emacs immediately,
+evaluate all code blocks using =M-x org-babel-execute-subtree=
+
+To make project working, you need to build it first using gradle
+#+begin_src shell
+./gradlew clean build genSources eclipse
+#+end_src
+
+Then load project configuration by pressing =C-c p f l= or execute code block
+#+begin_src elisp :results none
+(project-config-file-find-load)
+#+end_src
+
+If lsp throws errors, run
+#+begin_src shell
+./gradlew eclipse --refresh-dependencies
+#+end_src
+
+#+RESULTS:
+
+* Pallete of textures
+The order is going from brightest colors to the darkest
+- #EAE9E9
+- #D5D5D5
+- #A0A0A0
+- #555555
+- #444444
+
+* Sources
+** Sounds
+- void_harbinger.shoot_prepare    :: https://pixabay.com/sound-effects/search/dark%20magic/
+- void_harbinger.shoot            :: https://pixabay.com/sound-effects/search/dark%20magic/
+- void_harbinger.teleport         :: blade of darkness (desaparece-vamp1.wav)
+- shattered_sentinel_master.death :: https://depositphotos.com/sound-effect/rumbling-impact-ancient-stony-stride-784492644.html
+- music.1                         :: blade of darkness (ATMOSFERA8)
+- music.2                         :: blade of darkness (ATMOSFERA19)
+- music.3                         :: blade of darkness (SORPRESA7)
+
+** Textures
+- Corrupted mobs black skin :: https://modrinth.com/mod/intothevoid
+- corrupt_block texture     :: https://modrinth.com/mod/intothevoid
+  
+** Blocks
+- old_corpse_pile           :: https://github.com/TroupeMaster/TheDeepVoid
+- old_corpse                :: https://github.com/TroupeMaster/TheDeepVoid
+
+* Credits
+** Programmers
+- Balamah
+
+** Builders
+- Balamah
+- H0peL0ck
+- legendary_pasha
+
+** 3D modellers
+- Balamah

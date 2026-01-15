@@ -1,0 +1,24 @@
+{
+	"layers": {
+		"humanoid": [
+			{
+				"texture": "void-dimension:void"
+			}
+		],
+		"humanoid_leggings": [
+			{
+				"texture": "void-dimension:void"
+			}
+		],
+		"horse_body": [
+			{
+				"texture": "void-dimension:void"
+			}
+		],
+		"nautilus_body": [
+			{
+				"texture": "void-dimension:void"
+			}
+		]
+	}
+}

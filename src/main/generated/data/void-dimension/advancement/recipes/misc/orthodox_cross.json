@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_latin_cross": {
+      "conditions": {
+        "items": [
+          {
+            "items": "void-dimension:latin_cross"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "void-dimension:orthodox_cross"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_latin_cross"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "void-dimension:orthodox_cross"
+    ]
+  }
+}

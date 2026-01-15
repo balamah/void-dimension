@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: block
+# key: block:::
+# --
+
+{
+	"model": {
+		"type": "minecraft:model",
+		"model": "learning-fabric:block/$0"
+	}
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": "minecraft:deepslate",
+    "2": "void-dimension:void_shard"
+  },
+  "pattern": [
+    "121",
+    "121",
+    "111"
+  ],
+  "result": {
+    "count": 1,
+    "id": "void-dimension:wind_manipulation_block"
+  }
+}

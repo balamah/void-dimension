@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:skull_tree"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 2,
+		"spacing": 4,
+		"salt": 90521776,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 15
+			}
+		}
+	}
+}

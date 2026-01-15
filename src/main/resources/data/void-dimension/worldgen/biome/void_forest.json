@@ -1,0 +1,116 @@
+{
+	"attributes": {
+		"minecraft:audio/ambient_sounds": {
+			"additions": {
+				"sound": "void-dimension:void.ambient.1",
+				"tick_chance": 0.003
+			}
+		},
+		"minecraft:audio/background_music": {
+			"default": {
+				"max_delay": 16000,
+				"min_delay": 12000,
+				"sound": "void-dimension:music.void"
+			}
+		},
+		"minecraft:visual/ambient_particles": [
+			{
+				"particle": {
+					"type": "minecraft:white_ash"
+				},
+				"probability": 0.118093334
+			}
+		]
+	},
+	"has_precipitation": false,
+	"temperature": 1,
+	"temperature_modifier": "none",
+	"downfall": 0.4,
+	"carvers": [],
+	"features": [
+		[
+			"void-dimension:withered_forest_tree"
+		],
+		[],
+		[],
+		[],
+		[],
+		[],
+		[
+			"void-dimension:deepslate_coal_ore",
+			"void-dimension:deepslate_copper_ore",
+			"void-dimension:deepslate_diamond_ore",
+			"void-dimension:deepslate_emerald_ore",
+			"void-dimension:deepslate_gold_ore",
+			"void-dimension:deepslate_iron_ore",
+			"void-dimension:deepslate_lapis_ore",
+			"void-dimension:deepslate_redstone_ore",
+			"void-dimension:deepslate_void_shard_ore"
+		],
+		[],
+		[],
+		[
+			"void-dimension:void_flower",
+			"void-dimension:wither_rose",
+			"void-dimension:corrupted_fire"
+		]
+	],
+	"spawners": {
+		"monster": [
+			{
+				"type": "void-dimension:void_maw",
+				"weight": 20,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:werewolf",
+				"weight": 60,
+				"minCount": 1,
+				"maxCount": 3
+			},
+			{
+				"type": "void-dimension:hollowed_beast",
+				"weight": 50,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:corrupted_stalker",
+				"weight": 55,
+				"minCount": 1,
+				"maxCount": 2
+			}
+		]
+	},
+	"spawn_costs": {
+		"void-dimension:void_maw": {
+			"energy_budget": 2.0,
+			"charge": 1.0
+		},
+		"void-dimension:werewolf": {
+			"energy_budget": 6.0,
+			"charge": 2.0
+		},
+		"void-dimension:hollowed_beast": {
+			"energy_budget": 4.0,
+			"charge": 2.0
+		},
+		"void-dimension:corrupted_creeper": {
+			"energy_budget": 1.0,
+			"charge": 1.0
+		},
+		"void-dimension:corrupted_stalker": {
+			"energy_budget": 4.0,
+			"charge": 2.0
+		}
+	},
+	"effects": {
+		"foliage_color": -14211547,
+		"grass_color": 15395305,
+		"sky_color": -16777216,
+		"fog_color": -16777216,
+		"water_color": 15395305,
+		"water_fog_color": 15395305
+	}
+}

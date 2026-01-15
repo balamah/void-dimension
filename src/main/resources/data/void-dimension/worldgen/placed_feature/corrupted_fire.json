@@ -1,0 +1,19 @@
+{
+	"feature": "void-dimension:corrupted_fire",
+	"placement": [
+		{
+			"type": "rarity_filter",
+			"chance": 12
+		},
+		{
+			"type": "in_square"
+		},
+		{
+			"type": "heightmap",
+			"heightmap": "WORLD_SURFACE_WG"
+		},
+		{
+			"type": "biome"
+		}
+	]
+}

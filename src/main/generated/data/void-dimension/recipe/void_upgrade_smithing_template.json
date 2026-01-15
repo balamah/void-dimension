@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "multi_bench",
+  "key": {
+    "1": "minecraft:diamond",
+    "2": "void-dimension:void_ingot",
+    "3": "minecraft:netherite_upgrade_smithing_template"
+  },
+  "pattern": [
+    "131",
+    "121",
+    "111"
+  ],
+  "result": {
+    "count": 1,
+    "id": "void-dimension:void_upgrade_smithing_template"
+  }
+}

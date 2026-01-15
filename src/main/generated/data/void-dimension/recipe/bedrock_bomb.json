@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": "minecraft:tnt",
+    "2": "void-dimension:void_shard"
+  },
+  "pattern": [
+    "111",
+    "121",
+    "111"
+  ],
+  "result": {
+    "count": 1,
+    "id": "void-dimension:bedrock_bomb"
+  }
+}

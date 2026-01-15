@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "void-dimension:block/corrupted_lantern"
+    },
+    "hanging=true": {
+      "model": "void-dimension:block/corrupted_lantern_hanging"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "void-dimension:block/old_corpse_pile"
+    },
+    "facing=east": {
+      "model": "void-dimension:block/old_corpse_pile",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "void-dimension:block/old_corpse_pile",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "void-dimension:block/old_corpse_pile",
+      "y": 270
+    }
+  }
+}

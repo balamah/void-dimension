@@ -1,0 +1,12 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"down"		: "minecraft:block/deepslate",
+		"east"		: "minecraft:block/deepslate",
+		"north"		: "minecraft:block/deepslate",
+		"particle"	: "minecraft:block/deepslate",
+		"south"		: "minecraft:block/deepslate",
+		"up"		: "void-dimension:block/wind_manipulation_block_top",
+		"west"		: "minecraft:block/deepslate"
+	}
+}

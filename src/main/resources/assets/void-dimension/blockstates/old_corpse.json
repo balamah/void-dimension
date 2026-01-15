@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "facing=north,waterlogged=false": { "model": "void-dimension:block/old_corpse" },
+    "facing=north,waterlogged=true":  { "model": "void-dimension:block/old_corpse" },
+    "facing=east,waterlogged=false":  { "model": "void-dimension:block/old_corpse", "y": 90 },
+    "facing=east,waterlogged=true":   { "model": "void-dimension:block/old_corpse", "y": 90 },
+    "facing=south,waterlogged=false": { "model": "void-dimension:block/old_corpse", "y": 180 },
+    "facing=south,waterlogged=true":  { "model": "void-dimension:block/old_corpse", "y": 180 },
+    "facing=west,waterlogged=false":  { "model": "void-dimension:block/old_corpse", "y": 270 },
+    "facing=west,waterlogged=true":   { "model": "void-dimension:block/old_corpse", "y": 270 }
+  }
+}
+

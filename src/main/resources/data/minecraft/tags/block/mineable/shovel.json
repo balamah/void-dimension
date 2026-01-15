@@ -1,0 +1,7 @@
+{
+	"replace": false,
+	"values": [
+		"void-dimension:corrupt_block",
+		"void-dimension:corrupt_void_shard_ore"
+	]
+}

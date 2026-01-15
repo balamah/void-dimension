@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "void-dimension:item/skull_prayer_rope"
+	}
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:torch",
+    "void-dimension:void_shard"
+  ],
+  "result": {
+    "count": 1,
+    "id": "void-dimension:corrupted_torch"
+  }
+}

@@ -1,0 +1,17 @@
+{
+	"type": "void-dimension:void",
+	"dimension_type": "void-dimension:void",
+	"generator": {
+		"type": "noise",
+		"biome_source": {
+			"type": "checkerboard",
+			"scale": 5,
+			"biomes": [
+				"void-dimension:void_plains",
+				"void-dimension:void_forest",
+				"void-dimension:corrupt_valley"
+			]
+		},
+		"settings": "void-dimension:settings"
+	}
+}

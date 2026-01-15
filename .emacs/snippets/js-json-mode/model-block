@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: model-block
+# key: model/block:::
+# --
+
+{
+	"parent": "minecraft:${1:block/cube_all}",
+	"textures": {
+		"all": "learning-fabric:block/$0"
+	}
+}

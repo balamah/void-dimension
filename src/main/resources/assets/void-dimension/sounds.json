@@ -1,0 +1,282 @@
+{
+	"wind_manipulation.jump": {
+		"subtitle": "sound.void-dimension.wind_manipulation.jump",
+		"sounds": [
+			"void-dimension:wind_manipulation/jump"
+		]
+	},
+	"corrupted_stalker.attack": {
+		"subtitle": "sound.void-dimension.corrupted_stalker.attack",
+		"sounds": [
+			"void-dimension:corrupted_stalker/attack"
+		]
+	},
+	"corrupted_stalker.hit": {
+		"subtitle": "sound.void-dimension.corrupted_stalker.hit",
+		"sounds": [
+			"void-dimension:corrupted_stalker/hit1",
+			"void-dimension:corrupted_stalker/hit2",
+			"void-dimension:corrupted_stalker/hit3"
+		]
+	},
+	"corrupted_stalker.death": {
+		"subtitle": "sound.void-dimension.corrupted_stalker.death",
+		"sounds": [
+			"void-dimension:corrupted_stalker/death"
+		]
+	},
+	"shattered_sentinel.hit": {
+		"subtitle": "sound.void-dimension.shattered_sentinel.hit",
+		"sounds": [
+			"void-dimension:shattered_sentinel/hit1",
+			"void-dimension:shattered_sentinel/hit2",
+			"void-dimension:shattered_sentinel/hit3",
+			"void-dimension:shattered_sentinel/hit4"
+		]
+	},
+	"shattered_sentinel.death": {
+		"subtitle": "sound.void-dimension.shattered_sentinel.death",
+		"sounds": [
+			"void-dimension:shattered_sentinel/death"
+		]
+	},
+	"shattered_sentinel_master.hit": {
+		"subtitle": "sound.void-dimension.shattered_sentinel_master.hit",
+		"sounds": [
+			"void-dimension:shattered_sentinel/hit1",
+			"void-dimension:shattered_sentinel/hit3",
+			"void-dimension:shattered_sentinel/hit4"
+		]
+	},
+	"shattered_sentinel_master.death": {
+		"subtitle": "sound.void-dimension.shattered_sentinel_master.death",
+		"sounds": [
+			"void-dimension:shattered_sentinel_master/death"
+		]
+	},
+	"void_harbinger.hit": {
+		"subtitle": "sound.void-dimension.void_harbinger.hit",
+		"sounds": [
+			"void-dimension:void_harbinger/hurt1",
+			"void-dimension:void_harbinger/hurt2",
+			"void-dimension:void_harbinger/hurt3"
+		]
+	},
+	"void_harbinger.death": {
+		"subtitle": "sound.void-dimension.void_harbinger.death",
+		"sounds": [
+			"void-dimension:void_harbinger/death"
+		]
+	},
+	"void_harbinger.shoot_prepare": {
+		"subtitle": "sound.void-dimension.void_harbinger.shoot_prepare",
+		"sounds": [
+			"void-dimension:void_harbinger/shoot_prepare"
+		]
+	},
+	"void_harbinger.shoot": {
+		"subtitle": "sound.void-dimension.void_harbinger.shoot",
+		"sounds": [
+			"void-dimension:void_harbinger/shoot"
+		]
+	},
+	"void_harbinger.teleport": {
+		"subtitle": "sound.void-dimension.void_harbinger.teleport",
+		"sounds": [
+			"void-dimension:void_harbinger/teleport"
+		]
+	},
+	"werewolf.hit": {
+		"subtitle": "sound.void-dimension.werewolf.hit",
+		"sounds": [
+			"void-dimension:werewolf/hurt1",
+			"void-dimension:werewolf/hurt2",
+			"void-dimension:werewolf/hurt3"
+		]
+	},
+	"werewolf.ambient": {
+		"subtitle": "sound.void-dimension.werewolf.ambient",
+		"sounds": [
+			"void-dimension:werewolf/bark1",
+			"void-dimension:werewolf/bark2",
+			"void-dimension:werewolf/bark3"
+		]
+	},
+	"werewolf.attack": {
+		"subtitle": "sound.void-dimension.werewolf.attack",
+		"sounds": [
+			"void-dimension:werewolf/growl1",
+			"void-dimension:werewolf/growl2",
+			"void-dimension:werewolf/growl3"
+		]
+	},
+	"werewolf.death": {
+		"subtitle": "sound.void-dimension.werewolf.death",
+		"sounds": [
+			"void-dimension:werewolf/death"
+		]
+	},
+	"hollowed_beast.hit": {
+		"subtitle": "sound.void-dimension.hollowed_beast.hit",
+		"sounds": [
+			"void-dimension:hollowed_beast/hit1",
+			"void-dimension:hollowed_beast/hit2",
+			"void-dimension:hollowed_beast/hit3"
+		]
+	},
+	"hollowed_beast.ambient": {
+		"subtitle": "sound.void-dimension.hollowed_beast.ambient",
+		"sounds": [
+			"void-dimension:hollowed_beast/idle1",
+			"void-dimension:hollowed_beast/idle2",
+			"void-dimension:hollowed_beast/idle3"
+		]
+	},
+	"hollowed_beast.death": {
+		"subtitle": "sound.void-dimension.hollowed_beast.death",
+		"sounds": [
+			"void-dimension:hollowed_beast/death"
+		]
+	},
+	"void_sphere.burst": {
+		"subtitle": "sound.void-dimension.void_sphere.death",
+		"sounds": [
+			"void-dimension:void_harbinger/void_sphere/burst1",
+			"void-dimension:void_harbinger/void_sphere/burst2",
+			"void-dimension:void_harbinger/void_sphere/burst3"
+		]
+	},
+	"worm_of_corruption.hit": {
+		"subtitle": "sound.void-dimension.worm_of_corruption.hit",
+		"sounds": [
+			"void-dimension:worm_of_corruption/hurt1",
+			"void-dimension:worm_of_corruption/hurt2"
+		]
+	},
+	"worm_of_corruption.attack": {
+		"subtitle": "sound.void-dimension.worm_of_corruption.attack",
+		"sounds": [
+			"void-dimension:worm_of_corruption/attack1",
+			"void-dimension:worm_of_corruption/attack2",
+			"void-dimension:worm_of_corruption/attack3"
+		]
+	},
+	"worm_of_corruption.death": {
+		"subtitle": "sound.void-dimension.worm_of_corruption.death",
+		"sounds": [
+			"void-dimension:worm_of_corruption/death1",
+			"void-dimension:worm_of_corruption/death2"
+		]
+	},
+	"worm_of_corruption.dig_down": {
+		"subtitle": "sound.void-dimension.worm_of_corruption.dig_down",
+		"sounds": [
+			"void-dimension:worm_of_corruption/dig_down"
+		]
+	},
+	"worm_of_corruption.dig_up": {
+		"subtitle": "sound.void-dimension.worm_of_corruption.dig_up",
+		"sounds": [
+			"void-dimension:worm_of_corruption/dig_up"
+		]
+	},
+	"shockwave": {
+		"subtitle": "sound.shockwave",
+		"sounds": [
+			"void-dimension:shockwave"
+		]
+	},
+	"corrupted_blaze.ambient": {
+		"subtitle": "sound.void-dimension.corrupted_blaze.ambient",
+		"sounds": [
+			"void-dimension:corrupted_blaze/breathe1",
+			"void-dimension:corrupted_blaze/breathe2",
+			"void-dimension:corrupted_blaze/breathe3",
+			"void-dimension:corrupted_blaze/breathe4"
+		]
+	},
+	"corrupted_blaze.hit": {
+		"subtitle": "sound.void-dimension.corrupted_blaze.hit",
+		"sounds": [
+			"void-dimension:corrupted_blaze/hit1",
+			"void-dimension:corrupted_blaze/hit2",
+			"void-dimension:corrupted_blaze/hit3",
+			"void-dimension:corrupted_blaze/hit4"
+		]
+	},
+	"corrupted_blaze.death": {
+		"subtitle": "sound.void-dimension.corrupted_blaze.death",
+		"sounds": [
+			"void-dimension:corrupted_blaze/death"
+		]
+	},
+	"void.ambient.1": {
+		"subtitle": "sound.void-dimension.void.ambient.1",
+		"sounds": [
+			{
+				"name": "minecraft:step/grass1",
+				"volume": 0.1
+			},
+			{
+				"name": "minecraft:step/grass2",
+				"volume": 0.1
+			},
+			{
+				"name": "minecraft:step/grass3",
+				"volume": 0.1
+			},
+			{
+				"name": "minecraft:step/grass4",
+				"volume": 0.1
+			},
+			{
+				"name": "minecraft:step/grass5",
+				"volume": 0.1
+			},
+			{
+				"name": "minecraft:step/grass6",
+				"volume": 0.1
+			},
+			{
+				"name": "void-dimension:corrupted_stalker/attack",
+				"volume": 0.2
+			},
+			{
+				"name": "minecraft:random/fuse",
+				"volume": 0.2
+			}
+		]
+	},
+	"void.ambient.2": {
+		"subtitle": "sound.void-dimension.void.ambient.2",
+		"sounds": [
+			{
+				"name": "void-dimension:corrupted_stalker/attack",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_harbinger/shoot_prepare",
+				"volume": 0.6
+			}
+		]
+	},
+	"music.void": {
+		"sounds": [
+			{
+				"name": "void-dimension:music/1",
+				"stream": true,
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:music/2",
+				"stream": true,
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:music/3",
+				"stream": true,
+				"volume": 0.2
+			}
+		]
+	}
+}

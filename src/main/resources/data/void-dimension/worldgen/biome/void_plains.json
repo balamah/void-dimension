@@ -1,0 +1,132 @@
+{
+	"attributes": {
+		"minecraft:audio/ambient_sounds": {
+			"additions": {
+				"sound": "void-dimension:void.ambient.1",
+				"tick_chance": 0.003
+			}
+		},
+		"minecraft:audio/background_music": {
+			"default": {
+				"max_delay": 16000,
+				"min_delay": 12000,
+				"sound": "void-dimension:music.void"
+			}
+		},
+		"minecraft:visual/ambient_particles": [
+			{
+				"particle": {
+					"type": "minecraft:white_ash"
+				},
+				"probability": 0.118093334
+			}
+		]
+	},
+	"has_precipitation": false,
+	"temperature": 1,
+	"temperature_modifier": "none",
+	"downfall": 0.4,
+	"carvers": [],
+	"features": [
+		[
+			"void-dimension:withered_tree"
+		],
+		[],
+		[],
+		[],
+		[],
+		[],
+		[
+			"void-dimension:deepslate_coal_ore",
+			"void-dimension:deepslate_copper_ore",
+			"void-dimension:deepslate_diamond_ore",
+			"void-dimension:deepslate_emerald_ore",
+			"void-dimension:deepslate_gold_ore",
+			"void-dimension:deepslate_iron_ore",
+			"void-dimension:deepslate_lapis_ore",
+			"void-dimension:deepslate_redstone_ore",
+			"void-dimension:deepslate_void_shard_ore"
+		],
+		[],
+		[],
+		[
+			"void-dimension:void_flower",
+			"void-dimension:wither_rose",
+			"void-dimension:corrupted_fire"
+		]
+	],
+	"spawners": {
+		"monster": [
+			{
+				"type": "void-dimension:void_maw",
+				"weight": 25,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "minecraft:zombie",
+				"weight": 35,
+				"minCount": 2,
+				"maxCount": 4
+			},
+			{
+				"type": "void-dimension:corrupted_creeper",
+				"weight": 45,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:corrupted_stalker",
+				"weight": 40,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:corrupted_blaze",
+				"weight": 43,
+				"minCount": 1,
+				"maxCount": 2
+			},
+			{
+				"type": "void-dimension:corrupted_spider",
+				"weight": 30,
+				"minCount": 1,
+				"maxCount": 2
+			}
+		]
+	},
+	"spawn_costs": {
+		"void-dimension:void_maw": {
+			"energy_budget": 2.0,
+			"charge": 1.0
+		},
+		"minecraft:zombie": {
+			"energy_budget": 10.0,
+			"charge": 2.0
+		},
+		"void-dimension:corrupted_creeper": {
+			"energy_budget": 2.0,
+			"charge": 1.0
+		},
+		"void-dimension:corrupted_stalker": {
+			"energy_budget": 2.0,
+			"charge": 1.0
+		},
+		"void-dimension:corrupted_blaze": {
+			"energy_budget": 1.0,
+			"charge": 1.0
+		},
+		"void-dimension:corrupted_spider": {
+			"energy_budget": 1.0,
+			"charge": 1.0
+		}
+	},
+	"effects": {
+		"foliage_color": -14211547,
+		"grass_color": 15395305,
+		"sky_color": -16777216,
+		"fog_color": -16777216,
+		"water_color": 15395305,
+		"water_fog_color": 15395305
+	}
+}

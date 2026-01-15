@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:failed_railway"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 6,
+		"spacing": 7,
+		"salt": 78006759,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 55
+			}
+		}
+	}
+}

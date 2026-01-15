@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/cube_bottom_top",
+	"textures": {
+		"bottom": "void-dimension:block/bedrock_bomb_bottom",
+		"side": "void-dimension:block/bedrock_bomb_side",
+		"top": "void-dimension:block/bedrock_bomb_top"
+	}
+}

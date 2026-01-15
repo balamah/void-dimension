@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"1": "minecraft:stick"
+	},
+	"pattern": [
+		" 1 ",
+		"111",
+		" 1 "
+	],
+	"result": {
+		"count": 1,
+		"id": "void-dimension:latin_cross"
+	}
+}

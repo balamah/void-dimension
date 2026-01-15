@@ -1,0 +1,9 @@
+{
+	"parent": "void-dimension:custom/old_corpse",
+	"textures": {
+		"all": "minecraft:block/bone_block_side",
+		"particle": "minecraft:block/bone_block_side",
+		"0": "void-dimension:block/old_corpse"
+	},
+	"render_type": "cutout"
+}

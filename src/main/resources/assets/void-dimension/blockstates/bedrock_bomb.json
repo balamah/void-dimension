@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "void-dimension:block/bedrock_bomb"
+		}
+	}
+}

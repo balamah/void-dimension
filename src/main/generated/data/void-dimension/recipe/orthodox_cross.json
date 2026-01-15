@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "multi_bench",
+  "key": {
+    "1": "#minecraft:wooden_buttons",
+    "2": "void-dimension:latin_cross"
+  },
+  "pattern": [
+    "1",
+    "2",
+    "1"
+  ],
+  "result": {
+    "count": 1,
+    "id": "void-dimension:orthodox_cross"
+  }
+}

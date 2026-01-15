@@ -1,0 +1,10 @@
+{
+	"type": "minecraft:smithing_transform",
+	"addition": "void-dimension:void_ingot",
+	"base": "minecraft:netherite_spear",
+	"result": {
+		"count": 1,
+		"id": "void-dimension:void_spear"
+	},
+	"template": "void-dimension:void_upgrade_smithing_template"
+}

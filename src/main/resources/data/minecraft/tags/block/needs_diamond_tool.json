@@ -1,0 +1,10 @@
+{
+	"replace": false,
+	"values": [
+		"void-dimension:corrupt_block",
+		"void-dimension:corrupt_void_shard_ore",
+		"void-dimension:deepslate_void_shard_ore",
+		"void-dimension:void_shard_block",
+		"void-dimension:wind_manipulation_block"
+	]
+}
