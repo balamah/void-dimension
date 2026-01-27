@@ -9,23 +9,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.entity.Entity;
 
-import net.balamah.voiddim.entity.custom.ShatteredSentinelMasterEntity;
-import net.balamah.voiddim.entity.custom.SmallCorruptedFireballEntity;
-import net.balamah.voiddim.entity.custom.ShatteredSentinelEntity;
-import net.balamah.voiddim.entity.custom.CorruptedStalkerEntity;
-import net.balamah.voiddim.entity.custom.WormOfCorruptionEntity;
-import net.balamah.voiddim.entity.custom.CorruptedCreeperEntity;
-import net.balamah.voiddim.entity.custom.CorruptedSpiderEntity;
-import net.balamah.voiddim.entity.custom.CorruptedBlazeEntity;
-import net.balamah.voiddim.entity.custom.HollowedBeastEntity;
-import net.balamah.voiddim.entity.custom.VoidHarbingerEntity;
-import net.balamah.voiddim.entity.custom.BedrockBombEntity;
-import net.balamah.voiddim.entity.custom.ThrownBlockEntity;
-import net.balamah.voiddim.entity.custom.VoidSphereEntity;
-import net.balamah.voiddim.entity.custom.WerewolfEntity;
-import net.balamah.voiddim.entity.custom.VoidMawEntity;
-import net.balamah.voiddim.entity.custom.SnowmanEntity;
-import net.balamah.voiddim.entity.custom.MantisEntity;
+import net.balamah.voiddim.entity.custom.*;
 import net.balamah.voiddim.VoidDimension;
 
 public class ModEntities {
@@ -209,8 +193,8 @@ public class ModEntities {
 		register(String name, Class<T> entityClass, EntityType.Builder<T> entityBuilder)
 	{
 		RegistryKey<EntityType<?>> key =
-			RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(VoidDimension.MOD_ID,
-																   name));
+			RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(VoidDimension.MOD_ID, name)
+		);
 
 		return Registry.register(Registries.ENTITY_TYPE,
 								 Identifier.of(VoidDimension.MOD_ID, name),
