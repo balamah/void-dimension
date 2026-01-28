@@ -39,19 +39,7 @@
             }
           ],
           "name": "minecraft:oak_log"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "chance": 0.35,
-          "condition": "minecraft:random_chance"
-        }
-      ],
-      "entries": [
+        },
         {
           "type": "minecraft:item",
           "functions": [
@@ -83,7 +71,7 @@
           "name": "minecraft:trapped_chest"
         }
       ],
-      "rolls": 1.0
+      "rolls": 2.0
     },
     {
       "bonus_rolls": 0.0,
@@ -191,7 +179,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:diamond"
+          "name": "minecraft:netherite_ingot"
         }
       ],
       "rolls": 1.0
@@ -200,7 +188,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "chance": 0.05,
+          "chance": 0.8,
           "condition": "minecraft:random_chance"
         }
       ],

@@ -32,13 +32,28 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:diamond"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
                 "max": 4.0,
                 "min": 3.0
               },
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:gold_nugget"
+          "name": "minecraft:gold_ingot"
         }
       ],
       "rolls": 1.0
@@ -47,7 +62,49 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "chance": 0.25,
+          "chance": 0.45,
+          "condition": "minecraft:random_chance"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:netherite_scrap"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:netherite_ingot"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "chance": 0.1,
           "condition": "minecraft:random_chance"
         }
       ],
@@ -65,7 +122,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:netherite_scrap"
+          "name": "void-dimension:void_shard"
         }
       ],
       "rolls": 1.0

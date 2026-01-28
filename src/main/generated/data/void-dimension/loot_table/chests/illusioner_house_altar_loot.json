@@ -11,20 +11,44 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 5.0,
-                "min": 3.0
+                "max": 9.0,
+                "min": 5.0
               },
               "function": "minecraft:set_count"
             }
           ],
           "name": "minecraft:diamond"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 11.0,
+                "min": 7.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:gold_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:gold_block"
+        },
         {
           "type": "minecraft:item",
           "functions": [
@@ -41,7 +65,7 @@
           "name": "minecraft:redstone"
         }
       ],
-      "rolls": 1.0
+      "rolls": 4.0
     }
   ]
 }

@@ -59,7 +59,7 @@
 		"monster": [
 			{
 				"type": "void-dimension:void_maw",
-				"weight": 25,
+				"weight": 20,
 				"minCount": 1,
 				"maxCount": 1
 			},
@@ -97,7 +97,7 @@
 	},
 	"spawn_costs": {
 		"void-dimension:void_maw": {
-			"energy_budget": 2.0,
+			"energy_budget": 1.0,
 			"charge": 1.0
 		},
 		"minecraft:zombie": {

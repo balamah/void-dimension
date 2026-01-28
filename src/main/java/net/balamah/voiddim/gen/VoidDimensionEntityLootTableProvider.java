@@ -58,12 +58,9 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootTableP
 		LootTable.Builder wormOfCorruptionTable =
 			LootTable.builder()
 				.pool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.9f)
+					McGenHelper.getPool(McGenHelper.constantNumber(2), 0.9f)
 					.with(McGenHelper.getItemEntry(Items.DIRT, 1, 16))
 					.with(McGenHelper.getItemEntry(Items.OAK_LOG, 1, 8))
-				)
-				.pool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.35f)
 					.with(McGenHelper.getItemEntry(Items.CHEST, 1))
 					.with(McGenHelper.getItemEntry(Items.TRAPPED_CHEST, 1))
 				)
@@ -79,10 +76,10 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootTableP
 				)
 				.pool(
 					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.12f)
-					.with(McGenHelper.getItemEntry(Items.DIAMOND, 1, 3))
+					.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
 				)
 				.pool(
-					McGenHelper.getPool(McGenHelper.constantNumber(3), 0.05f)
+					McGenHelper.getPool(McGenHelper.constantNumber(3), 0.8f)
 					.with(McGenHelper.getItemEntry(Items.DIAMOND, 1, 2))
 					.with(McGenHelper.getItemEntry(Items.GOLD_BLOCK, 1))
 					.with(McGenHelper.getItemEntry(Items.GOLD_BLOCK, 1))
@@ -104,7 +101,7 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootTableP
 			.pool(
 				McGenHelper.getPool(McGenHelper.constantNumber(3))
 				.with(McGenHelper.getItemEntry(Items.BONE, 5, 9))
-						);
+			);
 
 		LootTable.Builder shatteredSentinelTable =
 			LootTable.builder()

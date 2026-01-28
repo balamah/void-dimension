@@ -67,7 +67,7 @@
 				"type": "void-dimension:werewolf",
 				"weight": 60,
 				"minCount": 1,
-				"maxCount": 3
+				"maxCount": 2
 			},
 			{
 				"type": "void-dimension:hollowed_beast",
@@ -85,15 +85,15 @@
 	},
 	"spawn_costs": {
 		"void-dimension:void_maw": {
-			"energy_budget": 2.0,
+			"energy_budget": 1.0,
 			"charge": 1.0
 		},
 		"void-dimension:werewolf": {
-			"energy_budget": 6.0,
+			"energy_budget": 4.0,
 			"charge": 2.0
 		},
 		"void-dimension:hollowed_beast": {
-			"energy_budget": 4.0,
+			"energy_budget": 3.0,
 			"charge": 2.0
 		},
 		"void-dimension:corrupted_creeper": {

@@ -46,6 +46,10 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 				.with(McGenHelper.getItemEntry(Items.ARROW, 15, 20))
 				.with(McGenHelper.getItemEntry(Items.NETHER_WART, 4, 9))
 			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.5f)
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1, 2))
+			)
 		;
 
 		LootTable.Builder illusionerSecretChestTable =
@@ -55,9 +59,9 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 				.with(McGenHelper.getItemEntry(ModItems.VOID_INGOT, 1, 2))
 			)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
 				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 4, 6))
-				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 4))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
 			)
 		;
 
@@ -95,14 +99,15 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 			LootTable.builder()
 			.pool(
 				McGenHelper.getPool(McGenHelper.constantNumber(2))
-				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1, 3))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 3))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 2))
 			)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(3))
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
 				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 8, 12))
 			)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
 				.with(McGenHelper.getItemEntry(Items.COBWEB, 2, 3))
 			)
 		;
@@ -110,11 +115,10 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 		LootTable.Builder illusionerAltarTable =
 			LootTable.builder()
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
-				.with(McGenHelper.getItemEntry(Items.DIAMOND, 3, 5))
-			)
-			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				McGenHelper.getPool(McGenHelper.constantNumber(4))
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 5, 9))
+				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 7, 11))
+				.with(McGenHelper.getItemEntry(Items.GOLD_BLOCK, 1, 2))
 				.with(McGenHelper.getItemEntry(Items.REDSTONE, 2, 4))
 			)
 		;
@@ -149,13 +153,12 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 			.pool(
 				McGenHelper.getPool(McGenHelper.constantNumber(2))
 				.with(McGenHelper.getItemEntry(Items.BONE, 1, 3))
-				.with(McGenHelper.getItemEntry(Items.COAL, 1))
+				.with(McGenHelper.getItemEntry(Items.COAL, 1, 4))
 				.with(McGenHelper.getItemEntry(Items.COBWEB, 2))
 			)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(2), 0.10f)
+				McGenHelper.getPool(McGenHelper.constantNumber(2), 0.15f)
 				.with(McGenHelper.getItemEntry(Items.DIAMOND, 1, 2))
-				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 2, 3))
 				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1))
 			)
 		;
@@ -165,7 +168,7 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 			.pool(
 				McGenHelper.getPool(McGenHelper.constantNumber(3))
 				.with(McGenHelper.getItemEntry(Items.RAIL, 3, 6))
-				.with(McGenHelper.getItemEntry(Items.GOLD_NUGGET, 3, 4))
+				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 2, 3))
 				.with(McGenHelper.getItemEntry(Items.POWERED_RAIL, 1, 2))
 				.with(McGenHelper.getItemEntry(Items.TNT, 2, 4))
 			)
@@ -179,8 +182,8 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 			LootTable.builder()
 			.pool(cobwebPool)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
-				.with(McGenHelper.getItemEntry(Items.DIAMOND, 1, 3))
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 1, 2))
 				.with(McGenHelper.getItemEntry(Items.GOLD_NUGGET, 2, 4))
 			)
 		;	
@@ -190,24 +193,35 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 			.pool(cobwebPool)
 			.pool(
 				McGenHelper.getPool(McGenHelper.constantNumber(1))
-				.with(McGenHelper.getItemEntry(Items.GOLD_NUGGET, 3, 4))
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 2, 3))
+				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 3, 4))
 			)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.25f)
-				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1, 2))
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.45f)
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 3))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 2))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.10f)
+				.with(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1, 2))
 			)
 		;
 
 		LootTable.Builder normalHouseTable =
 			LootTable.builder()
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.45f)
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.6f)
 				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 3))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 2))
 			)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
 				.with(McGenHelper.getItemEntry(Items.IRON_INGOT, 4, 5))
-				.with(McGenHelper.getItemEntry(Items.GOLD_NUGGET, 2, 3))
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 2, 3))
+			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.10f)
+				.with(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1, 2))
 			)
 		;
 
