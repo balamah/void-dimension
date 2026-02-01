@@ -42,6 +42,7 @@ public class VoidDimension implements ModInitializer {
 		ModEffects.registerModEffects();
 		ModPotions.registerModPotions();
 		ModEntities.registerModEntities();
+		ModEntities.registerSpawnRestrictions();
 		ModDimensions.registerModDimensions();
 		ModEvents.registerModEvents();
 		ModLootTables.registerModLootTables();

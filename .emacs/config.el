@@ -12,8 +12,7 @@
 										:default t)
 									   (:name "JavaSE-21"
 										:path "/usr/lib/jvm/java-21-openjdk")]
-	  lsp-java-vmargs '("-noverify" "-Xmx1G" "-XX:+UseG1GC"
-						"-XX:+UseStringDeduplication")
+	  lsp-java-vmargs '("-noverify" "-Xmx4G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication")
 	  )
 
 ;; run project
@@ -36,10 +35,16 @@
 
 (global-set-key (kbd "M-<f10>") 'run-project-sources-regenerate)
 
+(defvar project-current-world "mob-spawn-test"
+  "The variable specifies a world, whose void dimension data will be removed when
+`run-project-remove-dimension' is executed")
+
 (defun run-project-remove-dimension ()
   (interactive)
-  (delete-directory
-   (concat (project-get-root) "run/saves/mod-test-1_21_11/dimensions/void-dimension/") t)
+  (let* ((world-path-minecraft
+		  (format "run/saves/%s/dimensions/void-dimension/" project-current-world))
+		 (full-world-path (concat (project-get-root) world-path-minecraft)))
+	(delete-directory full-world-path t))
   (message "%s Successfully removed dimension directory" (format-time-string "%H:%M"))
   (run-project))
 

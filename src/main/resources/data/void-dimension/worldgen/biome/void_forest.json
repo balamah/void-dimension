@@ -89,7 +89,7 @@
 			"charge": 1.0
 		},
 		"void-dimension:werewolf": {
-			"energy_budget": 4.0,
+			"energy_budget": 5.0,
 			"charge": 2.0
 		},
 		"void-dimension:hollowed_beast": {
