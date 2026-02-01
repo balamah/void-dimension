@@ -11,7 +11,6 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.particle.ModParticleTypes;
-import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.effect.ModEffects;
 
 public class CorruptBlock extends Block {
@@ -36,7 +35,7 @@ public class CorruptBlock extends Block {
 	public void randomDisplayTick(
 		BlockState state, World world, BlockPos blockPos, Random random
 	) {
-		if (!world.isClient() || this.isUnderBlock(world, blockPos)) {
+		if (!world.isClient()) {
 			return;
 		}
 
@@ -48,19 +47,8 @@ public class CorruptBlock extends Block {
 		double vy = 0.05 + random.nextDouble() * 0.03;
 		double vz = (random.nextDouble() - 0.5) * 0.01;
 
-		if (random.nextInt(3) == 0) {
+		if (random.nextInt(12) == 0) {
 			world.addParticleClient(ModParticleTypes.CORRUPTION, x, y, z, vx, vy, vz);
 		}
-	}
-
-	protected boolean isUnderBlock(World world, BlockPos blockPos) {
-		BlockPos upperBlockPos = blockPos.up();
-		BlockState upperBlockState = world.getBlockState(upperBlockPos);
-
-		if (upperBlockState.isAir()) {
-			return false;
-		}
-
-		return true;
 	}
 }
