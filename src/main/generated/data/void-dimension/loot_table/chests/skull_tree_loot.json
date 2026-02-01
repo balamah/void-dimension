@@ -89,7 +89,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:netherite_scrap"
+          "name": "minecraft:netherite_ingot"
         }
       ],
       "rolls": 2.0

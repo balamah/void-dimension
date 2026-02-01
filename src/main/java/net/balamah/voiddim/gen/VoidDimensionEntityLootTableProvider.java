@@ -65,26 +65,24 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootTableP
 					.with(McGenHelper.getItemEntry(Items.TRAPPED_CHEST, 1))
 				)
 				.pool(
-					McGenHelper.getPool(McGenHelper.constantNumber(2), 0.45f)
+					McGenHelper.getPool(McGenHelper.constantNumber(2), 0.55f)
 					.with(McGenHelper.getItemEntry(Items.IRON_INGOT, 1, 6))
 					.with(McGenHelper.getItemEntry(Items.RAW_IRON, 1, 4))
 				)
 				.pool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.3f)
+					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.4f)
 					.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 1, 4))
 					.with(McGenHelper.getItemEntry(Items.RAW_GOLD, 1, 3))
 				)
 				.pool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.12f)
+					McGenHelper.getPool(McGenHelper.constantNumber(2), 0.3f)
 					.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
+					.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 4, 6))
+					.with(McGenHelper.getItemEntry(Items.DIAMOND, 3, 4))
 				)
 				.pool(
-					McGenHelper.getPool(McGenHelper.constantNumber(3), 0.8f)
-					.with(McGenHelper.getItemEntry(Items.DIAMOND, 1, 2))
-					.with(McGenHelper.getItemEntry(Items.GOLD_BLOCK, 1))
-					.with(McGenHelper.getItemEntry(Items.GOLD_BLOCK, 1))
+					McGenHelper.getPool(McGenHelper.constantNumber(3), 0.15f)
 					.with(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
-					.with(McGenHelper.getItemEntry(Items.CHEST, 1))
 				);
 
 		LootTable.Builder werewolfTable =

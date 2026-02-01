@@ -60,7 +60,7 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 			)
 			.pool(
 				McGenHelper.getPool(McGenHelper.constantNumber(2))
-				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 4, 6))
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 4, 6))
 				.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
 			)
 		;
@@ -90,7 +90,7 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 				.with(McGenHelper.getItemEntry(Items.COBWEB, 2, 3))
 			)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
 				.with(McGenHelper.getItemEntry(Items.EMERALD, 3, 7))
 			)
 		;
@@ -103,8 +103,9 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 				.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 2))
 			)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
-				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 8, 12))
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 5, 9))
+				.with(McGenHelper.getItemEntry(Items.DIAMOND, 2, 6))
 			)
 			.pool(
 				McGenHelper.getPool(McGenHelper.constantNumber(1))
@@ -159,7 +160,7 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 			.pool(
 				McGenHelper.getPool(McGenHelper.constantNumber(2), 0.15f)
 				.with(McGenHelper.getItemEntry(Items.DIAMOND, 1, 2))
-				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1))
 			)
 		;
 
@@ -220,8 +221,8 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 				.with(McGenHelper.getItemEntry(Items.DIAMOND, 2, 3))
 			)
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.10f)
-				.with(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1, 2))
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.15f)
+				.with(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
 			)
 		;
 
