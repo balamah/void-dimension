@@ -25,8 +25,7 @@ public class CorruptBlock extends Block {
 	@Override
 	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
-			StatusEffectInstance effect =
-				new StatusEffectInstance(ModEffects.CORRUPTION, 60, 1);
+			StatusEffectInstance effect = new StatusEffectInstance(ModEffects.CORRUPTION, 60, 1);
 
 			livingEntity.addStatusEffect(effect);
 		}
@@ -34,19 +33,21 @@ public class CorruptBlock extends Block {
 
 	@Override
 	public void randomDisplayTick(
-		BlockState state, World world, BlockPos pos, Random random
+		BlockState state, World world, BlockPos blockPos, Random random
 	) {
-		if (!world.isClient()) return;
+		if (!world.isClient()) {
+			return;
+		}
 
-		double x = pos.getX() + 0.2 + random.nextDouble() * 0.6;
-		double y = pos.getY() + random.nextDouble();
-		double z = pos.getZ() + 0.2 + random.nextDouble() * 0.6;
+		double x = blockPos.getX() + 0.2 + random.nextDouble() * 0.6;
+		double y = blockPos.getY() + random.nextDouble();
+		double z = blockPos.getZ() + 0.2 + random.nextDouble() * 0.6;
 
 		double vx = (random.nextDouble() - 0.5) * 0.01;
 		double vy = 0.05 + random.nextDouble() * 0.03;
 		double vz = (random.nextDouble() - 0.5) * 0.01;
 
-		if (random.nextInt(3) == 0) {
+		if (random.nextInt(12) == 0) {
 			world.addParticleClient(ModParticleTypes.CORRUPTION, x, y, z, vx, vy, vz);
 		}
 	}
