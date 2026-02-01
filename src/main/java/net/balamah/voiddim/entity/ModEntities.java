@@ -1,12 +1,16 @@
 package net.balamah.voiddim.entity;
 
+import net.minecraft.entity.SpawnLocationTypes;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.Heightmap;
 import net.minecraft.entity.Entity;
 
 import net.balamah.voiddim.entity.custom.*;
@@ -19,7 +23,6 @@ public class ModEntities {
 			MantisEntity.class,
 			EntityType.Builder.create(MantisEntity::new, SpawnGroup.CREATURE)
 			.dimensions(1f, 2.5f)
-			
 		);
 
 	public static final EntityType<SnowmanEntity> SNOWMAN =
@@ -150,7 +153,7 @@ public class ModEntities {
 			.trackingTickInterval(20)
 	);
 
-	// TODO: Return the code down below
+	// TODO: Restore the code down below
 	// public static final EntityType<CorruptedWarriorEntity> CORRUPTED_WARRIOR =
 	// 	register("corrupted_warrior",
 	// 			 CorruptedWarriorEntity.class,
@@ -185,8 +188,37 @@ public class ModEntities {
 			.trackingTickInterval(10)
 	);
 
+	protected static final EntityType<? extends MobEntity>[] restrictedEntities =
+		new EntityType[] {
+			ModEntities.CORRUPTED_STALKER,
+			ModEntities.SHATTERED_SENTINEL,
+			ModEntities.WEREWOLF,
+			ModEntities.HOLLOWED_BEAST,
+			ModEntities.SHATTERED_SENTINEL_MASTER,
+			ModEntities.VOID_HARBINGER,
+			ModEntities.WORM_OF_CORRUPTION,
+			ModEntities.CORRUPTED_BLAZE,
+			ModEntities.CORRUPTED_CREEPER,
+			ModEntities.CORRUPTED_SPIDER
+		};
+
 	public static void registerModEntities() {
 		VoidDimension.LOGGER.info("Registering mod entities for " + VoidDimension.MOD_ID);
+	}
+
+	public static void registerSpawnRestrictions() {
+		VoidDimension.LOGGER.info(
+			"Registering mob spawn restrictions for " + VoidDimension.MOD_ID
+		);
+
+		for (EntityType<? extends MobEntity> entityType : restrictedEntities) {
+			SpawnRestriction.register(
+				entityType,
+				SpawnLocationTypes.ON_GROUND,
+				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				MobEntity::canMobSpawn
+			);
+		}
 	}
 
 	protected static <T extends Entity> EntityType<T>
@@ -196,8 +228,10 @@ public class ModEntities {
 			RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(VoidDimension.MOD_ID, name)
 		);
 
-		return Registry.register(Registries.ENTITY_TYPE,
-								 Identifier.of(VoidDimension.MOD_ID, name),
-								 entityBuilder.build(key));
+		return Registry.register(
+			Registries.ENTITY_TYPE,
+			Identifier.of(VoidDimension.MOD_ID, name),
+			entityBuilder.build(key)
+		);
 	}
 }
