@@ -1,6 +1,10 @@
 #+TITLE: README
 #+AUTHOR: Balamah
 
+=WARNING=: Sodium mod is recommended if you set render distance more
+than 20 chunks. The terrain is very cpu heavy, or maybe it is a skill
+issue, idk
+
 * Table of contents :toc:
 - [[#introduction][Introduction]]
 - [[#setting-up-the-project][Setting up the project]]
