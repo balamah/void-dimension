@@ -7,8 +7,8 @@
 	],
 	"placement": {
 		"type": "minecraft:random_spread",
-		"separation": 6,
-		"spacing": 25,
+		"separation": 12,
+		"spacing": 48,
 		"salt": 43855099,
 		"height": {
 			"type": "minecraft:uniform",
