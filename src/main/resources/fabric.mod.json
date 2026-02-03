@@ -36,5 +36,7 @@
 		"java": ">=21",
 		"fabric-api": "*"
 	},
-	"suggests": {}
+	"suggests": {
+		"sodium": "*"
+	}
 }
