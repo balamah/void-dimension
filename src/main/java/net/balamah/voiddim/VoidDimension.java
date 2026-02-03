@@ -1,6 +1,7 @@
 package net.balamah.voiddim;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,10 @@ public class VoidDimension implements ModInitializer {
 		ModEvents.registerModEvents();
 		ModLootTables.registerModLootTables();
 		ModWorldGeneration.registerModWorldGeneration();
+
+		if (!FabricLoader.getInstance().isModLoaded("sodium")) {
+			LOGGER.warn("!!! Sodium mod is recommended for best performance !!!");
+		}
 
 		this.registerEntityAttributes();
 	}
