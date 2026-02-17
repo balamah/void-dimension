@@ -19,8 +19,7 @@
 (defun run-gradle-commands (commands terminal-name)
   "Run gradle commands using `COMMANDS' in vterm with buffer-name
 `TERMINAL-NAME'. All parameters are strings"
-  (vterm-run (format "builtin cd %s && ./gradlew %s"
-					 current-project commands) terminal-name))
+  (vterm-run (format "builtin cd %s && ./gradlew %s" current-project commands) terminal-name))
 
 (defrunc project-no-build (run-gradle-commands "clean runClient" "*run-mod*"))
 

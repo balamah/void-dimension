@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:infected_ruined_house"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 25,
+		"spacing": 55,
+		"salt": 6521,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 25
+			}
+		}
+	}
+}

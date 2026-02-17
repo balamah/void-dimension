@@ -17,8 +17,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 2.0
+                "max": 5.0,
+                "min": 4.0
               },
               "function": "minecraft:set_count"
             }
@@ -68,8 +68,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 5.0,
-                "min": 4.0
+                "max": 3.0,
+                "min": 2.0
               },
               "function": "minecraft:set_count"
             }
@@ -83,8 +83,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 3.0
+                "max": 1.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -107,13 +107,13 @@
           "name": "minecraft:gold_ingot"
         }
       ],
-      "rolls": 2.0
+      "rolls": 3.0
     },
     {
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "chance": 0.15,
+          "chance": 0.1,
           "condition": "minecraft:random_chance"
         }
       ],
@@ -135,6 +135,27 @@
         }
       ],
       "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:cobweb"
+        }
+      ],
+      "rolls": 2.0
     }
   ]
 }
