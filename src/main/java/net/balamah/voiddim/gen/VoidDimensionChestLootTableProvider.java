@@ -55,14 +55,21 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 		LootTable.Builder illusionerSecretChestTable =
 			LootTable.builder()
 			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.60f)
 				.with(McGenHelper.getItemEntry(ModItems.VOID_INGOT, 1, 2))
 			)
 			.pool(
 				McGenHelper.getPool(McGenHelper.constantNumber(2))
 				.with(McGenHelper.getItemEntry(Items.DIAMOND, 4, 6))
+				.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 4))
 				.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
 			)
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.75f)
+				.with(McGenHelper.getItemEntry(Items.EMERALD, 1, 3))
+				.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 2, 4))
+			)
+			.pool(cobwebPool)
 		;
 
 		LootTable.Builder illusionerKitchenChestTable =
