@@ -66,6 +66,15 @@ public class WormOfCorruptionMoveGoal extends Goal {
 	@Override
 	public void start() {
 		this.cooldown = 0;
+
+		LivingEntity target = this.entity.getTarget();
+
+		this.entity.setInvulnerable(true);
+		this.entity.setStopAttacks(true);
+		this.setCoordinates(target);
+		this.sendStatus(
+			this.entity.getEntityWorld(), ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN
+		);
 	}
 
 	@Override
@@ -73,18 +82,12 @@ public class WormOfCorruptionMoveGoal extends Goal {
 		super.tick();
 
 		World world = this.entity.getEntityWorld();
-		LivingEntity target = this.entity.getTarget();
 
-		if (!(world instanceof ServerWorld serverWorld)) return;
+		if (!(world instanceof ServerWorld serverWorld)) {
+			return;
+		}
 
 		this.cooldown++;
-
-		if (this.cooldown == 1) {
-			this.entity.setInvulnerable(true);
-			this.entity.setStopAttacks(true);
-			this.sendStatus(serverWorld, ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN);
-			this.setCoordinates(target);
-		}
 
 		if (this.cooldown == 5) {
 			world.playSound(
@@ -102,13 +105,10 @@ public class WormOfCorruptionMoveGoal extends Goal {
 			this.sendStatus(serverWorld, ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN_STOP);
 
 			if (!this.attackAttributeInstance.hasModifier(this.attributeId)) {
-				this.attackAttributeInstance
-					.addTemporaryModifier(this.attackAttributeInstanceModifier);
+				this.attackAttributeInstance.addTemporaryModifier(
+					this.attackAttributeInstanceModifier
+				);
 			}
-		}
-
-		if (this.cooldown == 16) {
-			this.sendStatus(serverWorld, ModEntityStatuses.WORM_OF_CORRUPTION_DIG_UP);
 		}
 	}
 
@@ -116,10 +116,14 @@ public class WormOfCorruptionMoveGoal extends Goal {
 	public void stop() {
 		super.stop();
 
-		this.sendStatus(this.entity.getEntityWorld(), ModEntityStatuses.WORM_OF_CORRUPTION_IDLE);
+		World world = this.entity.getEntityWorld();
+
+		this.sentStatuses.clear();
+		this.sendStatus(world, ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN_STOP);
+		this.sendStatus(world, ModEntityStatuses.WORM_OF_CORRUPTION_DIG_UP);
 		this.attackAttributeInstance.removeModifier(this.attackAttributeInstanceModifier);
 		this.entity.setStopAttacks(false);
-		this.sentStatuses.clear();
+		this.entity.setInvulnerable(false);
 
 		this.entity.attackCount = 0;
 		this.cooldown = 0;
@@ -127,11 +131,13 @@ public class WormOfCorruptionMoveGoal extends Goal {
 
 	@Override
 	public boolean shouldContinue() {
-		return this.entity.getTarget() != null && this.cooldown <= 26;
+		return this.entity.getTarget() != null && this.cooldown <= 16;
 	}
 
 	protected void sendStatus(World world, byte entitySignal) {
-		if (this.sentStatuses.contains(entitySignal)) return;
+		if (this.sentStatuses.contains(entitySignal)) {
+			return;
+		}
 
 		world.sendEntityStatus(this.entity, entitySignal);
 
