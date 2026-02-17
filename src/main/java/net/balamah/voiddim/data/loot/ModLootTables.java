@@ -50,6 +50,15 @@ public class ModLootTables {
 	public static RegistryKey<LootTable> FAILED_RAILWAY_LOOT =
 		register("chests/failed_railway_loot");
 
+	public static RegistryKey<LootTable> CEMETERY_CHEST_LOOT =
+		register("chests/cemetery_chest_loot");
+
+	public static RegistryKey<LootTable> INFECTED_RUINED_HOUSE_LOOT =
+		register("chests/infected_ruined_house_loot");
+
+	public static RegistryKey<LootTable> INFECTED_TOWER_HOUSE_WEAPONS_LOOT =
+		register("chests/infected_tower_house_weapons_loot");
+
 	public static void registerModLootTables() {
 		VoidDimension.LOGGER.info("Registering mod loot tables for " + VoidDimension.MOD_ID);
 	}
