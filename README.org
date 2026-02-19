@@ -75,6 +75,7 @@ The order is going from brightest colors to the darkest
 ** Textures
 - Corrupted mobs black skin :: https://modrinth.com/mod/intothevoid
 - corrupt_block texture     :: https://modrinth.com/mod/intothevoid
+- alpha_steve               :: https://namemc.com/skin/f2d10ae87c2444ff
   
 ** Blocks
 - old_corpse_pile           :: https://github.com/TroupeMaster/TheDeepVoid

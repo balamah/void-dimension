@@ -70,5 +70,6 @@ public class VoidDimension implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_BLAZE, CorruptedBlazeEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_CREEPER, CorruptedCreeperEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_SPIDER, CorruptedSpiderEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HOLLOWED_ALPHA_STEVE, HollowedAlphaSteveEntity.createAttributes());
 	}
 }

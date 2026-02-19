@@ -2,6 +2,7 @@ package net.balamah.voiddim;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.entity.EntityRendererFactories;
 import net.minecraft.client.render.BlockRenderLayer;
@@ -117,6 +118,22 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		this.createBlocksTransparency(this.blocksForTransparency);
 
 		EntityRendererFactories.register(ModEntities.BEDROCK_BOMB, BedrockBombRenderer::new);
+
+		// TODO: Make code below consize
+		EntityRendererFactories.register(
+            ModEntities.HOLLOWED_ALPHA_STEVE,
+            context -> new HollowedAlphaSteveRenderer<>(
+                context,
+                new HollowedAlphaSteveModel<>(
+                    context.getPart(HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE)
+                ),
+                0.5f
+            )
+        );
+        EntityModelLayerRegistry.registerModelLayer(
+            HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE,
+            HollowedAlphaSteveModel::getTexturedModelData  // see note below
+        );
 
 		ModParticleTypes.registerModParticles();
 	}

@@ -97,6 +97,14 @@ public class ModEntities {
 			.dimensions(1.2F, 2.5f)
 		);
 
+	public static final EntityType<HollowedAlphaSteveEntity> HOLLOWED_ALPHA_STEVE =
+		register(
+			"hollowed_alpha_steve",
+			HollowedAlphaSteveEntity.class,
+			EntityType.Builder.<HollowedAlphaSteveEntity>create(HollowedAlphaSteveEntity::new, SpawnGroup.CREATURE)
+			.dimensions(1.2F, 2.5f)
+		);
+
 	public static final EntityType<CorruptedBlazeEntity> CORRUPTED_BLAZE = register(
 		"corrupted_blaze",
 		CorruptedBlazeEntity.class,
