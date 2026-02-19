@@ -1,8 +1,6 @@
 package net.balamah.voiddim;
 
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.entity.EntityRendererFactories;
 import net.minecraft.client.render.BlockRenderLayer;
@@ -30,67 +28,54 @@ public class VoidDimensionRendering implements ClientModInitializer {
 
 	protected List<EntitySpecs<? extends LivingEntity>> entitySpecs =
 		List.of(new EntitySpecs<>(ModEntities.MANTIS,             				
-								  MantisEntity.createAttributes(),
 								  MantisModel.MANTIS,
 								  MantisModel.getTexturedModelData(),
 								  MantisRenderer::new),
 				new EntitySpecs<>(ModEntities.SNOWMAN,             				
-								  SnowmanEntity.createAttributes(),
 								  SnowmanModel.SNOWMAN,
 								  SnowmanModel.getTexturedModelData(),
 								  SnowmanRenderer::new),
 				new EntitySpecs<>(ModEntities.CORRUPTED_STALKER,             				
-								  CorruptedStalkerEntity.createAttributes(),
 								  CorruptedStalkerModel.CORRUPTED_STALKER,
 								  CorruptedStalkerModel.getTexturedModelData(),
 								  CorruptedStalkerRenderer::new),
 				new EntitySpecs<>(ModEntities.SHATTERED_SENTINEL,             				
-								  ShatteredSentinelEntity.createAttributes(),
 								  ShatteredSentinelModel.SHATTERED_SENTINEL,
 								  ShatteredSentinelModel.getTexturedModelData(),
 								  ShatteredSentinelRenderer::new),
 				new EntitySpecs<>(ModEntities.VOID_MAW,             				
-								  VoidMawEntity.createAttributes(),
 								  VoidMawModel.VOID_MAW,
 								  VoidMawModel.getTexturedModelData(),
 								  VoidMawRenderer::new),
 				new EntitySpecs<>(ModEntities.VOID_HARBINGER,             				
-								  VoidHarbingerEntity.createAttributes(),
 								  VoidHarbingerModel.VOID_HARBINGER,
 								  VoidHarbingerModel.getTexturedModelData(),
 								  VoidHarbingerRenderer::new),
 				new EntitySpecs<>(ModEntities.SHATTERED_SENTINEL_MASTER,
-								  ShatteredSentinelMasterEntity.createAttributes(),
 								  ShatteredSentinelMasterModel.SHATTERED_SENTINEL_MASTER,
 								  ShatteredSentinelMasterModel.getTexturedModelData(),
 								  ShatteredSentinelMasterRenderer::new),
 				new EntitySpecs<>(ModEntities.WEREWOLF,             				
-								  WerewolfEntity.createAttributes(),
 								  WerewolfModel.WEREWOLF,
 								  WerewolfModel.getTexturedModelData(),
 								  WerewolfRenderer::new),
 				new EntitySpecs<>(ModEntities.WORM_OF_CORRUPTION,             				
-								  WormOfCorruptionEntity.createAttributes(),
 								  WormOfCorruptionModel.WORM_OF_CORRUPTION,
 								  WormOfCorruptionModel.getTexturedModelData(),
 								  WormOfCorruptionRenderer::new),
 				new EntitySpecs<>(ModEntities.HOLLOWED_BEAST,             				
-								  HollowedBeastEntity.createAttributes(),
 								  HollowedBeastModel.HOLLOWED_BEAST,
 								  HollowedBeastModel.getTexturedModelData(),
 								  HollowedBeastRenderer::new),
 				new EntitySpecs<CorruptedBlazeEntity>(ModEntities.CORRUPTED_BLAZE,
-													 CorruptedBlazeEntity.createAttributes(),
 													 CorruptedBlazeModel.CORRUPTED_BLAZE,
 													 CorruptedBlazeModel.getTexturedModelData(),
 													  CorruptedBlazeRenderer::new),
 				new EntitySpecs<CorruptedCreeperEntity>(ModEntities.CORRUPTED_CREEPER,
-													 CorruptedCreeperEntity.createAttributes(),
 													 CorruptedCreeperModel.CORRUPTED_CREEPER,
 													 CorruptedCreeperModel.getTexturedModelData(),
 													CorruptedCreeperRenderer::new),
 				new EntitySpecs<CorruptedSpiderEntity>(ModEntities.CORRUPTED_SPIDER,
-													 CorruptedSpiderEntity.createAttributes(),
 													 CorruptedSpiderModel.CORRUPTED_SPIDER,
 													 CorruptedSpiderModel.getTexturedModelData(),
 													 CorruptedSpiderRenderer::new)
@@ -138,16 +123,17 @@ public class VoidDimensionRendering implements ClientModInitializer {
 	}
 
 	protected <T extends Entity> void registerSpec(NonLivingEntitySpecs<T> spec) {
-		EntityModelLayerRegistry.registerModelLayer(spec.modelLayer(),
-													() -> spec.texturedModelData());
+		EntityModelLayerRegistry.registerModelLayer(
+			spec.modelLayer(), () -> spec.texturedModelData()
+		);
 
 		EntityRendererFactories.register(spec.entity(), spec.entityRendererFactory());
 	}
 
 	protected <T extends LivingEntity> void registerLivingSpec(EntitySpecs<T> spec) {
-		FabricDefaultAttributeRegistry.register(spec.entity(), spec.attributes());
-		EntityModelLayerRegistry.registerModelLayer(spec.modelLayer(),
-													() -> spec.texturedModelData());
+		EntityModelLayerRegistry.registerModelLayer(
+			spec.modelLayer(), () -> spec.texturedModelData()
+		);
 
 		EntityRendererFactories.register(spec.entity(), spec.entityRendererFactory());
 	}
@@ -186,13 +172,9 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		BipedEntitySpecs<T> specs
 	) {
 		EntityModelLayerRegistry.registerModelLayer(
-			specs.modelLayer(),
-			specs::texturedModelData
+			specs.modelLayer(), specs::texturedModelData
 		);
 
-		EntityRendererFactories.register(
-			specs.entity(),
-			specs.entityRendererFactory()
-		);
+		EntityRendererFactories.register(specs.entity(), specs.entityRendererFactory());
 	}
 }
