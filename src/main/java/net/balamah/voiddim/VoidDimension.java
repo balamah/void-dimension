@@ -56,6 +56,8 @@ public class VoidDimension implements ModInitializer {
 		this.registerEntityAttributes();
 	}
 
+	// Looks bad, but it should be this way.
+	// Otherwise entities will not spawn on servers
 	protected void registerEntityAttributes() {
 		FabricDefaultAttributeRegistry.register(ModEntities.MANTIS, MantisEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SNOWMAN, SnowmanEntity.createAttributes());

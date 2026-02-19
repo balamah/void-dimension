@@ -13,6 +13,7 @@ import net.minecraft.block.Block;
 
 import net.balamah.voiddim.custom.NonLivingEntitySpecs;
 import net.balamah.voiddim.particle.ModParticleTypes;
+import net.balamah.voiddim.custom.BipedEntitySpecs;
 import net.balamah.voiddim.custom.EntitySpecs;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.block.ModBlocks;
@@ -96,6 +97,19 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				);
 
 
+	protected List<BipedEntitySpecs<? extends Entity>> bipedEntitySpecs =
+		List.of(new BipedEntitySpecs<>(ModEntities.HOLLOWED_ALPHA_STEVE,
+									   HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE,
+									   HollowedAlphaSteveModel.getTexturedModelData(),
+									   context -> new HollowedAlphaSteveRenderer<>(
+										   context,
+										   new HollowedAlphaSteveModel<>(
+											   context.getPart(HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE)
+										   ),
+										   0.5f
+									   ))
+		);
+
 	protected List<NonLivingEntitySpecs<? extends Entity>> nonLivingEntitySpecs =
 		List.of(new NonLivingEntitySpecs<>(ModEntities.VOID_SPHERE,
 										   VoidSphereModel.VOID_SPHERE,
@@ -114,26 +128,11 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		);
 
 		this.createLivingEntityRenders(this.entitySpecs);
+		this.createBipedEntityRenders(this.bipedEntitySpecs);
 		this.createEntityRenders(this.nonLivingEntitySpecs);
 		this.createBlocksTransparency(this.blocksForTransparency);
 
 		EntityRendererFactories.register(ModEntities.BEDROCK_BOMB, BedrockBombRenderer::new);
-
-		// TODO: Make code below consize
-		EntityRendererFactories.register(
-            ModEntities.HOLLOWED_ALPHA_STEVE,
-            context -> new HollowedAlphaSteveRenderer<>(
-                context,
-                new HollowedAlphaSteveModel<>(
-                    context.getPart(HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE)
-                ),
-                0.5f
-            )
-        );
-        EntityModelLayerRegistry.registerModelLayer(
-            HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE,
-            HollowedAlphaSteveModel::getTexturedModelData  // see note below
-        );
 
 		ModParticleTypes.registerModParticles();
 	}
@@ -169,9 +168,31 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		}
 	}
 
+	protected void createBipedEntityRenders(
+		List<? extends BipedEntitySpecs<? extends Entity>> entitySpecs
+	) {
+		for (BipedEntitySpecs<? extends Entity> spec : entitySpecs) {
+			this.registerBipedEntitySpec(spec);
+		}
+	}
+
 	protected void createBlocksTransparency(Block[] blocks) {
 		for (Block block : blocks) {
 			BlockRenderLayerMap.putBlock(block, BlockRenderLayer.CUTOUT);
 		}
+	}
+
+	protected <T extends LivingEntity> void registerBipedEntitySpec(
+		BipedEntitySpecs<T> specs
+	) {
+		EntityModelLayerRegistry.registerModelLayer(
+			specs.modelLayer(),
+			specs::texturedModelData
+		);
+
+		EntityRendererFactories.register(
+			specs.entity(),
+			specs.entityRendererFactory()
+		);
 	}
 }
