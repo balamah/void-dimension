@@ -4,14 +4,12 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.ai.goal.LookAroundGoal;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.item.Item;
@@ -53,7 +51,6 @@ public class HollowedAlphaSteveEntity extends PathAwareEntity {
 
 	@Override
 	protected void initGoals() {
-		// TODO Auto-generated method stub
 		super.initGoals();
 
 		this.goalSelector.add(0, new WanderAroundFarGoal(this, 1.0));

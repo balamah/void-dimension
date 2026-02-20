@@ -2,14 +2,14 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 
 public class VoidHostileEntityAttackGoal extends MeleeAttackGoal {
-	protected final AbstractCorruptedHostileEntity entity;
+	protected final CorruptedHostileEntity entity;
 	protected int ticks;
 
 	public VoidHostileEntityAttackGoal(
-		AbstractCorruptedHostileEntity entity, double speed, boolean pauseWhenMobIdle
+		CorruptedHostileEntity entity, double speed, boolean pauseWhenMobIdle
 	)
 	{
 		super(entity, speed, pauseWhenMobIdle);

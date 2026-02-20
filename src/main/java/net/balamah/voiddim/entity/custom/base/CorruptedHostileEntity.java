@@ -22,13 +22,13 @@ import java.util.Random;
 import net.balamah.voiddim.entity.custom.ai.goal.VoidHostileEntityAttackGoal;
 import net.balamah.voiddim.custom.McCodeHelper;
 
-public abstract class AbstractCorruptedHostileEntity extends HostileEntity {
+public abstract class CorruptedHostileEntity extends HostileEntity {
 	public boolean breaksShield = false;
 	public int attackCount;
 
 	protected boolean stopAttacks = false;
 
-	public AbstractCorruptedHostileEntity(
+	public CorruptedHostileEntity(
 		EntityType<? extends HostileEntity> entityType, World world
 	) {
 		super(entityType, world);

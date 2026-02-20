@@ -14,11 +14,11 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class ShatteredSentinelEntity extends AbstractCorruptedHostileEntity {
+public class ShatteredSentinelEntity extends CorruptedHostileEntity {
 	public AnimationState idleAnimationState = new AnimationState();
 	public AnimationState attackAnimationState = new AnimationState();
 	public AnimationState stonesFloatAnimationState = new AnimationState();

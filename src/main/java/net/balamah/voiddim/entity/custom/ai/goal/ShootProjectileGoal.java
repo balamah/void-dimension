@@ -10,10 +10,10 @@ import net.minecraft.world.World;
 import com.google.common.base.Function;
 
 import net.balamah.voiddim.entity.ModEntityStatuses;
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 
 public class ShootProjectileGoal<T extends ProjectileEntity> extends Goal {
-	protected final AbstractCorruptedHostileEntity entity;
+	protected final CorruptedHostileEntity entity;
 	protected final Function<ServerWorld, T> projectileFactory;
 	protected final SoundEvent shootPrepareSound;
 	protected final SoundEvent shootStartSound;
@@ -22,7 +22,7 @@ public class ShootProjectileGoal<T extends ProjectileEntity> extends Goal {
 	protected int cooldown;
 
 	public ShootProjectileGoal(
-		AbstractCorruptedHostileEntity entity,
+		CorruptedHostileEntity entity,
 		Function<ServerWorld, T> projectileFactory,
 		SoundEvent shootPrepareSound, SoundEvent shootStartSound,
 		int shootingPrepareCooldown, int shootingCooldown

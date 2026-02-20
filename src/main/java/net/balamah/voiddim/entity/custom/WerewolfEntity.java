@@ -11,13 +11,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.sound.SoundEvent;
 
-public class WerewolfEntity extends AbstractCorruptedHostileEntity {
+public class WerewolfEntity extends CorruptedHostileEntity {
 	public AnimationState walkAnimationState = new AnimationState();
 	public AnimationState attackHitAnimationState = new AnimationState();
 	public AnimationState attackBiteAnimationState = new AnimationState();

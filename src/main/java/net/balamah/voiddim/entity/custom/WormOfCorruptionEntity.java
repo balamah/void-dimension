@@ -16,7 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
@@ -24,7 +24,7 @@ import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class WormOfCorruptionEntity extends AbstractCorruptedHostileEntity {
+public class WormOfCorruptionEntity extends CorruptedHostileEntity {
 	public AnimationState idleAnimationState = new AnimationState();
 	public AnimationState attackAnimationState = new AnimationState();
 	public AnimationState shootAnimationState = new AnimationState();

@@ -12,9 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 
-public class VoidBoundServantEntity extends AbstractCorruptedHostileEntity {
+public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	public final AnimationState suicideAnimationState = new AnimationState();
 
 	public VoidBoundServantEntity(

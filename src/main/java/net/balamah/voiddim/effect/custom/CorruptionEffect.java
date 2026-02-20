@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityType;
 
 import java.util.Arrays;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.effect.ModEffects;
@@ -48,7 +48,7 @@ public class CorruptionEffect extends StatusEffect {
 	public boolean applyUpdateEffect(
 		ServerWorld world, LivingEntity entity, int amplifier
 	) {
-		if (!(entity instanceof AbstractCorruptedHostileEntity) &&
+		if (!(entity instanceof CorruptedHostileEntity) &&
 			!entity.hasStatusEffect(ModEffects.DIVINE_PROTECTION) &&
 			!Arrays.asList(this.immuneEntities).contains(entity.getType())
 		) {
