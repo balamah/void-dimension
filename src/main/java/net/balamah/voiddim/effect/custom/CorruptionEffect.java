@@ -19,6 +19,7 @@ public class CorruptionEffect extends StatusEffect {
 		ModEntities.CORRUPTED_BLAZE,
 		ModEntities.CORRUPTED_CREEPER,
 		ModEntities.CORRUPTED_SPIDER,
+		ModEntities.HOLLOWED_ALPHA_STEVE,
 		ModEntities.VOID_MAW,
 		EntityType.ILLUSIONER,
 		EntityType.VINDICATOR,
