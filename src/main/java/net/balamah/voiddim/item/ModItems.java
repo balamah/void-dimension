@@ -6,6 +6,7 @@ import java.util.function.Function;
 import net.minecraft.item.VerticallyAttachableBlockItem;
 import net.minecraft.item.equipment.ArmorMaterial;
 import net.minecraft.item.equipment.EquipmentType;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.registry.RegistryKey;
@@ -51,6 +52,12 @@ public class ModItems {
 	public static final Item VOID_INGOT = register(
 		"void_ingot", Item::new, getVoidItemSettings()
 	);
+
+	public static final Item RAW_FLESH =
+		registerFoodItem("raw_flesh", ModFoodComponents.RAW_FLESH);
+
+	public static final Item COOKED_FLESH =
+		registerFoodItem("cooked_flesh", ModFoodComponents.COOKED_FLESH);
 
 	// This sux
 	public static final Item VOID_UPGRADE_SMITHING_TEMPLATE =
@@ -269,11 +276,11 @@ public class ModItems {
 	}
 
 	protected static Item registerSpawnEgg(String name, EntityType<? extends MobEntity> mob) {
-		return register(
-			name,
-			SpawnEggItem::new,
-			new Item.Settings().spawnEgg(mob)
-		);
+		return register(name, SpawnEggItem::new, new Item.Settings().spawnEgg(mob));
+	}
+
+	protected static Item registerFoodItem(String name, FoodComponent foodComponent) {
+		return register(name, Item::new, new Item.Settings().food(foodComponent));
 	}
 
 	protected static Item.Settings getVoidItemSettings() {
