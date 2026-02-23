@@ -15,6 +15,7 @@ issue, idk
   - [[#sounds][Sounds]]
   - [[#textures][Textures]]
   - [[#blocks][Blocks]]
+  - [[#animations][Animations]]
 - [[#credits][Credits]]
   - [[#programmers][Programmers]]
   - [[#builders][Builders]]
@@ -80,6 +81,9 @@ The order is going from brightest colors to the darkest
 ** Blocks
 - old_corpse_pile           :: https://github.com/TroupeMaster/TheDeepVoid
 - old_corpse                :: https://github.com/TroupeMaster/TheDeepVoid
+
+** Animations
+- alpha steve walking :: [[https://gitlab.com/TecnaGamer/OldWalkingAnimation][OldWalkingAnimation]]
 
 * Credits
 ** Programmers
