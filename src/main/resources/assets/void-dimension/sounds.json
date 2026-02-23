@@ -210,6 +210,14 @@
 			"void-dimension:corrupted_blaze/death"
 		]
 	},
+	"hollowed_alpha_steve.hit": {
+		"subtitle": "sound.void-dimension.hollowed_alpha_steve.hit",
+		"sounds": [
+			"void-dimension:hollowed_alpha_steve/hit1",
+			"void-dimension:hollowed_alpha_steve/hit2",
+			"void-dimension:hollowed_alpha_steve/hit3"
+		]
+	},
 	"void.ambient.1": {
 		"subtitle": "sound.void-dimension.void.ambient.1",
 		"sounds": [

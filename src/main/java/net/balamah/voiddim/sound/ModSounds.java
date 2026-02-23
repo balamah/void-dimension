@@ -103,6 +103,9 @@ public class ModSounds {
 	public static final SoundEvent VOID_AMBIENT_2 = register("void.ambient.2");
 	public static final SoundEvent MUSIC_VOID = register("music.void");
 
+	public static final SoundEvent HOLLOWED_ALPHA_STEVE_HIT =
+		register("hollowed_alpha_steve.hit");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}
