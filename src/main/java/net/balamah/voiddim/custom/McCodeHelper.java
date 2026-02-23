@@ -1,14 +1,17 @@
 package net.balamah.voiddim.custom;
 
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.boss.BossBar.Color;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.Direction;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.util.hit.HitResult;
@@ -176,8 +179,7 @@ public class McCodeHelper {
 		Entity entity, double targetY, double x, double y, double z
 	) {
 		BlockPos futurePosition = new BlockPos(
-			(int) x, (int) y, (int) z
-		);
+				(int) x, (int) y, (int) z);
 
 		Block futureBlock = entity.getEntityWorld().getBlockState(futurePosition).getBlock();
 
@@ -186,5 +188,12 @@ public class McCodeHelper {
 		}
 
 		return true;
+	}
+
+	public static Goal getTargetGoal(MobEntity entity, Class<?> entityTarget) {
+		return new ActiveTargetGoal(
+			entity, entityTarget, 10, true, false,
+			(target, world) -> Math.abs(target.getY() - target.getY()) <= 25.0
+		);
 	}
 }

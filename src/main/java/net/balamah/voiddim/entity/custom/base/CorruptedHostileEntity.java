@@ -84,8 +84,8 @@ public abstract class CorruptedHostileEntity extends HostileEntity {
 	}
 
 	protected void initTargets() {
-		this.targetSelector.add(0, this.getTargetGoal(PlayerEntity.class));
-		this.targetSelector.add(2, this.getTargetGoal(PassiveEntity.class));
+		this.targetSelector.add(0, McCodeHelper.getTargetGoal(this, PlayerEntity.class));
+		this.targetSelector.add(2, McCodeHelper.getTargetGoal(this, PassiveEntity.class));
 	}
 
 	protected void initBasicGoals() {
@@ -130,13 +130,6 @@ public abstract class CorruptedHostileEntity extends HostileEntity {
 
 	public double getChargeY() {
 		return this.getY() + this.getHeight() / 2.0F + 0.3F;
-	}
-
-	protected Goal getTargetGoal(Class<?> entityTarget) {
-		return new ActiveTargetGoal(
-			this, entityTarget, 10, true, false,
-			(entity, world) -> Math.abs(entity.getY() - this.getY()) <= 25.0
-		);
 	}
 
 	protected void playRandomAnimation(AnimationState[] animations) {

@@ -4,6 +4,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.EquipmentSlot;
@@ -14,6 +15,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.item.Item;
 
+import net.balamah.voiddim.custom.McCodeHelper;
+import net.balamah.voiddim.entity.custom.ai.goal.RandomAttackGoal;
+
 public class HollowedAlphaSteveEntity extends PathAwareEntity {
 	public HollowedAlphaSteveEntity(
 		EntityType<? extends PathAwareEntity> entityType, World world
@@ -23,7 +27,8 @@ public class HollowedAlphaSteveEntity extends PathAwareEntity {
 
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return PathAwareEntity.createMobAttributes()
-			.add(EntityAttributes.MAX_HEALTH, 35)
+			.add(EntityAttributes.MAX_HEALTH, 20)
+			.add(EntityAttributes.ATTACK_DAMAGE, 7.6f)
 			.add(EntityAttributes.MOVEMENT_SPEED, 0.4F);
 	}
 
@@ -56,6 +61,10 @@ public class HollowedAlphaSteveEntity extends PathAwareEntity {
 		this.goalSelector.add(0, new WanderAroundFarGoal(this, 1.0));
 		this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 15.0F));
 		this.goalSelector.add(2, new LookAroundGoal(this));
+		this.goalSelector.add(3, new RandomAttackGoal(this));
+
+		this.targetSelector.add(0, McCodeHelper.getTargetGoal(this, PlayerEntity.class));
+		this.targetSelector.add(2, McCodeHelper.getTargetGoal(this, PassiveEntity.class));
 	}
 
 	protected boolean isAffectedByDaylight() {
