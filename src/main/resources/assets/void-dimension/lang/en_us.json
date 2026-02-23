@@ -86,6 +86,8 @@
 	"entity.void-dimension.corrupted_creeper": "Corrupted creeper",
 	"entity.void-dimension.corrupted_blaze": "Corrupted blaze",
 	"entity.void-dimension.corrupted_spider": "Corrupted spider",
+	"entity.void-dimension.hollowed_alpha_steve": "Hollowed alpha steve",
+	"entity.void-dimension.bedrock_bomb": "Bedrock bomb",
 
 	"upgrade.void-dimension.apply_to": "Netherite Equipment",
 	"upgrade.void-dimension.ingredients": "Void Ingot",

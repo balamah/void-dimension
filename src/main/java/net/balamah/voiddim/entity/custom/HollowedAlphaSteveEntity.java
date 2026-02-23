@@ -29,7 +29,7 @@ public class HollowedAlphaSteveEntity extends PathAwareEntity {
 		return PathAwareEntity.createMobAttributes()
 			.add(EntityAttributes.MAX_HEALTH, 20)
 			.add(EntityAttributes.ATTACK_DAMAGE, 7.6f)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.4F);
+			.add(EntityAttributes.MOVEMENT_SPEED, 0.3F);
 	}
 
 	@Override
