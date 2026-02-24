@@ -85,14 +85,14 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootTableP
 					.with(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
 				);
 
+		LootPool.Builder bodyPartsPool = 
+			McGenHelper.getPool(McGenHelper.constantNumber(3))
+			.with(McGenHelper.getItemEntry(Items.BONE, 1, 3))
+			.with(McGenHelper.getItemEntry(Items.ROTTEN_FLESH, 1, 2))
+			.with(McGenHelper.getItemEntry(Items.LEATHER, 0, 2));
+
 		LootTable.Builder werewolfTable =
-			LootTable.builder()
-			.pool(
-				McGenHelper.getPool(McGenHelper.constantNumber(3))
-				.with(McGenHelper.getItemEntry(Items.BONE, 1, 3))
-				.with(McGenHelper.getItemEntry(Items.ROTTEN_FLESH, 1, 2))
-				.with(McGenHelper.getItemEntry(Items.LEATHER, 0, 2))
-			);
+			LootTable.builder().pool(bodyPartsPool);
 
 		LootTable.Builder hollowedBeastTable =
 			LootTable.builder()
@@ -126,6 +126,14 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootTableP
 			)
 			;
 
+		LootTable.Builder hollowedAlphaSteveTable = 
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(ModItems.RAW_FLESH, 1, 2))
+			)
+			;
+
 		this.register(ModEntities.CORRUPTED_STALKER, corruptedStalkerTable);
 		this.register(ModEntities.VOID_MAW, voidMawTable);
 		this.register(ModEntities.VOID_HARBINGER, voidHarbingerTable);
@@ -134,6 +142,7 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootTableP
 		this.register(ModEntities.HOLLOWED_BEAST, hollowedBeastTable);
 		this.register(ModEntities.SHATTERED_SENTINEL, shatteredSentinelTable);
 		this.register(ModEntities.SHATTERED_SENTINEL_MASTER, shatteredSentinelMasterTable);
+		this.register(ModEntities.HOLLOWED_ALPHA_STEVE, hollowedAlphaSteveTable);
 
 		// Didn't add loot table for corrupted versions of vanilla mobs,
 		// for i got tired and therefore copied them from minecraft files
