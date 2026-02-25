@@ -159,7 +159,7 @@ public class VoidHarbingerEntity extends BossEntity {
 	protected void initGoals() {
 		super.initGoals();
 
-		Goal shootingGoal = new ShootProjectileGoal<VoidSphereEntity>(
+		Goal shootingGoal = new ShootProjectileGoal<VoidHarbingerEntity, VoidSphereEntity>(
 			this, world -> new VoidSphereEntity(ModEntities.VOID_SPHERE, world),
 			ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
 			ModSounds.VOID_HARBINGER_SHOOT,
@@ -170,7 +170,7 @@ public class VoidHarbingerEntity extends BossEntity {
 		this.goalSelector.add(1, shootingGoal);
 		this.goalSelector.add(
 			2,
-			new SummonEntitiesGoal<CorruptedStalkerEntity>(
+			new SummonEntitiesGoal<VoidHarbingerEntity, CorruptedStalkerEntity>(
 				this, CorruptedStalkerEntity.class, ModEntities.CORRUPTED_STALKER
 			)
 		);

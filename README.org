@@ -16,6 +16,7 @@ issue, idk
   - [[#textures][Textures]]
   - [[#blocks][Blocks]]
   - [[#animations][Animations]]
+  - [[#models][Models]]
 - [[#credits][Credits]]
   - [[#programmers][Programmers]]
   - [[#builders][Builders]]
@@ -84,6 +85,9 @@ The order is going from brightest colors to the darkest
 
 ** Animations
 - alpha steve walking :: [[https://gitlab.com/TecnaGamer/OldWalkingAnimation][OldWalkingAnimation]]
+
+** Models
+- rana :: https://github.com/sakiiiiika/ranamod
 
 * Credits
 ** Programmers

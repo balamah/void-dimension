@@ -43,9 +43,4 @@ public class VoidHarbingerTeleportTowardsPlayerGoal extends Goal {
 			this.entity.teleportTo(target);
 		}
 	}
-
-	@Override
-	public void stop() {
-		super.stop();
-	}
 }

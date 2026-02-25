@@ -56,7 +56,7 @@ public class WormOfCorruptionEntity extends CorruptedHostileEntity {
 
 		this.goalSelector.add(2, new VoidHostileEntityAttackGoal(this, 1.0, false));
 
-		Goal shootingGoal = new ShootProjectileGoal<VoidSphereEntity>(
+		Goal shootingGoal = new ShootProjectileGoal<WormOfCorruptionEntity, VoidSphereEntity>(
 			this, world -> new VoidSphereEntity(ModEntities.VOID_SPHERE, world),
 			ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
 			ModSounds.VOID_HARBINGER_SHOOT,

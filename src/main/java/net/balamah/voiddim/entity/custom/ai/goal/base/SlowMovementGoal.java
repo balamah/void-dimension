@@ -3,10 +3,11 @@ package net.balamah.voiddim.entity.custom.ai.goal.base;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.Identifier;
 
-public abstract class SlowMovementGoal extends TickingGoal {
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+
+public abstract class SlowMovementGoal<T extends CorruptedHostileEntity> extends TickingGoal<T> {
 	protected final Identifier attributeId = Identifier.ofVanilla("speed");
 	protected final EntityAttributeModifier attributeModifier =
 		new EntityAttributeModifier(
@@ -15,7 +16,7 @@ public abstract class SlowMovementGoal extends TickingGoal {
 
 	protected final EntityAttributeInstance entityAttributeInstance;
 
-	public SlowMovementGoal(MobEntity entity) {
+	public SlowMovementGoal(T entity) {
 		super(entity);
 
 		this.entityAttributeInstance = entity.getAttributeInstance(
@@ -23,13 +24,13 @@ public abstract class SlowMovementGoal extends TickingGoal {
 		);
 	}
 
-	protected void lowerSpeed() {
+	protected void addSpeedModifier() {
 		if (!this.entityAttributeInstance.hasModifier(this.attributeId)) {
 			this.entityAttributeInstance.addTemporaryModifier(this.attributeModifier);
 		}
 	}
 
-	protected void restoreNormalSpeed() {
+	protected void removeSpeedModifier() {
 		this.entityAttributeInstance.removeModifier(this.attributeModifier);
 	}
 }

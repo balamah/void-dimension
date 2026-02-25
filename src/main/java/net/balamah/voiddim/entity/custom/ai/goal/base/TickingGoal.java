@@ -1,15 +1,16 @@
 package net.balamah.voiddim.entity.custom.ai.goal.base;
 
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.world.World;
 
-public abstract class TickingGoal extends Goal {
-	protected final MobEntity entity;
-	protected final World world;
-	protected int ticks;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 
-	public TickingGoal(MobEntity entity) {
+public abstract class TickingGoal<T extends CorruptedHostileEntity> extends Goal {
+	protected final T entity;
+	protected final World world;
+	protected int tick;
+
+	public TickingGoal(T entity) {
 		this.entity = entity;
 
 		this.world = entity.getEntityWorld();
@@ -22,7 +23,7 @@ public abstract class TickingGoal extends Goal {
 	public void tick() {
 		super.tick();
 
-		this.ticks++;
+		this.tick++;
 	}
 
 	protected void sendEntityStatus(byte status) {

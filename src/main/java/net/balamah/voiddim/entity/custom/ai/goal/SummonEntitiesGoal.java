@@ -1,9 +1,7 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.entity.EntityType;
@@ -16,20 +14,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.balamah.voiddim.custom.McCodeHelper;
+import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
+import net.balamah.voiddim.custom.McCodeHelper;
 
-public class SummonEntitiesGoal<T extends Entity> extends Goal {
-	protected final HostileEntity entity;
+public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Entity>
+	extends TickingGoal<E>
+{
 	protected final Class<T> entityClass;
 	protected final EntityType<T> entityType;
 
-	public int cooldown;
+	public SummonEntitiesGoal(E entity, Class<T> entityClass, EntityType<T> entityType) {
+		super(entity);
 
-	public SummonEntitiesGoal(HostileEntity entity, Class<T> entityClass,
-							  EntityType<T> entityType)
-	{
-		this.entity = entity;
 		this.entityClass = entityClass;
 		this.entityType = entityType;
 	}
@@ -46,28 +44,21 @@ public class SummonEntitiesGoal<T extends Entity> extends Goal {
 	}
 
 	@Override
-	public void start() {
-		this.cooldown = 0;
-	}
-
-	@Override
 	public boolean shouldRunEveryTick() {
 		return true;
 	}
 
 	@Override
 	public void tick() {
+		super.tick();
+
 		World world = this.entity.getEntityWorld();
 
-		this.cooldown++;
-
-		if (this.cooldown == 15) {
-			world.sendEntityStatus(
-				this.entity, ModEntityStatuses.SUMMON_ENTITIES_START
-			);
+		if (this.tick == 15) {
+			this.sendEntityStatus(ModEntityStatuses.SUMMON_ENTITIES_START);
 		}
 
-		if (this.cooldown == 20) {
+		if (this.tick == 20) {
 			this.spawnEntities(world);
 		}
 	}
@@ -76,9 +67,7 @@ public class SummonEntitiesGoal<T extends Entity> extends Goal {
 	public void stop() {
 		super.stop();
 
-		this.entity.getEntityWorld().sendEntityStatus(
-			this.entity, ModEntityStatuses.SUMMON_ENTITIES_FINISH
-		);
+		this.sendEntityStatus(ModEntityStatuses.SUMMON_ENTITIES_FINISH);
 	}
 
 	protected double getSideCoordinate() {
@@ -110,9 +99,10 @@ public class SummonEntitiesGoal<T extends Entity> extends Goal {
 		double firstEntityPos = sideCoordinate - 1;
 		double secondEntityPos = sideCoordinate + 1;
 
-		T firstEntity = entityType.create(world, null,
-											   new BlockPos((int) x, (int) y, (int) z),
-											   SpawnReason.MOB_SUMMONED, true, false);
+		T firstEntity = entityType.create(
+			world, null, new BlockPos((int) x, (int) y, (int) z),
+			SpawnReason.MOB_SUMMONED, true, false
+		);
 
 		T secondEntity = firstEntity;
 
@@ -132,7 +122,7 @@ public class SummonEntitiesGoal<T extends Entity> extends Goal {
  			world.spawnEntity(entityForSpawn);
  		}
 
-		this.cooldown = -100;
+		this.tick = -100;
 	}
 
     protected boolean areMobsSpawned(World world, Vec3d position, double radius) {
@@ -141,9 +131,9 @@ public class SummonEntitiesGoal<T extends Entity> extends Goal {
 			position.x + radius, position.y + radius, position.z + radius
         );
 
-        List<T> mobs = world.getEntitiesByClass(this.entityClass,
-												box,
-												entity -> entity.isAlive());
+		List<T> mobs = world.getEntitiesByClass(
+			this.entityClass, box, entity -> entity.isAlive()
+		);
 
         return !mobs.isEmpty();
     }

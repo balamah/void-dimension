@@ -5,7 +5,9 @@ import net.balamah.voiddim.entity.custom.VoidSphereEntity;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class ShatteredSentinelMasterShootGoal extends ShootProjectileGoal<VoidSphereEntity> {
+public class ShatteredSentinelMasterShootGoal
+	extends ShootProjectileGoal<ShatteredSentinelMasterEntity, VoidSphereEntity>
+{
 	public ShatteredSentinelMasterShootGoal(ShatteredSentinelMasterEntity entity) {
 		super(
 			entity,

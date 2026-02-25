@@ -180,7 +180,7 @@ public class ShatteredSentinelMasterEntity extends BossEntity {
 		this.goalSelector.add(6, new ShatterGroundGoal(this));
 		this.goalSelector.add(
 			7,
-			new SummonEntitiesGoal<ShatteredSentinelEntity>(
+			new SummonEntitiesGoal<ShatteredSentinelMasterEntity, ShatteredSentinelEntity>(
 				this, ShatteredSentinelEntity.class, ModEntities.SHATTERED_SENTINEL
 			)
 		);
