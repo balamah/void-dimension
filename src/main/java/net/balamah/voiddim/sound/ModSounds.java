@@ -106,6 +106,12 @@ public class ModSounds {
 	public static final SoundEvent HOLLOWED_ALPHA_STEVE_HIT =
 		register("hollowed_alpha_steve.hit");
 
+	public static final SoundEvent ZOMBIFIED_ALPHA_STEVE_HIT =
+		register("zombified_alpha_steve.hit");
+
+	public static final SoundEvent ZOMBIFIED_ALPHA_STEVE_DEATH =
+		register("zombified_alpha_steve.death");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}

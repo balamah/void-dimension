@@ -10,27 +10,27 @@ import net.balamah.voiddim.entity.custom.ai.goal.RandomAttackGoal;
 import net.balamah.voiddim.entity.custom.base.AlphaSteveEntity;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class HollowedAlphaSteveEntity extends AlphaSteveEntity {
-	public HollowedAlphaSteveEntity(
+public class ZombifiedAlphaSteveEntity extends AlphaSteveEntity {
+	public ZombifiedAlphaSteveEntity(
 		EntityType<? extends PathAwareEntity> entityType, World world
 	) {
 		super(entityType, world);
 	}
-
+	
 	@Override
 	protected void initGoals() {
 		super.initGoals();
 
-		this.goalSelector.add(3, new RandomAttackGoal(this, 500));
+		this.goalSelector.add(3, new RandomAttackGoal(this, 30));
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return ModSounds.HOLLOWED_ALPHA_STEVE_HIT;
+		return ModSounds.ZOMBIFIED_ALPHA_STEVE_HIT;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSounds.HOLLOWED_ALPHA_STEVE_HIT;
+		return ModSounds.ZOMBIFIED_ALPHA_STEVE_DEATH;
 	}
 }

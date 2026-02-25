@@ -2,7 +2,7 @@ package net.balamah.voiddim.entity.client;
 
 import net.minecraft.client.render.entity.animation.*;
 
-public class HollowedAlphaSteveAnimations {
+public class AlphaSteveAnimations {
     public static final AnimationDefinition IDLE = AnimationDefinition.Builder.create(0f).build();
     public static final AnimationDefinition WALK = AnimationDefinition.Builder.create(1f)
         .addBoneAnimation("right_arm",

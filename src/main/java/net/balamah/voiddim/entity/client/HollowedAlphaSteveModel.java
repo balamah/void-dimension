@@ -19,12 +19,15 @@ public class HollowedAlphaSteveModel
     public static final EntityModelLayer HOLLOWED_ALPHA_STEVE =
 		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "hollowed_alpha_steve"), "main");
 
+    public static final EntityModelLayer ZOMBIFIED_ALPHA_STEVE =
+		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "zombified_alpha_steve"), "main");
+
 	private final Animation walkingAnimation;
 
 	public HollowedAlphaSteveModel(ModelPart root) {
 		super(root);
 
-		this.walkingAnimation = HollowedAlphaSteveAnimations.WALK.createAnimation(root);
+		this.walkingAnimation = AlphaSteveAnimations.WALK.createAnimation(root);
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 	"item.void-dimension.void_nautilus_armor": "Void nautilus armor",
 	"item.void-dimension.void_upgrade_smithing_template": "Void upgrade",
 	"item.void-dimension.raw_flesh": "Raw flesh",
+	"item.void-dimension.spoiled_flesh": "Spoiled flesh",
 	"item.void-dimension.cooked_flesh": "Cooked flesh",
 
 	"item.void-dimension.latin_cross": "Latin cross",
@@ -89,6 +90,7 @@
 	"entity.void-dimension.corrupted_blaze": "Corrupted blaze",
 	"entity.void-dimension.corrupted_spider": "Corrupted spider",
 	"entity.void-dimension.hollowed_alpha_steve": "Hollowed alpha steve",
+	"entity.void-dimension.zombified_alpha_steve": "Zombified alpha steve",
 	"entity.void-dimension.bedrock_bomb": "Bedrock bomb",
 
 	"upgrade.void-dimension.apply_to": "Netherite Equipment",
@@ -129,6 +131,7 @@
 	"sound.void-dimension.corrupted_blaze.hit": "Corrupted Blaze hurt",
 	"sound.void-dimension.corrupted_blaze.death": "Corrupted Blaze dies",
 	"sound.void-dimension.hollowed_alpha_steve.hit": "Hollowed alpha steve hit",
+	"sound.void-dimension.zombified_alpha_steve.hit": "Zombified alpha steve hit",
 
 	"text.void-dimension.prayer_success": "I have heard thy prayer, and I will protect thee",
 	"text.void-dimension.prayer_failure": "I will hide mine eyes from you, I will not hear for thou hast abused my power and my grace"

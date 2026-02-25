@@ -104,6 +104,14 @@ public class ModEntities {
 			EntityType.Builder.<HollowedAlphaSteveEntity>create(HollowedAlphaSteveEntity::new, SpawnGroup.CREATURE)
 			.dimensions(1.2F, 2.5f)
 		);
+	public static final EntityType<ZombifiedAlphaSteveEntity> ZOMBIFIED_ALPHA_STEVE =
+		register(
+			"zombified_alpha_steve",
+			ZombifiedAlphaSteveEntity.class,
+			EntityType.Builder.<ZombifiedAlphaSteveEntity>create(ZombifiedAlphaSteveEntity::new, SpawnGroup.CREATURE)
+			.dimensions(1.2F, 2.5f)
+		);
+
 
 	public static final EntityType<CorruptedBlazeEntity> CORRUPTED_BLAZE = register(
 		"corrupted_blaze",
@@ -207,7 +215,8 @@ public class ModEntities {
 			ModEntities.WORM_OF_CORRUPTION,
 			ModEntities.CORRUPTED_BLAZE,
 			ModEntities.CORRUPTED_CREEPER,
-			ModEntities.CORRUPTED_SPIDER
+			ModEntities.CORRUPTED_SPIDER,
+			ModEntities.HOLLOWED_ALPHA_STEVE
 		};
 
 	public static void registerModEntities() {

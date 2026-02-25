@@ -92,6 +92,16 @@ public class VoidDimensionRendering implements ClientModInitializer {
 											   context.getPart(HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE)
 										   ),
 										   0.5f
+									   )),
+				new BipedEntitySpecs<>(ModEntities.ZOMBIFIED_ALPHA_STEVE,
+									   HollowedAlphaSteveModel.ZOMBIFIED_ALPHA_STEVE,
+									   HollowedAlphaSteveModel.getTexturedModelData(),
+									   context -> new ZombifiedAlphaSteveRenderer<>(
+										   context,
+										   new HollowedAlphaSteveModel<>(
+											   context.getPart(HollowedAlphaSteveModel.ZOMBIFIED_ALPHA_STEVE)
+										   ),
+										   0.5f
 									   ))
 		);
 

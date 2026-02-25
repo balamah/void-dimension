@@ -5,15 +5,18 @@ import java.util.Random;
 import net.minecraft.entity.mob.PathAwareEntity;
 
 public class RandomAttackGoal extends VoidHostileEntityAttackGoal {
-	public RandomAttackGoal(PathAwareEntity entity) {
+	protected int upperBondChance;
+
+	public RandomAttackGoal(PathAwareEntity entity, int upperBondChance) {
 		super(entity, 1.0, false);
+
+		this.upperBondChance = upperBondChance;
 	}
 
 	@Override
 	public boolean canStart() {
-		int upperBond = 100;
-		int randomNumber = new Random().nextInt(upperBond);
+		int randomNumber = new Random().nextInt(this.upperBondChance);
 
-		return randomNumber == upperBond - 1;
+		return randomNumber == this.upperBondChance - 1;
 	}
 }

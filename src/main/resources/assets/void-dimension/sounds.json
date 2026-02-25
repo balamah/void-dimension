@@ -218,6 +218,19 @@
 			"void-dimension:hollowed_alpha_steve/hit3"
 		]
 	},
+	"zombified_alpha_steve.hit": {
+		"subtitle": "sound.void-dimension.zombified_alpha_steve.hit",
+		"sounds": [
+			"void-dimension:zombified_alpha_steve/hit1",
+			"void-dimension:zombified_alpha_steve/hit2"
+		]
+	},
+	"zombified_alpha_steve.death": {
+		"subtitle": "sound.void-dimension.zombified_alpha_steve.death",
+		"sounds": [
+			"void-dimension:zombified_alpha_steve/death"
+		]
+	},
 	"void.ambient.1": {
 		"subtitle": "sound.void-dimension.void.ambient.1",
 		"sounds": [

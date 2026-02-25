@@ -4,9 +4,11 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import net.minecraft.item.VerticallyAttachableBlockItem;
+import net.minecraft.component.type.ConsumableComponent;
+import net.minecraft.component.type.ConsumableComponents;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.equipment.ArmorMaterial;
 import net.minecraft.item.equipment.EquipmentType;
-import net.minecraft.component.type.FoodComponent;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.registry.RegistryKey;
@@ -58,6 +60,13 @@ public class ModItems {
 
 	public static final Item COOKED_FLESH =
 		registerFoodItem("cooked_flesh", ModFoodComponents.COOKED_FLESH);
+
+	public static final Item SPOILED_FLESH =
+		registerFoodItem(
+			"spoiled_flesh",
+			ModFoodComponents.SPOILED_FLESH,
+			ConsumableComponents.ROTTEN_FLESH
+		);
 
 	// This sux
 	public static final Item VOID_UPGRADE_SMITHING_TEMPLATE =
@@ -281,6 +290,14 @@ public class ModItems {
 
 	protected static Item registerFoodItem(String name, FoodComponent foodComponent) {
 		return register(name, Item::new, new Item.Settings().food(foodComponent));
+	}
+
+	protected static Item registerFoodItem(
+		String name, FoodComponent foodComponent, ConsumableComponent consumableComponent
+	) {
+		return register(
+			name, Item::new, new Item.Settings().food(foodComponent, consumableComponent)
+		);
 	}
 
 	protected static Item.Settings getVoidItemSettings() {
