@@ -102,16 +102,16 @@ public class ModEntities {
 			"hollowed_alpha_steve",
 			HollowedAlphaSteveEntity.class,
 			EntityType.Builder.<HollowedAlphaSteveEntity>create(HollowedAlphaSteveEntity::new, SpawnGroup.CREATURE)
-			.dimensions(1.2F, 2.5f)
+			.dimensions(0.6f, 2f)
 		);
+
 	public static final EntityType<ZombifiedAlphaSteveEntity> ZOMBIFIED_ALPHA_STEVE =
 		register(
 			"zombified_alpha_steve",
 			ZombifiedAlphaSteveEntity.class,
 			EntityType.Builder.<ZombifiedAlphaSteveEntity>create(ZombifiedAlphaSteveEntity::new, SpawnGroup.CREATURE)
-			.dimensions(1.2F, 2.5f)
+			.dimensions(0.6f, 2f)
 		);
-
 
 	public static final EntityType<CorruptedBlazeEntity> CORRUPTED_BLAZE = register(
 		"corrupted_blaze",
