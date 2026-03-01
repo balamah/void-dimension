@@ -157,8 +157,7 @@
 		"subtitle": "sound.void-dimension.worm_of_corruption.attack",
 		"sounds": [
 			"void-dimension:worm_of_corruption/attack1",
-			"void-dimension:worm_of_corruption/attack2",
-			"void-dimension:worm_of_corruption/attack3"
+			"void-dimension:worm_of_corruption/attack2"
 		]
 	},
 	"worm_of_corruption.death": {
