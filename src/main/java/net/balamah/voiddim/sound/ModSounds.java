@@ -1,8 +1,11 @@
 package net.balamah.voiddim.sound;
 
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.block.jukebox.JukeboxSong;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
@@ -110,7 +113,14 @@ public class ModSounds {
 		register("zombified_alpha_steve.hit");
 
 	public static final SoundEvent ZOMBIFIED_ALPHA_STEVE_DEATH =
-		register("zombified_alpha_steve.death");
+			register("zombified_alpha_steve.death");
+
+	public static final SoundEvent MUSIC_CALM4 = register("music_disc.calm4");
+    public static final RegistryKey<JukeboxSong> MUSIC_CALM4_KEY =
+		RegistryKey.of(
+			RegistryKeys.JUKEBOX_SONG,
+			Identifier.of(VoidDimension.MOD_ID, "calm4")
+		);
 
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
@@ -123,6 +133,16 @@ public class ModSounds {
 			Registries.SOUND_EVENT,
 			identifier,
 			SoundEvent.of(identifier)
+		);
+	}
+
+	protected static SoundEvent register(String id, float range) {
+		Identifier identifier = Identifier.of(VoidDimension.MOD_ID, id);
+
+		return Registry.register(
+			Registries.SOUND_EVENT,
+			identifier,
+			SoundEvent.of(identifier, range)
 		);
 	}
 

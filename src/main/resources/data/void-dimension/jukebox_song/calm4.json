@@ -1,0 +1,8 @@
+{
+	"comparator_output": 15,
+	"description": {
+		"translate": "item.void-dimension.calm4_music_disc.desc"
+	},
+	"length_in_seconds": 193.0,
+	"sound_event": "void-dimension:music_disc.calm4"
+}

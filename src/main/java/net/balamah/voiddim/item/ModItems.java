@@ -3,12 +3,13 @@ package net.balamah.voiddim.item;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import net.minecraft.item.VerticallyAttachableBlockItem;
-import net.minecraft.component.type.ConsumableComponent;
 import net.minecraft.component.type.ConsumableComponents;
+import net.minecraft.component.type.ConsumableComponent;
+import net.minecraft.item.VerticallyAttachableBlockItem;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.equipment.ArmorMaterial;
 import net.minecraft.item.equipment.EquipmentType;
+import net.minecraft.block.jukebox.JukeboxSong;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.registry.RegistryKey;
@@ -33,6 +34,7 @@ import net.balamah.voiddim.item.custom.PrayerItem;
 import net.balamah.voiddim.material.ModMaterials;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.block.ModBlocks;
+import net.balamah.voiddim.sound.ModSounds;
 import net.balamah.voiddim.VoidDimension;
 
 public class ModItems {
@@ -224,6 +226,14 @@ public class ModItems {
 			getVoidItemSettings().nautilusArmor(VoidArmorMaterial.INSTANCE)
 		);
 
+	public static final Item MUSIC_DISC_CALM4 =
+		register(
+			"music_disc_calm4",
+			Item::new,
+			new Item.Settings().rarity(Rarity.UNCOMMON)
+			.jukeboxPlayable(ModSounds.MUSIC_CALM4_KEY).maxCount(1)
+		);
+
 	public static void registerModItems() {
 		VoidDimension.LOGGER.info("Registering mod items for " + MOD_ID);
 	}
@@ -297,6 +307,14 @@ public class ModItems {
 	) {
 		return register(
 			name, Item::new, new Item.Settings().food(foodComponent, consumableComponent)
+		);
+	}
+
+	protected static Item registerMusicDisc(String name, RegistryKey<JukeboxSong> song) {
+		return register(
+			name,
+			Item::new,
+			new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON).jukeboxPlayable(song)
 		);
 	}
 

@@ -298,5 +298,13 @@
 				"volume": 0.2
 			}
 		]
+	},
+	"music_disc.calm4": {
+		"sounds": [
+			{
+				"name": "void-dimension:records/calm4",
+				"stream": true
+			}
+		]
 	}
 }

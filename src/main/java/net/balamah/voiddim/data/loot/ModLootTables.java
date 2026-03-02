@@ -59,6 +59,9 @@ public class ModLootTables {
 	public static RegistryKey<LootTable> INFECTED_TOWER_HOUSE_WEAPONS_LOOT =
 		register("chests/infected_tower_house_weapons_loot");
 
+	public static RegistryKey<LootTable> INFDEV_PYRAMID_REMAINS_LOOT =
+		register("chests/infdev_pyramid_remains_loot");
+
 	public static void registerModLootTables() {
 		VoidDimension.LOGGER.info("Registering mod loot tables for " + VoidDimension.MOD_ID);
 	}
