@@ -56,6 +56,28 @@ public class ModBlocks {
 
 	protected static final int corruptedFlowerLuminance = 3;
 
+	public static final Block DEEPSLATE_VOIDIUM_ORE =
+		register(
+			"deepslate_voidium_ore",
+			settings -> new ExperienceDroppingBlock(
+				deepslateVoidShardOreIntProvider, settings
+			),
+			AbstractBlock.Settings.create().strength(3.5F, 3.0F).requiresTool()
+			.sounds(BlockSoundGroup.DEEPSLATE),
+			true, false
+		);
+
+	public static final Block CORRUPT_VOIDIUM_ORE =
+		register(
+			"corrupt_voidium_ore",
+			settings -> new CorruptOreBlock(
+				deepslateVoidShardOreIntProvider, settings
+			),
+			AbstractBlock.Settings.create().strength(3.5F, 3.0F).requiresTool()
+			.sounds(BlockSoundGroup.DEEPSLATE),
+			true, false
+		);
+
 	public static final Block DEEPSLATE_VOID_SHARD_ORE =
 		register(
 			"deepslate_void_shard_ore",

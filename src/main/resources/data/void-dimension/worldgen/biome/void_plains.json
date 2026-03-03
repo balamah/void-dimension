@@ -45,7 +45,8 @@
 			"void-dimension:deepslate_iron_ore",
 			"void-dimension:deepslate_lapis_ore",
 			"void-dimension:deepslate_redstone_ore",
-			"void-dimension:deepslate_void_shard_ore"
+			"void-dimension:deepslate_void_shard_ore",
+			"void-dimension:deepslate_voidium_ore"
 		],
 		[],
 		[],

@@ -14,6 +14,7 @@ import net.balamah.voiddim.VoidDimension;
 
 public class ModItemGroups {
 	private static final ItemConvertible[] TAB_ITEMS = {
+		ModItems.VOIDIUM, ModBlocks.DEEPSLATE_VOIDIUM_ORE, ModBlocks.CORRUPT_VOIDIUM_ORE,
 		ModItems.VOID_SHARD, ModItems.VOID_INGOT,
 		ModItems.VOID_UPGRADE_SMITHING_TEMPLATE, ModBlocks.DEEPSLATE_VOID_SHARD_ORE,
 		ModBlocks.CORRUPT_VOID_SHARD_ORE, ModBlocks.VOID_FLOWER, ModItems.CORRUPTED_TORCH,

@@ -49,6 +49,9 @@ public class ModItems {
 	protected static final Function<Item.Settings, Item> prayerRopeSettings =
 		settings -> new PrayerItem(settings, 240, 7200, 3);
 
+	public static final Item VOIDIUM =
+		register("voidium", Item::new, getVoidItemSettings());
+
 	public static final Item VOID_SHARD = register(
 		"void_shard", Item::new, getVoidItemSettings()
 	);

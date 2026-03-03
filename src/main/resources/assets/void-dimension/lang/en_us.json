@@ -1,5 +1,6 @@
 {
 	"item.void-dimension.void_shard": "Void shard",
+	"item.void-dimension.voidium": "Voidium",
 	"item.void-dimension.void_ingot": "Void ingot",
 	"item.void-dimension.void_sword": "Void sword",
 	"item.void-dimension.void_axe": "Void axe",
@@ -59,6 +60,8 @@
 
 	"item.void-dimension.deepslate_void_shard_ore": "Deepslate void shard ore",
 	"item.void-dimension.corrupt_void_shard_ore": "Corrupt void shard ore",
+	"item.void-dimension.deepslate_voidium_ore": "Deepslate voidium ore",
+	"item.void-dimension.corrupt_voidium_ore": "Corrupt voidium ore",
 	"item.void-dimension.void_shard_block": "Void shard block",
 	"item.void-dimension.void_flower": "Void flower",
 	"item.void-dimension.wind_manipulation_block": "Wind manipulation block",
