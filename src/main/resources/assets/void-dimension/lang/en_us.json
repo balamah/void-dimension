@@ -139,5 +139,32 @@
 	"sound.void-dimension.zombified_alpha_steve.hit": "Zombified alpha steve hit",
 
 	"text.void-dimension.prayer_success": "I have heard thy prayer, and I will protect thee",
-	"text.void-dimension.prayer_failure": "I will hide mine eyes from you, I will not hear for thou hast abused my power and my grace"
+	"text.void-dimension.prayer_failure": "I will hide mine eyes from you, I will not hear for thou hast abused my power and my grace",
+
+	"advancement.void-dimension.a_cursed_house.title": "A Cursed House",
+	"advancement.void-dimension.a_cursed_house.description": "Get into illusioner's house",
+	"advancement.void-dimension.a_dangerous_place.title": "A Dangerous Place",
+	"advancement.void-dimension.a_dangerous_place.description": "Come to the corrupt valley",
+	"advancement.void-dimension.a_forsaken_place.title": "A Forsaken Place",
+	"advancement.void-dimension.a_forsaken_place.description": "Get into the void using void salvation potion",
+	"advancement.void-dimension.cannibalism.title": "Cannibalism",
+	"advancement.void-dimension.cannibalism.description": "Eat alpha steve's cooked flesh",
+	"advancement.void-dimension.is_this_how_zombies_are_created.title": "Is This How Zombies Are Created?",
+	"advancement.void-dimension.is_this_how_zombies_are_created.description": "Get zombified alpha steve's flesh",
+	"advancement.void-dimension.down_with_heretics.title": "Down with Heretics",
+	"advancement.void-dimension.down_with_heretics.description": "Kill everyone in illusioner's church",
+	"advancement.void-dimension.first_preparation.title": "Void dimension",
+	"advancement.void-dimension.first_preparation.description": "Get voidium",
+	"advancement.void-dimension.first_steps.title": "First Steps",
+	"advancement.void-dimension.first_steps.description": "Get void shard",
+	"advancement.void-dimension.void_upgrade.title": "Void Upgrade",
+	"advancement.void-dimension.void_upgrade.description": "Upgrade a netherite tool to void",
+	"advancement.void-dimension.cover_me_in_void.title": "Cover Me in Void",
+	"advancement.void-dimension.cover_me_in_void.description": "Equip a full set of void armor",
+	"advancement.void-dimension.harbinger_of_oblivion.title": "Harbinger of Oblivion",
+	"advancement.void-dimension.harbinger_of_oblivion.description": "Eliminate void harbinger",
+	"advancement.void-dimension.master_of_the_shattered.title": "Master of the Shattered",
+	"advancement.void-dimension.master_of_the_shattered.description": "Eliminate shattered sentinel master",
+	"advancement.void-dimension.exodus.title": "Exodus",
+	"advancement.void-dimension.exodus.description": "Get out of the void to the nether"
 }

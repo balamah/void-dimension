@@ -25,6 +25,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.block.Block;
 import net.minecraft.item.Items;
+import net.minecraft.potion.Potion;
 import net.minecraft.item.Item;
 import net.minecraft.text.Text;
 

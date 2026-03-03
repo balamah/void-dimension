@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "got_voidium": {
+      "conditions": {
+        "items": [
+          {
+            "items": "void-dimension:voidium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "void-dimension:gui/advancements/deepslate",
+    "description": {
+      "translate": "advancement.void-dimension.first_preparation.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "void-dimension:voidium"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.first_preparation.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_voidium"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

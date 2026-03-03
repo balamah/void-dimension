@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:void-dimensionget_into_void",
+  "criteria": {
+    "got_void_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "void-dimension:void_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.first_steps.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "void-dimension:void_shard"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.first_steps.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_void_shard"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

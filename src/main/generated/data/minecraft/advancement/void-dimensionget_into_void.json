@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:void-dimensionvoid_dimension/root",
+  "criteria": {
+    "got_into_void": {
+      "conditions": {
+        "to": "void-dimension:void"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.a_forsaken_place.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:deepslate"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.a_forsaken_place.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_into_void"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -29,6 +29,14 @@
 
 (global-set-key (kbd "S-<f10>") 'run-project)
 
+(defrunc project-datagen
+  (vterm-run
+   (format
+	"builtin cd %s && ./gradlew runDatagen && ./gradlew clean build runClient" current-project)
+   "*build-run-datagen-mod*"))
+
+(global-set-key (kbd "S-C-M-<f10>") 'run-project-datagen)
+
 (defrunc project-sources-regenerate
   (run-gradle-commands "clean genSources build" "*project-sources-regenerate*"))
 
