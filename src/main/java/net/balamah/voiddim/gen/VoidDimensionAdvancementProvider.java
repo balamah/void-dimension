@@ -1,24 +1,27 @@
 package net.balamah.voiddim.gen;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+import java.util.List;
+import java.util.Optional;
 
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.advancement.AdvancementRequirements;
+import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementFrame;
-import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.entity.EntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.item.Items;
@@ -27,6 +30,7 @@ import net.minecraft.text.Text;
 
 import net.balamah.voiddim.world.dimension.ModDimensions;
 import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.item.ModItems;
 
 public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider {
@@ -41,6 +45,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		WrapperLookup wrapperLookup, Consumer<AdvancementEntry> consumer
 	) {
 		final RegistryWrapper.Impl<Item> itemLookup = wrapperLookup.getOrThrow(RegistryKeys.ITEM);
+		final RegistryWrapper.Impl<EntityType<?>> entityLookup = wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE);
 
         AdvancementEntry voidDimensionRoot = this.getAdvancementEntry(
 			ModItems.VOIDIUM, "first_preparation",
@@ -79,7 +84,6 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			consumer, "get_void_shard"
 		);
 
-		// TODO: Change condition
 		AdvancementEntry voidUpgrade = this.getAdvancementBuilder(
 			ModItems.VOID_UPGRADE_SMITHING_TEMPLATE, "void_upgrade",
 			null, AdvancementFrame.GOAL, false
@@ -111,6 +115,36 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		)
 		.build(consumer, VoidDimension.MOD_ID + "upgraded_netherite")
 		;
+
+		AdvancementEntry coverMeInVoid = this.getAdvancementEntry(
+			ModItems.VOID_CHESTPLATE, "cover_me_in_void", voidUpgrade,
+			null, AdvancementFrame.CHALLENGE, false, "got_void_armor",
+			InventoryChangedCriterion.Conditions.items(
+				ModItems.VOID_HELMET, ModItems.VOID_CHESTPLATE, ModItems.VOID_LEGGINGS,
+				ModItems.VOID_BOOTS
+			),
+			consumer, "get_void_armor"
+		);
+
+		Optional<EntityPredicate> voidHarbingerPredicate =
+			this.getEntityPredicate(entityLookup, ModEntities.VOID_HARBINGER);
+
+		Optional<EntityPredicate> shatteredSentinelMasterPredicate =
+			this.getEntityPredicate(entityLookup, ModEntities.SHATTERED_SENTINEL_MASTER);
+
+		AdvancementEntry harbingerOfOblivion = this.getAdvancementEntry(
+			ModItems.VOID_HARBINGER_SPAWN_EGG, "harbinger_of_oblivion", aForsakenPlace,
+			null, AdvancementFrame.CHALLENGE, false, "killed_void_harbinger",
+			OnKilledCriterion.Conditions.createPlayerKilledEntity(voidHarbingerPredicate),
+			consumer, "kill_void_harbinger"
+		);
+
+		AdvancementEntry masterOfTheShattered = this.getAdvancementEntry(
+			ModItems.SHATTERED_SENTINEL_SPAWN_EGG, "master_of_the_shattered", aForsakenPlace,
+			null, AdvancementFrame.CHALLENGE, false, "killed_shattered_sentinel_master",
+			OnKilledCriterion.Conditions.createPlayerKilledEntity(shatteredSentinelMasterPredicate),
+			consumer, "kill_shattered_sentinel_master"
+		);
 	}
 
 	protected Advancement.Builder getAdvancementBuilder(
@@ -186,5 +220,19 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		getRecipeCraftedCondition(String id)
 	{
 		return RecipeCraftedCriterion.Conditions.create(this.getRecipeKey(id));
+	}
+
+	protected EntityPredicate.Builder getEntityPredicateBuilder(
+		RegistryWrapper.Impl<EntityType<?>> entityLookup,
+		EntityType<?> entityType
+	) {
+		return EntityPredicate.Builder.create().type(entityLookup, entityType);
+	}
+
+	protected Optional<EntityPredicate> getEntityPredicate(
+		RegistryWrapper.Impl<EntityType<?>> entityLookup,
+		EntityType<?> entityType
+	) {
+		return Optional.of(this.getEntityPredicateBuilder(entityLookup, entityType).build());
 	}
 }

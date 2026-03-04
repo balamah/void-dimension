@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:void-dimensionupgraded_netherite",
+  "criteria": {
+    "got_void_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "void-dimension:void_helmet"
+          },
+          {
+            "items": "void-dimension:void_chestplate"
+          },
+          {
+            "items": "void-dimension:void_leggings"
+          },
+          {
+            "items": "void-dimension:void_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.cover_me_in_void.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "void-dimension:void_chestplate"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.cover_me_in_void.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_void_armor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

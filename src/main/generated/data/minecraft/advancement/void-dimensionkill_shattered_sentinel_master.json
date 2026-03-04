@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:void-dimensionget_into_void",
+  "criteria": {
+    "killed_shattered_sentinel_master": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "void-dimension:shattered_sentinel_master"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.master_of_the_shattered.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "void-dimension:shattered_sentinel_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.master_of_the_shattered.title"
+    }
+  },
+  "requirements": [
+    [
+      "killed_shattered_sentinel_master"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
