@@ -1,29 +1,33 @@
 package net.balamah.voiddim.gen;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.AdvancementRequirements;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.criterion.*;
-import net.minecraft.item.Item;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.Identifier;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.item.Items;
+import net.minecraft.item.Item;
 import net.minecraft.text.Text;
 
+import net.balamah.voiddim.world.dimension.ModDimensions;
 import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.item.ModItems;
-import net.balamah.voiddim.world.dimension.ModDimensions;
 
 public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider {
 	public VoidDimensionAdvancementProvider(
@@ -75,12 +79,60 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			consumer, "get_void_shard"
 		);
 
-		AdvancementEntry voidUpgrade = this.getAdvancementEntry(
-			ModItems.VOID_SHARD, "void_upgrade", firstSteps,
-			null, AdvancementFrame.TASK, false, "upgraded_netherite",
-            InventoryChangedCriterion.Conditions.items(ModItems.VOID_SHARD),
-			consumer, "upgrade_netherite"
-		);
+		// TODO: Change condition
+		AdvancementEntry voidUpgrade = this.getAdvancementBuilder(
+			ModItems.VOID_UPGRADE_SMITHING_TEMPLATE, "void_upgrade",
+			null, AdvancementFrame.GOAL, false
+		)
+		.parent(firstSteps)
+		.criterion("upgrade_netherite_horse_armor"	, this.getRecipeCraftedCondition("void_horse_armor_smithing"))
+		.criterion("upgrade_netherite_boots"		, this.getRecipeCraftedCondition("void_boots_smithing"))
+		.criterion("upgrade_netherite_pickaxe"		, this.getRecipeCraftedCondition("void_pickaxe_smithing"))
+		.criterion("upgrade_netherite_shovel"		, this.getRecipeCraftedCondition("void_shovel_smithing"))
+		.criterion("upgrade_netherite_leggings"		, this.getRecipeCraftedCondition("void_leggings_smithing"))
+		.criterion("upgrade_netherite_axe"			, this.getRecipeCraftedCondition("void_axe_smithing"))
+		.criterion("upgrade_netherite_chestplate"	, this.getRecipeCraftedCondition("void_chestplate_smithing"))
+		.criterion("upgrade_netherite_sword"		, this.getRecipeCraftedCondition("void_sword_smithing"))
+		.criterion("upgrade_netherite_hoe"			, this.getRecipeCraftedCondition("void_hoe_smithing"))
+		.criterion("upgrade_netherite_helmet"		, this.getRecipeCraftedCondition("void_helmet_smithing"))
+		.criterion("upgrade_netherite_spear"		, this.getRecipeCraftedCondition("void_spear_smithing"))
+		.requirements(AdvancementRequirements.anyOf(
+			List.of("upgrade_netherite_horse_armor",
+					"upgrade_netherite_boots",
+					"upgrade_netherite_pickaxe",
+					"upgrade_netherite_shovel",
+					"upgrade_netherite_leggings",
+					"upgrade_netherite_axe",
+					"upgrade_netherite_chestplate",
+					"upgrade_netherite_sword",
+					"upgrade_netherite_hoe",
+					"upgrade_netherite_helmet",
+					"upgrade_netherite_spear"))
+		)
+		.build(consumer, VoidDimension.MOD_ID + "upgraded_netherite")
+		;
+	}
+
+	protected Advancement.Builder getAdvancementBuilder(
+		ItemConvertible icon, String advancementLocale,
+		@Nullable Identifier background,
+		AdvancementFrame type, boolean hidden
+	) {
+		String titleString = this.getLocaleString(advancementLocale, "title");
+		String descriptionString = this.getLocaleString(advancementLocale, "description");
+
+		return Advancement.Builder.create()
+			.display(
+				icon, // The display icon
+				Text.translatable(titleString), // The title
+				Text.translatable(descriptionString), // The description
+				background, // Background image for the tab in the advancements page, if this is a root advancement (has no parent)
+				type, // TASK, CHALLENGE, or GOAL
+				true, // Show the toast when completing it
+				true, // Announce it to chat
+				hidden // Hide it in the advancement tab until it's achieved
+			)
+			;
 	}
 
 	protected AdvancementEntry getAdvancementEntry(
@@ -91,24 +143,10 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		String criteaName, AdvancementCriterion<?> criterion,
 		Consumer<AdvancementEntry> consumer, String id
 	) {
-		String titleString = this.getLocaleString(advancementLocale, "title");
-		String descriptionString = this.getLocaleString(advancementLocale, "description");
-
-		return Advancement.Builder.create()
+		return
+			this.getAdvancementBuilder(icon, advancementLocale, background, type, hidden)
 			.parent(parent)
-			.display(
-				icon, // The display icon
-				Text.translatable(titleString), // The title
-				Text.translatable(descriptionString), // The description
-				background, // Background image for the tab in the advancements page, if this is a root advancement (has no parent)
-				type, // TASK, CHALLENGE, or GOAL
-				true, // Show the toast when completing it
-				true, // Announce it to chat
-				hidden // Hide it in the advancement tab until it's achieved
-			)
-			// criteriaName is the name referenced by other advancements when they want to have "requirements."
 			.criterion(criteaName, criterion)
-			// Give the advancement an id
 			.build(consumer, VoidDimension.MOD_ID + id);
 	}
 
@@ -119,23 +157,9 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		String criteaName, AdvancementCriterion<?> criterion,
 		Consumer<AdvancementEntry> consumer, String id
 	) {
-		String titleString = this.getLocaleString(advancementLocale, "title");
-		String descriptionString = this.getLocaleString(advancementLocale, "description");
-
-		return Advancement.Builder.create()
-			.display(
-				icon, // The display icon
-				Text.translatable(titleString), // The title
-				Text.translatable(descriptionString), // The description
-				background, // Background image for the tab in the advancements page, if this is a root advancement (has no parent)
-				type, // TASK, CHALLENGE, or GOAL
-				true, // Show the toast when completing it
-				true, // Announce it to chat
-				hidden // Hide it in the advancement tab until it's achieved
-			)
-			// criteriaName is the name referenced by other advancements when they want to have "requirements."
+		return
+			this.getAdvancementBuilder(icon, advancementLocale, background, type, hidden)
 			.criterion(criteaName, criterion)
-			// Give the advancement an id
 			.build(consumer, VoidDimension.MOD_ID + id);
 	}
 
@@ -149,5 +173,18 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		String titleKey = "%s.%s." + value;
 
 		return String.format(titleKey, baseAdvancementLocaleKey, advancementLocale);
+	}
+
+	protected RegistryKey<Recipe<?>> getRecipeKey(String id) {
+		return RegistryKey.of(
+			RegistryKeys.RECIPE,
+			Identifier.of(VoidDimension.MOD_ID, id)
+		);
+	}
+
+	protected AdvancementCriterion<RecipeCraftedCriterion.Conditions>
+		getRecipeCraftedCondition(String id)
+	{
+		return RecipeCraftedCriterion.Conditions.create(this.getRecipeKey(id));
 	}
 }
