@@ -2,6 +2,7 @@ package net.balamah.voiddim;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.item.Items;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import net.balamah.voiddim.tag.ModItemTags;
 import net.balamah.voiddim.event.ModEvents;
 import net.balamah.voiddim.sound.ModSounds;
 import net.balamah.voiddim.block.ModBlocks;
+import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.item.ModItems;
 
 public class VoidDimension implements ModInitializer {

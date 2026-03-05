@@ -1,21 +1,11 @@
 {
-  "parent": "minecraft:void-dimensionget_void_shard",
+  "parent": "minecraft:void-dimensionvoid_dimension/root",
   "criteria": {
-    "got_bedrock_bomb": {
+    "got_prayer_item": {
       "conditions": {
         "items": [
           {
-            "items": "void-dimension:bedrock_bomb"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "got_flint_and_steel": {
-      "conditions": {
-        "items": [
-          {
-            "items": "minecraft:flint_and_steel"
+            "items": "#void-dimension:prayer_items"
           }
         ]
       },
@@ -40,25 +30,22 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.void-dimension.exodus_preparation.description"
+      "translate": "advancement.void-dimension.first_preparations.description"
     },
     "icon": {
       "count": 1,
-      "id": "void-dimension:bedrock_bomb"
+      "id": "void-dimension:orthodox_cross"
     },
     "title": {
-      "translate": "advancement.void-dimension.exodus_preparation.title"
+      "translate": "advancement.void-dimension.first_preparations.title"
     }
   },
   "requirements": [
     [
-      "got_bedrock_bomb"
-    ],
-    [
-      "got_flint_and_steel"
-    ],
-    [
       "got_void_salvation_potion"
+    ],
+    [
+      "got_prayer_item"
     ]
   ],
   "sends_telemetry_event": true

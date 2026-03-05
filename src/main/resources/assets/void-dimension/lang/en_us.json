@@ -153,8 +153,10 @@
 	"advancement.void-dimension.is_this_how_zombies_are_created.description": "Get zombified alpha steve's flesh",
 	"advancement.void-dimension.down_with_heretics.title": "Down with Heretics",
 	"advancement.void-dimension.down_with_heretics.description": "Kill everyone in illusioner's church",
-	"advancement.void-dimension.first_preparation.title": "Void dimension",
-	"advancement.void-dimension.first_preparation.description": "Get voidium",
+	"advancement.void-dimension.void_dimension.title": "Void dimension",
+	"advancement.void-dimension.void_dimension.description": "A new adventure starts by obtaining voidium",
+	"advancement.void-dimension.first_preparations.title": "First preparations",
+	"advancement.void-dimension.first_preparations.description": "Brew void salvation potion and get a prayer item",
 	"advancement.void-dimension.first_steps.title": "First Steps",
 	"advancement.void-dimension.first_steps.description": "Get void shard",
 	"advancement.void-dimension.void_upgrade.title": "Void Upgrade",
@@ -166,7 +168,7 @@
 	"advancement.void-dimension.master_of_the_shattered.title": "Master of the Shattered",
 	"advancement.void-dimension.master_of_the_shattered.description": "Eliminate shattered sentinel master",
 	"advancement.void-dimension.exodus_preparation.title": "Preparing the Exodus",
-	"advancement.void-dimension.exodus_preparation.description": "Craft a bedrock bomb to escape from nether and take flint and steel",
+	"advancement.void-dimension.exodus_preparation.description": "Craft a bedrock bomb, flint and still with void salvation potion to escape the void through nether",
 	"advancement.void-dimension.exodus.title": "Exodus",
 	"advancement.void-dimension.exodus.description": "Escape the Void to the Nether using a void salvation potion and lit a bedrock bomb"
 }

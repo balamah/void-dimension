@@ -14,14 +14,14 @@
   "display": {
     "background": "void-dimension:gui/advancements/deepslate",
     "description": {
-      "translate": "advancement.void-dimension.first_preparation.description"
+      "translate": "advancement.void-dimension.void_dimension.description"
     },
     "icon": {
       "count": 1,
       "id": "void-dimension:voidium"
     },
     "title": {
-      "translate": "advancement.void-dimension.first_preparation.title"
+      "translate": "advancement.void-dimension.void_dimension.title"
     }
   },
   "requirements": [

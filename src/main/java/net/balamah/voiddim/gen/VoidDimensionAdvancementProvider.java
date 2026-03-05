@@ -2,34 +2,30 @@ package net.balamah.voiddim.gen;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
-import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.AdvancementEntry;
-import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.advancement.AdvancementFrame;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.ComponentChanges;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.Identifier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.World;
@@ -43,6 +39,7 @@ import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.item.ModItems;
+import net.balamah.voiddim.tag.ModItemTags;
 
 public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider {
 	public VoidDimensionAdvancementProvider(
@@ -58,12 +55,21 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		final RegistryWrapper.Impl<Item> itemLookup = wrapperLookup.getOrThrow(RegistryKeys.ITEM);
 		final RegistryWrapper.Impl<EntityType<?>> entityLookup = wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE);
 
+		// TODO: Fix issue with void salvation potion stack
 		Item voidSalvationPotion = McCodeHelper.getPotionItemStack(Items.POTION, "void_salvation").getItem();
 		Item voidSalvationSplashPotion = McCodeHelper.getPotionItemStack(Items.SPLASH_POTION, "void_salvation").getItem();
 		Item voidSalvationLingeringPotion = McCodeHelper.getPotionItemStack(Items.LINGERING_POTION, "void_salvation").getItem();
 
+		AdvancementCriterion<?> voidSalvationPotionCriterion =
+			InventoryChangedCriterion.Conditions.items(
+				voidSalvationPotion, voidSalvationSplashPotion, voidSalvationLingeringPotion
+			);
+
+		ItemPredicate prayerItemsPredicate =
+			ItemPredicate.Builder.create().tag(itemLookup, ModItemTags.PRAYER_ITEMS).build();
+
 		AdvancementEntry voidDimensionRoot = this.getAdvancementEntry(
-			ModItems.VOIDIUM, "first_preparation",
+			ModItems.VOIDIUM, "void_dimension",
 			Identifier.of(VoidDimension.MOD_ID, "gui/advancements/deepslate"),
 			AdvancementFrame.TASK,
             false, "got_voidium",
@@ -71,9 +77,22 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
             consumer, "void_dimension/root"
         );
 
+		AdvancementEntry firstPreparations = this.getAdvancementBuilder(
+			ModItems.ORTHODOX_CROSS, "first_preparations",
+			null, AdvancementFrame.TASK, false
+		)
+		.parent(voidDimensionRoot)
+		.criterion("got_void_salvation_potion", voidSalvationPotionCriterion)
+		.criterion("got_prayer_item", InventoryChangedCriterion.Conditions.items(prayerItemsPredicate))
+		.requirements(AdvancementRequirements.allOf(
+			List.of("got_void_salvation_potion", "got_prayer_item"))
+		)
+		.build(consumer, VoidDimension.MOD_ID + "get_saving_items")
+		;
+
 		AdvancementEntry aForsakenPlace = this.getAdvancementEntry(
-			Items.DEEPSLATE, "a_forsaken_place", voidDimensionRoot,
-			null, AdvancementFrame.TASK, false, "got_into_void",
+			Items.DEEPSLATE, "a_forsaken_place", firstPreparations,
+			null, AdvancementFrame.GOAL, false, "got_into_void",
 			ChangedDimensionCriterion.Conditions.to(ModDimensions.VOID_WORLD),
 			consumer, "get_into_void"
 		);

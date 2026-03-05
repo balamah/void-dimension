@@ -215,7 +215,7 @@ public class McCodeHelper {
 		);
 
 		return PotionContentsComponent.createStack(
-			Items.POTION, Registries.POTION.getOrThrow(potionRegistryKey)
+			potionType, Registries.POTION.getOrThrow(potionRegistryKey)
 		);
 	}
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:void-dimensionvoid_dimension/root",
+  "parent": "minecraft:void-dimensionget_saving_items",
   "criteria": {
     "got_into_void": {
       "conditions": {
@@ -12,6 +12,7 @@
     "description": {
       "translate": "advancement.void-dimension.a_forsaken_place.description"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
       "id": "minecraft:deepslate"
