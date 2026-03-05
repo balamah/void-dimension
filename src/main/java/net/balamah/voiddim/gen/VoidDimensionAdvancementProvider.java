@@ -97,6 +97,14 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			consumer, "get_into_void"
 		);
 
+		// TODO: Change condition to VisitBiomeCriterion, which is a custom criterion
+		AdvancementEntry aDangerousPlace = this.getAdvancementEntry(
+			Items.DEEPSLATE, "a_dangerous_place", aForsakenPlace,
+			null, AdvancementFrame.GOAL, true, "got_into_corrupt_valley",
+			ChangedDimensionCriterion.Conditions.to(ModDimensions.VOID_WORLD),
+			consumer, "get_into_corrupt_valley"
+		);
+
 		AdvancementEntry cannibalism = this.getAdvancementEntry(
 			ModItems.COOKED_FLESH, "cannibalism", aForsakenPlace,
 			null, AdvancementFrame.TASK, false, "ate_alpha_steve_flesh",
