@@ -1,0 +1,39 @@
+{
+  "parent": "minecraft:void-dimensionget_bedrock_bomb_flint_and_steel",
+  "criteria": {
+    "went_from_void": {
+      "conditions": {
+        "from": "void-dimension:void"
+      },
+      "trigger": "minecraft:changed_dimension"
+    },
+    "went_to_nether": {
+      "conditions": {
+        "to": "minecraft:the_nether"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.exodus.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:netherrack"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.exodus.title"
+    }
+  },
+  "requirements": [
+    [
+      "went_from_void"
+    ],
+    [
+      "went_to_nether"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -8,29 +8,40 @@ import java.util.Optional;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.ComponentChanges;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.Identifier;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.block.Blocks;
+import net.minecraft.world.World;
 import net.minecraft.item.Items;
 import net.minecraft.item.Item;
 import net.minecraft.text.Text;
 
 import net.balamah.voiddim.world.dimension.ModDimensions;
-import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.entity.ModEntities;
+import net.balamah.voiddim.block.ModBlocks;
+import net.balamah.voiddim.custom.McCodeHelper;
+import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.item.ModItems;
 
 public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider {
@@ -47,7 +58,11 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		final RegistryWrapper.Impl<Item> itemLookup = wrapperLookup.getOrThrow(RegistryKeys.ITEM);
 		final RegistryWrapper.Impl<EntityType<?>> entityLookup = wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE);
 
-        AdvancementEntry voidDimensionRoot = this.getAdvancementEntry(
+		Item voidSalvationPotion = McCodeHelper.getPotionItemStack(Items.POTION, "void_salvation").getItem();
+		Item voidSalvationSplashPotion = McCodeHelper.getPotionItemStack(Items.SPLASH_POTION, "void_salvation").getItem();
+		Item voidSalvationLingeringPotion = McCodeHelper.getPotionItemStack(Items.LINGERING_POTION, "void_salvation").getItem();
+
+		AdvancementEntry voidDimensionRoot = this.getAdvancementEntry(
 			ModItems.VOIDIUM, "first_preparation",
 			Identifier.of(VoidDimension.MOD_ID, "gui/advancements/deepslate"),
 			AdvancementFrame.TASK,
@@ -145,6 +160,29 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			OnKilledCriterion.Conditions.createPlayerKilledEntity(shatteredSentinelMasterPredicate),
 			consumer, "kill_shattered_sentinel_master"
 		);
+
+		AdvancementEntry exodusPreparation = this.getAdvancementBuilder(
+			ModBlocks.BEDROCK_BOMB, "exodus_preparation",
+			null, AdvancementFrame.TASK, false
+		)
+		.parent(firstSteps)
+		.criterion("got_bedrock_bomb", InventoryChangedCriterion.Conditions.items(ModBlocks.BEDROCK_BOMB))
+		.criterion("got_flint_and_steel", InventoryChangedCriterion.Conditions.items(Items.FLINT_AND_STEEL))
+		.criterion("got_void_salvation_potion", InventoryChangedCriterion.Conditions.items(voidSalvationPotion, voidSalvationSplashPotion, voidSalvationLingeringPotion))
+		.requirements(AdvancementRequirements.allOf(List.of("got_bedrock_bomb", "got_flint_and_steel", "got_void_salvation_potion")))
+		.build(consumer, VoidDimension.MOD_ID + "get_bedrock_bomb_flint_and_steel")
+			;
+
+		AdvancementEntry exodus = this.getAdvancementBuilder(
+			Blocks.NETHERRACK, "exodus",
+			null, AdvancementFrame.GOAL, false
+		)
+		.parent(exodusPreparation)
+		.criterion("went_from_void", ChangedDimensionCriterion.Conditions.from(ModDimensions.VOID_WORLD))
+		.criterion("went_to_nether", ChangedDimensionCriterion.Conditions.to(World.NETHER))
+		.requirements(AdvancementRequirements.allOf(List.of("went_from_void", "went_to_nether")))
+		.build(consumer, VoidDimension.MOD_ID + "go_to_nether")
+			;
 	}
 
 	protected Advancement.Builder getAdvancementBuilder(

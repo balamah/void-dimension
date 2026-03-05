@@ -1,14 +1,18 @@
 package net.balamah.voiddim.custom;
 
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.boss.BossBar.Color;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -19,15 +23,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.Identifier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.potion.Potion;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.block.Block;
 import net.minecraft.item.Items;
-import net.minecraft.potion.Potion;
 import net.minecraft.item.Item;
 import net.minecraft.text.Text;
+
+import net.balamah.voiddim.VoidDimension;
 
 import java.util.List;
 
@@ -195,6 +202,20 @@ public class McCodeHelper {
 		return new ActiveTargetGoal(
 			entity, entityTarget, 10, true, false,
 			(target, world) -> Math.abs(target.getY() - target.getY()) <= 25.0
+		);
+	}
+
+	/**
+	 * @param potionType {Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION}
+	 * @param potionId an id from an attribute in ModPotions
+	 */
+	public static ItemStack getPotionItemStack(Item potionType, String potionId) {
+		RegistryKey<Potion> potionRegistryKey = RegistryKey.of(
+			RegistryKeys.POTION, Identifier.of(VoidDimension.MOD_ID, potionId)
+		);
+
+		return PotionContentsComponent.createStack(
+			Items.POTION, Registries.POTION.getOrThrow(potionRegistryKey)
 		);
 	}
 }

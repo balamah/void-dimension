@@ -158,13 +158,15 @@
 	"advancement.void-dimension.first_steps.title": "First Steps",
 	"advancement.void-dimension.first_steps.description": "Get void shard",
 	"advancement.void-dimension.void_upgrade.title": "Void Upgrade",
-	"advancement.void-dimension.void_upgrade.description": "Upgrade a netherite tool to void",
-	"advancement.void-dimension.cover_me_in_void.title": "Cover Me in Void",
+	"advancement.void-dimension.void_upgrade.description": "Upgrade a netherite tool to void tier",
+	"advancement.void-dimension.cover_me_in_void.title": "Cover Me in the Void",
 	"advancement.void-dimension.cover_me_in_void.description": "Get a full set of void armor",
 	"advancement.void-dimension.harbinger_of_oblivion.title": "Harbinger of Oblivion",
 	"advancement.void-dimension.harbinger_of_oblivion.description": "Eliminate void harbinger",
 	"advancement.void-dimension.master_of_the_shattered.title": "Master of the Shattered",
 	"advancement.void-dimension.master_of_the_shattered.description": "Eliminate shattered sentinel master",
+	"advancement.void-dimension.exodus_preparation.title": "Preparing the Exodus",
+	"advancement.void-dimension.exodus_preparation.description": "Craft a bedrock bomb to escape from nether and take flint and steel",
 	"advancement.void-dimension.exodus.title": "Exodus",
-	"advancement.void-dimension.exodus.description": "Get out of the void to the nether"
+	"advancement.void-dimension.exodus.description": "Escape the Void to the Nether using a void salvation potion and lit a bedrock bomb"
 }
