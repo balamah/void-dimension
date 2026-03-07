@@ -55,15 +55,12 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		final RegistryWrapper.Impl<Item> itemLookup = wrapperLookup.getOrThrow(RegistryKeys.ITEM);
 		final RegistryWrapper.Impl<EntityType<?>> entityLookup = wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE);
 
-		// TODO: Fix issue with void salvation potion stack
 		Item voidSalvationPotion = McCodeHelper.getPotionItemStack(Items.POTION, "void_salvation").getItem();
 		Item voidSalvationSplashPotion = McCodeHelper.getPotionItemStack(Items.SPLASH_POTION, "void_salvation").getItem();
 		Item voidSalvationLingeringPotion = McCodeHelper.getPotionItemStack(Items.LINGERING_POTION, "void_salvation").getItem();
 
-		AdvancementCriterion<?> voidSalvationPotionCriterion =
-			InventoryChangedCriterion.Conditions.items(
-				voidSalvationPotion, voidSalvationSplashPotion, voidSalvationLingeringPotion
-			);
+		ItemPredicate voidSalvationPotionPredicate =
+			ItemPredicate.Builder.create().items(itemLookup, voidSalvationPotion, voidSalvationSplashPotion, voidSalvationLingeringPotion).build();
 
 		ItemPredicate prayerItemsPredicate =
 			ItemPredicate.Builder.create().tag(itemLookup, ModItemTags.PRAYER_ITEMS).build();
@@ -82,7 +79,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			null, AdvancementFrame.TASK, false
 		)
 		.parent(voidDimensionRoot)
-		.criterion("got_void_salvation_potion", voidSalvationPotionCriterion)
+		.criterion("got_void_salvation_potion", InventoryChangedCriterion.Conditions.items(voidSalvationPotionPredicate))
 		.criterion("got_prayer_item", InventoryChangedCriterion.Conditions.items(prayerItemsPredicate))
 		.requirements(AdvancementRequirements.allOf(
 			List.of("got_void_salvation_potion", "got_prayer_item"))
@@ -99,8 +96,8 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 
 		// TODO: Change condition to VisitBiomeCriterion, which is a custom criterion
 		AdvancementEntry aDangerousPlace = this.getAdvancementEntry(
-			Items.DEEPSLATE, "a_dangerous_place", aForsakenPlace,
-			null, AdvancementFrame.GOAL, true, "got_into_corrupt_valley",
+			ModBlocks.CORRUPT_BLOCK, "a_dangerous_place", aForsakenPlace,
+			null, AdvancementFrame.TASK, true, "got_into_corrupt_valley",
 			ChangedDimensionCriterion.Conditions.to(ModDimensions.VOID_WORLD),
 			consumer, "get_into_corrupt_valley"
 		);
@@ -195,7 +192,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		.parent(firstSteps)
 		.criterion("got_bedrock_bomb", InventoryChangedCriterion.Conditions.items(ModBlocks.BEDROCK_BOMB))
 		.criterion("got_flint_and_steel", InventoryChangedCriterion.Conditions.items(Items.FLINT_AND_STEEL))
-		.criterion("got_void_salvation_potion", InventoryChangedCriterion.Conditions.items(voidSalvationPotion, voidSalvationSplashPotion, voidSalvationLingeringPotion))
+		.criterion("got_void_salvation_potion", InventoryChangedCriterion.Conditions.items(voidSalvationPotionPredicate))
 		.requirements(AdvancementRequirements.allOf(List.of("got_bedrock_bomb", "got_flint_and_steel", "got_void_salvation_potion")))
 		.build(consumer, VoidDimension.MOD_ID + "get_bedrock_bomb_flint_and_steel")
 			;

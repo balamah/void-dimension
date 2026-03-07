@@ -15,13 +15,11 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:potion"
-          },
-          {
-            "items": "minecraft:splash_potion"
-          },
-          {
-            "items": "minecraft:lingering_potion"
+            "items": [
+              "minecraft:potion",
+              "minecraft:splash_potion",
+              "minecraft:lingering_potion"
+            ]
           }
         ]
       },

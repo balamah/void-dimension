@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:void-dimensionget_into_void",
+  "criteria": {
+    "got_into_corrupt_valley": {
+      "conditions": {
+        "to": "void-dimension:void"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.a_dangerous_place.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "minecraft:deepslate"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.a_dangerous_place.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_into_corrupt_valley"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
