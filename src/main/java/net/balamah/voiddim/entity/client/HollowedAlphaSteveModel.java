@@ -22,6 +22,9 @@ public class HollowedAlphaSteveModel
     public static final EntityModelLayer ZOMBIFIED_ALPHA_STEVE =
 		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "zombified_alpha_steve"), "main");
 
+    public static final EntityModelLayer NULL =
+		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "null_entity"), "main");
+
 	private final Animation walkingAnimation;
 
 	public HollowedAlphaSteveModel(ModelPart root) {

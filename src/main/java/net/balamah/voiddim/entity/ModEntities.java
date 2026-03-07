@@ -113,6 +113,14 @@ public class ModEntities {
 			.dimensions(0.6f, 2f)
 		);
 
+	public static final EntityType<NullEntity> NULL =
+		register(
+			"null",
+			NullEntity.class,
+			EntityType.Builder.<NullEntity>create(NullEntity::new, SpawnGroup.CREATURE)
+			.dimensions(0.6f, 2f)
+		);
+
 	public static final EntityType<CorruptedBlazeEntity> CORRUPTED_BLAZE = register(
 		"corrupted_blaze",
 		CorruptedBlazeEntity.class,
