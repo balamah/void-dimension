@@ -230,6 +230,15 @@
 			"void-dimension:zombified_alpha_steve/death"
 		]
 	},
+	"staring_entity.death": {
+		"subtitle": "sound.void-dimension.staring_entity.death",
+		"sounds": [
+			{
+				"name": "void-dimension:staring_entity/death",
+				"volume": 0.5
+			}
+		]
+	},
 	"void.ambient.1": {
 		"subtitle": "sound.void-dimension.void.ambient.1",
 		"sounds": [

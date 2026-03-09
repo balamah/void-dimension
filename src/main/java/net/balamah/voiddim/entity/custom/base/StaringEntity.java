@@ -4,7 +4,6 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.effect.StatusEffects;
@@ -13,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.TntEntity;
@@ -26,6 +26,7 @@ import java.util.List;
 import net.balamah.voiddim.entity.custom.BedrockBombEntity;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.effect.ModEffects;
+import net.balamah.voiddim.sound.ModSounds;
 
 public abstract class StaringEntity extends SunBurningEntity {
 	protected Class<? extends Entity>[] projectileEntities = new Class[]{
@@ -110,5 +111,10 @@ public abstract class StaringEntity extends SunBurningEntity {
 		this.targetSelector.add(0, McCodeHelper.getTargetGoal(this, PlayerEntity.class));
 
 		this.goalSelector.add(0, new LookAtEntityGoal(this, PlayerEntity.class, 100.0F));
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.STARING_ENTITY_DEATH;
 	}
 }

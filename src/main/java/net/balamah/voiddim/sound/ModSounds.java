@@ -115,6 +115,8 @@ public class ModSounds {
 	public static final SoundEvent ZOMBIFIED_ALPHA_STEVE_DEATH =
 			register("zombified_alpha_steve.death");
 
+	public static final SoundEvent STARING_ENTITY_DEATH = register("staring_entity.death");
+
 	public static final SoundEvent MUSIC_CALM4 = register("music_disc.calm4");
     public static final RegistryKey<JukeboxSong> MUSIC_CALM4_KEY =
 		RegistryKey.of(
