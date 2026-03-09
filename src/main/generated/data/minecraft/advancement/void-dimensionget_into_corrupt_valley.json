@@ -12,11 +12,10 @@
     "description": {
       "translate": "advancement.void-dimension.a_dangerous_place.description"
     },
-    "frame": "goal",
     "hidden": true,
     "icon": {
       "count": 1,
-      "id": "minecraft:deepslate"
+      "id": "void-dimension:corrupt_block"
     },
     "title": {
       "translate": "advancement.void-dimension.a_dangerous_place.title"
