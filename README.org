@@ -70,7 +70,7 @@ The order is going from brightest colors to the darkest
 - void_harbinger.shoot            :: https://pixabay.com/sound-effects/search/dark%20magic/
 - void_harbinger.teleport         :: blade of darkness (desaparece-vamp1.wav)
 - shattered_sentinel_master.death :: https://depositphotos.com/sound-effect/rumbling-impact-ancient-stony-stride-784492644.html
-- staring_entity.death :: blade of darkness (muerte-Ldm.wav)
+- staring_entity.death            :: blade of darkness (muerte-Ldm.wav)
 - music.1                         :: blade of darkness (ATMOSFERA8)
 - music.2                         :: blade of darkness (ATMOSFERA19)
 - music.3                         :: blade of darkness (SORPRESA7)

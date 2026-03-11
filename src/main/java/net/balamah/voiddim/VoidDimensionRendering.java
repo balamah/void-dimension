@@ -68,17 +68,25 @@ public class VoidDimensionRendering implements ClientModInitializer {
 								  HollowedBeastModel.getTexturedModelData(),
 								  HollowedBeastRenderer::new),
 				new EntitySpecs<CorruptedBlazeEntity>(ModEntities.CORRUPTED_BLAZE,
-													 CorruptedBlazeModel.CORRUPTED_BLAZE,
-													 CorruptedBlazeModel.getTexturedModelData(),
+													  CorruptedBlazeModel.CORRUPTED_BLAZE,
+													  CorruptedBlazeModel.getTexturedModelData(),
 													  CorruptedBlazeRenderer::new),
 				new EntitySpecs<CorruptedCreeperEntity>(ModEntities.CORRUPTED_CREEPER,
-													 CorruptedCreeperModel.CORRUPTED_CREEPER,
-													 CorruptedCreeperModel.getTexturedModelData(),
-													CorruptedCreeperRenderer::new),
+														CorruptedCreeperModel.CORRUPTED_CREEPER,
+														CorruptedCreeperModel.getTexturedModelData(),
+														CorruptedCreeperRenderer::new),
 				new EntitySpecs<CorruptedSpiderEntity>(ModEntities.CORRUPTED_SPIDER,
-													 CorruptedSpiderModel.CORRUPTED_SPIDER,
-													 CorruptedSpiderModel.getTexturedModelData(),
-													 CorruptedSpiderRenderer::new)
+													   CorruptedSpiderModel.CORRUPTED_SPIDER,
+													   CorruptedSpiderModel.getTexturedModelData(),
+													   CorruptedSpiderRenderer::new),
+				new EntitySpecs<StaringDogEntity>(ModEntities.STARING_DOG,
+												  StaringDogModel.STARING_DOG,
+												  StaringDogModel.getTexturedModelData(),
+												  StaringDogRenderer::new),
+				new EntitySpecs<StaringCatEntity>(ModEntities.STARING_CAT,
+												  StaringCatModel.STARING_CAT,
+												  StaringCatModel.getTexturedModelData(),
+												  StaringCatRenderer::new)
 				);
 
 

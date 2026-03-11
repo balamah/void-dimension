@@ -121,6 +121,20 @@ public class ModEntities {
 			.dimensions(0.6f, 2f)
 		);
 
+	public static final EntityType<StaringCatEntity> STARING_CAT = register(
+		"staring_cat",
+		StaringCatEntity.class,
+		EntityType.Builder.create(StaringCatEntity::new, SpawnGroup.CREATURE)
+		.dimensions(0.6F, 0.7F)
+	);
+
+	public static final EntityType<StaringDogEntity> STARING_DOG = register(
+		"staring_dog",
+		StaringDogEntity.class,
+		EntityType.Builder.create(StaringDogEntity::new, SpawnGroup.CREATURE)
+		.dimensions(0.6F, 0.85F)
+	);
+
 	public static final EntityType<CorruptedBlazeEntity> CORRUPTED_BLAZE = register(
 		"corrupted_blaze",
 		CorruptedBlazeEntity.class,
