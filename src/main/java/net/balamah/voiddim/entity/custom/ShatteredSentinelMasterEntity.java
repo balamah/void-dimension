@@ -151,15 +151,6 @@ public class ShatteredSentinelMasterEntity extends BossEntity {
 	}
 
 	@Override
-	public boolean damage(ServerWorld world, DamageSource source, float amount) {
-		boolean result = super.damage(world, source, amount);
-
-		if (result) this.attackCount++;
-
-		return result;
-	}
-
-	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.SHATTERED_SENTINEL_MASTER_DEATH;
 	}

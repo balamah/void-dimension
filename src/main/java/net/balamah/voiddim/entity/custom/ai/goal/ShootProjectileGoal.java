@@ -11,6 +11,7 @@ import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
+// TODO: Fix the goal stopping
 public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends ProjectileEntity>
 	extends TickingGoal<E>
 {

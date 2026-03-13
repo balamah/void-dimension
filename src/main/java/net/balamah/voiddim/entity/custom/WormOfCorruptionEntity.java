@@ -77,16 +77,6 @@ public class WormOfCorruptionEntity extends CorruptedHostileEntity {
 	}
 
 	@Override
-	public boolean damage(ServerWorld world, DamageSource source, float amount) {
-		boolean result = super.damage(world, source, amount);
-
-		if (result)
-			this.attackCount++;
-
-		return result;
-	}
-
-	@Override
 	public void tickMovement() {
 		super.tickMovement();
 		if (!(this.getEntityWorld() instanceof ServerWorld serverWorld)) return;

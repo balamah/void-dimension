@@ -3,6 +3,7 @@ package net.balamah.voiddim.entity.custom.base;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.AnimationState;
@@ -77,6 +78,15 @@ public abstract class CorruptedHostileEntity extends HostileEntity {
 
 	public void setStopAttacks(boolean stopAttacks) {
 		this.stopAttacks = stopAttacks;
+	}
+
+	@Override
+	public boolean damage(ServerWorld world, DamageSource source, float amount) {
+		boolean result = super.damage(world, source, amount);
+
+		if (result) this.attackCount++;
+
+		return result;
 	}
 
 	protected boolean burnsInDaylight() {
