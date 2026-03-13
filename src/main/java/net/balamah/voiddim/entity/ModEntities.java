@@ -121,6 +121,14 @@ public class ModEntities {
 			.dimensions(0.6f, 2f)
 		);
 
+	public static final EntityType<AggressiveNullEntity> AGGRESSIVE_NULL =
+		register(
+			"aggressive_null",
+			AggressiveNullEntity.class,
+			EntityType.Builder.<AggressiveNullEntity>create(AggressiveNullEntity::new, SpawnGroup.CREATURE)
+			.dimensions(0.6f, 2f)
+		);
+
 	public static final EntityType<StaringCatEntity> STARING_CAT = register(
 		"staring_cat",
 		StaringCatEntity.class,

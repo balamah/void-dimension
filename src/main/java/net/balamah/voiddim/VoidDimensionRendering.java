@@ -120,6 +120,16 @@ public class VoidDimensionRendering implements ClientModInitializer {
 											   context.getPart(HollowedAlphaSteveModel.NULL)
 										   ),
 										   0.5f
+									   )),
+				new BipedEntitySpecs<>(ModEntities.AGGRESSIVE_NULL,
+									   HumanModel.AGGRESSIVE_NULL,
+									   HumanModel.getTexturedModelData(),
+									   context -> new AggressiveNullRenderer<>(
+										   context,
+										   new HumanModel<>(
+											   context.getPart(HumanModel.AGGRESSIVE_NULL)
+										   ),
+										   0.5f
 									   ))
 		);
 
