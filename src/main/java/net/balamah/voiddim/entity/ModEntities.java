@@ -129,6 +129,14 @@ public class ModEntities {
 			.dimensions(0.6f, 2f)
 		);
 
+	public static final EntityType<HerobrineEntity> HEROBRINE =
+		register(
+			"herobrine",
+			HerobrineEntity.class,
+			EntityType.Builder.<HerobrineEntity>create(HerobrineEntity::new, SpawnGroup.CREATURE)
+			.dimensions(0.6f, 2f)
+		);
+
 	public static final EntityType<StaringCatEntity> STARING_CAT = register(
 		"staring_cat",
 		StaringCatEntity.class,
@@ -234,6 +242,7 @@ public class ModEntities {
 			.trackingTickInterval(10)
 	);
 
+	@SuppressWarnings("unchecked")
 	protected static final EntityType<? extends MobEntity>[] restrictedEntities =
 		new EntityType[] {
 			ModEntities.CORRUPTED_STALKER,
@@ -246,7 +255,8 @@ public class ModEntities {
 			ModEntities.CORRUPTED_BLAZE,
 			ModEntities.CORRUPTED_CREEPER,
 			ModEntities.CORRUPTED_SPIDER,
-			ModEntities.HOLLOWED_ALPHA_STEVE
+			ModEntities.HOLLOWED_ALPHA_STEVE,
+			ModEntities.ZOMBIFIED_ALPHA_STEVE
 		};
 
 	public static void registerModEntities() {
