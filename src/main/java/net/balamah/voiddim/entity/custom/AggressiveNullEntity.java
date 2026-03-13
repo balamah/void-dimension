@@ -22,10 +22,12 @@ public class AggressiveNullEntity extends CorruptedHostileEntity {
 
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return PathAwareEntity.createMobAttributes()
-			.add(EntityAttributes.MAX_HEALTH, 20)
+			.add(EntityAttributes.MAX_HEALTH, 25)
 			.add(EntityAttributes.STEP_HEIGHT, 1.0)
 			.add(EntityAttributes.JUMP_STRENGTH, 0.4f)
 			.add(EntityAttributes.ATTACK_DAMAGE, 7.6f)
+			.add(EntityAttributes.MOVEMENT_SPEED, 0.65F)
+			.add(EntityAttributes.FOLLOW_RANGE, 35)
 			.add(EntityAttributes.MOVEMENT_SPEED, 0.4F);
 	}
 
