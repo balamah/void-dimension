@@ -3,76 +3,7 @@ package net.balamah.voiddim.entity.client;
 import net.minecraft.client.render.entity.animation.*;
 
 public class HerobrineAnimations {
-	public static final AnimationDefinition SUMMON_PROJECTILE = AnimationDefinition.Builder.create(0.5f)
-		.addBoneAnimation("head",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.125f, AnimationHelper.createRotationalVector(-25.77f, 13.73f, -6.06f),
-					Transformation.Interpolations.LINEAR)))
-		.addBoneAnimation("right_arm",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.16667f, AnimationHelper.createRotationalVector(-127.07f, 8.53f, 0.69f),
-					Transformation.Interpolations.LINEAR)))
-		.addBoneAnimation("left_arm",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.08333f, AnimationHelper.createRotationalVector(19.92f, 1.3f, -7.39f),
-					Transformation.Interpolations.LINEAR))).build();
-		public static final AnimationDefinition SPECIAL_ATTACK = AnimationDefinition.Builder.create(0.79167f)
-		.addBoneAnimation("body",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.33333f, AnimationHelper.createRotationalVector(-5f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.41667f, AnimationHelper.createRotationalVector(10f, 0f, 0f),
-					Transformation.Interpolations.LINEAR)))
-		.addBoneAnimation("cape",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.33333f, AnimationHelper.createRotationalVector(1f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.41667f, AnimationHelper.createRotationalVector(7.5f, 0f, 0f),
-					Transformation.Interpolations.LINEAR)))
-		.addBoneAnimation("arms",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.33333f, AnimationHelper.createRotationalVector(-75f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.41667f, AnimationHelper.createRotationalVector(-22.5f, 0f, 0f),
-					Transformation.Interpolations.LINEAR)))
-		.addBoneAnimation("right_arm",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.125f, AnimationHelper.createRotationalVector(-25.02f, -22.48f, -17.4f),
-					Transformation.Interpolations.LINEAR)))
-		.addBoneAnimation("right_elbow",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.08333f, AnimationHelper.createRotationalVector(-30f, 0f, 0f),
-					Transformation.Interpolations.LINEAR)))
-		.addBoneAnimation("left_arm",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.125f, AnimationHelper.createRotationalVector(-25.02f, 22.48f, 17.4f),
-					Transformation.Interpolations.LINEAR)))
-		.addBoneAnimation("left_elbow",
-			new Transformation(Transformation.Targets.ROTATE,
-				new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-					Transformation.Interpolations.LINEAR),
-				new Keyframe(0.08333f, AnimationHelper.createRotationalVector(-30f, 0f, 0f),
-					Transformation.Interpolations.LINEAR))).build();
-
-	public static final AnimationDefinition lightning_invoke = AnimationDefinition.Builder.create(0.75F)
+	public static final AnimationDefinition LIGHTNING_INVOKE = AnimationDefinition.Builder.create(0.75F)
 		.addBoneAnimation("body", new Transformation(Transformation.Targets.ROTATE, 
 			new Keyframe(0.0F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
 			new Keyframe(0.4583F, AnimationHelper.createRotationalVector(5.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
@@ -95,7 +26,7 @@ public class HerobrineAnimations {
 		))
 		.build();
 
-	public static final AnimationDefinition ground_corruption = AnimationDefinition.Builder.create(0.875F)
+	public static final AnimationDefinition GROUND_CORRUPTION = AnimationDefinition.Builder.create(0.875F)
 		.addBoneAnimation("arms", new Transformation(Transformation.Targets.ROTATE, 
 			new Keyframe(0.0F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
 			new Keyframe(0.3333F, AnimationHelper.createRotationalVector(-10.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),

@@ -28,4 +28,7 @@ public class ModEntityStatuses {
 	public static final byte CORRUPTED_WARRIOR_STRONG_ATTACK = 92;
 	public static final byte CORRUPTED_WARRIOR_STRONGEST_ATTACK = 93;
 	public static final byte CORRUPTED_WARRIOR_SUMMON_PROJECTILE = 94;
+	public static final byte HEROBRINE_LIGHTNING_INVOKE = 95;
+	public static final byte HEROBRINE_SHOCKWAVE_INVOKE = 96;
+	public static final byte HEROBRINE_GROUND_CORRUPTION = 97;
 }
