@@ -2,11 +2,13 @@ package net.balamah.voiddim.custom;
 
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.boss.BossBar.Color;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.block.entity.SignText;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.entity.mob.MobEntity;
@@ -217,5 +219,19 @@ public class McCodeHelper {
 		return PotionContentsComponent.createStack(
 			potionType, Registries.POTION.getOrThrow(potionRegistryKey)
 		);
+	}
+
+	/**
+	 * @param signLines is an String[] array of 4 elements max. Which looks like {"First", "second", "third", "fourth"}
+	 */
+	public static void setSignText(SignBlockEntity signBlockEntity, String[] signLines) {
+		SignText signText = signBlockEntity.getFrontText();
+
+		for (int i = 0; i < signLines.length; i++) {
+			String signLineText = signLines[i];
+			signText = signText.withMessage(i, Text.literal(signLineText));
+		}
+
+		signBlockEntity.setText(signText, true);
 	}
 }

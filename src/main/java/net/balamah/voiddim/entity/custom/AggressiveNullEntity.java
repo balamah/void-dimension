@@ -6,10 +6,11 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.world.World;
 
+import net.balamah.voiddim.entity.custom.ai.goal.RandomPlaceSignsGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
-import net.balamah.voiddim.entity.custom.ai.goal.PlaceSignsGoal;
 import net.balamah.voiddim.sound.ModSounds;
 
 public class AggressiveNullEntity extends CorruptedHostileEntity {
@@ -30,14 +31,14 @@ public class AggressiveNullEntity extends CorruptedHostileEntity {
 
 	@Override
 	protected void initGoals() {
-		// TODO: Add goal: PlaceSignsGoal
 		super.initGoals();
 
-		this.goalSelector.add(
-			1, new PlaceSignsGoal<AggressiveNullEntity>(
-				this, new String[]{"NULL", "NULL", "NULL", "NULL"}, 25
-			)
-		);
+		Goal randomPlaceSignsGoal =
+			new RandomPlaceSignsGoal<AggressiveNullEntity>(
+				this, new String[]{"NULL", "NULL", "NULL", "NULL"}, 25, 6
+			);
+
+		this.goalSelector.add(1, randomPlaceSignsGoal);
 	}
 
 	@Override
