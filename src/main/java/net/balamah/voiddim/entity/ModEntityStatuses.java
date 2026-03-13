@@ -31,4 +31,7 @@ public class ModEntityStatuses {
 	public static final byte HEROBRINE_LIGHTNING_INVOKE = 95;
 	public static final byte HEROBRINE_SHOCKWAVE_INVOKE = 96;
 	public static final byte HEROBRINE_GROUND_CORRUPTION = 97;
+	public static final byte HEROBRINE_LIGHTNING_INVOKE_STOP = 98;
+	public static final byte HEROBRINE_SHOCKWAVE_INVOKE_STOP = 99;
+	public static final byte HEROBRINE_GROUND_CORRUPTION_STOP = 100;
 }

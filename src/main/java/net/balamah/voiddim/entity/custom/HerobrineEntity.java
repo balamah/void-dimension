@@ -19,6 +19,8 @@ public class HerobrineEntity extends BossEntity {
 	public AnimationState groundCorruptionAnimationState = new AnimationState();
 	public AnimationState shockwaveInvokeAnimationState = new AnimationState();
 
+	protected int lightningCooldown;
+
 	public HerobrineEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -28,7 +30,6 @@ public class HerobrineEntity extends BossEntity {
 			.add(EntityAttributes.FOLLOW_RANGE, 32)
 			.add(EntityAttributes.MOVEMENT_SPEED, 0.2F)
 			.add(EntityAttributes.ATTACK_DAMAGE, 13.0F)
-			.add(EntityAttributes.STEP_HEIGHT, 3.0)
 			.add(EntityAttributes.MAX_HEALTH, 315);
 	}
 
@@ -62,6 +63,7 @@ public class HerobrineEntity extends BossEntity {
 		 */
 		super.initGoals();
 
+		this.goalSelector.add(3, new ShootLightningGoal<HerobrineEntity>(this));
 		this.goalSelector.add(
 			2,
 			new SummonEntitiesGoal<HerobrineEntity, AggressiveNullEntity>(
