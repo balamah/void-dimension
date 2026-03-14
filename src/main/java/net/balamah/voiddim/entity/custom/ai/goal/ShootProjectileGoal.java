@@ -11,7 +11,6 @@ import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
-// TODO: Fix the goal stopping
 public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends ProjectileEntity>
 	extends TickingGoal<E>
 {
@@ -38,7 +37,10 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 
 	@Override
 	public boolean canStart() {
-		return this.entity.getTarget() != null && !this.entity.areAttacksStopped();
+		LivingEntity target = this.entity.getTarget();
+
+		return target != null && !this.entity.areAttacksStopped() &&
+			target.distanceTo(this.entity) < 14;
 	}
 
 	@Override
@@ -51,8 +53,6 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 		super.tick();
 		
 		LivingEntity target = this.entity.getTarget();
-
-		if (target == null || target.distanceTo(this.entity) >= 14.0) return;
 
 		if (this.tick == this.shootingPrepareCooldown) {
 			this.entity.playSound(this.shootPrepareSound);
