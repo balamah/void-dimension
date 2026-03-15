@@ -65,7 +65,7 @@ public class VoidHarbingerEntity extends BossEntity {
 			double y = Math.max(this.getY(), newY);
 			double z = this.getZ() + teleportationRadius;
 
-			return this.teleportTo(x, y, z);
+			return this.teleportTo(x, y, z, true);
 		}
 
 		return false;
@@ -83,16 +83,17 @@ public class VoidHarbingerEntity extends BossEntity {
 		double teleportDiameter = 7.0;
 
 		int randomYoffset = (this.random.nextInt(16) - 8);
-		double randomY = this.getY() + randomYoffset - vec3d.y * teleportDiameter;
 
 		double x, y, z;
 		for (int i = 0; i < 10; i++) {
+			double randomY = this.getY() + randomYoffset - vec3d.y * teleportDiameter;
+
 			x = this.getRandomCoordinate(this.getX(), vec3d.x, teleportDiameter);
 			y = Math.max(entity.getY(), randomY);
 			z = this.getRandomCoordinate(this.getZ(), vec3d.z, teleportDiameter);
 
 			if (McCodeHelper.isTeleportationSafe(entity, entity.getY(), x, y, z)) {
-				return this.teleportTo(x, y, z);
+				return this.teleportTo(x, y, z, false);
 			}
 		}
 
@@ -100,20 +101,10 @@ public class VoidHarbingerEntity extends BossEntity {
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean teleportTo(double x, double y, double z) {
-		BlockPos.Mutable mutable = new BlockPos.Mutable(x, y, z);
-
-		while (mutable.getY() > this.getEntityWorld().getBottomY() &&
-			   !this.getEntityWorld().getBlockState(mutable).blocksMovement()
-		) {
-			double heightDifference = this.getY() - mutable.getY();
-
-			if (heightDifference < 30) {
-				mutable.move(Direction.DOWN);
-			} else {
-				// TODO: send signal to teleport again.
-				return false;
-			}
+	public boolean teleportTo(double x, double y, double z, boolean ignoreLimitPredicate) {
+		BlockPos.Mutable mutable = this.getMutableCoordinate(x, y, z, ignoreLimitPredicate);
+		if (mutable == null) {
+			return false;
 		}
 
 		BlockState blockState = this.getEntityWorld().getBlockState(mutable);
@@ -161,6 +152,27 @@ public class VoidHarbingerEntity extends BossEntity {
 		return baseCoordinate + (this.random.nextDouble() - 0.5) * 2 - vector * diameter;
 	}
 
+	@SuppressWarnings("deprecation")
+	protected @Nullable BlockPos.Mutable getMutableCoordinate(
+		double x, double y, double z, boolean ignoreLimitPredicate
+	) {
+		BlockPos.Mutable mutable = new BlockPos.Mutable(x, y, z);
+
+		while (mutable.getY() > this.getEntityWorld().getBottomY() &&
+			   !this.getEntityWorld().getBlockState(mutable).blocksMovement()
+		) {
+			double heightDifference = this.getY() - mutable.getY();
+
+			if (heightDifference < 30 || ignoreLimitPredicate) {
+				mutable.move(Direction.DOWN);
+			} else {
+				return null;
+			}
+		}
+
+		return mutable;
+	}
+
 	@Override
 	protected void initGoals() {
 		super.initGoals();
@@ -172,6 +184,7 @@ public class VoidHarbingerEntity extends BossEntity {
 			50, 60
 		);
 
+		// Make teleportation more often on the second phase
 		this.goalSelector.add(0, new VoidHarbingerTeleportTowardsPlayerGoal(this));
 		this.goalSelector.add(1, shootingGoal);
 		this.goalSelector.add(
