@@ -4,8 +4,6 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.world.event.GameEvent;
 import net.minecraft.util.math.Direction;
@@ -55,15 +53,19 @@ public class VoidHarbingerEntity extends BossEntity {
 	}
 
 	public boolean teleportRandomly() {
-		if (!this.getEntityWorld().isClient() && this.isAlive()) {
-			double d = this.getX() + (this.random.nextDouble() - 0.5) * 64.0;
-			double e = this.getY() + (this.random.nextInt(64) - 32);
-			double f = this.getZ() + (this.random.nextDouble() - 0.5) * 64.0;
+		int teleportationRadius = 9;
 
-			return this.teleportTo(d, e, f);
-		} else {
-			return false;
+		if (!this.getEntityWorld().isClient() && this.isAlive()) {
+			double newY = this.getY() + (this.random.nextInt(teleportationRadius));
+
+			double x = this.getX() + teleportationRadius;
+			double y = Math.max(this.getY(), newY);
+			double z = this.getZ() + teleportationRadius;
+
+			return this.teleportTo(x, y, z);
 		}
+
+		return false;
 	}
 
 	public boolean teleportTo(Entity entity) {
@@ -75,16 +77,16 @@ public class VoidHarbingerEntity extends BossEntity {
 
 		vec3d = vec3d.normalize();
 
-		double teleportDiameter = 16.0;
+		double teleportDiameter = 7.0;
 
-		double x;
-		double y;
-		double z;
+		int randomYoffset = (this.random.nextInt(16) - 8);
+		double randomY = this.getY() + randomYoffset - vec3d.y * teleportDiameter;
 
+		double x, y, z;
 		for (int i = 0; i < 10; i++) {
-			x = this.getX() + (this.random.nextDouble() - 0.5) * 8.0 - vec3d.x * teleportDiameter;
-			y = this.getY() + (this.random.nextInt(16) - 8) - vec3d.y * teleportDiameter;
-			z = this.getZ() + (this.random.nextDouble() - 0.5) * 8.0 - vec3d.z * teleportDiameter;
+			x = this.getRandomCoordinate(this.getX(), vec3d.x, teleportDiameter);
+			y = Math.max(entity.getY(), randomY);
+			z = this.getRandomCoordinate(this.getZ(), vec3d.z, teleportDiameter);
 
 			if (McCodeHelper.isTeleportationSafe(entity, entity.getY(), x, y, z)) {
 				return this.teleportTo(x, y, z);
@@ -94,31 +96,37 @@ public class VoidHarbingerEntity extends BossEntity {
 		return false;
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean teleportTo(double x, double y, double z) {
 		BlockPos.Mutable mutable = new BlockPos.Mutable(x, y, z);
 
 		while (mutable.getY() > this.getEntityWorld().getBottomY() &&
 			   !this.getEntityWorld().getBlockState(mutable).blocksMovement()
 		) {
-			mutable.move(Direction.DOWN);
-		}
+			double heightDifference = this.getY() - mutable.getY();
 
-		BlockState blockState = this.getEntityWorld().getBlockState(mutable);
-		boolean bl = blockState.blocksMovement();
-		boolean bl2 = blockState.getFluidState().isIn(FluidTags.WATER);
-		if (!(bl && !bl2))
-			return false;
-
-		Vec3d vec3d = new Vec3d(this.getX(), this.getY(), this.getZ());
-		boolean bl3 = this.teleport(x, y, z, true);
-		if (bl3) {
-			this.getEntityWorld().emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(this));
-			if (!this.isSilent()) {
-				this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
+			if (heightDifference < 30) {
+				mutable.move(Direction.DOWN);
+			} else {
+				// TODO: send signal to teleport again.
+				return false;
 			}
 		}
 
-		return bl3;
+		BlockState blockState = this.getEntityWorld().getBlockState(mutable);
+		boolean isSolidBlock = blockState.blocksMovement();
+		if (!isSolidBlock) {
+			return false;
+		}
+
+		Vec3d vec3d = new Vec3d(this.getX(), this.getY(), this.getZ());
+		boolean didTeleport = this.teleport(x, y, z, true);
+		if (didTeleport) {
+			this.getEntityWorld().emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(this));
+			this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
+		}
+
+		return didTeleport;
 	}
 
 	@Override
@@ -144,6 +152,10 @@ public class VoidHarbingerEntity extends BossEntity {
 
 	public int getTeleportCooldown() {
 		return teleportCooldown;
+	}
+
+	protected double getRandomCoordinate(double baseCoordinate, double vector, double diameter) {
+		return baseCoordinate + (this.random.nextDouble() - 0.5) * 2 - vector * diameter;
 	}
 
 	@Override
