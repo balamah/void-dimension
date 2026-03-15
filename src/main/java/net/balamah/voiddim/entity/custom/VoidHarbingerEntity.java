@@ -19,6 +19,9 @@ import net.minecraft.world.World;
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
