@@ -4,6 +4,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.projectile.FireballEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.effect.StatusEffects;
@@ -51,13 +52,15 @@ public abstract class StaringEntity extends SunBurningEntity {
 	public void tick() {
 		super.tick();
 
-		LivingEntity target = this.getTarget();
-		if (this.canSeeClosePlayer(target)) {
-			this.disappear(target);
-		}
+		if (!this.getEntityWorld().isClient()) {
+			LivingEntity target = this.getTarget();
+			if (this.canSeeClosePlayer(target)) {
+				this.disappear(target);
+			}
 
-		if (this.areProjectilesNearby(this.getEntityWorld())) {
-			this.fade();
+			if (this.areProjectilesNearby(this.getEntityWorld())) {
+				this.fade();
+			}
 		}
 	}
 
@@ -71,7 +74,7 @@ public abstract class StaringEntity extends SunBurningEntity {
 	}
 
 	protected boolean areProjectilesNearby(World world) {
-		int radius = 4;
+		int radius = 10;
 		Vec3d position = new Vec3d(this.getX(), this.getY(), this.getZ());
 		
         Box box = new Box(
@@ -79,14 +82,14 @@ public abstract class StaringEntity extends SunBurningEntity {
 			position.x + radius, position.y + radius, position.z + radius
         );
 
-		for (Class<? extends Entity> projectileEntity : this.projectileEntities) {
-			List<? extends Entity> nearProjectileEntities = world.getEntitiesByClass(
-				projectileEntity, box, entity -> entity != null
-			);
+		List<Entity> nearProjectileEntities = world.getOtherEntities(
+			this,
+			box,
+			entity -> (entity instanceof ProjectileEntity || entity instanceof TntEntity)
+		);
 
-			if (!nearProjectileEntities.isEmpty()) {
-				return true;
-			}
+		if (!nearProjectileEntities.isEmpty()) {
+			return true;
 		}
 
 		return false;
