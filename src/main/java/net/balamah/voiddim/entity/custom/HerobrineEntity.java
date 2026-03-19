@@ -4,15 +4,15 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EntityType;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.entity.ModEntities;
-import net.balamah.voiddim.entity.ModEntityStatuses;
 
 public class HerobrineEntity extends BossEntity {
 	public AnimationState lightningInvokeAnimationState = new AnimationState();
@@ -24,12 +24,12 @@ public class HerobrineEntity extends BossEntity {
 	public HerobrineEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return HostileEntity.createHostileAttributes()
 			.add(EntityAttributes.FOLLOW_RANGE, 32)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.2F)
-			.add(EntityAttributes.ATTACK_DAMAGE, 13.0F)
+			.add(EntityAttributes.ATTACK_DAMAGE, 7.0F)
+			.add(EntityAttributes.MOVEMENT_SPEED, 0.3f)
 			.add(EntityAttributes.MAX_HEALTH, 315);
 	}
 
@@ -49,6 +49,23 @@ public class HerobrineEntity extends BossEntity {
 				super.handleStatus(status);
 				break;
 		}
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		if (this.lightningCooldown > 0) {
+			this.lightningCooldown--;
+		}
+	}
+	
+	public int getLightningCooldown() {
+		return this.lightningCooldown;
+	}
+
+	public void setLightningCooldown(int lightningCooldown) {
+		this.lightningCooldown = lightningCooldown;
 	}
 
 	@Override
