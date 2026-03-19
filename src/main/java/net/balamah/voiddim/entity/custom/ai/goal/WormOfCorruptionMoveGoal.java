@@ -64,6 +64,8 @@ public class WormOfCorruptionMoveGoal extends TickingGoal<WormOfCorruptionEntity
 
 	@Override
 	public void start() {
+		super.start();
+
 		LivingEntity target = this.entity.getTarget();
 
 		this.entity.setInvulnerable(true);

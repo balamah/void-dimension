@@ -17,6 +17,11 @@ public abstract class TickingGoal<T extends CorruptedHostileEntity> extends Goal
 	}
 
 	@Override
+	public void start() {
+		this.tick = 0;
+	}
+
+	@Override
 	public abstract boolean canStart();
 
 	@Override

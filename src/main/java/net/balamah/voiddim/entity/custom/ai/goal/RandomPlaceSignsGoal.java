@@ -43,6 +43,8 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 
 	@Override
 	public void start() {
+		super.start();
+
 		this.finalTick = this.random.nextInt(15);
 	}
 
