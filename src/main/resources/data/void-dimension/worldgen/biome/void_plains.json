@@ -66,13 +66,13 @@
 			},
 			{
 				"type": "minecraft:zombie",
-				"weight": 60,
-				"minCount": 2,
-				"maxCount": 4
+				"weight": 30,
+				"minCount": 1,
+				"maxCount": 3
 			},
 			{
 				"type": "void-dimension:corrupted_creeper",
-				"weight": 50,
+				"weight": 45,
 				"minCount": 1,
 				"maxCount": 1
 			},
@@ -80,7 +80,7 @@
 				"type": "void-dimension:corrupted_stalker",
 				"weight": 55,
 				"minCount": 1,
-				"maxCount": 1
+				"maxCount": 2
 			},
 			{
 				"type": "void-dimension:corrupted_blaze",
@@ -90,9 +90,39 @@
 			},
 			{
 				"type": "void-dimension:corrupted_spider",
-				"weight": 40,
+				"weight": 35,
 				"minCount": 1,
 				"maxCount": 2
+			},
+			{
+				"type": "void-dimension:hollowed_alpha_steve",
+				"weight": 12,
+				"minCount": 1,
+				"maxCount": 2
+			},
+			{
+				"type": "void-dimension:zombified_alpha_steve",
+				"weight": 14,
+				"minCount": 1,
+				"maxCount": 2
+			},
+			{
+				"type": "void-dimension:null",
+				"weight": 8,
+				"minCount": 1,
+				"maxCount": 2
+			},
+			{
+				"type": "void-dimension:staring_dog",
+				"weight": 6,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:staring_cat",
+				"weight": 6,
+				"minCount": 1,
+				"maxCount": 1
 			}
 		]
 	},
@@ -120,6 +150,26 @@
 		"void-dimension:corrupted_spider": {
 			"energy_budget": 2.0,
 			"charge": 1.0
+		},
+		"void-dimension:staring_dog": {
+			"energy_budget": 2.0,
+			"charge": 1.0
+		},
+		"void-dimension:staring_cat": {
+			"energy_budget": 2.0,
+			"charge": 1.0
+		},
+		"void-dimension:hollowed_alpha_steve": {
+			"energy_budget": 3.5,
+			"charge": 1.5
+		},
+		"void-dimension:zombified_alpha_steve": {
+			"energy_budget": 3.0,
+			"charge": 1.2
+		},
+		"void-dimension:null": {
+			"energy_budget": 5.0,
+			"charge": 2.0
 		}
 	},
 	"effects": {

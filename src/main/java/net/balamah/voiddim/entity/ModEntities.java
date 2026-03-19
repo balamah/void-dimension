@@ -243,7 +243,7 @@ public class ModEntities {
 	);
 
 	@SuppressWarnings("unchecked")
-	protected static final EntityType<? extends MobEntity>[] restrictedEntities =
+	protected static final EntityType<? extends MobEntity>[] spawnRestrictedEntities =
 		new EntityType[] {
 			ModEntities.CORRUPTED_STALKER,
 			ModEntities.SHATTERED_SENTINEL,
@@ -256,7 +256,11 @@ public class ModEntities {
 			ModEntities.CORRUPTED_CREEPER,
 			ModEntities.CORRUPTED_SPIDER,
 			ModEntities.HOLLOWED_ALPHA_STEVE,
-			ModEntities.ZOMBIFIED_ALPHA_STEVE
+			ModEntities.ZOMBIFIED_ALPHA_STEVE,
+			ModEntities.NULL,
+			ModEntities.AGGRESSIVE_NULL,
+			ModEntities.STARING_CAT,
+			ModEntities.STARING_DOG
 		};
 
 	public static void registerModEntities() {
@@ -268,7 +272,7 @@ public class ModEntities {
 			"Registering mob spawn restrictions for " + VoidDimension.MOD_ID
 		);
 
-		for (EntityType<? extends MobEntity> entityType : restrictedEntities) {
+		for (EntityType<? extends MobEntity> entityType : spawnRestrictedEntities) {
 			SpawnRestriction.register(
 				entityType,
 				SpawnLocationTypes.ON_GROUND,

@@ -2,6 +2,7 @@
 ;; The plugin will be released soon.
 ;; To load the configuration file, press `C-c p f l'.
 ;; To load the configuration file, press `C-c p f l'.
+
 (defvar current-project (project-get-root)
   "Current project directory")
 
