@@ -1,22 +1,24 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
-import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.entity.EntityType;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.entity.EntityType;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Random;
 
+import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
+import net.balamah.voiddim.entity.custom.HerobrineEntity;
+import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
-public class ShootLightningGoal<T extends CorruptedHostileEntity> extends SlowMovementGoal<T> {
+public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementGoal<T> {
 	protected Random random = new Random();
 	protected Vec3d targetPosition;
+	protected boolean shotPredicate;
 
 	public ShootLightningGoal(T entity) {
 		super(entity);
@@ -24,12 +26,12 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity> extends SlowMo
 
 	@Override
 	public boolean canStart() {
-		return this.entity.getTarget() != null;
+		return this.entity.getTarget() != null && this.entity.getLightningCooldown() == 0;
 	}
 
 	@Override
 	public boolean shouldContinue() {
-		return this.canStart() && this.tick < 11;
+		return !this.shotPredicate;
 	}
 
 	@Override
@@ -38,6 +40,7 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity> extends SlowMo
 
 		this.targetPosition = this.getTargetPosition(this.entity.getTarget());
 		this.sendEntityStatus(ModEntityStatuses.HEROBRINE_LIGHTNING_INVOKE);
+		this.addSpeedModifier();
 		// TODO: Chance sound
 		this.world.playSound(
 			this.entity, targetPosition.x, targetPosition.y, targetPosition.z,
@@ -49,7 +52,12 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity> extends SlowMo
 	public void stop() {
 		super.stop();
 
+		this.tick = 0;
+		this.shotPredicate = false;
+
+		this.entity.setLightningCooldown(400);
 		this.sendEntityStatus(ModEntityStatuses.HEROBRINE_LIGHTNING_INVOKE_STOP);
+		this.removeSpeedModifier();
 	}
 
 	@Override
@@ -58,7 +66,7 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity> extends SlowMo
 
 		this.displayParticles(this.targetPosition);
 
-		if (this.tick == 10) {
+		if (this.tick == 20) {
 			this.summonLightningBolt(this.targetPosition);
 		}
 	}
@@ -68,23 +76,28 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity> extends SlowMo
 	}
 
 	protected void displayParticles(Vec3d position) {
+		if (!(this.world instanceof ServerWorld serverWorld)) {
+			return;
+		}
+
 		double vx = (random.nextDouble() - 0.5) * 0.01;
-		double vy = 0.05 + random.nextDouble() * 0.03;
+		double vy = 0.05 + random.nextDouble(5.5) * 0.03;
 		double vz = (random.nextDouble() - 0.5) * 0.01;
 
-		if (random.nextInt(5) == 0) {
-			this.world.addParticleClient(
-				ParticleTypes.SOUL, position.x, position.y, position.z, vx, vy, vz
-			);
-		}
+		serverWorld.spawnParticles(
+			ModParticleTypes.LIGHTNING, position.x, position.y, position.z, 10, vz, vx, vy, 0.25
+		);
 	}
 
 	protected void summonLightningBolt(Vec3d position) {
-		LightningEntity lightningBolt = new LightningEntity(
-			EntityType.LIGHTNING_BOLT, this.world
-		);
+		if (!(this.world instanceof ServerWorld)) {
+			return;
+		}
+
+		LightningEntity lightningBolt = new LightningEntity(EntityType.LIGHTNING_BOLT, this.world);
 
 		lightningBolt.setPosition(position);
 		this.world.spawnEntity(lightningBolt);
+		this.shotPredicate = true;
 	}
 }
