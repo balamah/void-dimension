@@ -50,7 +50,7 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 	public void tick() {
 		super.tick();
 
-		int randomSignCount = this.random.nextInt(5);
+		int randomSignCount = this.random.nextInt(3);
 		int signCount = Math.max(1, randomSignCount);
 
 		for (int i = 0; i < signCount; i++) {
@@ -58,6 +58,10 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 			this.world.setBlockState(tableBlockPos, Blocks.PALE_OAK_SIGN.getDefaultState());
 
 			SignBlockEntity signBlockEntity = (SignBlockEntity) this.world.getBlockEntity(tableBlockPos);
+			if (signBlockEntity == null) {
+				continue;
+			}
+
 			McCodeHelper.setSignText(signBlockEntity, this.signLines);
 		}
 	}
