@@ -52,7 +52,6 @@ public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementG
 	public void stop() {
 		super.stop();
 
-		this.tick = 0;
 		this.shotPredicate = false;
 
 		this.entity.setLightningCooldown(400);
@@ -64,6 +63,7 @@ public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementG
 	public void tick() {
 		super.tick();
 
+		this.walkAway();
 		this.displayParticles(this.targetPosition);
 
 		if (this.tick == 20) {
@@ -85,7 +85,7 @@ public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementG
 		double vz = (random.nextDouble() - 0.5) * 0.01;
 
 		serverWorld.spawnParticles(
-			ModParticleTypes.LIGHTNING, position.x, position.y, position.z, 10, vz, vx, vy, 0.25
+			ModParticleTypes.LIGHTNING, position.x, position.y, position.z, 10, vz, vx, vy, 0.1
 		);
 	}
 
@@ -99,5 +99,28 @@ public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementG
 		lightningBolt.setPosition(position);
 		this.world.spawnEntity(lightningBolt);
 		this.shotPredicate = true;
+	}
+
+	protected void walkAway() {
+		double x = this.entity.getX();
+		double y = this.entity.getY();
+		double z = this.entity.getZ();
+
+		double xt = this.targetPosition.x;
+		double zt = this.targetPosition.z;
+
+		double xEntityTargetDistance = Math.abs(xt - x);
+		double zEntityTargetDistance = Math.abs(zt - z);
+
+		double xTarget = x;
+		double zTarget = z;
+
+		if (xEntityTargetDistance < 4) {
+			xTarget = xt - 5;
+		} else if (zEntityTargetDistance < 4) {
+			zTarget = zt - 5;
+		}
+
+		this.entity.getNavigation().startMovingTo(xTarget, y, zTarget, 1.0);
 	}
 }
