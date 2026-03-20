@@ -5,7 +5,6 @@ import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.entity.EntityType;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Random;
@@ -13,6 +12,7 @@ import java.util.Random;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.HerobrineEntity;
 import net.balamah.voiddim.particle.ModParticleTypes;
+import net.balamah.voiddim.sound.ModSounds;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
 public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementGoal<T> {
@@ -41,10 +41,10 @@ public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementG
 		this.targetPosition = this.getTargetPosition(this.entity.getTarget());
 		this.sendEntityStatus(ModEntityStatuses.HEROBRINE_LIGHTNING_INVOKE);
 		this.addSpeedModifier();
-		// TODO: Chance sound
+
 		this.world.playSound(
 			this.entity, targetPosition.x, targetPosition.y, targetPosition.z,
-			SoundEvents.BLOCK_ANVIL_USE, SoundCategory.HOSTILE
+			ModSounds.LIGHTNING, SoundCategory.HOSTILE
 		);
 	}
 

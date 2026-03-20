@@ -141,6 +141,7 @@
 	"sound.void-dimension.corrupted_blaze.death": "Corrupted Blaze dies",
 	"sound.void-dimension.hollowed_alpha_steve.hit": "Hollowed alpha steve hit",
 	"sound.void-dimension.zombified_alpha_steve.hit": "Zombified alpha steve hit",
+	"sound.void-dimension.special_attack.lightning": "Lightning target position",
 
 	"text.void-dimension.prayer_success": "I have heard thy prayer, and I will protect thee",
 	"text.void-dimension.prayer_failure": "I will hide mine eyes from you, I will not hear for thou hast abused my power and my grace",

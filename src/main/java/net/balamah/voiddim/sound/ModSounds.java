@@ -124,6 +124,8 @@ public class ModSounds {
 			Identifier.of(VoidDimension.MOD_ID, "calm4")
 		);
 
+	public static final SoundEvent LIGHTNING = register("special_attacks.lightning");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}

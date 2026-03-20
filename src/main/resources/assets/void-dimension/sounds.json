@@ -315,5 +315,11 @@
 				"stream": true
 			}
 		]
+	},
+	"special_attacks.lightning": {
+		"subtitle": "sound.void-dimension.special_attack.lightning",
+		"sounds": [
+			"void-dimension:special_attacks/lightning"
+		]
 	}
 }
