@@ -26,6 +26,7 @@ import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
+// TODO: Nerf VoidHarbingerEntity teleportation
 public class VoidHarbingerEntity extends BossEntity {
 	protected final int teleportCooldown = 140;
 	protected int teleportTicks;
@@ -56,7 +57,7 @@ public class VoidHarbingerEntity extends BossEntity {
 	}
 
 	public boolean teleportRandomly() {
-		int teleportationRadius = 9;
+		int teleportationRadius = 13;
 
 		if (!this.getEntityWorld().isClient() && this.isAlive()) {
 			double newY = this.getY() + (this.random.nextInt(teleportationRadius));

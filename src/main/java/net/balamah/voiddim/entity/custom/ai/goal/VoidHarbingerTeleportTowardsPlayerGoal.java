@@ -40,6 +40,7 @@ public class VoidHarbingerTeleportTowardsPlayerGoal extends Goal {
 		if (targetDistance < 5 || targetDistance > 10 ||
 			(attackCount > 0 && attackCount % 4 == 0)
 		) {
+			System.out.println("Void harbinger: goal teleporting");
 			this.entity.teleportTo(target);
 		}
 	}

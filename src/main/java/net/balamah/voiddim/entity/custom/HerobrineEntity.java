@@ -80,6 +80,7 @@ public class HerobrineEntity extends BossEntity {
 		 */
 		super.initGoals();
 
+		this.goalSelector.add(2, new HeavyJumpTargetGoal<HerobrineEntity>(this));
 		this.goalSelector.add(3, new ShootLightningGoal<HerobrineEntity>(this));
 		this.goalSelector.add(
 			2,

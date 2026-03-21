@@ -1,19 +1,26 @@
 package net.balamah.voiddim.custom;
 
 import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.boss.BossBar.Color;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.block.entity.SignText;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.entity.LivingEntity;
@@ -33,14 +40,25 @@ import net.minecraft.block.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.block.Block;
 import net.minecraft.item.Items;
+import net.minecraft.util.Hand;
 import net.minecraft.item.Item;
 import net.minecraft.text.Text;
 
+import net.balamah.voiddim.entity.custom.VoidSphereEntity;
+import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.effect.ModDamageSources;
+import net.balamah.voiddim.sound.ModSounds;
 import net.balamah.voiddim.VoidDimension;
 
 import java.util.List;
 
 public class McCodeHelper {
+	public static final List<RegistryEntry<StatusEffect>> effects = List.of(
+		StatusEffects.SLOWNESS,
+		StatusEffects.BLINDNESS,
+		StatusEffects.WEAKNESS
+	);
+
 	public static final List<Block> dangerousBlocks = List.of(
 		Blocks.AIR, Blocks.LAVA, Blocks.COBWEB
 	);
@@ -167,7 +185,9 @@ public class McCodeHelper {
 		 * Blocks.AIR is included in {@link #dangerousBlocks} to prevent hit combos.
 		 * Which makes fights with the entity better
 		 */
-		if (dangerousBlocks.contains(elevatedBlock) || target.getY() > y) {
+		if (dangerousBlocks.contains(elevatedBlock) || target.getY() > y ||
+			target.distanceTo(entity) > 10
+		) {
 			return true;
 		}
 
@@ -233,5 +253,53 @@ public class McCodeHelper {
 		}
 
 		signBlockEntity.setText(signText, true);
+	}
+
+	public static void createShockWave(ServerWorld world, LivingEntity entity, float radius) {
+		world.createExplosion(
+			entity, null, VoidSphereEntity.EXPLOSION_BEHAVIOR,
+			entity.getX(), entity.getY(), entity.getZ(),
+			radius, false, World.ExplosionSourceType.TRIGGER,
+			ParticleTypes.GUST_EMITTER_SMALL, ParticleTypes.GUST_EMITTER_LARGE,
+			Pool.empty(), ModSounds.SHOCKWAVE
+		);
+
+		List<LivingEntity> entities = entity.getEntityWorld()
+			.getEntitiesByClass(
+				LivingEntity.class,
+				entity.getBoundingBox().expand(radius),
+				e -> !e.isSpectator()
+			);
+
+		for (LivingEntity target : entities) {
+			if (target instanceof BossEntity || !McCodeHelper.isTargetVisible(entity, target)) {
+				continue;
+			}
+
+			for (RegistryEntry<StatusEffect> effect : effects) {
+				target.addStatusEffect(new StatusEffectInstance(effect, 1200, 2));
+				target.damage(world, ModDamageSources.shockWave(world), 15f);
+
+				breakShield(target);
+			}
+		}
+	}
+
+	public static void breakShield(LivingEntity target) {
+		if (!(target instanceof PlayerEntity player)) {
+			return;
+		}
+
+		ItemStack stack = player.getActiveItem();
+
+		if (stack.isOf(Items.SHIELD)) {
+			EquipmentSlot slot = (player.getActiveHand() == Hand.MAIN_HAND)
+				? EquipmentSlot.MAINHAND
+				: EquipmentSlot.OFFHAND;
+
+			stack.damage(150, player, slot);
+
+			McCodeHelper.playSoundFromEntity(target, SoundEvents.ITEM_SHIELD_BREAK);
+		}
 	}
 }
