@@ -9,13 +9,11 @@ import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.advancement.AdvancementCriterion;
+import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.registry.RegistryWrapper;
@@ -92,14 +90,6 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			null, AdvancementFrame.GOAL, false, "got_into_void",
 			ChangedDimensionCriterion.Conditions.to(ModDimensions.VOID_WORLD),
 			consumer, "get_into_void"
-		);
-
-		// TODO: Change condition to VisitBiomeCriterion, which is a custom criterion
-		AdvancementEntry aDangerousPlace = this.getAdvancementEntry(
-			ModBlocks.CORRUPT_BLOCK, "a_dangerous_place", aForsakenPlace,
-			null, AdvancementFrame.TASK, true, "got_into_corrupt_valley",
-			ChangedDimensionCriterion.Conditions.to(ModDimensions.VOID_WORLD),
-			consumer, "get_into_corrupt_valley"
 		);
 
 		AdvancementEntry cannibalism = this.getAdvancementEntry(
