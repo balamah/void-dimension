@@ -10,10 +10,10 @@ import net.balamah.voiddim.entity.custom.CorruptedWarriorEntity;
 import net.balamah.voiddim.entity.custom.DarkGraspEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
-public class DarkGraspInvokeGoal extends SlowMovementGoal {
+public class DarkGraspInvokeGoal<T extends CorruptedWarriorEntity> extends SlowMovementGoal<T> {
 	protected boolean didInvokeGrasp;
 
-	public DarkGraspInvokeGoal(CorruptedWarriorEntity entity) {
+	public DarkGraspInvokeGoal(T entity) {
 	    super(entity);
 	}
 
@@ -29,16 +29,16 @@ public class DarkGraspInvokeGoal extends SlowMovementGoal {
 		this.addSpeedModifier();
 
 		this.entity.setStopAttacks(true);
-		this.sendEntityStatus(ModEntityStatuses.CORRUPTED_WARRIOR_SPECIAL_ATTACK);
+		this.sendEntityStatus(ModEntityStatuses.SPECIAL_ATTACK);
 	}
 
 	@Override
 	public void stop() {
 		super.stop();
 
-		this.removeSpeedModifier();;
+		this.removeSpeedModifier();
 		this.entity.setStopAttacks(false);
-		this.sendEntityStatus(ModEntityStatuses.CORRUPTED_WARRIOR_ATTACKS_STOP);
+		this.sendEntityStatus(ModEntityStatuses.STOP_ATTACK);
 	}
 
 	@Override

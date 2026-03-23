@@ -48,7 +48,7 @@ public class ShatteredSentinelEntity extends CorruptedHostileEntity {
 
 	@Override
 	public boolean tryAttack(ServerWorld world, Entity target) {
-		world.sendEntityStatus(this, ModEntityStatuses.SHATTERED_SENTINEL_ATTACK);
+		world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
 
 		DamageSource damageSource = this.getDamageSources().mobAttack(this);
 		float f = this.getAttackDamage();
@@ -71,7 +71,7 @@ public class ShatteredSentinelEntity extends CorruptedHostileEntity {
 	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
-			case ModEntityStatuses.SHATTERED_SENTINEL_ATTACK:
+			case ModEntityStatuses.ATTACK:
 				this.attackAnimationState.start(this.age);
 				break;
 			default: super.handleStatus(status);

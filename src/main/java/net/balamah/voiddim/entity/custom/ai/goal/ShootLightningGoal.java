@@ -39,7 +39,7 @@ public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementG
 		super.start();
 
 		this.targetPosition = this.getTargetPosition(this.entity.getTarget());
-		this.sendEntityStatus(ModEntityStatuses.HEROBRINE_LIGHTNING_INVOKE);
+		this.sendEntityStatus(ModEntityStatuses.LIGHTNING_INVOKE);
 		this.addSpeedModifier();
 
 		this.world.playSound(
@@ -55,7 +55,7 @@ public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementG
 		this.shotPredicate = false;
 
 		this.entity.setLightningCooldown(400);
-		this.sendEntityStatus(ModEntityStatuses.HEROBRINE_LIGHTNING_INVOKE_STOP);
+		this.sendEntityStatus(ModEntityStatuses.LIGHTNING_STOP);
 		this.removeSpeedModifier();
 	}
 

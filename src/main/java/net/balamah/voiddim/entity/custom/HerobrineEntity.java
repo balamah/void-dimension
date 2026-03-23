@@ -38,13 +38,13 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
-			case ModEntityStatuses.HEROBRINE_LIGHTNING_INVOKE:
+			case ModEntityStatuses.LIGHTNING_INVOKE:
 				this.lightningInvokeAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.HEROBRINE_SHOCKWAVE_INVOKE:
+			case ModEntityStatuses.SHOCK_WAVE_INVOKE:
 				this.shockwaveInvokeAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.HEROBRINE_GROUND_CORRUPTION:
+			case ModEntityStatuses.GROUND_MANIPULATION_BEGIN:
 				this.groundCorruptionAnimationState.start(this.age);
 				break;
 			default:

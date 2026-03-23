@@ -22,7 +22,7 @@ public class ShatterGroundGoal extends SlowMovementGoal<ShatteredSentinelMasterE
 	public void start() {
 		this.addSpeedModifier();
 		this.entity.setStopAttacks(true);
-		this.sendEntityStatus(ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_BEGIN);
+		this.sendEntityStatus(ModEntityStatuses.GROUND_MANIPULATION_BEGIN);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class ShatterGroundGoal extends SlowMovementGoal<ShatteredSentinelMasterE
 			this.entity.getRandom().nextInt(100)
 		);
 
-		this.sendEntityStatus(ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_END);
+		this.sendEntityStatus(ModEntityStatuses.GROUND_MANIPULATION_END);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class ShatterGroundGoal extends SlowMovementGoal<ShatteredSentinelMasterE
 		this.tick++;
 
 		if (this.tick == this.endTick) {
-			this.sendEntityStatus(ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_PUSH);
+			this.sendEntityStatus(ModEntityStatuses.GROUND_MANIPULATION_PROCESS);
 
 			ExplosionBehavior behavior = new ExplosionIgnoreEntitiesBehavior(
 				this.entity.getType(), ModEntities.SHATTERED_SENTINEL

@@ -6,7 +6,6 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
@@ -55,27 +54,27 @@ public class CorruptedWarriorEntity extends BossEntity {
 	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
-			case ModEntityStatuses.CORRUPTED_WARRIOR_ATTACK:
+			case ModEntityStatuses.ATTACK:
 				this.stopAnimations(this.normalAttackAnimations);
 				this.playRandomAnimation(this.normalAttackAnimations);
 				break;
-			case ModEntityStatuses.CORRUPTED_WARRIOR_SPECIAL_ATTACK:
+			case ModEntityStatuses.SPECIAL_ATTACK:
 				this.specialAttackAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.CORRUPTED_WARRIOR_ATTACKS_STOP:
+			case ModEntityStatuses.STOP_ATTACK:
 				this.stopAnimations(this.normalAttackAnimations);
 				this.specialAttackAnimationState.stop();
 				this.strongAttackAnimationState.stop();
 				this.strongestAttackAnimationState.stop();
 				this.summonProjectileAnimationState.stop();
 				break;
-			case ModEntityStatuses.CORRUPTED_WARRIOR_STRONG_ATTACK:
+			case ModEntityStatuses.STRONG_ATTACK:
 				this.strongAttackAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.CORRUPTED_WARRIOR_STRONGEST_ATTACK:
+			case ModEntityStatuses.STRONGEST_ATTACK:
 				this.strongestAttackAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.CORRUPTED_WARRIOR_SUMMON_PROJECTILE:
+			case ModEntityStatuses.PROJECTILE_INVOKE:
 				this.summonProjectileAnimationState.start(this.age);
 				break;
 			default: super.handleStatus(status);
@@ -88,7 +87,7 @@ public class CorruptedWarriorEntity extends BossEntity {
 		boolean result = super.tryAttack(world, target);
 		
 		if (result) {
-			world.sendEntityStatus(this, ModEntityStatuses.CORRUPTED_WARRIOR_ATTACK);
+			world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
 
 			// A magic number, don't touch
 			this.attackInterval = 8;
@@ -117,7 +116,7 @@ public class CorruptedWarriorEntity extends BossEntity {
 
 		if (this.getTarget() == null || this.attackInterval == 0) {
 			world.sendEntityStatus(
-				this, ModEntityStatuses.CORRUPTED_WARRIOR_ATTACKS_STOP
+				this, ModEntityStatuses.STOP_ATTACK
 			);
 		}
 

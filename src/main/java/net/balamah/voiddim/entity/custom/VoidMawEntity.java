@@ -43,7 +43,7 @@ public class VoidMawEntity extends PhantomEntity {
 
 	@Override
 	public boolean tryAttack(ServerWorld world, Entity target) {
-		world.sendEntityStatus(this, ModEntityStatuses.VOID_MAW_ATTACK);
+		world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
 
 		return super.tryAttack(world, target);
 	}
@@ -51,7 +51,7 @@ public class VoidMawEntity extends PhantomEntity {
 	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
-			case ModEntityStatuses.VOID_MAW_ATTACK:
+			case ModEntityStatuses.ATTACK:
 				this.attackAnimationState.start(this.age);
 				break;
 			default: super.handleStatus(status);

@@ -69,7 +69,7 @@ public class WormOfCorruptionEntity extends CorruptedHostileEntity {
 
 	@Override
 	public boolean tryAttack(ServerWorld world, Entity target) {
-		world.sendEntityStatus(this, ModEntityStatuses.WORM_OF_CORRUPTION_ATTACK);
+		world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
 
 		this.playSound(ModSounds.WORM_OF_CORRUPTION_ATTACK);
 
@@ -94,7 +94,7 @@ public class WormOfCorruptionEntity extends CorruptedHostileEntity {
 	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
-			case ModEntityStatuses.WORM_OF_CORRUPTION_ATTACK:
+			case ModEntityStatuses.ATTACK:
 				this.attackAnimationState.start(this.age);
 				break;
 			case ModEntityStatuses.VOID_SPHERE_SHOOT:

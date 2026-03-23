@@ -46,7 +46,7 @@ public class ShockWaveInvokeGoal<T extends BossEntity & ShockWaveUser> extends S
 		this.entity.setStopAttacks(true);
 		this.addSpeedModifier();
 		this.entity.playSound(SoundEvents.ENTITY_PLAYER_BREATH, 4, 1);
-		this.sendEntityStatus(ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHOCK_WAVE_INVOKE);
+		this.sendEntityStatus(ModEntityStatuses.SHOCK_WAVE_INVOKE);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class ShockWaveInvokeGoal<T extends BossEntity & ShockWaveUser> extends S
 		this.entity.setShockWaveTicks(shockWaveTicks);
 		this.entity.setStopAttacks(false);
 		this.entityAttributeInstance.removeModifier(this.attributeModifier);
-		this.sendEntityStatus(ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHOCK_WAVE_INVOKE_STOP);
+		this.sendEntityStatus(ModEntityStatuses.SHOCK_WAVE_INVOKE_STOP);
 
 		this.entity.attackCount = 0;
 	}

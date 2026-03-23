@@ -86,25 +86,25 @@ public class ShatteredSentinelMasterEntity extends BossEntity implements ShockWa
 			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_ATTACK:
 				this.attackAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHOCK_WAVE_INVOKE:
+			case ModEntityStatuses.SHOCK_WAVE_INVOKE:
 				this.shockWaveInvokeState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHOCK_WAVE_INVOKE_STOP:
+			case ModEntityStatuses.SHOCK_WAVE_INVOKE_STOP:
 				this.shockWaveInvokeState.stop();
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_THROW_BLOCK:
+			case ModEntityStatuses.THROW_BLOCK:
 				this.throwBlockState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_THROW_BLOCK_STOP:
+			case ModEntityStatuses.THROW_BLOCK_STOP:
 				this.throwBlockState.stop();
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_BEGIN:
+			case ModEntityStatuses.GROUND_MANIPULATION_BEGIN:
 				this.shatterGroundBeginAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_PUSH:
+			case ModEntityStatuses.GROUND_MANIPULATION_PROCESS:
 				this.shatterGroundPushAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_END:
+			case ModEntityStatuses.GROUND_MANIPULATION_END:
 				this.shatterGroundBeginAnimationState.stop();
 				this.shatterGroundPushAnimationState.stop();
 				break;
