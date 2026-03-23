@@ -10,16 +10,18 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.interfaces.ShockWaveUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.entity.ModEntities;
 
-public class HerobrineEntity extends BossEntity {
+public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 	public AnimationState lightningInvokeAnimationState = new AnimationState();
 	public AnimationState groundCorruptionAnimationState = new AnimationState();
 	public AnimationState shockwaveInvokeAnimationState = new AnimationState();
 
 	protected int lightningCooldown;
+	protected int shockwaveCooldown;
 
 	public HerobrineEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -58,6 +60,10 @@ public class HerobrineEntity extends BossEntity {
 		if (this.lightningCooldown > 0) {
 			this.lightningCooldown--;
 		}
+
+		if (this.shockwaveCooldown > 0) {
+			this.shockwaveCooldown--;
+		}
 	}
 	
 	public int getLightningCooldown() {
@@ -66,6 +72,21 @@ public class HerobrineEntity extends BossEntity {
 
 	public void setLightningCooldown(int lightningCooldown) {
 		this.lightningCooldown = lightningCooldown;
+	}
+
+	@Override
+	public int getShockWaveCooldown() {
+		return 200;
+	}
+
+	@Override
+	public int getShockWaveTicks() {
+		return this.shockwaveCooldown;
+	}
+
+	@Override
+	public void setShockWaveTicks(int ticks) {
+		this.shockwaveCooldown = ticks;
 	}
 
 	@Override
@@ -80,7 +101,9 @@ public class HerobrineEntity extends BossEntity {
 		 */
 		super.initGoals();
 
-		this.goalSelector.add(2, new HeavyJumpTargetGoal<HerobrineEntity>(this));
+		// this.goalSelector.add(2, new HeavyJumpTargetGoal<HerobrineEntity>(this));
+
+		this.goalSelector.add(2, new ShockWaveInvokeGoal<HerobrineEntity>(this, 12, 10));
 		this.goalSelector.add(3, new ShootLightningGoal<HerobrineEntity>(this));
 		this.goalSelector.add(
 			2,
