@@ -102,6 +102,12 @@ public class McCodeHelper {
 		return world.getBlockState(blockPos).getBlock();
 	}
 
+	public static Block getBlock(World world, int x, int y, int z) {
+		BlockPos blockPos = new BlockPos(x, y, z);
+
+		return world.getBlockState(blockPos).getBlock();
+	}
+
 	public static BlockPos getRandomBlockRightOf(Entity entity, int distance, int range) {
 		Direction facing = entity.getHorizontalFacing();
 

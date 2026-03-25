@@ -22,6 +22,7 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 
 	protected int lightningCooldown;
 	protected int shockwaveCooldown;
+	protected int groundCorruptionCooldown;
 
 	public HerobrineEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -64,6 +65,10 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 		if (this.shockwaveCooldown > 0) {
 			this.shockwaveCooldown--;
 		}
+
+		if (this.groundCorruptionCooldown > 0) {
+			this.groundCorruptionCooldown--;
+		}
 	}
 	
 	public int getLightningCooldown() {
@@ -72,6 +77,14 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 
 	public void setLightningCooldown(int lightningCooldown) {
 		this.lightningCooldown = lightningCooldown;
+	}
+
+	public int getGroundCorruptionCooldown() {
+		return this.groundCorruptionCooldown;
+	}
+
+	public void setGroundCorruptionCooldown(int groundCorruptionCooldown) {
+		this.groundCorruptionCooldown = groundCorruptionCooldown;
 	}
 
 	@Override
@@ -103,6 +116,7 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 
 		// this.goalSelector.add(2, new HeavyJumpTargetGoal<HerobrineEntity>(this));
 
+		this.goalSelector.add(1, new GroundCorruptionGoal<HerobrineEntity>(this, 10, 15, 10));
 		this.goalSelector.add(2, new ShockWaveInvokeGoal<HerobrineEntity>(this, 12, 10));
 		this.goalSelector.add(3, new ShootLightningGoal<HerobrineEntity>(this));
 		this.goalSelector.add(
