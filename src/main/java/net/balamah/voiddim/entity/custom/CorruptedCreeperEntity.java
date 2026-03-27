@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 public class CorruptedCreeperEntity extends CreeperEntity {
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.MAX_HEALTH, 35)
-			.add(EntityAttributes.FOLLOW_RANGE, 40)
+			.add(EntityAttributes.MAX_HEALTH, 25)
+			.add(EntityAttributes.FOLLOW_RANGE, 25)
 			.add(EntityAttributes.MOVEMENT_SPEED, 0.32F)
 			.add(EntityAttributes.STEP_HEIGHT, 1.0);
 	}
