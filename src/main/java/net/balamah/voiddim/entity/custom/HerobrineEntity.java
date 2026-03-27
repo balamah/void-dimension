@@ -13,12 +13,13 @@ import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.ShockWaveUser;
+import net.balamah.voiddim.interfaces.VoidSlashUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 
-public class HerobrineEntity extends BossEntity implements ShockWaveUser {
+public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSlashUser {
 	public AnimationState lightningInvokeAnimationState = new AnimationState();
 	public AnimationState groundCorruptionAnimationState = new AnimationState();
 	public AnimationState shockwaveInvokeAnimationState = new AnimationState();
@@ -26,6 +27,7 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 	protected int lightningCooldown;
 	protected int shockwaveCooldown = 200;
 	protected int groundCorruptionCooldown;
+	protected int voidSlashCooldown;
 
 	public HerobrineEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -121,6 +123,7 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 		 */
 		super.initGoals();
 
+		this.goalSelector.add(1, new VoidSlashGoal<HerobrineEntity>(this, 35, 2, 2, 15));
 		this.goalSelector.add(2, new ShockWaveInvokeGoal<HerobrineEntity>(this, 12, 10));
 		this.goalSelector.add(3, new ShootLightningGoal<HerobrineEntity>(this));
 		this.goalSelector.add(
@@ -141,5 +144,20 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 	protected SoundEvent getHurtSound(DamageSource source) {
 		// TODO Auto-generated method stub
 		return super.getHurtSound(source);
+	}
+
+	@Override
+	public int getVoidSlashCooldown() {
+		return 200;
+	}
+
+	@Override
+	public int getVoidSlashTicks() {
+		return this.voidSlashCooldown;
+	}
+
+	@Override
+	public void setVoidSlashTicks(int ticks) {
+		this.voidSlashCooldown = ticks;
 	}
 }

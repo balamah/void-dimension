@@ -37,7 +37,7 @@ public class GroundCorruptionGoal<T extends HerobrineEntity> extends SlowMovemen
 		LivingEntity target = this.entity.getTarget();
 
 		return target != null && this.entity.attackCount >= 4 &&
-			this.entity.getGroundCorruptionCooldown() == 0 &&
+			// this.entity.getGroundCorruptionCooldown() == 0 &&
 			target.distanceTo(this.entity) <= 10;
 	}
 
@@ -63,7 +63,7 @@ public class GroundCorruptionGoal<T extends HerobrineEntity> extends SlowMovemen
 		super.stop();
 
 		this.removeSpeedModifier();
-		this.entity.setGroundCorruptionCooldown(100);
+		// this.entity.setGroundCorruptionCooldown(100);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ public class ModParticleTypes {
 
 	public static final SimpleParticleType CORRUPTION = FabricParticleTypes.simple();
 	public static final SimpleParticleType LIGHTNING = FabricParticleTypes.simple();
+	public static final SimpleParticleType VOID_SLASH_AREA = FabricParticleTypes.simple();
 
 	public static void registerModParticles() {
 		VoidDimension.LOGGER.info("Registering mod particles for " + VoidDimension.MOD_ID);
@@ -39,8 +40,15 @@ public class ModParticleTypes {
 			LIGHTNING
 		);
 
+		Registry.register(
+			Registries.PARTICLE_TYPE,
+			Identifier.of(VoidDimension.MOD_ID, "void_slash_area"),
+			VOID_SLASH_AREA
+		);
+
 		ParticleFactoryRegistry.getInstance().register(CORRUPTED_FLAME, FlameParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(CORRUPTION, EndRodParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(LIGHTNING, EndRodParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(VOID_SLASH_AREA, EndRodParticle.Factory::new);
 	}
 }
