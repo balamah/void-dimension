@@ -1,9 +1,9 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.block.Block;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.block.Block;
+import net.minecraft.entity.LivingEntity;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.HerobrineEntity;
 import net.balamah.voiddim.custom.McCodeHelper;
@@ -12,7 +12,10 @@ import java.util.Random;
 
 import net.balamah.voiddim.block.ModBlocks;
 
+// TODO: Finish some time
 public class GroundCorruptionGoal<T extends HerobrineEntity> extends SlowMovementGoal<T> {
+	protected boolean corruptedGroundPredicate;
+
 	protected final Random random = new Random();
 
 	protected final int groundCorruptionTick;
@@ -31,21 +34,26 @@ public class GroundCorruptionGoal<T extends HerobrineEntity> extends SlowMovemen
 
 	@Override
 	public boolean canStart() {
-		return this.entity.attackCount >= 4 && this.entity.getGroundCorruptionCooldown() == 0;
+		LivingEntity target = this.entity.getTarget();
+
+		return target != null && this.entity.attackCount >= 4 &&
+			this.entity.getGroundCorruptionCooldown() == 0 &&
+			target.distanceTo(this.entity) <= 10;
 	}
 
 	@Override
 	public boolean shouldContinue() {
-		return this.entity.getTarget() != null;
+		return !this.corruptedGroundPredicate;
 	}
 
 	@Override
 	public void start() {
 		super.start();
 
-		this.entity.setInvulnerable(true);
 		this.addSpeedModifier();
 		this.entity.playSound(SoundEvents.BLOCK_ANVIL_BREAK);
+
+		this.corruptedGroundPredicate = false;
 
 		// TODO: Add animation
 	}
@@ -54,26 +62,22 @@ public class GroundCorruptionGoal<T extends HerobrineEntity> extends SlowMovemen
 	public void stop() {
 		super.stop();
 
-		this.entity.setInvulnerable(false);
 		this.removeSpeedModifier();
+		this.entity.setGroundCorruptionCooldown(100);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
+		System.out.println("Prediate --> " + this.corruptedGroundPredicate);
+
 		if (this.tick == this.groundCorruptionTick) {
 			// TODO: Implement corrupt block spreading
 			this.corruptBlocksUnderEntity();
 			this.corruptBlocksAround(this.corruptionRadius, this.corruptBlocksCount);
-		}
-	}
 
-	protected void corruptBlock(BlockPos blockPos) {
-		Block block = McCodeHelper.getBlock(this.world, blockPos);
-
-		if (McCodeHelper.isBlockReplaceable(block)) {
-			this.world.setBlockState(blockPos, ModBlocks.CORRUPT_BLOCK.getDefaultState());
+			this.corruptedGroundPredicate = true;
 		}
 	}
 
@@ -81,7 +85,7 @@ public class GroundCorruptionGoal<T extends HerobrineEntity> extends SlowMovemen
 		for (int i = 0; i < 4; i++) {
 			BlockPos blockPos = McCodeHelper.getBlockPosUnderEntity(this.entity, i);
 
-			this.corruptBlock(blockPos);
+			this.entity.corruptBlock(this.world, blockPos);
 		}
 	}
 
@@ -102,7 +106,7 @@ public class GroundCorruptionGoal<T extends HerobrineEntity> extends SlowMovemen
 			int randomY = this.getRandomCoordinate(minY, maxY);
 			int randomZ = this.getRandomCoordinate(minZ, maxZ);
 
-			this.corruptBlock(new BlockPos(randomX, randomY, randomZ));
+			this.entity.corruptBlock(this.world, new BlockPos(randomX, randomY, randomZ));
 		}
 	}
 

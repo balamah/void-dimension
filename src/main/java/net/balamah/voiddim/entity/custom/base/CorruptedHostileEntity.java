@@ -15,12 +15,14 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.item.Item;
 
 import java.util.Random;
 
 import net.balamah.voiddim.entity.custom.ai.goal.VoidHostileEntityAttackGoal;
+import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.custom.McCodeHelper;
 
 public abstract class CorruptedHostileEntity extends HostileEntity {
@@ -84,9 +86,27 @@ public abstract class CorruptedHostileEntity extends HostileEntity {
 	public boolean damage(ServerWorld world, DamageSource source, float amount) {
 		boolean result = super.damage(world, source, amount);
 
-		if (result) this.attackCount++;
+		if (result) {
+			this.attackCount++;
+		}
 
 		return result;
+	}
+
+	public boolean isSecondPhase() {
+		float maxHP = this.getMaxHealth();
+		float middleHP = maxHP / 2;
+		float currentHP = this.getHealth();
+
+		return currentHP < middleHP;
+	}
+
+	public void corruptBlock(World world, BlockPos blockPos) {
+		Block block = McCodeHelper.getBlock(world, blockPos);
+
+		if (McCodeHelper.isBlockReplaceable(block)) {
+			world.setBlockState(blockPos, ModBlocks.CORRUPT_BLOCK.getDefaultState());
+		}
 	}
 
 	protected boolean burnsInDaylight() {

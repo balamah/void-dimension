@@ -4,15 +4,18 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.block.Block;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.ShockWaveUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
+import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 
 public class HerobrineEntity extends BossEntity implements ShockWaveUser {
@@ -21,7 +24,7 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 	public AnimationState shockwaveInvokeAnimationState = new AnimationState();
 
 	protected int lightningCooldown;
-	protected int shockwaveCooldown;
+	protected int shockwaveCooldown = 200;
 	protected int groundCorruptionCooldown;
 
 	public HerobrineEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -71,6 +74,20 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 		}
 	}
 	
+	@Override
+	public void tickMovement() {
+		super.tickMovement();
+
+		if (this.isSecondPhase()) {
+			BlockPos blockToCorruptPos = this.getBlockPos().add(0, -1, 0);
+			World world = this.getEntityWorld();
+			Block blockToCorrupt = McCodeHelper.getBlock(world, blockToCorruptPos);
+			if (McCodeHelper.isBlockReplaceable(blockToCorrupt)) {
+				this.corruptBlock(this.getEntityWorld(), blockToCorruptPos);
+			}
+		}
+	}
+
 	public int getLightningCooldown() {
 		return this.lightningCooldown;
 	}
@@ -79,17 +96,10 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 		this.lightningCooldown = lightningCooldown;
 	}
 
-	public int getGroundCorruptionCooldown() {
-		return this.groundCorruptionCooldown;
-	}
-
-	public void setGroundCorruptionCooldown(int groundCorruptionCooldown) {
-		this.groundCorruptionCooldown = groundCorruptionCooldown;
-	}
 
 	@Override
 	public int getShockWaveCooldown() {
-		return 200;
+		return 350;
 	}
 
 	@Override
@@ -106,17 +116,11 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser {
 	protected void initGoals() {
 		/*
 		 * TODO: Add goals for HerobrineEntity
-		 * - ShootLightning
-		 * - HeavyJump
-		 * - Attack
-		 * - ShockWaveInvoke
-		 * - GroundCorruption
+		 * - BreakRoofGoal
+		 * - VoidSlashGoal
 		 */
 		super.initGoals();
 
-		// this.goalSelector.add(2, new HeavyJumpTargetGoal<HerobrineEntity>(this));
-
-		this.goalSelector.add(1, new GroundCorruptionGoal<HerobrineEntity>(this, 10, 15, 10));
 		this.goalSelector.add(2, new ShockWaveInvokeGoal<HerobrineEntity>(this, 12, 10));
 		this.goalSelector.add(3, new ShootLightningGoal<HerobrineEntity>(this));
 		this.goalSelector.add(

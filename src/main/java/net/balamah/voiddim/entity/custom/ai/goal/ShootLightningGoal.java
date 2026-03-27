@@ -54,7 +54,7 @@ public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementG
 
 		this.shotPredicate = false;
 
-		this.entity.setLightningCooldown(400);
+		this.entity.setLightningCooldown(600);
 		this.sendEntityStatus(ModEntityStatuses.LIGHTNING_STOP);
 		this.removeSpeedModifier();
 	}
