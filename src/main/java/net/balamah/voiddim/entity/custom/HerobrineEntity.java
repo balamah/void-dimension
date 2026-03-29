@@ -4,11 +4,13 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.block.Block;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.AnimationState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.entity.EntityType;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
@@ -115,6 +117,36 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSl
 	}
 
 	@Override
+	public int getVoidSlashCooldown() {
+		return 200;
+	}
+
+	@Override
+	public int getVoidSlashTicks() {
+		return this.voidSlashCooldown;
+	}
+
+	@Override
+	public void setVoidSlashTicks(int ticks) {
+		this.voidSlashCooldown = ticks;
+	}
+
+	@Override
+	public void onDamaged(DamageSource damageSource) {
+		super.onDamaged(damageSource);
+	}
+
+	@Override
+	public boolean isFireImmune() {
+		return true;
+	}
+
+	@Override
+	public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
+		this.heal(5);
+	}
+
+	@Override
 	protected void initGoals() {
 		/*
 		 * TODO: Add goals for HerobrineEntity
@@ -144,20 +176,5 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSl
 	protected SoundEvent getHurtSound(DamageSource source) {
 		// TODO Auto-generated method stub
 		return super.getHurtSound(source);
-	}
-
-	@Override
-	public int getVoidSlashCooldown() {
-		return 200;
-	}
-
-	@Override
-	public int getVoidSlashTicks() {
-		return this.voidSlashCooldown;
-	}
-
-	@Override
-	public void setVoidSlashTicks(int ticks) {
-		this.voidSlashCooldown = ticks;
 	}
 }

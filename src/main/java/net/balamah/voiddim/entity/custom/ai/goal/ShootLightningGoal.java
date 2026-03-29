@@ -1,7 +1,6 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.entity.EntityType;
@@ -10,10 +9,12 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Random;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
+import net.balamah.voiddim.entity.custom.VoidLightningEntity;
 import net.balamah.voiddim.entity.custom.HerobrineEntity;
 import net.balamah.voiddim.particle.ModParticleTypes;
-import net.balamah.voiddim.sound.ModSounds;
+import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.entity.ModEntityStatuses;
+import net.balamah.voiddim.sound.ModSounds;
 
 public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementGoal<T> {
 	protected Random random = new Random();
@@ -94,7 +95,9 @@ public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementG
 			return;
 		}
 
-		LightningEntity lightningBolt = new LightningEntity(EntityType.LIGHTNING_BOLT, this.world);
+		VoidLightningEntity lightningBolt = new VoidLightningEntity(
+			ModEntities.VOID_LIGHTNING_BOLT, this.world
+		);
 
 		lightningBolt.setPosition(position);
 		this.world.spawnEntity(lightningBolt);

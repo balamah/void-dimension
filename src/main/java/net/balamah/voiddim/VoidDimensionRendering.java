@@ -166,6 +166,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		this.createBlocksTransparency(this.blocksForTransparency);
 
 		EntityRendererFactories.register(ModEntities.BEDROCK_BOMB, BedrockBombRenderer::new);
+		EntityRendererFactories.register(ModEntities.VOID_LIGHTNING_BOLT, VoidLightningEntityRenderer::new);
 
 		ModParticleTypes.registerModParticles();
 	}

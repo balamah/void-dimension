@@ -137,6 +137,17 @@ public class ModEntities {
 			.dimensions(0.6f, 2f)
 		);
 
+	public static final EntityType<VoidLightningEntity> VOID_LIGHTNING_BOLT = register(
+		"void_lightning_bolt",
+		VoidLightningEntity.class,
+		EntityType.Builder.create(VoidLightningEntity::new, SpawnGroup.MISC)
+			.dropsNothing()
+			.disableSaving()
+			.dimensions(0.0F, 0.0F)
+			.maxTrackingRange(16)
+			.trackingTickInterval(Integer.MAX_VALUE)
+	);
+
 	public static final EntityType<StaringCatEntity> STARING_CAT = register(
 		"staring_cat",
 		StaringCatEntity.class,
