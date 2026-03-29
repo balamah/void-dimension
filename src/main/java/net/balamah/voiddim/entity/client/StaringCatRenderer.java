@@ -32,7 +32,7 @@ public class StaringCatRenderer extends AgeableMobEntityRenderer<StaringCatEntit
 		this.addFeature(new CatCollarFeatureRenderer(this, context.getEntityModels()));
 
 		this.addFeature(
-			new GlowFeatureRenderer<>(this, "textures/entity/staring_cat_glow.png")
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/staring_cat.png")
 		);
 	}
 

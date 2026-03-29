@@ -16,7 +16,7 @@ public class NullEntityRenderer
 		super(context, model, shadowRadius);
 
 		this.addFeature(
-			new GlowFeatureRenderer<>(this, "textures/entity/null_glow.png")
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/null.png")
 		);
 	}
 

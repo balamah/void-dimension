@@ -17,7 +17,7 @@ public class VoidHarbingerRenderer
 		super(context, new VoidHarbingerModel(context.getPart(VoidHarbingerModel.VOID_HARBINGER)), 0.75f);
 
 		this.addFeature(
-			new GlowFeatureRenderer<>(this, "textures/entity/void_harbinger_glow.png")
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/void_harbinger.png")
 		);
 	}
 

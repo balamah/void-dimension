@@ -22,7 +22,7 @@ public class StaringDogRenderer
 		);
 
 		this.addFeature(
-			new GlowFeatureRenderer<>(this, "textures/entity/staring_dog_glow.png")
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/staring_dog.png")
 		);
 	}
 

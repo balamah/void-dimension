@@ -16,13 +16,13 @@ public class HerobrineRenderer
 		super(context, model, shadowRadius);
 
 		this.addFeature(
-			new GlowFeatureRenderer<>(this, "textures/entity/herobrine_glow.png")
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/entity_303.png")
 		);
 	}
 
 	@Override
 	public Identifier getTexture(S state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/herobrine.png");
+		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/entity_303.png");
 	}
 
 	@Override

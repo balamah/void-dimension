@@ -16,7 +16,7 @@ public class AggressiveNullRenderer
 		super(context, model, shadowRadius);
 
 		this.addFeature(
-			new GlowFeatureRenderer<>(this, "textures/entity/aggressive_null_glow.png")
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/aggressive_null.png")
 		);
 	}
 
