@@ -14,14 +14,14 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.interfaces.DodgeAttackUser;
 import net.balamah.voiddim.interfaces.ShockWaveUser;
-import net.balamah.voiddim.interfaces.VoidSlashUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 
-public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSlashUser {
+public class HerobrineEntity extends BossEntity implements ShockWaveUser, DodgeAttackUser {
 	public AnimationState lightningInvokeAnimationState = new AnimationState();
 	public AnimationState groundCorruptionAnimationState = new AnimationState();
 	public AnimationState shockwaveInvokeAnimationState = new AnimationState();
@@ -29,7 +29,7 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSl
 	protected int lightningCooldown;
 	protected int shockwaveCooldown = 200;
 	protected int groundCorruptionCooldown;
-	protected int voidSlashCooldown;
+	protected int dodgeAttackCooldown;
 
 	public HerobrineEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -76,6 +76,10 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSl
 		if (this.groundCorruptionCooldown > 0) {
 			this.groundCorruptionCooldown--;
 		}
+
+		if (this.dodgeAttackCooldown > 0) {
+			this.dodgeAttackCooldown--;
+		}
 	}
 	
 	@Override
@@ -87,7 +91,8 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSl
 			World world = this.getEntityWorld();
 			Block blockToCorrupt = McCodeHelper.getBlock(world, blockToCorruptPos);
 			if (McCodeHelper.isBlockReplaceable(blockToCorrupt)) {
-				this.corruptBlock(this.getEntityWorld(), blockToCorruptPos);
+				// TODO: Restore code
+				// this.corruptBlock(this.getEntityWorld(), blockToCorruptPos);
 			}
 		}
 	}
@@ -117,21 +122,6 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSl
 	}
 
 	@Override
-	public int getVoidSlashCooldown() {
-		return 200;
-	}
-
-	@Override
-	public int getVoidSlashTicks() {
-		return this.voidSlashCooldown;
-	}
-
-	@Override
-	public void setVoidSlashTicks(int ticks) {
-		this.voidSlashCooldown = ticks;
-	}
-
-	@Override
 	public void onDamaged(DamageSource damageSource) {
 		super.onDamaged(damageSource);
 	}
@@ -147,6 +137,27 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSl
 	}
 
 	@Override
+	public int getDodgeAttackCooldown() {
+		return 100;
+	}
+
+	@Override
+	public int getDodgeAttackTicks() {
+		return this.dodgeAttackCooldown;
+	}
+
+	@Override
+	public void setDodgeAttackTicks(int ticks) {
+		this.dodgeAttackCooldown = ticks;
+	}
+
+	@Override
+	public void onDeath(DamageSource damageSource) {
+		// TODO Add chat message
+		super.onDeath(damageSource);
+	}
+
+	@Override
 	protected void initGoals() {
 		/*
 		 * TODO: Add goals for HerobrineEntity
@@ -155,7 +166,8 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSl
 		 */
 		super.initGoals();
 
-		this.goalSelector.add(1, new VoidSlashGoal<HerobrineEntity>(this, 35, 2, 2, 15));
+		// this.goalSelector.add(1, new VoidSlashGoal<HerobrineEntity>(this, 35, 2, 2, 15));
+		this.goalSelector.add(1, new DodgeAttackGoal<HerobrineEntity>(this, 15));
 		this.goalSelector.add(2, new ShockWaveInvokeGoal<HerobrineEntity>(this, 12, 10));
 		this.goalSelector.add(3, new ShootLightningGoal<HerobrineEntity>(this));
 		this.goalSelector.add(
@@ -168,13 +180,13 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, VoidSl
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		// TODO Auto-generated method stub
+		// TODO Change death sound
 		return super.getDeathSound();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		// TODO Auto-generated method stub
+		// TODO Change hurt sound
 		return super.getHurtSound(source);
 	}
 }
