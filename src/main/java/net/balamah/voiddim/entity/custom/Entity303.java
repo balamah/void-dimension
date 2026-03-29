@@ -21,7 +21,7 @@ import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 
-public class HerobrineEntity extends BossEntity implements ShockWaveUser, DodgeAttackUser {
+public class Entity303 extends BossEntity implements ShockWaveUser, DodgeAttackUser {
 	public AnimationState lightningInvokeAnimationState = new AnimationState();
 	public AnimationState groundCorruptionAnimationState = new AnimationState();
 	public AnimationState shockwaveInvokeAnimationState = new AnimationState();
@@ -31,13 +31,14 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, DodgeA
 	protected int groundCorruptionCooldown;
 	protected int dodgeAttackCooldown;
 
-	public HerobrineEntity(EntityType<? extends HostileEntity> entityType, World world) {
+	public Entity303(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return HostileEntity.createHostileAttributes()
 			.add(EntityAttributes.FOLLOW_RANGE, 32)
+			.add(EntityAttributes.STEP_HEIGHT, 2)
 			.add(EntityAttributes.ATTACK_DAMAGE, 7.0F)
 			.add(EntityAttributes.MOVEMENT_SPEED, 0.3f)
 			.add(EntityAttributes.MAX_HEALTH, 315);
@@ -167,13 +168,13 @@ public class HerobrineEntity extends BossEntity implements ShockWaveUser, DodgeA
 		super.initGoals();
 
 		// this.goalSelector.add(1, new VoidSlashGoal<HerobrineEntity>(this, 35, 2, 2, 15));
-		this.goalSelector.add(1, new DodgeAttackGoal<HerobrineEntity>(this, 15));
-		this.goalSelector.add(2, new ShockWaveInvokeGoal<HerobrineEntity>(this, 12, 10));
-		this.goalSelector.add(3, new ShootLightningGoal<HerobrineEntity>(this));
+		this.goalSelector.add(1, new DodgeAttackGoal<Entity303>(this, 15));
+		this.goalSelector.add(2, new ShockWaveInvokeGoal<Entity303>(this, 12, 10));
+		this.goalSelector.add(3, new ShootLightningGoal<Entity303>(this));
 		this.goalSelector.add(
 			2,
-			new SummonEntitiesGoal<HerobrineEntity, AggressiveNullEntity>(
-				this, AggressiveNullEntity.class, ModEntities.AGGRESSIVE_NULL
+			new SummonEntitiesGoal<Entity303, AggressiveNullEntity>(
+				this, AggressiveNullEntity.class, ModEntities.AGGRESSIVE_NULL, 5
 			)
 		);
 	}

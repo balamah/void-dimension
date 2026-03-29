@@ -131,10 +131,10 @@ public class VoidDimensionRendering implements ClientModInitializer {
 										   ),
 										   0.5f
 									   )),
-				new BipedEntitySpecs<>(ModEntities.HEROBRINE,
+				new BipedEntitySpecs<>(ModEntities.ENTITY_303,
 									   HumanModel.HEROBRINE,
 									   HumanModel.getTexturedModelData(),
-									   context -> new HerobrineRenderer<>(
+									   context -> new Entity303Renderer<>(
 										   context,
 										   new HumanModel<>(
 											   context.getPart(HumanModel.HEROBRINE)

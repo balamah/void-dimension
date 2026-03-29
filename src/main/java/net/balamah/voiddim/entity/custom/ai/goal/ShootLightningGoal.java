@@ -10,13 +10,13 @@ import java.util.Random;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.VoidLightningEntity;
-import net.balamah.voiddim.entity.custom.HerobrineEntity;
+import net.balamah.voiddim.entity.custom.Entity303;
 import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class ShootLightningGoal<T extends HerobrineEntity> extends SlowMovementGoal<T> {
+public class ShootLightningGoal<T extends Entity303> extends SlowMovementGoal<T> {
 	protected Random random = new Random();
 	protected Vec3d targetPosition;
 	protected boolean shotPredicate;

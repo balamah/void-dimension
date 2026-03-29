@@ -5,14 +5,14 @@ import net.minecraft.client.render.entity.BipedEntityRenderer;
 import net.minecraft.util.Identifier;
 
 import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
-import net.balamah.voiddim.entity.custom.HerobrineEntity;
+import net.balamah.voiddim.entity.custom.Entity303;
 import net.balamah.voiddim.VoidDimension;
 
-public class HerobrineRenderer
-<E extends HerobrineEntity, S extends HerobrineRenderState, M extends HumanModel<S>>
+public class Entity303Renderer
+<E extends Entity303, S extends Entity303RenderState, M extends HumanModel<S>>
 	extends BipedEntityRenderer<E, S, M>
 {
-	public HerobrineRenderer(Context context, M model, float shadowRadius) {
+	public Entity303Renderer(Context context, M model, float shadowRadius) {
 		super(context, model, shadowRadius);
 
 		this.addFeature(
@@ -28,7 +28,7 @@ public class HerobrineRenderer
 	@Override
 	@SuppressWarnings("unchecked")
 	public S createRenderState() {
-		return (S) new HerobrineRenderState();
+		return (S) new Entity303RenderState();
 	}
 
 	@Override

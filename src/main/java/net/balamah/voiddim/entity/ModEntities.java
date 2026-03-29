@@ -129,11 +129,11 @@ public class ModEntities {
 			.dimensions(0.6f, 2f)
 		);
 
-	public static final EntityType<HerobrineEntity> HEROBRINE =
+	public static final EntityType<Entity303> ENTITY_303 =
 		register(
-			"herobrine",
-			HerobrineEntity.class,
-			EntityType.Builder.<HerobrineEntity>create(HerobrineEntity::new, SpawnGroup.CREATURE)
+			"entity_303",
+			Entity303.class,
+			EntityType.Builder.<Entity303>create(Entity303::new, SpawnGroup.CREATURE)
 			.dimensions(0.6f, 2f)
 		);
 

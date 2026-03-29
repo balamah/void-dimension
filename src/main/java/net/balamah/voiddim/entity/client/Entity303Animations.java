@@ -2,7 +2,7 @@ package net.balamah.voiddim.entity.client;
 
 import net.minecraft.client.render.entity.animation.*;
 
-public class HerobrineAnimations {
+public class Entity303Animations {
 	public static final AnimationDefinition LIGHTNING_INVOKE = AnimationDefinition.Builder.create(0.75F)
 		.addBoneAnimation("body", new Transformation(Transformation.Targets.ROTATE, 
 			new Keyframe(0.0F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),

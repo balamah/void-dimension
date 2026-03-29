@@ -4,10 +4,10 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.LivingEntity;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
-import net.balamah.voiddim.entity.custom.HerobrineEntity;
+import net.balamah.voiddim.entity.custom.Entity303;
 import net.balamah.voiddim.custom.McCodeHelper;
 
-public class HeavyJumpTargetGoal<T extends HerobrineEntity> extends TickingGoal<T> {
+public class HeavyJumpTargetGoal<T extends Entity303> extends TickingGoal<T> {
 	protected boolean jumpedPredicate;
 
 	protected double xtarget;

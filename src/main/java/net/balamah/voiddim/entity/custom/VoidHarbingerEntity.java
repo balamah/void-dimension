@@ -191,7 +191,7 @@ public class VoidHarbingerEntity extends BossEntity {
 		this.goalSelector.add(
 			2,
 			new SummonEntitiesGoal<VoidHarbingerEntity, CorruptedStalkerEntity>(
-				this, CorruptedStalkerEntity.class, ModEntities.CORRUPTED_STALKER
+				this, CorruptedStalkerEntity.class, ModEntities.CORRUPTED_STALKER, 10
 			)
 		);
 	}

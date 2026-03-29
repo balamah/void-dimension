@@ -5,7 +5,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
-import net.balamah.voiddim.entity.custom.HerobrineEntity;
+import net.balamah.voiddim.entity.custom.Entity303;
 import net.balamah.voiddim.custom.McCodeHelper;
 
 import java.util.Random;
@@ -13,7 +13,7 @@ import java.util.Random;
 import net.balamah.voiddim.block.ModBlocks;
 
 // TODO: Finish some time
-public class GroundCorruptionGoal<T extends HerobrineEntity> extends SlowMovementGoal<T> {
+public class GroundCorruptionGoal<T extends Entity303> extends SlowMovementGoal<T> {
 	protected boolean corruptedGroundPredicate;
 
 	protected final Random random = new Random();

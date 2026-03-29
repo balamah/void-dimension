@@ -24,12 +24,16 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
 {
 	protected final Class<T> entityClass;
 	protected final EntityType<T> entityType;
+	protected final int maxTargetDistance;
 
-	public SummonEntitiesGoal(E entity, Class<T> entityClass, EntityType<T> entityType) {
+	public SummonEntitiesGoal(
+		E entity, Class<T> entityClass, EntityType<T> entityType, int maxTargetDistance
+	) {
 		super(entity);
 
 		this.entityClass = entityClass;
 		this.entityType = entityType;
+		this.maxTargetDistance = maxTargetDistance;
 	}
 
 	@Override
@@ -39,7 +43,7 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
 		Vec3d position = new Vec3d(this.entity.getX(), this.entity.getY(), this.entity.getZ());;
 
 		return target != null &&
-			   target.distanceTo(this.entity) > 11.0 &&
+			   target.distanceTo(this.entity) > this.maxTargetDistance &&
 			   !this.areMobsSpawned(this.entity.getEntityWorld(), position, 15);
 	}
 
@@ -52,14 +56,12 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
 	public void tick() {
 		super.tick();
 
-		World world = this.entity.getEntityWorld();
-
 		if (this.tick == 15) {
 			this.sendEntityStatus(ModEntityStatuses.SUMMON_ENTITIES_START);
 		}
 
 		if (this.tick == 20) {
-			this.spawnEntities(world);
+			this.spawnEntities(this.world);
 		}
 	}
 

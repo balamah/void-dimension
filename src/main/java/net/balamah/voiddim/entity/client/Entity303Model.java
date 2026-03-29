@@ -11,8 +11,8 @@ import net.minecraft.util.Identifier;
 
 import net.balamah.voiddim.VoidDimension;
 
-public class HerobrineModel
-	<T extends HerobrineRenderState> extends BipedEntityModel<T>
+public class Entity303Model
+	<T extends Entity303RenderState> extends BipedEntityModel<T>
 {
 	private final Animation lightningInvokeAnimation;
 	private final Animation groundCorruptionAnimation;
@@ -21,12 +21,12 @@ public class HerobrineModel
     public static final EntityModelLayer HEROBRINE =
 		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "herobrine"), "main");
 
-	public HerobrineModel(ModelPart root) {
+	public Entity303Model(ModelPart root) {
 		super(root);
 
-		this.lightningInvokeAnimation = HerobrineAnimations.LIGHTNING_INVOKE.createAnimation(root);
-		this.groundCorruptionAnimation = HerobrineAnimations.GROUND_CORRUPTION.createAnimation(root);
-		this.shockwaveInvokeAnimation = HerobrineAnimations.SHOCKWAVE_INVOKE.createAnimation(root);
+		this.lightningInvokeAnimation = Entity303Animations.LIGHTNING_INVOKE.createAnimation(root);
+		this.groundCorruptionAnimation = Entity303Animations.GROUND_CORRUPTION.createAnimation(root);
+		this.shockwaveInvokeAnimation = Entity303Animations.SHOCKWAVE_INVOKE.createAnimation(root);
 	}
 
 	public static TexturedModelData getTexturedModelData() {

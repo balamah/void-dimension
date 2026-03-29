@@ -20,6 +20,7 @@ public class CorruptionEffect extends StatusEffect {
 		ModEntities.CORRUPTED_CREEPER,
 		ModEntities.CORRUPTED_SPIDER,
 		ModEntities.HOLLOWED_ALPHA_STEVE,
+		ModEntities.ZOMBIFIED_ALPHA_STEVE,
 		ModEntities.VOID_MAW,
 		ModEntities.NULL,
 		ModEntities.STARING_CAT,

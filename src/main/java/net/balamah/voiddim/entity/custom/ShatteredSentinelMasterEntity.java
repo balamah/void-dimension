@@ -173,7 +173,7 @@ public class ShatteredSentinelMasterEntity extends BossEntity implements ShockWa
 		this.goalSelector.add(
 			7,
 			new SummonEntitiesGoal<ShatteredSentinelMasterEntity, ShatteredSentinelEntity>(
-				this, ShatteredSentinelEntity.class, ModEntities.SHATTERED_SENTINEL
+				this, ShatteredSentinelEntity.class, ModEntities.SHATTERED_SENTINEL, 11
 			)
 		);
 	}
