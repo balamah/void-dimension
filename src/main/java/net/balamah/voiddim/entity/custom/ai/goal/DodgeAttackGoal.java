@@ -6,12 +6,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.block.Block;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
-import net.balamah.voiddim.custom.McCodeHelper;
-import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
+import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.interfaces.DodgeAttackUser;
+import net.balamah.voiddim.custom.McCodeHelper;
 
 public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
-	extends TickingGoal<T>
+	extends SlowMovementGoal<T>
 {
 	protected final int counterAttackDelay;
 	protected boolean dodgedAndHit;
@@ -57,12 +57,14 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 		}
 
 		this.entity.setVelocity(newVelocity);
+		this.addSpeedModifier();
 	}
 
 	@Override
 	public void stop() {
 		super.stop();
 
+		this.removeSpeedModifier();
 		this.dodgedAndHit = false;
 		this.entity.attackCount = 0;
 	}
