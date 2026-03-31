@@ -64,9 +64,9 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 	public void stop() {
 		super.stop();
 
-		this.removeSpeedModifier();
 		this.dodgedAndHit = false;
 		this.entity.attackCount = 0;
+		this.removeSpeedModifier();
 	}
 
 	@Override

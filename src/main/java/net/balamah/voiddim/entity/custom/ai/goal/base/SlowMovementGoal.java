@@ -7,10 +7,12 @@ import net.minecraft.util.Identifier;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 
-public abstract class SlowMovementGoal<T extends CorruptedHostileEntity> extends TickingGoal<T> {
+public abstract class SlowMovementGoal<T extends CorruptedHostileEntity>
+	extends EntityAttributeModifierGoal<T>
+{
 	protected final Identifier attributeId = Identifier.ofVanilla("speed");
 	protected final EntityAttributeModifier attributeModifier =
-		new EntityAttributeModifier(
+		this.getAttributeModifier(
 			this.attributeId, -2, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
 		);
 
@@ -25,12 +27,10 @@ public abstract class SlowMovementGoal<T extends CorruptedHostileEntity> extends
 	}
 
 	protected void addSpeedModifier() {
-		if (!this.entityAttributeInstance.hasModifier(this.attributeId)) {
-			this.entityAttributeInstance.addTemporaryModifier(this.attributeModifier);
-		}
+		this.addModifier(this.entityAttributeInstance, this.attributeId, this.attributeModifier);
 	}
 
 	protected void removeSpeedModifier() {
-		this.entityAttributeInstance.removeModifier(this.attributeModifier);
+		this.removeModifier(this.entityAttributeInstance, this.attributeModifier);
 	}
 }
