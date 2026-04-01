@@ -131,7 +131,7 @@ public class ModEntities {
 
 	public static final EntityType<Entity303> ENTITY_303 =
 		register(
-			"entity_303",
+			"entity303",
 			Entity303.class,
 			EntityType.Builder.<Entity303>create(Entity303::new, SpawnGroup.CREATURE)
 			.dimensions(0.6f, 2f)
