@@ -2,6 +2,7 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 
 import java.util.Random;
 
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.Blocks;
@@ -12,6 +13,8 @@ import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
 import net.balamah.voiddim.custom.McCodeHelper;
 
 public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends TickingGoal<T> {
+	protected boolean placedSigns;
+
 	protected final Random random = new Random();
 	protected final String[] signLines;
 	protected final int upperBondChance;
@@ -38,33 +41,36 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 
 	@Override
 	public boolean shouldContinue() {
-		return this.tick <= this.finalTick;
+		return !this.placedSigns;
 	}
 
 	@Override
-	public void start() {
-		super.start();
+	public void stop() {
+		super.stop();
 
-		this.finalTick = this.random.nextInt(15);
+		this.placedSigns = false;
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		int randomSignCount = this.random.nextInt(3);
+		int randomSignCount = this.random.nextInt(2);
 		int signCount = Math.max(1, randomSignCount);
 
 		for (int i = 0; i < signCount; i++) {
 			BlockPos tableBlockPos = this.getRandomBlockPos(this.world, this.maxPlacingRadius);
 			this.world.setBlockState(tableBlockPos, Blocks.PALE_OAK_SIGN.getDefaultState());
 
-			SignBlockEntity signBlockEntity = (SignBlockEntity) this.world.getBlockEntity(tableBlockPos);
+			BlockEntity blockEntity = this.world.getBlockEntity(tableBlockPos);
+			SignBlockEntity signBlockEntity = (SignBlockEntity) blockEntity;
 			if (signBlockEntity == null) {
 				continue;
 			}
 
 			McCodeHelper.setSignText(signBlockEntity, this.signLines);
+
+			this.placedSigns = true;
 		}
 	}
 
