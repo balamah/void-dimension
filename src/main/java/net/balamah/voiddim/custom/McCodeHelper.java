@@ -2,6 +2,7 @@ package net.balamah.voiddim.custom;
 
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -36,6 +37,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.math.Box;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.block.Block;
@@ -308,4 +310,19 @@ public class McCodeHelper {
 			McCodeHelper.playSoundFromEntity(target, SoundEvents.ITEM_SHIELD_BREAK);
 		}
 	}
+
+	public static void sendMessageToNearbyPlayers(
+		ServerWorld world, Vec3d center, double radius, String message
+	) {
+        Box box = new Box(
+            center.x - radius, center.y - radius, center.z - radius,
+            center.x + radius, center.y + radius, center.z + radius
+        );
+
+        for (ServerPlayerEntity player : world.getPlayers()) {
+            if (box.contains(player.getEntityPos())) {
+                player.sendMessage(Text.literal(message), false);
+            }
+        }
+    }
 }

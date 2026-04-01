@@ -30,6 +30,11 @@ public class Entity303 extends BossEntity implements ShockWaveUser, DodgeAttackU
 	protected int shockwaveCooldown = 200;
 	protected int groundCorruptionCooldown;
 	protected int dodgeAttackCooldown;
+	protected String[] deathMessages = {
+		"I am not gone, I am waiting",
+		"Every end is temporary, even mine",
+		"Do not be fooled, I am never truly gone"
+	};
 
 	public Entity303(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -154,8 +159,15 @@ public class Entity303 extends BossEntity implements ShockWaveUser, DodgeAttackU
 
 	@Override
 	public void onDeath(DamageSource damageSource) {
-		// TODO Add chat message
 		super.onDeath(damageSource);
+
+		if (this.getEntityWorld() instanceof ServerWorld serverWorld) {
+			int randomMessageIndex = this.random.nextInt(this.deathMessages.length);
+
+			McCodeHelper.sendMessageToNearbyPlayers(
+				serverWorld, this.getEntityPos(), 10, this.deathMessages[randomMessageIndex]
+			);
+		}
 	}
 
 	@Override
