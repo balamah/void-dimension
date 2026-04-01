@@ -72,6 +72,7 @@ The order is going from brightest colors to the darkest
 - shattered_sentinel_master.death :: https://depositphotos.com/sound-effect/rumbling-impact-ancient-stony-stride-784492644.html
 - staring_entity.death            :: blade of darkness (muerte-Ldm.wav)
 - special_attack.lightning        :: https://pixabay.com/sound-effects/search/lightning/
+- special_attacks.counter_attack  :: https://pixabay.com/sound-effects/search/power%20attack/
 - music.1                         :: blade of darkness (ATMOSFERA8)
 - music.2                         :: blade of darkness (ATMOSFERA19)
 - music.3                         :: blade of darkness (SORPRESA7)

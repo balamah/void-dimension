@@ -1,25 +1,44 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.block.Block;
 
-import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.DodgeAttackUser;
+import net.balamah.voiddim.sound.ModSounds;
 import net.balamah.voiddim.custom.McCodeHelper;
 
 public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 	extends SlowMovementGoal<T>
 {
 	protected final int counterAttackDelay;
+	protected final double dashSpeed;
+	protected final float counterAttackBonusDamage;
 	protected boolean dodgedAndHit;
+	protected Vec3d targetPosition;
 
-	public DodgeAttackGoal(T entity, int counterAttackDelay) {
+	protected final Identifier attackAttributeId = Identifier.ofVanilla("attacking");
+	protected final EntityAttributeModifier attackAttributeModifier;
+
+	public DodgeAttackGoal(
+		T entity, int counterAttackDelay, double dashSpeed, float counterAttackBonusDamage
+	) {
 		super(entity);
 
 		this.counterAttackDelay = counterAttackDelay;
+		this.dashSpeed = dashSpeed;
+		this.counterAttackBonusDamage = counterAttackBonusDamage;
+
+		this.attackAttributeModifier = this.getAttributeModifier(
+			this.attackAttributeId,
+			this.counterAttackBonusDamage,
+			EntityAttributeModifier.Operation.ADD_VALUE
+		);
 	}
 
 	@Override
@@ -67,16 +86,19 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 		this.dodgedAndHit = false;
 		this.entity.attackCount = 0;
 		this.removeSpeedModifier();
+		this.removeModifier(this.entityAttributeInstance, this.attackAttributeModifier);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (this.tick == this.counterAttackDelay) {
-			this.entity.setVelocity(this.entity.getTarget().getVelocity());
+		if (this.tick == this.counterAttackDelay - 5) {
+			this.prepareDashAttack();
+		}
 
-			this.dodgedAndHit = true;
+		if (this.tick == this.counterAttackDelay) {
+			this.performDashAttack();
 		}
 	}
 
@@ -117,5 +139,22 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 		}
 
 		return true;
+	}
+
+	protected void prepareDashAttack() {
+		this.entity.playSound(ModSounds.COUNTER_ATTACK);
+		this.addModifier(
+			this.entityAttributeInstance, this.attackAttributeId, this.attackAttributeModifier
+		);
+
+		this.targetPosition = this.entity.getTarget().getEntityPos();
+	}
+
+	protected void performDashAttack() {
+		Vec3d dashDirection = this.targetPosition.subtract(this.entity.getEntityPos()).normalize();
+
+		this.entity.setVelocity(dashDirection.multiply(this.dashSpeed));
+
+		this.dodgedAndHit = true;
 	}
 }

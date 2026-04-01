@@ -321,5 +321,14 @@
 		"sounds": [
 			"void-dimension:special_attacks/lightning"
 		]
+	},
+	"special_attacks.counter_attack": {
+		"subtitle": "sound.void-dimension.special_attack.counter_attack",
+		"sounds": [
+			{
+				"name": "void-dimension:special_attacks/counter_attack",
+				"volume": 0.2
+			}
+		]
 	}
 }

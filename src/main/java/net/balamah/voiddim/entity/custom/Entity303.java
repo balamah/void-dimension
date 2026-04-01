@@ -160,14 +160,9 @@ public class Entity303 extends BossEntity implements ShockWaveUser, DodgeAttackU
 
 	@Override
 	protected void initGoals() {
-		/*
-		 * TODO: Add goals for HerobrineEntity
-		 * - BreakRoofGoal
-		 * - VoidSlashGoal
-		 */
 		super.initGoals();
 
-		this.goalSelector.add(1, new DodgeAttackGoal<Entity303>(this, 20));
+		this.goalSelector.add(1, new DodgeAttackGoal<Entity303>(this, 15, 2.0, 13f));
 		this.goalSelector.add(2, new ShockWaveInvokeGoal<Entity303>(this, 12, 10));
 		this.goalSelector.add(3, new ShootLightningGoal<Entity303>(this));
 		this.goalSelector.add(

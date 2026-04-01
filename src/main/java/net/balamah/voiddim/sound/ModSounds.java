@@ -125,6 +125,7 @@ public class ModSounds {
 		);
 
 	public static final SoundEvent LIGHTNING = register("special_attacks.lightning");
+	public static final SoundEvent COUNTER_ATTACK = register("special_attacks.counter_attack");
 
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
