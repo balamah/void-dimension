@@ -330,5 +330,14 @@
 				"volume": 0.2
 			}
 		]
+	},
+	"entity303.death": {
+		"subtitle": "sound.void-dimension.entity303.death",
+		"sounds": [
+			"void-dimension:entity303/death1",
+			"void-dimension:entity303/death2",
+			"void-dimension:entity303/death3",
+			"void-dimension:entity303/death4"
+		]
 	}
 }

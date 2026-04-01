@@ -20,6 +20,7 @@ import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
+import net.balamah.voiddim.sound.ModSounds;
 
 public class Entity303 extends BossEntity implements ShockWaveUser, DodgeAttackUser {
 	public AnimationState lightningInvokeAnimationState = new AnimationState();
@@ -97,8 +98,7 @@ public class Entity303 extends BossEntity implements ShockWaveUser, DodgeAttackU
 			World world = this.getEntityWorld();
 			Block blockToCorrupt = McCodeHelper.getBlock(world, blockToCorruptPos);
 			if (McCodeHelper.isBlockReplaceable(blockToCorrupt)) {
-				// TODO: Restore code
-				// this.corruptBlock(this.getEntityWorld(), blockToCorruptPos);
+				this.corruptBlock(this.getEntityWorld(), blockToCorruptPos);
 			}
 		}
 	}
@@ -187,13 +187,6 @@ public class Entity303 extends BossEntity implements ShockWaveUser, DodgeAttackU
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		// TODO Change death sound
-		return super.getDeathSound();
-	}
-
-	@Override
-	protected SoundEvent getHurtSound(DamageSource source) {
-		// TODO Change hurt sound
-		return super.getHurtSound(source);
+		return ModSounds.ENTITY303_DEATH;
 	}
 }
