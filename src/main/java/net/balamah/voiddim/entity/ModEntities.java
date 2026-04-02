@@ -129,7 +129,7 @@ public class ModEntities {
 			.dimensions(0.6f, 2f)
 		);
 
-	public static final EntityType<Entity303> ENTITY_303 =
+	public static final EntityType<Entity303> ENTITY303 =
 		register(
 			"entity303",
 			Entity303.class,

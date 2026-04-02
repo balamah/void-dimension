@@ -41,6 +41,11 @@
 	"item.void-dimension.corrupted_spider_spawn_egg": "Corrupted spider spawn egg",
 	"item.void-dimension.corrupted_blaze_spawn_egg": "Corrupted blaze spawn egg",
 	"item.void-dimension.corrupted_stalker_spawn_egg": "Corrupted stalker spawn egg",
+	"item.void-dimension.null_spawn_egg": "Null spawn egg",
+	"item.void-dimension.aggressive_null_spawn_egg": "Aggressive null spawn egg",
+	"item.void-dimension.staring_dog_spawn_egg": "Staring dog spawn egg",
+	"item.void-dimension.staring_cat_spawn_egg": "Staring cat spawn egg",
+	"item.void-dimension.entity303_spawn_egg": "Entity 303 spawn egg",
 
 	"item.minecraft.potion.effect.corruption": "Corruption potion",
 	"item.minecraft.potion.effect.divine_protection": "Divine protection potion",

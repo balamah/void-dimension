@@ -215,6 +215,21 @@ public class ModItems {
 	public static final Item ILLUSIONER_SPAWN_EGG =
 		registerSpawnEgg("illusioner_spawn_egg", EntityType.ILLUSIONER);
 
+	public static final Item NULL_SPAWN_EGG =
+		registerSpawnEgg("null_spawn_egg", ModEntities.NULL);
+
+	public static final Item AGGRESSIVE_NULL_SPAWN_EGG =
+		registerSpawnEgg("aggressive_null_spawn_egg", ModEntities.AGGRESSIVE_NULL);
+
+	public static final Item STARING_DOG_SPAWN_EGG =
+		registerSpawnEgg("staring_dog_spawn_egg", ModEntities.STARING_DOG);
+
+	public static final Item STARING_CAT_SPAWN_EGG =
+		registerSpawnEgg("staring_cat_spawn_egg", ModEntities.STARING_CAT);
+
+	public static final Item ENTITY303_SPAWN_EGG =
+		registerSpawnEgg("entity303_spawn_egg", ModEntities.ENTITY303);
+
 	public static final Item VOID_HORSE_ARMOR =
 		register(
 			"void_horse_armor",
