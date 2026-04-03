@@ -1,39 +1,23 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.ShatteredSentinelMasterEntity;
-import net.balamah.voiddim.entity.custom.ThrownBlockEntity;
+import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.interfaces.ThrowBlockUser;
 import net.balamah.voiddim.custom.McCodeHelper;
 
-public class ThrowBlockGoal extends Goal {
-	protected final ShatteredSentinelMasterEntity entity;
-
-	protected final EntityAttributeInstance entityAttributeInstance;
-	protected final Identifier attributeId = Identifier.ofVanilla("speed");
-	protected final EntityAttributeModifier attributeModifier =
-		new EntityAttributeModifier(
-			this.attributeId, -1.2, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
-		);
-
+public class ThrowBlockGoal<T extends CorruptedHostileEntity & ThrowBlockUser>
+	extends SlowMovementGoal<T>
+{
 	protected int cooldown;
 	protected boolean blockThrown = false;
 
-	public ThrowBlockGoal(
-		ShatteredSentinelMasterEntity entity
-	) {
-		this.entity = entity;
-		this.entityAttributeInstance =
-			this.entity.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
+	public ThrowBlockGoal(T entity) {
+		super(entity);
 	}
 
 	@Override
@@ -45,16 +29,16 @@ public class ThrowBlockGoal extends Goal {
 
 	@Override
 	public void start() {
-		this.cooldown = 0;
+		this.addSpeedModifier();
 	}
 
 	@Override
 	public void tick() {
+		super.tick();
+
 		World world = this.entity.getEntityWorld();
 		LivingEntity target = this.entity.getTarget();
 		if (!(world instanceof ServerWorld serverWorld)) return;
-
-		this.cooldown++;
 
 		if (this.cooldown == 1) {
 			this.entity.setStopAttacks(true);
@@ -77,8 +61,7 @@ public class ThrowBlockGoal extends Goal {
 	public void stop() {
 		super.stop();
 
-		// this.entity.setThrowBlockTicks(500);
-		this.entityAttributeInstance.removeModifier(this.attributeModifier);
+		this.removeSpeedModifier();
 	}
 
 	protected void throwBlock(ServerWorld serverWorld, BlockPos blockPos, LivingEntity target) {

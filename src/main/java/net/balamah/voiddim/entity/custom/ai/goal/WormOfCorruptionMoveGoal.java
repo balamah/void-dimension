@@ -9,14 +9,17 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.OneShotDamageGoal;
-import net.balamah.voiddim.entity.custom.WormOfCorruptionEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.interfaces.StationaryAttackUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.sound.ModSounds;
 
 import java.util.ArrayList;
 
-public class WormOfCorruptionMoveGoal extends OneShotDamageGoal<WormOfCorruptionEntity> {
+public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & StationaryAttackUser>
+	extends OneShotDamageGoal<T>
+{
 	protected final int maxAttackCountBeforeMoving;
 
 	protected final Random random = Random.create();
@@ -26,7 +29,7 @@ public class WormOfCorruptionMoveGoal extends OneShotDamageGoal<WormOfCorruption
 	protected int cooldown;
 
 	public WormOfCorruptionMoveGoal(
-		WormOfCorruptionEntity entity, int maxAttackCountBeforeMoving
+		T entity, int maxAttackCountBeforeMoving
 	) {
 		super(entity);
 

@@ -15,13 +15,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.interfaces.ShatterGroundUser;
 import net.balamah.voiddim.interfaces.ShockWaveUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class ShatteredSentinelMasterEntity extends BossEntity implements ShockWaveUser {
+public class ShatteredSentinelMasterEntity extends BossEntity
+	implements ShockWaveUser, ShatterGroundUser
+{
 	public AnimationState walkAnimationState = new AnimationState();
 	public AnimationState attackAnimationState = new AnimationState();
 	public AnimationState idleAnimationState = new AnimationState();
@@ -169,7 +172,7 @@ public class ShatteredSentinelMasterEntity extends BossEntity implements ShockWa
 
 		this.goalSelector.add(1, new ShatteredSentinelMasterShootGoal(this));
 		this.goalSelector.add(2, new ShockWaveInvokeGoal<ShatteredSentinelMasterEntity>(this, 12, 25));
-		this.goalSelector.add(6, new ShatterGroundGoal(this));
+		this.goalSelector.add(6, new ShatterGroundGoal<ShatteredSentinelMasterEntity>(this));
 		this.goalSelector.add(
 			7,
 			new SummonEntitiesGoal<ShatteredSentinelMasterEntity, ShatteredSentinelEntity>(

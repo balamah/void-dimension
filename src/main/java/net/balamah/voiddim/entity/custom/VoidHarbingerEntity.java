@@ -17,6 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.interfaces.TeleportUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 
@@ -27,7 +28,7 @@ import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
 // TODO: Nerf VoidHarbingerEntity teleportation
-public class VoidHarbingerEntity extends BossEntity {
+public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	protected final int teleportCooldown = 140;
 	protected int teleportTicks;
 
@@ -186,7 +187,7 @@ public class VoidHarbingerEntity extends BossEntity {
 		);
 
 		// Make teleportation more often on the second phase
-		this.goalSelector.add(0, new VoidHarbingerTeleportTowardsPlayerGoal(this));
+		this.goalSelector.add(0, new TeleportTowardsPlayerGoal<VoidHarbingerEntity>(this));
 		this.goalSelector.add(1, shootingGoal);
 		this.goalSelector.add(
 			2,

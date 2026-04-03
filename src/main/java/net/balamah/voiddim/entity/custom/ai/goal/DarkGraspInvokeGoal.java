@@ -6,11 +6,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
-import net.balamah.voiddim.entity.custom.CorruptedWarriorEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.custom.DarkGraspEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
-public class DarkGraspInvokeGoal<T extends CorruptedWarriorEntity> extends SlowMovementGoal<T> {
+public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity> extends SlowMovementGoal<T> {
 	protected boolean didInvokeGrasp;
 
 	public DarkGraspInvokeGoal(T entity) {

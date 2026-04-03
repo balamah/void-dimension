@@ -6,15 +6,18 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.world.explosion.ExplosionIgnoreEntitiesBehavior;
-import net.balamah.voiddim.entity.custom.ShatteredSentinelMasterEntity;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
+import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.interfaces.ShatterGroundUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.ModEntities;
 
-public class ShatterGroundGoal extends SlowMovementGoal<ShatteredSentinelMasterEntity> {
+public class ShatterGroundGoal<T extends BossEntity & ShatterGroundUser>
+	extends SlowMovementGoal<T>
+{
 	protected final int endTick = 25;
 
-	public ShatterGroundGoal(ShatteredSentinelMasterEntity entity) {
+	public ShatterGroundGoal(T entity) {
 	    super(entity);
 	}
 

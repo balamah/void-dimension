@@ -16,13 +16,16 @@ import net.minecraft.world.World;
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.DodgeAttackUser;
 import net.balamah.voiddim.interfaces.ShockWaveUser;
+import net.balamah.voiddim.interfaces.ShootLightningUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class Entity303 extends BossEntity implements ShockWaveUser, DodgeAttackUser {
+public class Entity303 extends BossEntity
+	implements ShockWaveUser, DodgeAttackUser, ShootLightningUser
+{
 	public AnimationState lightningInvokeAnimationState = new AnimationState();
 	public AnimationState groundCorruptionAnimationState = new AnimationState();
 	public AnimationState shockwaveInvokeAnimationState = new AnimationState();
