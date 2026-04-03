@@ -17,7 +17,7 @@ import net.balamah.voiddim.VoidDimension;
 
 public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> DEEPSLATE_VOID_SHARD_ORE_PLACED_KEY =
-		register("deepslate_void_shard_ore_overworld");
+		register("deepslate_voidium_ore_overworld");
 
 	public static void bootstrap(Registerable<PlacedFeature> context) {
         var configuredFeatures = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);

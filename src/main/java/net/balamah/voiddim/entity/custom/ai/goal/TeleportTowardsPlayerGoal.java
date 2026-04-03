@@ -3,12 +3,15 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 
-import net.balamah.voiddim.entity.custom.VoidHarbingerEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.interfaces.TeleportUser;
 
-public class VoidHarbingerTeleportTowardsPlayerGoal extends Goal {
-	protected final VoidHarbingerEntity entity;
+public class TeleportTowardsPlayerGoal<T extends CorruptedHostileEntity & TeleportUser>
+	extends Goal
+{
+	protected final T entity;
 
-	public VoidHarbingerTeleportTowardsPlayerGoal(VoidHarbingerEntity entity) {
+	public TeleportTowardsPlayerGoal(T entity) {
 		this.entity = entity;
 	}
 
@@ -40,12 +43,8 @@ public class VoidHarbingerTeleportTowardsPlayerGoal extends Goal {
 		if (targetDistance < 5 || targetDistance > 10 ||
 			(attackCount > 0 && attackCount % 4 == 0)
 		) {
+			System.out.println("Void harbinger: goal teleporting");
 			this.entity.teleportTo(target);
 		}
-	}
-
-	@Override
-	public void stop() {
-		super.stop();
 	}
 }

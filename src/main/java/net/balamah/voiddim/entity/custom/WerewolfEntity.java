@@ -11,13 +11,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.sound.SoundEvent;
 
-public class WerewolfEntity extends AbstractCorruptedHostileEntity {
+public class WerewolfEntity extends CorruptedHostileEntity {
 	public AnimationState walkAnimationState = new AnimationState();
 	public AnimationState attackHitAnimationState = new AnimationState();
 	public AnimationState attackBiteAnimationState = new AnimationState();
@@ -42,14 +42,14 @@ public class WerewolfEntity extends AbstractCorruptedHostileEntity {
 	public boolean tryAttack(ServerWorld world, Entity target) {
 		this.attackTicksLeft = 10;
 
-		byte status = ModEntityStatuses.WEREWOLF_ATTACK;
+		byte status = ModEntityStatuses.ATTACK;
 
 		if (world.random.nextFloat() < 0.15f &&
 			target instanceof PlayerEntity playerEntity
 		) {
 			McCodeHelper.disableShield(playerEntity);
 
-			status = ModEntityStatuses.WEREWOLF_BREAK_SHIELD;
+			status = ModEntityStatuses.BREAK_SHIELD;
 		}
 
 		world.sendEntityStatus(this, status);
@@ -73,11 +73,11 @@ public class WerewolfEntity extends AbstractCorruptedHostileEntity {
 	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
-			case ModEntityStatuses.WEREWOLF_ATTACK:
+			case ModEntityStatuses.ATTACK:
 				this.attackBiteAnimationState.start(this.age);
 				this.attackTicksLeft = 10;
 				break;
-			case ModEntityStatuses.WEREWOLF_BREAK_SHIELD:
+			case ModEntityStatuses.BREAK_SHIELD:
 				this.attackHitAnimationState.start(this.age);
 				this.attackTicksLeft = 10;
 				break;

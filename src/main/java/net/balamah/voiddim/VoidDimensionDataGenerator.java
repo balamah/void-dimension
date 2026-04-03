@@ -4,12 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack.RegistryDepen
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
-import net.balamah.voiddim.gen.VoidDimensionBlockLootTableProvider;
-import net.balamah.voiddim.gen.VoidDimensionChestLootTableProvider;
-import net.balamah.voiddim.gen.VoidDimensionEntityLootTableProvider;
-import net.balamah.voiddim.gen.VoidDimensionBlockTagProvider;
-import net.balamah.voiddim.gen.VoidDimensionItemTagProvider;
-import net.balamah.voiddim.gen.VoidDimensionRecipeProvider;
+import net.balamah.voiddim.gen.*;
 
 public class VoidDimensionDataGenerator implements DataGeneratorEntrypoint {
 	protected RegistryDependentFactory<?>[] providers = {
@@ -18,7 +13,8 @@ public class VoidDimensionDataGenerator implements DataGeneratorEntrypoint {
 		VoidDimensionRecipeProvider::new,
 		VoidDimensionBlockLootTableProvider::new,
 		VoidDimensionChestLootTableProvider::new,
-		VoidDimensionEntityLootTableProvider::new
+		VoidDimensionEntityLootTableProvider::new,
+		VoidDimensionAdvancementProvider::new
 	};
 
 	@Override

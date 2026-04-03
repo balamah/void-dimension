@@ -45,7 +45,8 @@
 			"void-dimension:deepslate_iron_ore",
 			"void-dimension:deepslate_lapis_ore",
 			"void-dimension:deepslate_redstone_ore",
-			"void-dimension:deepslate_void_shard_ore"
+			"void-dimension:deepslate_void_shard_ore",
+			"void-dimension:deepslate_voidium_ore"
 		],
 		[],
 		[],
@@ -80,6 +81,36 @@
 				"weight": 55,
 				"minCount": 1,
 				"maxCount": 2
+			},
+			{
+				"type": "void-dimension:staring_dog",
+				"weight": 35,
+				"minCount": 1,
+				"maxCount": 2
+			},
+			{
+				"type": "void-dimension:staring_cat",
+				"weight": 10,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:hollowed_alpha_steve",
+				"weight": 35,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:zombified_alpha_steve",
+				"weight": 25,
+				"minCount": 1,
+				"maxCount": 2
+			},
+			{
+				"type": "void-dimension:null",
+			"weight": 30,
+				"minCount": 1,
+				"maxCount": 1
 			}
 		]
 	},
@@ -102,6 +133,26 @@
 		},
 		"void-dimension:corrupted_stalker": {
 			"energy_budget": 4.0,
+			"charge": 2.0
+		},
+		"void-dimension:staring_dog": {
+			"energy_budget": 2.0,
+			"charge": 1.0
+		},
+		"void-dimension:staring_cat": {
+			"energy_budget": 2.0,
+			"charge": 1.0
+		},
+		"void-dimension:hollowed_alpha_steve": {
+			"energy_budget": 3.5,
+			"charge": 1.5
+		},
+		"void-dimension:zombified_alpha_steve": {
+			"energy_budget": 3.0,
+			"charge": 1.2
+		},
+		"void-dimension:null": {
+			"energy_budget": 5.0,
 			"charge": 2.0
 		}
 	},

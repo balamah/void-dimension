@@ -56,6 +56,8 @@ public class VoidDimension implements ModInitializer {
 		this.registerEntityAttributes();
 	}
 
+	// Looks bad, but it should be this way.
+	// Otherwise entities will not spawn on servers
 	protected void registerEntityAttributes() {
 		FabricDefaultAttributeRegistry.register(ModEntities.MANTIS, MantisEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SNOWMAN, SnowmanEntity.createAttributes());
@@ -70,5 +72,12 @@ public class VoidDimension implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_BLAZE, CorruptedBlazeEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_CREEPER, CorruptedCreeperEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_SPIDER, CorruptedSpiderEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HOLLOWED_ALPHA_STEVE, HollowedAlphaSteveEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ZOMBIFIED_ALPHA_STEVE, ZombifiedAlphaSteveEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.NULL, NullEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.AGGRESSIVE_NULL, AggressiveNullEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ENTITY303, Entity303.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.STARING_CAT, StaringCatEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.STARING_DOG, StaringDogEntity.createAttributes());
 	}
 }

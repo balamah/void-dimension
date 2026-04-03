@@ -97,6 +97,71 @@ public class ModEntities {
 			.dimensions(1.2F, 2.5f)
 		);
 
+	public static final EntityType<HollowedAlphaSteveEntity> HOLLOWED_ALPHA_STEVE =
+		register(
+			"hollowed_alpha_steve",
+			HollowedAlphaSteveEntity.class,
+			EntityType.Builder.<HollowedAlphaSteveEntity>create(HollowedAlphaSteveEntity::new, SpawnGroup.CREATURE)
+			.dimensions(0.6f, 2f)
+		);
+
+	public static final EntityType<ZombifiedAlphaSteveEntity> ZOMBIFIED_ALPHA_STEVE =
+		register(
+			"zombified_alpha_steve",
+			ZombifiedAlphaSteveEntity.class,
+			EntityType.Builder.<ZombifiedAlphaSteveEntity>create(ZombifiedAlphaSteveEntity::new, SpawnGroup.CREATURE)
+			.dimensions(0.6f, 2f)
+		);
+
+	public static final EntityType<NullEntity> NULL =
+		register(
+			"null",
+			NullEntity.class,
+			EntityType.Builder.<NullEntity>create(NullEntity::new, SpawnGroup.CREATURE)
+			.dimensions(0.6f, 2f)
+		);
+
+	public static final EntityType<AggressiveNullEntity> AGGRESSIVE_NULL =
+		register(
+			"aggressive_null",
+			AggressiveNullEntity.class,
+			EntityType.Builder.<AggressiveNullEntity>create(AggressiveNullEntity::new, SpawnGroup.CREATURE)
+			.dimensions(0.6f, 2f)
+		);
+
+	public static final EntityType<Entity303> ENTITY303 =
+		register(
+			"entity303",
+			Entity303.class,
+			EntityType.Builder.<Entity303>create(Entity303::new, SpawnGroup.CREATURE)
+			.dimensions(0.6f, 2f)
+		);
+
+	public static final EntityType<VoidLightningEntity> VOID_LIGHTNING_BOLT = register(
+		"void_lightning_bolt",
+		VoidLightningEntity.class,
+		EntityType.Builder.create(VoidLightningEntity::new, SpawnGroup.MISC)
+			.dropsNothing()
+			.disableSaving()
+			.dimensions(0.0F, 0.0F)
+			.maxTrackingRange(16)
+			.trackingTickInterval(Integer.MAX_VALUE)
+	);
+
+	public static final EntityType<StaringCatEntity> STARING_CAT = register(
+		"staring_cat",
+		StaringCatEntity.class,
+		EntityType.Builder.create(StaringCatEntity::new, SpawnGroup.CREATURE)
+		.dimensions(0.6F, 0.7F)
+	);
+
+	public static final EntityType<StaringDogEntity> STARING_DOG = register(
+		"staring_dog",
+		StaringDogEntity.class,
+		EntityType.Builder.create(StaringDogEntity::new, SpawnGroup.CREATURE)
+		.dimensions(0.6F, 0.85F)
+	);
+
 	public static final EntityType<CorruptedBlazeEntity> CORRUPTED_BLAZE = register(
 		"corrupted_blaze",
 		CorruptedBlazeEntity.class,
@@ -188,7 +253,8 @@ public class ModEntities {
 			.trackingTickInterval(10)
 	);
 
-	protected static final EntityType<? extends MobEntity>[] restrictedEntities =
+	@SuppressWarnings("unchecked")
+	protected static final EntityType<? extends MobEntity>[] spawnRestrictedEntities =
 		new EntityType[] {
 			ModEntities.CORRUPTED_STALKER,
 			ModEntities.SHATTERED_SENTINEL,
@@ -199,7 +265,13 @@ public class ModEntities {
 			ModEntities.WORM_OF_CORRUPTION,
 			ModEntities.CORRUPTED_BLAZE,
 			ModEntities.CORRUPTED_CREEPER,
-			ModEntities.CORRUPTED_SPIDER
+			ModEntities.CORRUPTED_SPIDER,
+			ModEntities.HOLLOWED_ALPHA_STEVE,
+			ModEntities.ZOMBIFIED_ALPHA_STEVE,
+			ModEntities.NULL,
+			ModEntities.AGGRESSIVE_NULL,
+			ModEntities.STARING_CAT,
+			ModEntities.STARING_DOG
 		};
 
 	public static void registerModEntities() {
@@ -211,7 +283,7 @@ public class ModEntities {
 			"Registering mob spawn restrictions for " + VoidDimension.MOD_ID
 		);
 
-		for (EntityType<? extends MobEntity> entityType : restrictedEntities) {
+		for (EntityType<? extends MobEntity> entityType : spawnRestrictedEntities) {
 			SpawnRestriction.register(
 				entityType,
 				SpawnLocationTypes.ON_GROUND,

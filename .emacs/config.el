@@ -1,3 +1,7 @@
+;; A configuration file for `project-config-file' for emacs.
+;; The plugin will be released soon.
+;; To load the configuration file, press `C-c p f l'.
+
 (defvar current-project (project-get-root)
   "Current project directory")
 
@@ -29,12 +33,20 @@
 
 (global-set-key (kbd "S-<f10>") 'run-project)
 
+(defrunc project-datagen
+  (vterm-run
+   (format
+	"builtin cd %s && ./gradlew runDatagen && ./gradlew clean build runClient" current-project)
+   "*build-run-datagen-mod*"))
+
+(global-set-key (kbd "S-C-M-<f10>") 'run-project-datagen)
+
 (defrunc project-sources-regenerate
   (run-gradle-commands "clean genSources build" "*project-sources-regenerate*"))
 
 (global-set-key (kbd "M-<f10>") 'run-project-sources-regenerate)
 
-(defvar project-current-world "mob-spawn-test"
+(defvar project-current-world "dimension-test"
   "The variable specifies a world, whose void dimension data will be removed when
 `run-project-remove-dimension' is executed")
 

@@ -30,10 +30,21 @@ public class VoidDimensionBlockLootTableProvider extends FabricBlockLootTablePro
 			)
 		;
 
+		LootTable.Builder voidiumLootTable = 
+			LootTable.builder()
+			.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(ModItems.VOIDIUM, 1, 3))
+			)
+		;
+
 		this.addDrop(ModBlocks.VOID_SHARD_BLOCK);
 		this.addDrop(ModBlocks.VOID_FLOWER);
 		this.addDrop(ModBlocks.CORRUPT_BLOCK);
 		this.addDrop(ModBlocks.CORRUPTED_LANTERN);
+
+		this.addDrop(ModBlocks.DEEPSLATE_VOIDIUM_ORE, voidiumLootTable);
+		this.addDrop(ModBlocks.CORRUPT_VOIDIUM_ORE, voidiumLootTable);
 
 		this.addDrop(
 			ModBlocks.WIND_MANIPULATION_BLOCK,

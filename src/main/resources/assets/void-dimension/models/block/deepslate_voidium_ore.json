@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cube_all",
+	"textures": {
+		"all": "void-dimension:block/deepslate_voidium_ore"
+	}
+}

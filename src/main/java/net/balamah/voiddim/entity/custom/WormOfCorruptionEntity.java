@@ -16,7 +16,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.interfaces.StationaryAttackUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
@@ -24,7 +25,9 @@ import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class WormOfCorruptionEntity extends AbstractCorruptedHostileEntity {
+public class WormOfCorruptionEntity extends CorruptedHostileEntity
+	implements StationaryAttackUser
+{
 	public AnimationState idleAnimationState = new AnimationState();
 	public AnimationState attackAnimationState = new AnimationState();
 	public AnimationState shootAnimationState = new AnimationState();
@@ -56,7 +59,7 @@ public class WormOfCorruptionEntity extends AbstractCorruptedHostileEntity {
 
 		this.goalSelector.add(2, new VoidHostileEntityAttackGoal(this, 1.0, false));
 
-		Goal shootingGoal = new ShootProjectileGoal<VoidSphereEntity>(
+		Goal shootingGoal = new ShootProjectileGoal<WormOfCorruptionEntity, VoidSphereEntity>(
 			this, world -> new VoidSphereEntity(ModEntities.VOID_SPHERE, world),
 			ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
 			ModSounds.VOID_HARBINGER_SHOOT,
@@ -69,21 +72,11 @@ public class WormOfCorruptionEntity extends AbstractCorruptedHostileEntity {
 
 	@Override
 	public boolean tryAttack(ServerWorld world, Entity target) {
-		world.sendEntityStatus(this, ModEntityStatuses.WORM_OF_CORRUPTION_ATTACK);
+		world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
 
 		this.playSound(ModSounds.WORM_OF_CORRUPTION_ATTACK);
 
 		return super.tryAttack(world, target);
-	}
-
-	@Override
-	public boolean damage(ServerWorld world, DamageSource source, float amount) {
-		boolean result = super.damage(world, source, amount);
-
-		if (result)
-			this.attackCount++;
-
-		return result;
 	}
 
 	@Override
@@ -104,7 +97,7 @@ public class WormOfCorruptionEntity extends AbstractCorruptedHostileEntity {
 	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
-			case ModEntityStatuses.WORM_OF_CORRUPTION_ATTACK:
+			case ModEntityStatuses.ATTACK:
 				this.attackAnimationState.start(this.age);
 				break;
 			case ModEntityStatuses.VOID_SPHERE_SHOOT:

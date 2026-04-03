@@ -15,10 +15,10 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class CorruptedStalkerEntity extends AbstractCorruptedHostileEntity {
+public class CorruptedStalkerEntity extends CorruptedHostileEntity {
 	protected Identifier ATTACKING_SPEED_MODIFIER_ID = Identifier.ofVanilla("attacking");
 	protected EntityAttributeModifier ATTACKING_SPEED_BOOST =
 		new EntityAttributeModifier(

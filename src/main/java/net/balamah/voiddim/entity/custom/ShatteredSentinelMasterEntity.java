@@ -15,12 +15,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.interfaces.ShatterGroundUser;
+import net.balamah.voiddim.interfaces.ShockWaveUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class ShatteredSentinelMasterEntity extends BossEntity {
+public class ShatteredSentinelMasterEntity extends BossEntity
+	implements ShockWaveUser, ShatterGroundUser
+{
 	public AnimationState walkAnimationState = new AnimationState();
 	public AnimationState attackAnimationState = new AnimationState();
 	public AnimationState idleAnimationState = new AnimationState();
@@ -85,25 +89,25 @@ public class ShatteredSentinelMasterEntity extends BossEntity {
 			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_ATTACK:
 				this.attackAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHOCK_WAVE_INVOKE:
+			case ModEntityStatuses.SHOCK_WAVE_INVOKE:
 				this.shockWaveInvokeState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHOCK_WAVE_INVOKE_STOP:
+			case ModEntityStatuses.SHOCK_WAVE_INVOKE_STOP:
 				this.shockWaveInvokeState.stop();
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_THROW_BLOCK:
+			case ModEntityStatuses.THROW_BLOCK:
 				this.throwBlockState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_THROW_BLOCK_STOP:
+			case ModEntityStatuses.THROW_BLOCK_STOP:
 				this.throwBlockState.stop();
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_BEGIN:
+			case ModEntityStatuses.GROUND_MANIPULATION_BEGIN:
 				this.shatterGroundBeginAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_PUSH:
+			case ModEntityStatuses.GROUND_MANIPULATION_PROCESS:
 				this.shatterGroundPushAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_END:
+			case ModEntityStatuses.GROUND_MANIPULATION_END:
 				this.shatterGroundBeginAnimationState.stop();
 				this.shatterGroundPushAnimationState.stop();
 				break;
@@ -151,15 +155,6 @@ public class ShatteredSentinelMasterEntity extends BossEntity {
 	}
 
 	@Override
-	public boolean damage(ServerWorld world, DamageSource source, float amount) {
-		boolean result = super.damage(world, source, amount);
-
-		if (result) this.attackCount++;
-
-		return result;
-	}
-
-	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.SHATTERED_SENTINEL_MASTER_DEATH;
 	}
@@ -176,12 +171,12 @@ public class ShatteredSentinelMasterEntity extends BossEntity {
 		super.initGoals();
 
 		this.goalSelector.add(1, new ShatteredSentinelMasterShootGoal(this));
-		this.goalSelector.add(2, new ShockWaveInvokeGoal(this, 12, 25));
-		this.goalSelector.add(6, new ShatterGroundGoal(this));
+		this.goalSelector.add(2, new ShockWaveInvokeGoal<ShatteredSentinelMasterEntity>(this, 12, 25));
+		this.goalSelector.add(6, new ShatterGroundGoal<ShatteredSentinelMasterEntity>(this));
 		this.goalSelector.add(
 			7,
-			new SummonEntitiesGoal<ShatteredSentinelEntity>(
-				this, ShatteredSentinelEntity.class, ModEntities.SHATTERED_SENTINEL
+			new SummonEntitiesGoal<ShatteredSentinelMasterEntity, ShatteredSentinelEntity>(
+				this, ShatteredSentinelEntity.class, ModEntities.SHATTERED_SENTINEL, 11
 			)
 		);
 	}

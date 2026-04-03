@@ -19,7 +19,7 @@ import net.balamah.voiddim.block.ModBlocks;
 
 public class ModConfiguredFeatures {
 	public static final RegistryKey<ConfiguredFeature<?, ?>> DEEPSLATE_VOID_SHARD_ORE_KEY =
-		register("pink_garnet_ore");
+		register("deepslate_voidium_ore");
 
 	public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
         RuleTest deepslateReplaceables = new TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);

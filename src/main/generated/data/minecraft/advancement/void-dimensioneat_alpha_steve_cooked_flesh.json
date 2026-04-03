@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:void-dimensionget_into_void",
+  "criteria": {
+    "ate_alpha_steve_flesh": {
+      "conditions": {
+        "item": {
+          "items": "void-dimension:cooked_flesh"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.cannibalism.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "void-dimension:cooked_flesh"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.cannibalism.title"
+    }
+  },
+  "requirements": [
+    [
+      "ate_alpha_steve_flesh"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

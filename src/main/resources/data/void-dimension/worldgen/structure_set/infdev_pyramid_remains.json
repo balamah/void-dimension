@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:infdev_pyramid_remains"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 100,
+		"spacing": 150,
+		"salt": 345871,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 15
+			}
+		}
+	}
+}

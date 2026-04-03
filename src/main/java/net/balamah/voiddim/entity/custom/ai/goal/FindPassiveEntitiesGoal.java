@@ -7,19 +7,22 @@ import java.util.List;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Entity;
 
-import net.balamah.voiddim.entity.custom.VoidMawEntity;
+import net.balamah.voiddim.interfaces.MinecraftEntityDongle;
 
-public class VoidMawFindPassiveEntitiesGoal extends Goal {
-	protected final VoidMawEntity entity;
+public class FindPassiveEntitiesGoal<T extends MobEntity & MinecraftEntityDongle>
+	extends Goal
+{
+	protected final T entity;
 
 	protected final TargetPredicate predicate = TargetPredicate.createAttackable().setBaseMaxDistance(64.0);
 	protected int delay = toGoalTicks(20);
 
-	public VoidMawFindPassiveEntitiesGoal(VoidMawEntity entity) {
+	public FindPassiveEntitiesGoal(T entity) {
 		this.entity = entity;
 	}
 

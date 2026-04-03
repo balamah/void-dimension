@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:jigsaw",
+	"biomes": [
+		"void-dimension:void_plains",
+		"void-dimension:void_forest",
+		"void-dimension:corrupt_valley"
+	],
+	"max_distance_from_center": 80,
+	"size": 1,
+	"step": "lakes",
+	"project_start_to_heightmap": "WORLD_SURFACE_WG",
+	"start_height_offset": -8,
+	"start_height": {
+		"type": "minecraft:uniform",
+		"min_inclusive": {
+			"absolute": 20
+		},
+		"max_inclusive": {
+			"absolute": 35
+		}
+	},
+	"spawn_overrides": {},
+	"use_expansion_hack": false,
+	"start_pool": "void-dimension:infdev_pyramid_remains"
+}

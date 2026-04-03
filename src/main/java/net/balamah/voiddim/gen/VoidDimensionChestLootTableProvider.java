@@ -331,6 +331,24 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 			.pool(cobwebPool)
 			;
 
+			LootTable.Builder infdevPyramidRemains =
+				LootTable.builder()
+				.pool(cobwebPool)
+				.pool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.9f)
+					.with(McGenHelper.getItemEntry(ModItems.MUSIC_DISC_CALM4, 1))
+				)
+				.pool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.with(McGenHelper.getItemEntry(Items.DIAMOND, 2, 4))
+					.with(McGenHelper.getItemEntry(Items.GOLD_INGOT, 5, 7))
+				)
+				.pool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.with(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 5, 7))
+					.with(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
+				)
+			;
 
 		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_WORM_ROOM_LOOT, illusionerWormChestTable);
 		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_KITCHEN_LOOT, illusionerKitchenChestTable);
@@ -355,6 +373,10 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTablePr
 
 		consumer.accept(ModLootTables.CEMETERY_CHEST_LOOT, cemeteryChestTable);
 		consumer.accept(ModLootTables.INFECTED_RUINED_HOUSE_LOOT, infectedRuinedHouseTable);
-		consumer.accept(ModLootTables.INFECTED_TOWER_HOUSE_WEAPONS_LOOT, infectedTowerHouseWeaponsTable);
+		consumer.accept(
+			ModLootTables.INFECTED_TOWER_HOUSE_WEAPONS_LOOT, infectedTowerHouseWeaponsTable
+		);
+
+		consumer.accept(ModLootTables.INFDEV_PYRAMID_REMAINS_LOOT, infdevPyramidRemains);
 	}
 }

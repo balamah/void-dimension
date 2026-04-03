@@ -25,6 +25,9 @@ public class ModEffects {
 	public static final RegistryKey<DamageType> THROWN_BLOCK_DAMAGE =
 		registerDamageType("thrown_block");
 
+	public static final RegistryKey<DamageType> VOID_SLASH_DAMAGE =
+		registerDamageType("void_slash");
+
 	public static final RegistryEntry<StatusEffect> CORRUPTION =
 		register("corruption", new CorruptionEffect());
 

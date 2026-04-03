@@ -3,9 +3,13 @@ package net.balamah.voiddim.item;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import net.minecraft.component.type.ConsumableComponents;
+import net.minecraft.component.type.ConsumableComponent;
 import net.minecraft.item.VerticallyAttachableBlockItem;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.equipment.ArmorMaterial;
 import net.minecraft.item.equipment.EquipmentType;
+import net.minecraft.block.jukebox.JukeboxSong;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.registry.RegistryKey;
@@ -30,6 +34,7 @@ import net.balamah.voiddim.item.custom.PrayerItem;
 import net.balamah.voiddim.material.ModMaterials;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.block.ModBlocks;
+import net.balamah.voiddim.sound.ModSounds;
 import net.balamah.voiddim.VoidDimension;
 
 public class ModItems {
@@ -44,6 +49,9 @@ public class ModItems {
 	protected static final Function<Item.Settings, Item> prayerRopeSettings =
 		settings -> new PrayerItem(settings, 240, 7200, 3);
 
+	public static final Item VOIDIUM =
+		register("voidium", Item::new, getVoidItemSettings());
+
 	public static final Item VOID_SHARD = register(
 		"void_shard", Item::new, getVoidItemSettings()
 	);
@@ -51,6 +59,19 @@ public class ModItems {
 	public static final Item VOID_INGOT = register(
 		"void_ingot", Item::new, getVoidItemSettings()
 	);
+
+	public static final Item RAW_FLESH =
+		registerFoodItem("raw_flesh", ModFoodComponents.RAW_FLESH);
+
+	public static final Item COOKED_FLESH =
+		registerFoodItem("cooked_flesh", ModFoodComponents.COOKED_FLESH);
+
+	public static final Item SPOILED_FLESH =
+		registerFoodItem(
+			"spoiled_flesh",
+			ModFoodComponents.SPOILED_FLESH,
+			ConsumableComponents.ROTTEN_FLESH
+		);
 
 	// This sux
 	public static final Item VOID_UPGRADE_SMITHING_TEMPLATE =
@@ -194,6 +215,21 @@ public class ModItems {
 	public static final Item ILLUSIONER_SPAWN_EGG =
 		registerSpawnEgg("illusioner_spawn_egg", EntityType.ILLUSIONER);
 
+	public static final Item NULL_SPAWN_EGG =
+		registerSpawnEgg("null_spawn_egg", ModEntities.NULL);
+
+	public static final Item AGGRESSIVE_NULL_SPAWN_EGG =
+		registerSpawnEgg("aggressive_null_spawn_egg", ModEntities.AGGRESSIVE_NULL);
+
+	public static final Item STARING_DOG_SPAWN_EGG =
+		registerSpawnEgg("staring_dog_spawn_egg", ModEntities.STARING_DOG);
+
+	public static final Item STARING_CAT_SPAWN_EGG =
+		registerSpawnEgg("staring_cat_spawn_egg", ModEntities.STARING_CAT);
+
+	public static final Item ENTITY303_SPAWN_EGG =
+		registerSpawnEgg("entity303_spawn_egg", ModEntities.ENTITY303);
+
 	public static final Item VOID_HORSE_ARMOR =
 		register(
 			"void_horse_armor",
@@ -206,6 +242,14 @@ public class ModItems {
 			"void_nautilus_armor",
 			Item::new,
 			getVoidItemSettings().nautilusArmor(VoidArmorMaterial.INSTANCE)
+		);
+
+	public static final Item MUSIC_DISC_CALM4 =
+		register(
+			"music_disc_calm4",
+			Item::new,
+			new Item.Settings().rarity(Rarity.UNCOMMON)
+			.jukeboxPlayable(ModSounds.MUSIC_CALM4_KEY).maxCount(1)
 		);
 
 	public static void registerModItems() {
@@ -269,10 +313,26 @@ public class ModItems {
 	}
 
 	protected static Item registerSpawnEgg(String name, EntityType<? extends MobEntity> mob) {
+		return register(name, SpawnEggItem::new, new Item.Settings().spawnEgg(mob));
+	}
+
+	protected static Item registerFoodItem(String name, FoodComponent foodComponent) {
+		return register(name, Item::new, new Item.Settings().food(foodComponent));
+	}
+
+	protected static Item registerFoodItem(
+		String name, FoodComponent foodComponent, ConsumableComponent consumableComponent
+	) {
+		return register(
+			name, Item::new, new Item.Settings().food(foodComponent, consumableComponent)
+		);
+	}
+
+	protected static Item registerMusicDisc(String name, RegistryKey<JukeboxSong> song) {
 		return register(
 			name,
-			SpawnEggItem::new,
-			new Item.Settings().spawnEgg(mob)
+			Item::new,
+			new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON).jukeboxPlayable(song)
 		);
 	}
 

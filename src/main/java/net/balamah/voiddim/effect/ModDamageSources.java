@@ -26,4 +26,8 @@ public class ModDamageSources {
 	public static DamageSource thrownBlock(ServerWorld world) {
 		return getBasicDamageSource(world, ModEffects.THROWN_BLOCK_DAMAGE.getValue());
 	}
+
+	public static DamageSource voidSlash(ServerWorld world) {
+		return getBasicDamageSource(world, ModEffects.VOID_SLASH_DAMAGE.getValue());
+	}
 }

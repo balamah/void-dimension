@@ -1,52 +1,31 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionBehavior;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.world.explosion.Explosion;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.world.explosion.ExplosionIgnoreEntitiesBehavior;
-import net.balamah.voiddim.entity.custom.ShatteredSentinelMasterEntity;
+import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
+import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.interfaces.ShatterGroundUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.ModEntities;
 
-public class ShatterGroundGoal extends Goal {
-	protected final ShatteredSentinelMasterEntity entity;
-
-	protected final Identifier attributeId = Identifier.ofVanilla("speed");
-	protected final EntityAttributeModifier attributeModifier =
-		new EntityAttributeModifier(
-			this.attributeId, -2, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
-		);
-
-	protected final EntityAttributeInstance entityAttributeInstance;
-
+public class ShatterGroundGoal<T extends BossEntity & ShatterGroundUser>
+	extends SlowMovementGoal<T>
+{
 	protected final int endTick = 25;
-	protected int tick;
 
-	public ShatterGroundGoal(ShatteredSentinelMasterEntity entity) {
-	    this.entity = entity;
-		this.entityAttributeInstance =
-			this.entity.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
+	public ShatterGroundGoal(T entity) {
+	    super(entity);
 	}
 
 	@Override
 	public void start() {
-		this.tick = 0;
-
-		if (!this.entityAttributeInstance.hasModifier(this.attributeId)) {
-			this.entityAttributeInstance.addTemporaryModifier(this.attributeModifier);
-		}
-
+		this.addSpeedModifier();
 		this.entity.setStopAttacks(true);
-		this.entity.getEntityWorld().sendEntityStatus(
-			this.entity, ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_BEGIN
-		);
+		this.sendEntityStatus(ModEntityStatuses.GROUND_MANIPULATION_BEGIN);
 	}
 
 	@Override
@@ -66,16 +45,14 @@ public class ShatterGroundGoal extends Goal {
 	public void stop() {
 		super.stop();
 
-		this.entityAttributeInstance.removeModifier(this.attributeModifier);
+		this.removeSpeedModifier();
 		this.entity.setStopAttacks(false);
 		this.entity.setShatterGroundTicks(
 			this.entity.getShatterGroundCooldown() +
 			this.entity.getRandom().nextInt(100)
 		);
 
-		this.entity.getEntityWorld().sendEntityStatus(
-			this.entity, ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_END
-		);
+		this.sendEntityStatus(ModEntityStatuses.GROUND_MANIPULATION_END);
 	}
 
 	@Override
@@ -88,22 +65,18 @@ public class ShatterGroundGoal extends Goal {
 
 	@Override
 	public void tick() {
-		World world = this.entity.getEntityWorld();
-
 		this.tick++;
 
 		if (this.tick == this.endTick) {
-			world.sendEntityStatus(
-				this.entity, ModEntityStatuses.SHATTERED_SENTINEL_MASTER_SHATTER_GROUND_PUSH
-			);
+			this.sendEntityStatus(ModEntityStatuses.GROUND_MANIPULATION_PROCESS);
 
 			ExplosionBehavior behavior = new ExplosionIgnoreEntitiesBehavior(
 				this.entity.getType(), ModEntities.SHATTERED_SENTINEL
 			);
 
-			world.createExplosion(
+			this.world.createExplosion(
 				this.entity,
-				Explosion.createDamageSource(world, this.entity),
+				Explosion.createDamageSource(this.world, this.entity),
 				behavior,
 				this.entity.getX(),
 				this.entity.getY(),

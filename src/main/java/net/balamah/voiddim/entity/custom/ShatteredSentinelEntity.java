@@ -14,11 +14,11 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.base.AbstractCorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class ShatteredSentinelEntity extends AbstractCorruptedHostileEntity {
+public class ShatteredSentinelEntity extends CorruptedHostileEntity {
 	public AnimationState idleAnimationState = new AnimationState();
 	public AnimationState attackAnimationState = new AnimationState();
 	public AnimationState stonesFloatAnimationState = new AnimationState();
@@ -48,7 +48,7 @@ public class ShatteredSentinelEntity extends AbstractCorruptedHostileEntity {
 
 	@Override
 	public boolean tryAttack(ServerWorld world, Entity target) {
-		world.sendEntityStatus(this, ModEntityStatuses.SHATTERED_SENTINEL_ATTACK);
+		world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
 
 		DamageSource damageSource = this.getDamageSources().mobAttack(this);
 		float f = this.getAttackDamage();
@@ -71,7 +71,7 @@ public class ShatteredSentinelEntity extends AbstractCorruptedHostileEntity {
 	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
-			case ModEntityStatuses.SHATTERED_SENTINEL_ATTACK:
+			case ModEntityStatuses.ATTACK:
 				this.attackAnimationState.start(this.age);
 				break;
 			default: super.handleStatus(status);

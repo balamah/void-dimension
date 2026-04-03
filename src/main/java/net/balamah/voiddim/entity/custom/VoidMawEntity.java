@@ -12,10 +12,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.ai.goal.VoidMawFindPassiveEntitiesGoal;
+import net.balamah.voiddim.entity.custom.ai.goal.FindPassiveEntitiesGoal;
+import net.balamah.voiddim.interfaces.MinecraftEntityDongle;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
-public class VoidMawEntity extends PhantomEntity {
+public class VoidMawEntity extends PhantomEntity implements MinecraftEntityDongle {
 	public AnimationState attackAnimationState = new AnimationState();
 
 	public VoidMawEntity(EntityType<? extends PhantomEntity> entityType, World world) {
@@ -43,7 +44,7 @@ public class VoidMawEntity extends PhantomEntity {
 
 	@Override
 	public boolean tryAttack(ServerWorld world, Entity target) {
-		world.sendEntityStatus(this, ModEntityStatuses.VOID_MAW_ATTACK);
+		world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
 
 		return super.tryAttack(world, target);
 	}
@@ -51,7 +52,7 @@ public class VoidMawEntity extends PhantomEntity {
 	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
-			case ModEntityStatuses.VOID_MAW_ATTACK:
+			case ModEntityStatuses.ATTACK:
 				this.attackAnimationState.start(this.age);
 				break;
 			default: super.handleStatus(status);
@@ -63,7 +64,7 @@ public class VoidMawEntity extends PhantomEntity {
 	protected void initGoals() {
 		super.initGoals();
 
-		this.targetSelector.add(2, new VoidMawFindPassiveEntitiesGoal(this));
+		this.targetSelector.add(2, new FindPassiveEntitiesGoal<VoidMawEntity>(this));
 	}
 
 	public boolean testPredicate(

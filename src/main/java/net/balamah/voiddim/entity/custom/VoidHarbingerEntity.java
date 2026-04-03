@@ -4,8 +4,6 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.world.event.GameEvent;
 import net.minecraft.util.math.Direction;
@@ -19,13 +17,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.interfaces.TeleportUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class VoidHarbingerEntity extends BossEntity {
+// TODO: Nerf VoidHarbingerEntity teleportation
+public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	protected final int teleportCooldown = 140;
 	protected int teleportTicks;
 
@@ -55,15 +58,19 @@ public class VoidHarbingerEntity extends BossEntity {
 	}
 
 	public boolean teleportRandomly() {
-		if (!this.getEntityWorld().isClient() && this.isAlive()) {
-			double d = this.getX() + (this.random.nextDouble() - 0.5) * 64.0;
-			double e = this.getY() + (this.random.nextInt(64) - 32);
-			double f = this.getZ() + (this.random.nextDouble() - 0.5) * 64.0;
+		int teleportationRadius = 13;
 
-			return this.teleportTo(d, e, f);
-		} else {
-			return false;
+		if (!this.getEntityWorld().isClient() && this.isAlive()) {
+			double newY = this.getY() + (this.random.nextInt(teleportationRadius));
+
+			double x = this.getX() + teleportationRadius;
+			double y = Math.max(this.getY(), newY);
+			double z = this.getZ() + teleportationRadius;
+
+			return this.teleportTo(x, y, z, true);
 		}
+
+		return false;
 	}
 
 	public boolean teleportTo(Entity entity) {
@@ -75,59 +82,47 @@ public class VoidHarbingerEntity extends BossEntity {
 
 		vec3d = vec3d.normalize();
 
-		double teleportDiameter = 16.0;
+		double teleportDiameter = 7.0;
 
-		double x;
-		double y;
-		double z;
+		int randomYoffset = (this.random.nextInt(16) - 8);
 
+		double x, y, z;
 		for (int i = 0; i < 10; i++) {
-			x = this.getX() + (this.random.nextDouble() - 0.5) * 8.0 - vec3d.x * teleportDiameter;
-			y = this.getY() + (this.random.nextInt(16) - 8) - vec3d.y * teleportDiameter;
-			z = this.getZ() + (this.random.nextDouble() - 0.5) * 8.0 - vec3d.z * teleportDiameter;
+			double randomY = this.getY() + randomYoffset - vec3d.y * teleportDiameter;
+
+			x = this.getRandomCoordinate(this.getX(), vec3d.x, teleportDiameter);
+			y = Math.max(entity.getY(), randomY);
+			z = this.getRandomCoordinate(this.getZ(), vec3d.z, teleportDiameter);
 
 			if (McCodeHelper.isTeleportationSafe(entity, entity.getY(), x, y, z)) {
-				return this.teleportTo(x, y, z);
+				return this.teleportTo(x, y, z, false);
 			}
 		}
 
 		return false;
 	}
 
-	public boolean teleportTo(double x, double y, double z) {
-		BlockPos.Mutable mutable = new BlockPos.Mutable(x, y, z);
-
-		while (mutable.getY() > this.getEntityWorld().getBottomY() &&
-			   !this.getEntityWorld().getBlockState(mutable).blocksMovement()
-		) {
-			mutable.move(Direction.DOWN);
+	@SuppressWarnings("deprecation")
+	public boolean teleportTo(double x, double y, double z, boolean ignoreLimitPredicate) {
+		BlockPos.Mutable mutable = this.getMutableCoordinate(x, y, z, ignoreLimitPredicate);
+		if (mutable == null) {
+			return false;
 		}
 
 		BlockState blockState = this.getEntityWorld().getBlockState(mutable);
-		boolean bl = blockState.blocksMovement();
-		boolean bl2 = blockState.getFluidState().isIn(FluidTags.WATER);
-		if (!(bl && !bl2))
+		boolean isSolidBlock = blockState.blocksMovement();
+		if (!isSolidBlock) {
 			return false;
-
-		Vec3d vec3d = new Vec3d(this.getX(), this.getY(), this.getZ());
-		boolean bl3 = this.teleport(x, y, z, true);
-		if (bl3) {
-			this.getEntityWorld().emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(this));
-			if (!this.isSilent()) {
-				this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
-			}
 		}
 
-		return bl3;
-	}
+		Vec3d vec3d = new Vec3d(this.getX(), this.getY(), this.getZ());
+		boolean didTeleport = this.teleport(x, y, z, true);
+		if (didTeleport) {
+			this.getEntityWorld().emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(this));
+			this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
+		}
 
-	@Override
-	public boolean damage(ServerWorld world, DamageSource source, float amount) {
-		boolean result = super.damage(world, source, amount);
-
-		if (result) this.attackCount++;
-
-		return result;
+		return didTeleport;
 	}
 
 	@Override
@@ -155,23 +150,49 @@ public class VoidHarbingerEntity extends BossEntity {
 		return teleportCooldown;
 	}
 
+	protected double getRandomCoordinate(double baseCoordinate, double vector, double diameter) {
+		return baseCoordinate + (this.random.nextDouble() - 0.5) * 2 - vector * diameter;
+	}
+
+	@SuppressWarnings("deprecation")
+	protected @Nullable BlockPos.Mutable getMutableCoordinate(
+		double x, double y, double z, boolean ignoreLimitPredicate
+	) {
+		BlockPos.Mutable mutable = new BlockPos.Mutable(x, y, z);
+
+		while (mutable.getY() > this.getEntityWorld().getBottomY() &&
+			   !this.getEntityWorld().getBlockState(mutable).blocksMovement()
+		) {
+			double heightDifference = this.getY() - mutable.getY();
+
+			if (heightDifference < 30 || ignoreLimitPredicate) {
+				mutable.move(Direction.DOWN);
+			} else {
+				return null;
+			}
+		}
+
+		return mutable;
+	}
+
 	@Override
 	protected void initGoals() {
 		super.initGoals();
 
-		Goal shootingGoal = new ShootProjectileGoal<VoidSphereEntity>(
+		Goal shootingGoal = new ShootProjectileGoal<VoidHarbingerEntity, VoidSphereEntity>(
 			this, world -> new VoidSphereEntity(ModEntities.VOID_SPHERE, world),
 			ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
 			ModSounds.VOID_HARBINGER_SHOOT,
 			50, 60
 		);
 
-		this.goalSelector.add(0, new VoidHarbingerTeleportTowardsPlayerGoal(this));
+		// Make teleportation more often on the second phase
+		this.goalSelector.add(0, new TeleportTowardsPlayerGoal<VoidHarbingerEntity>(this));
 		this.goalSelector.add(1, shootingGoal);
 		this.goalSelector.add(
 			2,
-			new SummonEntitiesGoal<CorruptedStalkerEntity>(
-				this, CorruptedStalkerEntity.class, ModEntities.CORRUPTED_STALKER
+			new SummonEntitiesGoal<VoidHarbingerEntity, CorruptedStalkerEntity>(
+				this, CorruptedStalkerEntity.class, ModEntities.CORRUPTED_STALKER, 10
 			)
 		);
 	}

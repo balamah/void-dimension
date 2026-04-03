@@ -157,8 +157,7 @@
 		"subtitle": "sound.void-dimension.worm_of_corruption.attack",
 		"sounds": [
 			"void-dimension:worm_of_corruption/attack1",
-			"void-dimension:worm_of_corruption/attack2",
-			"void-dimension:worm_of_corruption/attack3"
+			"void-dimension:worm_of_corruption/attack2"
 		]
 	},
 	"worm_of_corruption.death": {
@@ -208,6 +207,36 @@
 		"subtitle": "sound.void-dimension.corrupted_blaze.death",
 		"sounds": [
 			"void-dimension:corrupted_blaze/death"
+		]
+	},
+	"hollowed_alpha_steve.hit": {
+		"subtitle": "sound.void-dimension.hollowed_alpha_steve.hit",
+		"sounds": [
+			"void-dimension:hollowed_alpha_steve/hit1",
+			"void-dimension:hollowed_alpha_steve/hit2",
+			"void-dimension:hollowed_alpha_steve/hit3"
+		]
+	},
+	"zombified_alpha_steve.hit": {
+		"subtitle": "sound.void-dimension.zombified_alpha_steve.hit",
+		"sounds": [
+			"void-dimension:zombified_alpha_steve/hit1",
+			"void-dimension:zombified_alpha_steve/hit2"
+		]
+	},
+	"zombified_alpha_steve.death": {
+		"subtitle": "sound.void-dimension.zombified_alpha_steve.death",
+		"sounds": [
+			"void-dimension:zombified_alpha_steve/death"
+		]
+	},
+	"staring_entity.death": {
+		"subtitle": "sound.void-dimension.staring_entity.death",
+		"sounds": [
+			{
+				"name": "void-dimension:staring_entity/death",
+				"volume": 0.5
+			}
 		]
 	},
 	"void.ambient.1": {
@@ -277,6 +306,38 @@
 				"stream": true,
 				"volume": 0.2
 			}
+		]
+	},
+	"music_disc.calm4": {
+		"sounds": [
+			{
+				"name": "void-dimension:records/calm4",
+				"stream": true
+			}
+		]
+	},
+	"special_attacks.lightning": {
+		"subtitle": "sound.void-dimension.special_attack.lightning",
+		"sounds": [
+			"void-dimension:special_attacks/lightning"
+		]
+	},
+	"special_attacks.counter_attack": {
+		"subtitle": "sound.void-dimension.special_attack.counter_attack",
+		"sounds": [
+			{
+				"name": "void-dimension:special_attacks/counter_attack",
+				"volume": 0.2
+			}
+		]
+	},
+	"entity303.death": {
+		"subtitle": "sound.void-dimension.entity303.death",
+		"sounds": [
+			"void-dimension:entity303/death1",
+			"void-dimension:entity303/death2",
+			"void-dimension:entity303/death3",
+			"void-dimension:entity303/death4"
 		]
 	}
 }

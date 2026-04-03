@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: registry-class
+# key: registry:::
+# --
+
+public class `(file-name-sans-extension (file-name-nondirectory buffer-file-name))` {
+	$0
+
+	public static void register`(file-name-sans-extension (file-name-nondirectory buffer-file-name))`() {
+		VoidDimension.LOGGER.info("Registering mod ${1:type} for " + VoidDimension.MOD_ID);
+	} 
+}

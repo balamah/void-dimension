@@ -1,0 +1,50 @@
+{
+  "parent": "minecraft:void-dimensionvoid_dimension/root",
+  "criteria": {
+    "got_prayer_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#void-dimension:prayer_items"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_void_salvation_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:potion",
+              "minecraft:splash_potion",
+              "minecraft:lingering_potion"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.first_preparations.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "void-dimension:orthodox_cross"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.first_preparations.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_void_salvation_potion"
+    ],
+    [
+      "got_prayer_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

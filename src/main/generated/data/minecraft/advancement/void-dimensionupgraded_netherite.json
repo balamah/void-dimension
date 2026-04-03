@@ -1,0 +1,100 @@
+{
+  "parent": "minecraft:void-dimensionget_void_shard",
+  "criteria": {
+    "upgrade_netherite_axe": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_axe_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_boots": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_boots_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_chestplate": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_chestplate_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_helmet": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_helmet_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_hoe": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_hoe_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_horse_armor": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_horse_armor_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_leggings": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_leggings_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_pickaxe": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_pickaxe_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_shovel": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_shovel_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_spear": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_spear_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "upgrade_netherite_sword": {
+      "conditions": {
+        "recipe_id": "void-dimension:void_sword_smithing"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.void_upgrade.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "void-dimension:void_upgrade_smithing_template"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.void_upgrade.title"
+    }
+  },
+  "requirements": [
+    [
+      "upgrade_netherite_horse_armor",
+      "upgrade_netherite_boots",
+      "upgrade_netherite_pickaxe",
+      "upgrade_netherite_shovel",
+      "upgrade_netherite_leggings",
+      "upgrade_netherite_axe",
+      "upgrade_netherite_chestplate",
+      "upgrade_netherite_sword",
+      "upgrade_netherite_hoe",
+      "upgrade_netherite_helmet",
+      "upgrade_netherite_spear"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

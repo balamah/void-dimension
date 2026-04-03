@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:void-dimensionget_into_void",
+  "criteria": {
+    "killed_entity303": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "void-dimension:entity303"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.anomaly_beaten.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "void-dimension:entity303_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.anomaly_beaten.title"
+    }
+  },
+  "requirements": [
+    [
+      "killed_entity303"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

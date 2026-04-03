@@ -1,36 +1,20 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import net.balamah.voiddim.entity.custom.CorruptedWarriorEntity;
+import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.custom.DarkGraspEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
-public class DarkGraspInvokeGoal extends Goal {
-	protected final Identifier attributeId = Identifier.ofVanilla("speed");
-	protected final EntityAttributeInstance entityAttributeInstance;
-	protected final EntityAttributeModifier attributeModifier =
-		new EntityAttributeModifier(
-			this.attributeId, -2, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
-		);
-
-	protected final CorruptedWarriorEntity entity;
-	protected int tick;
+public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity> extends SlowMovementGoal<T> {
 	protected boolean didInvokeGrasp;
 
-	public DarkGraspInvokeGoal(CorruptedWarriorEntity entity) {
-	    this.entity = entity;
-
-		this.entityAttributeInstance =
-			this.entity.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
+	public DarkGraspInvokeGoal(T entity) {
+	    super(entity);
 	}
 
 	@Override
@@ -42,24 +26,19 @@ public class DarkGraspInvokeGoal extends Goal {
 
 	@Override
 	public void start() {
-		this.tick = 0;
-
-		if (!this.entityAttributeInstance.hasModifier(this.attributeId)) {
-			this.entityAttributeInstance.addTemporaryModifier(this.attributeModifier);
-		}
+		this.addSpeedModifier();
 
 		this.entity.setStopAttacks(true);
+		this.sendEntityStatus(ModEntityStatuses.SPECIAL_ATTACK);
 	}
 
 	@Override
 	public void stop() {
 		super.stop();
 
-		this.entityAttributeInstance.removeModifier(this.attributeId);
+		this.removeSpeedModifier();
 		this.entity.setStopAttacks(false);
-		this.entity.getEntityWorld().sendEntityStatus(
-			this.entity, ModEntityStatuses.CORRUPTED_WARRIOR_ATTACKS_STOP
-		);
+		this.sendEntityStatus(ModEntityStatuses.STOP_ATTACK);
 	}
 
 	@Override
@@ -69,15 +48,7 @@ public class DarkGraspInvokeGoal extends Goal {
 
 	@Override
 	public void tick() {
-		World world = this.entity.getEntityWorld();
-
-		this.tick++;
-
-		if (this.tick == 1) {
-			world.sendEntityStatus(
-				this.entity, ModEntityStatuses.CORRUPTED_WARRIOR_SPECIAL_ATTACK
-			);
-		}
+		super.tick();
 
 		if (this.tick == 15) {
 			this.cast(world, this.entity.getTarget());

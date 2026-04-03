@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:void-dimensioneat_alpha_steve_cooked_flesh",
+  "criteria": {
+    "ate_zombified_steve_flesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": "void-dimension:spoiled_flesh"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.is_this_how_zombies_are_created.description"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "void-dimension:spoiled_flesh"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.is_this_how_zombies_are_created.title"
+    }
+  },
+  "requirements": [
+    [
+      "ate_zombified_steve_flesh"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 import net.balamah.voiddim.custom.McCodeHelper;
 
-public class BossEntity extends AbstractCorruptedHostileEntity {
+public class BossEntity extends CorruptedHostileEntity {
 	protected final ServerBossBar bossBar =
 		McCodeHelper.getBossBar(this.getDisplayName(), BossBar.Color.WHITE);
 

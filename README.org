@@ -15,6 +15,8 @@ issue, idk
   - [[#sounds][Sounds]]
   - [[#textures][Textures]]
   - [[#blocks][Blocks]]
+  - [[#animations][Animations]]
+  - [[#models][Models]]
 - [[#credits][Credits]]
   - [[#programmers][Programmers]]
   - [[#builders][Builders]]
@@ -68,6 +70,10 @@ The order is going from brightest colors to the darkest
 - void_harbinger.shoot            :: https://pixabay.com/sound-effects/search/dark%20magic/
 - void_harbinger.teleport         :: blade of darkness (desaparece-vamp1.wav)
 - shattered_sentinel_master.death :: https://depositphotos.com/sound-effect/rumbling-impact-ancient-stony-stride-784492644.html
+- staring_entity.death            :: blade of darkness (muerte-Ldm.wav)
+- special_attack.lightning        :: https://pixabay.com/sound-effects/search/lightning/
+- special_attacks.counter_attack  :: https://pixabay.com/sound-effects/search/power%20attack/
+- entity303.death                 :: nazgul screams from The lord of the rings
 - music.1                         :: blade of darkness (ATMOSFERA8)
 - music.2                         :: blade of darkness (ATMOSFERA19)
 - music.3                         :: blade of darkness (SORPRESA7)
@@ -75,10 +81,17 @@ The order is going from brightest colors to the darkest
 ** Textures
 - Corrupted mobs black skin :: https://modrinth.com/mod/intothevoid
 - corrupt_block texture     :: https://modrinth.com/mod/intothevoid
+- alpha_steve               :: https://namemc.com/skin/f2d10ae87c2444ff
   
 ** Blocks
 - old_corpse_pile           :: https://github.com/TroupeMaster/TheDeepVoid
 - old_corpse                :: https://github.com/TroupeMaster/TheDeepVoid
+
+** Animations
+- alpha steve walking :: [[https://gitlab.com/TecnaGamer/OldWalkingAnimation][OldWalkingAnimation]]
+
+** Models
+- rana :: https://github.com/sakiiiiika/ranamod
 
 * Credits
 ** Programmers

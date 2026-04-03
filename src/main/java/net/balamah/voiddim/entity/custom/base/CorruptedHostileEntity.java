@@ -3,32 +3,35 @@ package net.balamah.voiddim.entity.custom.base;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.item.ItemStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.item.Item;
 
 import java.util.Random;
 
 import net.balamah.voiddim.entity.custom.ai.goal.VoidHostileEntityAttackGoal;
+import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.custom.McCodeHelper;
 
-public abstract class AbstractCorruptedHostileEntity extends HostileEntity {
+public abstract class CorruptedHostileEntity extends HostileEntity {
 	public boolean breaksShield = false;
 	public int attackCount;
 
 	protected boolean stopAttacks = false;
 
-	public AbstractCorruptedHostileEntity(
+	public CorruptedHostileEntity(
 		EntityType<? extends HostileEntity> entityType, World world
 	) {
 		super(entityType, world);
@@ -79,13 +82,40 @@ public abstract class AbstractCorruptedHostileEntity extends HostileEntity {
 		this.stopAttacks = stopAttacks;
 	}
 
+	@Override
+	public boolean damage(ServerWorld world, DamageSource source, float amount) {
+		boolean result = super.damage(world, source, amount);
+
+		if (result) {
+			this.attackCount++;
+		}
+
+		return result;
+	}
+
+	public boolean isSecondPhase() {
+		float maxHP = this.getMaxHealth();
+		float middleHP = maxHP / 2;
+		float currentHP = this.getHealth();
+
+		return currentHP < middleHP;
+	}
+
+	public void corruptBlock(World world, BlockPos blockPos) {
+		Block block = McCodeHelper.getBlock(world, blockPos);
+
+		if (McCodeHelper.isBlockReplaceable(block)) {
+			world.setBlockState(blockPos, ModBlocks.CORRUPT_BLOCK.getDefaultState());
+		}
+	}
+
 	protected boolean burnsInDaylight() {
 		return true;
 	}
 
 	protected void initTargets() {
-		this.targetSelector.add(0, this.getTargetGoal(PlayerEntity.class));
-		this.targetSelector.add(2, this.getTargetGoal(PassiveEntity.class));
+		this.targetSelector.add(0, McCodeHelper.getTargetGoal(this, PlayerEntity.class));
+		this.targetSelector.add(2, McCodeHelper.getTargetGoal(this, PassiveEntity.class));
 	}
 
 	protected void initBasicGoals() {
@@ -130,13 +160,6 @@ public abstract class AbstractCorruptedHostileEntity extends HostileEntity {
 
 	public double getChargeY() {
 		return this.getY() + this.getHeight() / 2.0F + 0.3F;
-	}
-
-	protected Goal getTargetGoal(Class<?> entityTarget) {
-		return new ActiveTargetGoal(
-			this, entityTarget, 10, true, false,
-			(entity, world) -> Math.abs(entity.getY() - this.getY()) <= 25.0
-		);
 	}
 
 	protected void playRandomAnimation(AnimationState[] animations) {
