@@ -158,6 +158,9 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		Optional<EntityPredicate> voidHarbingerPredicate =
 			this.getEntityPredicate(entityLookup, ModEntities.VOID_HARBINGER);
 
+		Optional<EntityPredicate> entity303Predicate =
+			this.getEntityPredicate(entityLookup, ModEntities.ENTITY303);
+
 		Optional<EntityPredicate> shatteredSentinelMasterPredicate =
 			this.getEntityPredicate(entityLookup, ModEntities.SHATTERED_SENTINEL_MASTER);
 
@@ -173,6 +176,13 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			null, AdvancementFrame.CHALLENGE, false, "killed_shattered_sentinel_master",
 			OnKilledCriterion.Conditions.createPlayerKilledEntity(shatteredSentinelMasterPredicate),
 			consumer, "kill_shattered_sentinel_master"
+		);
+
+		AdvancementEntry anomalyBeaten = this.getAdvancementEntry(
+			ModItems.ENTITY303_SPAWN_EGG, "anomaly_beaten", aForsakenPlace,
+			null, AdvancementFrame.CHALLENGE, false, "killed_entity303",
+			OnKilledCriterion.Conditions.createPlayerKilledEntity(entity303Predicate),
+			consumer, "kill_entity303"
 		);
 
 		AdvancementEntry exodusPreparation = this.getAdvancementBuilder(

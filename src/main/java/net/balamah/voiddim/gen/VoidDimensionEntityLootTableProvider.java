@@ -142,6 +142,13 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootTableP
 			)
 			;
 
+		LootTable.Builder entity303table =
+			voidHarbingerTable.pool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.with(McGenHelper.getItemEntry(ModItems.CORRUPTED_FIRE_CHARGE, 1, 2))
+			)
+			;
+
 		this.register(ModEntities.CORRUPTED_STALKER, corruptedStalkerTable);
 		this.register(ModEntities.VOID_MAW, voidMawTable);
 		this.register(ModEntities.VOID_HARBINGER, voidHarbingerTable);
@@ -152,8 +159,9 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootTableP
 		this.register(ModEntities.SHATTERED_SENTINEL_MASTER, shatteredSentinelMasterTable);
 		this.register(ModEntities.HOLLOWED_ALPHA_STEVE, hollowedAlphaSteveTable);
 		this.register(ModEntities.ZOMBIFIED_ALPHA_STEVE, zombifiedAlphaSteveTable);
+		this.register(ModEntities.ENTITY303, entity303table);
 
 		// Didn't add loot table for corrupted versions of vanilla mobs,
-		// for i got tired and therefore copied them from minecraft files
+		// i got tired and therefore copied them from minecraft's files
 	}
 }
