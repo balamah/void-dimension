@@ -230,6 +230,9 @@ public class ModItems {
 	public static final Item ENTITY303_SPAWN_EGG =
 		registerSpawnEgg("entity303_spawn_egg", ModEntities.ENTITY303);
 
+	public static final Item EYE_BRIGHT_SPAWN_EGG =
+		registerSpawnEgg("eye_bright_spawn_egg", ModEntities.EYE_BRIGHT);
+
 	public static final Item VOID_HORSE_ARMOR =
 		register(
 			"void_horse_armor",

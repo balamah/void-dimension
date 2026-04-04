@@ -5,7 +5,7 @@ public class ModEntityStatuses {
 	public static final byte STOP_ATTACK						= 68;
 	public static final byte STOP_ANIMATIONS					= 69;
 	public static final byte BREAK_SHIELD						= 70;
-	public static final byte VOID_SPHERE_SHOOT					= 72;
+	public static final byte SHOOT								= 72;
 	public static final byte SUMMON_ENTITIES_START				= 73;
 	public static final byte SUMMON_ENTITIES_FINISH				= 74;
 	public static final byte WORM_OF_CORRUPTION_DIG_UP			= 75;

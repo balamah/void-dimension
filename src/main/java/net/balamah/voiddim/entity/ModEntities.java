@@ -241,6 +241,14 @@ public class ModEntities {
 	// 		.trackingTickInterval(2)
 	// );
 
+	public static final EntityType<EyeBrightEntity> EYE_BRIGHT =
+		register(
+			"eye_bright",
+			EyeBrightEntity.class,
+			EntityType.Builder.create(EyeBrightEntity::new, SpawnGroup.CREATURE)
+			.dimensions(0.6F, 2.9F)
+		);
+
 	public static final EntityType<BedrockBombEntity> BEDROCK_BOMB = register(
 		"bedrock_bomb",
 		BedrockBombEntity.class,

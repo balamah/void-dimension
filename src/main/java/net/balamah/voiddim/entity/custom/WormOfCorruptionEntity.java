@@ -100,7 +100,7 @@ public class WormOfCorruptionEntity extends CorruptedHostileEntity
 			case ModEntityStatuses.ATTACK:
 				this.attackAnimationState.start(this.age);
 				break;
-			case ModEntityStatuses.VOID_SPHERE_SHOOT:
+			case ModEntityStatuses.SHOOT:
 				this.shootAnimationState.start(this.age);
 				break;
 			case ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN:

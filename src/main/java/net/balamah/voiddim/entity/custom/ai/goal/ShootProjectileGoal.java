@@ -66,7 +66,7 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 				double dy = target.getBodyY(target.hasVehicle() ? 0.8 : 0.3) - this.entity.getChargeY();
 				double dz = target.getZ() - this.entity.getZ();
 
-				this.sendEntityStatus(ModEntityStatuses.VOID_SPHERE_SHOOT);
+				this.sendEntityStatus(ModEntityStatuses.SHOOT);
 
 				this.spawnProjectile(serverWorld, dx, dy, dz);
 				this.entity.attackCount++;

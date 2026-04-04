@@ -86,7 +86,11 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new EntitySpecs<StaringCatEntity>(ModEntities.STARING_CAT,
 												  StaringCatModel.STARING_CAT,
 												  StaringCatModel.getTexturedModelData(),
-												  StaringCatRenderer::new)
+												  StaringCatRenderer::new),
+				new EntitySpecs<EyeBrightEntity>(ModEntities.EYE_BRIGHT,
+												  EyeBrightModel.EYE_BRIGHT,
+												  EyeBrightModel.getTexturedModelData(),
+												  EyeBrightRenderer::new)
 				);
 
 
