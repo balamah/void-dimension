@@ -1,6 +1,5 @@
 package net.balamah.voiddim;
 
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.api.ModInitializer;
 
@@ -8,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import net.balamah.voiddim.world.dimension.ModDimensions;
+import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.world.ModWorldGeneration;
 import net.balamah.voiddim.data.loot.ModLootTables;
 import net.balamah.voiddim.item.ModItemGroups;
@@ -15,7 +15,6 @@ import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.effect.ModEffects;
 import net.balamah.voiddim.potion.ModPotions;
 import net.balamah.voiddim.tag.ModBlockTags;
-import net.balamah.voiddim.entity.custom.*;
 import net.balamah.voiddim.tag.ModItemTags;
 import net.balamah.voiddim.event.ModEvents;
 import net.balamah.voiddim.sound.ModSounds;
@@ -49,36 +48,12 @@ public class VoidDimension implements ModInitializer {
 		ModLootTables.registerModLootTables();
 		ModWorldGeneration.registerModWorldGeneration();
 
+		// Register neccessary elements on the server side
+		ModParticleTypes.registerParticlesServer();
+		ModEntities.registerEntityAttributes();
+
 		if (!FabricLoader.getInstance().isModLoaded("sodium")) {
 			LOGGER.warn("!!! Sodium mod is recommended for best performance !!!");
 		}
-
-		this.registerEntityAttributes();
-	}
-
-	// Looks bad, but it should be this way.
-	// Otherwise entities will not spawn on servers
-	protected void registerEntityAttributes() {
-		FabricDefaultAttributeRegistry.register(ModEntities.MANTIS, MantisEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.SNOWMAN, SnowmanEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_STALKER, CorruptedStalkerEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.SHATTERED_SENTINEL, ShatteredSentinelEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.WEREWOLF, WerewolfEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.HOLLOWED_BEAST, HollowedBeastEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.SHATTERED_SENTINEL_MASTER, ShatteredSentinelMasterEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.VOID_MAW, VoidMawEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.VOID_HARBINGER, VoidHarbingerEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.WORM_OF_CORRUPTION, WormOfCorruptionEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_BLAZE, CorruptedBlazeEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_CREEPER, CorruptedCreeperEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_SPIDER, CorruptedSpiderEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.HOLLOWED_ALPHA_STEVE, HollowedAlphaSteveEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.ZOMBIFIED_ALPHA_STEVE, ZombifiedAlphaSteveEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.NULL, NullEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.AGGRESSIVE_NULL, AggressiveNullEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.ENTITY303, Entity303.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.STARING_CAT, StaringCatEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.STARING_DOG, StaringDogEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.EYE_BRIGHT, EyeBrightEntity.createAttributes());
 	}
 }

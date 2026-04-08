@@ -10,7 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.block.Block;
 
 import net.balamah.voiddim.custom.NonLivingEntitySpecs;
-import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.custom.BipedEntitySpecs;
 import net.balamah.voiddim.custom.EntitySpecs;
 import net.balamah.voiddim.entity.ModEntities;
@@ -160,9 +159,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		VoidDimension.LOGGER.info(
-			"Registering mod rendering for " + VoidDimension.MOD_ID
-		);
+		VoidDimension.LOGGER.info("Registering mod rendering for " + VoidDimension.MOD_ID);
 
 		this.createLivingEntityRenders(this.entitySpecs);
 		this.createBipedEntityRenders(this.bipedEntitySpecs);
@@ -171,8 +168,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 
 		EntityRendererFactories.register(ModEntities.BEDROCK_BOMB, BedrockBombRenderer::new);
 		EntityRendererFactories.register(ModEntities.VOID_LIGHTNING_BOLT, VoidLightningEntityRenderer::new);
-
-		ModParticleTypes.registerModParticles();
+		EntityRendererFactories.register(ModEntities.EYE_BRIGHT_HEAD, EyeBrightHeadRenderer::new);
 	}
 
 	protected <T extends Entity> void registerSpec(NonLivingEntitySpecs<T> spec) {
@@ -221,12 +217,8 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		}
 	}
 
-	protected <T extends LivingEntity> void registerBipedEntitySpec(
-		BipedEntitySpecs<T> specs
-	) {
-		EntityModelLayerRegistry.registerModelLayer(
-			specs.modelLayer(), specs::texturedModelData
-		);
+	protected <T extends LivingEntity> void registerBipedEntitySpec(BipedEntitySpecs<T> specs) {
+		EntityModelLayerRegistry.registerModelLayer(specs.modelLayer(), specs::texturedModelData);
 
 		EntityRendererFactories.register(specs.entity(), specs.entityRendererFactory());
 	}

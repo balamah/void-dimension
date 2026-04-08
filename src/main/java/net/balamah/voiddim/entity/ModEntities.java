@@ -14,6 +14,7 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.entity.Entity;
 
 import net.balamah.voiddim.entity.custom.*;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.balamah.voiddim.VoidDimension;
 
 public class ModEntities {
@@ -249,6 +250,16 @@ public class ModEntities {
 			.dimensions(0.6F, 2.9F)
 		);
 
+	public static final EntityType<EyeBrightHeadEntity> EYE_BRIGHT_HEAD = register(
+		"wither_skull",
+		EyeBrightHeadEntity.class,
+		EntityType.Builder.<EyeBrightHeadEntity>create(EyeBrightHeadEntity::new, SpawnGroup.MISC)
+			.dropsNothing()
+			.dimensions(0.3125F, 0.3125F)
+			.maxTrackingRange(4)
+			.trackingTickInterval(10)
+	);
+
 	public static final EntityType<BedrockBombEntity> BEDROCK_BOMB = register(
 		"bedrock_bomb",
 		BedrockBombEntity.class,
@@ -260,6 +271,32 @@ public class ModEntities {
 			.maxTrackingRange(10)
 			.trackingTickInterval(10)
 	);
+
+	// Looks bad, but it should be this way.
+	// Otherwise entities will not spawn on servers
+	public static void registerEntityAttributes() {
+		FabricDefaultAttributeRegistry.register(ModEntities.MANTIS, MantisEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.SNOWMAN, SnowmanEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_STALKER, CorruptedStalkerEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.SHATTERED_SENTINEL, ShatteredSentinelEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.WEREWOLF, WerewolfEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HOLLOWED_BEAST, HollowedBeastEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.SHATTERED_SENTINEL_MASTER, ShatteredSentinelMasterEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.VOID_MAW, VoidMawEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.VOID_HARBINGER, VoidHarbingerEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.WORM_OF_CORRUPTION, WormOfCorruptionEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_BLAZE, CorruptedBlazeEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_CREEPER, CorruptedCreeperEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_SPIDER, CorruptedSpiderEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HOLLOWED_ALPHA_STEVE, HollowedAlphaSteveEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ZOMBIFIED_ALPHA_STEVE, ZombifiedAlphaSteveEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.NULL, NullEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.AGGRESSIVE_NULL, AggressiveNullEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ENTITY303, Entity303.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.STARING_CAT, StaringCatEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.STARING_DOG, StaringDogEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.EYE_BRIGHT, EyeBrightEntity.createAttributes());
+	}
 
 	@SuppressWarnings("unchecked")
 	protected static final EntityType<? extends MobEntity>[] spawnRestrictedEntities =
@@ -314,4 +351,5 @@ public class ModEntities {
 			entityBuilder.build(key)
 		);
 	}
+
 }

@@ -12,9 +12,7 @@ import net.minecraft.util.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
 public class ModParticleTypes {
-	public static final SimpleParticleType CORRUPTED_FLAME =
-		FabricParticleTypes.simple();
-
+	public static final SimpleParticleType CORRUPTED_FLAME = FabricParticleTypes.simple();
 	public static final SimpleParticleType CORRUPTION = FabricParticleTypes.simple();
 	public static final SimpleParticleType LIGHTNING = FabricParticleTypes.simple();
 	public static final SimpleParticleType VOID_SLASH_AREA = FabricParticleTypes.simple();
@@ -22,33 +20,28 @@ public class ModParticleTypes {
 	public static void registerModParticles() {
 		VoidDimension.LOGGER.info("Registering mod particles for " + VoidDimension.MOD_ID);
 
-		Registry.register(
-			Registries.PARTICLE_TYPE,
-			Identifier.of(VoidDimension.MOD_ID, "corrupted_flame"),
-			CORRUPTED_FLAME
-		);
-
-		Registry.register(
-			Registries.PARTICLE_TYPE,
-			Identifier.of(VoidDimension.MOD_ID, "corruption"),
-			CORRUPTION
-		);
-
-		Registry.register(
-			Registries.PARTICLE_TYPE,
-			Identifier.of(VoidDimension.MOD_ID, "lightning"),
-			LIGHTNING
-		);
-
-		Registry.register(
-			Registries.PARTICLE_TYPE,
-			Identifier.of(VoidDimension.MOD_ID, "void_slash_area"),
-			VOID_SLASH_AREA
-		);
-
 		ParticleFactoryRegistry.getInstance().register(CORRUPTED_FLAME, FlameParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(CORRUPTION, EndRodParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(LIGHTNING, EndRodParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(VOID_SLASH_AREA, EndRodParticle.Factory::new);
+	}
+
+	public static void registerParticlesServer() {
+		VoidDimension.LOGGER.info(
+			"Registering mod particles on server and client side for " + VoidDimension.MOD_ID
+		);
+
+		registerParticle("corrupted_flame", CORRUPTED_FLAME);
+		registerParticle("corruption", CORRUPTION);
+		registerParticle("lightning", LIGHTNING);
+		registerParticle("void_slash_area", VOID_SLASH_AREA);
+	}
+
+	protected static void registerParticle(String particleName, SimpleParticleType particleType) {
+		Registry.register(
+			Registries.PARTICLE_TYPE,
+			Identifier.of(VoidDimension.MOD_ID, particleName),
+			particleType
+		);
 	}
 }
