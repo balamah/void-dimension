@@ -129,6 +129,9 @@ public class ModSounds {
 
 	public static final SoundEvent ENTITY303_DEATH = register("entity303.death");
 
+	public static final SoundEvent EYE_BRIGHT_SHOOT_PREPARE =
+		register("eye_bright.shoot_prepare");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}

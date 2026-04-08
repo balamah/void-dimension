@@ -339,5 +339,14 @@
 			"void-dimension:entity303/death3",
 			"void-dimension:entity303/death4"
 		]
+	},
+	"eye_bright.shoot_prepare": {
+		"subtitle": "sound.void-dimension.eye_bright.shoot_prepare",
+		"sounds": [
+			{
+				"name": "void-dimension:eye_bright/shoot_prepare",
+				"volume": 0.3
+			}
+		]
 	}
 }

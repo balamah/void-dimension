@@ -28,6 +28,9 @@ public class ModEffects {
 	public static final RegistryKey<DamageType> VOID_SLASH_DAMAGE =
 		registerDamageType("void_slash");
 
+	public static final RegistryKey<DamageType> EYE_BRIGHT_HEAD_DAMAGE =
+		registerDamageType("eye_bright_head");
+
 	public static final RegistryEntry<StatusEffect> CORRUPTION =
 		register("corruption", new CorruptionEffect());
 

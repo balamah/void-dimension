@@ -13,7 +13,6 @@ import net.balamah.voiddim.entity.custom.VoidLightningEntity;
 import net.balamah.voiddim.interfaces.ShootLightningUser;
 import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.entity.ModEntityStatuses;
-import net.balamah.voiddim.entity.custom.Entity303;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 

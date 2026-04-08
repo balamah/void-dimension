@@ -30,4 +30,8 @@ public class ModDamageSources {
 	public static DamageSource voidSlash(ServerWorld world) {
 		return getBasicDamageSource(world, ModEffects.VOID_SLASH_DAMAGE.getValue());
 	}
+
+	public static DamageSource eyeBrightHead(ServerWorld world) {
+		return getBasicDamageSource(world, ModEffects.EYE_BRIGHT_HEAD_DAMAGE.getValue());
+	}
 }

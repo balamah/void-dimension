@@ -5,14 +5,19 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.AnimationState;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.interfaces.ShootingCooldownUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
+import net.balamah.voiddim.entity.custom.ai.goal.*;
+import net.balamah.voiddim.sound.ModSounds;
 
-public class EyeBrightEntity extends CorruptedHostileEntity {
+public class EyeBrightEntity extends CorruptedHostileEntity implements ShootingCooldownUser {
 	public final AnimationState idleAnimationState = new AnimationState();
 	public final AnimationState walkAnimationState = new AnimationState();
 	public final AnimationState attack1AnimationState = new AnimationState();
@@ -26,6 +31,9 @@ public class EyeBrightEntity extends CorruptedHostileEntity {
 
 	protected int idleAnimationTimeout;
 	protected int attackInterval;
+
+	protected int shootCoooldown = 80;
+	protected int shootTicks = this.random.nextInt(30);
 	
 	protected AnimationState[] attackAnimations = {
 		this.attack1AnimationState, this.attack2AnimationState, this.attack3AnimationState
@@ -44,8 +52,37 @@ public class EyeBrightEntity extends CorruptedHostileEntity {
 			.add(EntityAttributes.FOLLOW_RANGE, 20)
 			.add(EntityAttributes.STEP_HEIGHT, 1)
 			.add(EntityAttributes.ATTACK_DAMAGE, 15.0F)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.15f)
+			.add(EntityAttributes.MOVEMENT_SPEED, 0.2f)
+			.add(EntityAttributes.KNOCKBACK_RESISTANCE, 0.6f)
 			.add(EntityAttributes.MAX_HEALTH, 150);
+	}
+
+	@Override
+	public int getShootCooldown() {
+		return this.shootCoooldown;
+	}
+
+	@Override
+	public int getShootTicks() {
+		return this.shootTicks;
+	}
+
+	@Override
+	public void setShootTicks(int ticks) {
+		this.shootTicks = ticks;
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		if (this.attackInterval > 0) {
+			this.attackInterval--;
+		}
+
+		if (this.shootTicks > 0) {
+			this.shootTicks--;
+		}
 	}
 
 	@Override
@@ -57,13 +94,7 @@ public class EyeBrightEntity extends CorruptedHostileEntity {
 		}
 
 		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.sendEntityStatus(
-				this, ModEntityStatuses.STOP_ATTACK
-			);
-		}
-
-		if (this.attackInterval > 0) {
-			this.attackInterval--;
+			world.sendEntityStatus(this, ModEntityStatuses.STOP_ATTACK);
 		}
 	}
 
@@ -101,6 +132,18 @@ public class EyeBrightEntity extends CorruptedHostileEntity {
 			default:
 				super.handleStatus(status);	
 		}
+	}
+
+	@Override
+	protected void initGoals() {
+		super.initGoals();
+
+		Goal shootingGoal = new EyeBrightShootHeadGoal(
+			this, SoundEvents.ENTITY_PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE,
+			2, 6
+		);
+
+		this.goalSelector.add(2, shootingGoal);
 	}
 
 	protected void setupAnimationStates() {
