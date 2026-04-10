@@ -10,8 +10,8 @@ import net.minecraft.block.Block;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.DodgeAttackUser;
-import net.balamah.voiddim.sound.ModSounds;
 import net.balamah.voiddim.custom.McCodeHelper;
+import net.balamah.voiddim.sound.ModSounds;
 
 public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 	extends SlowMovementGoal<T>

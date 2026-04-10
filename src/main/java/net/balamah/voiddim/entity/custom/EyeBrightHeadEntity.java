@@ -58,6 +58,7 @@ public class EyeBrightHeadEntity extends ExplosiveProjectileEntity {
 		boolean hitResult;
 		if (this.getOwner() instanceof LivingEntity livingEntity) {
 			DamageSource damageSource = ModDamageSources.eyeBrightHead(serverWorld);
+			// TODO: Increase damage
 			hitResult = entityHit.damage(serverWorld, damageSource, 8.0F);
 			if (hitResult) {
 				if (entityHit.isAlive()) {

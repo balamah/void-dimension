@@ -13,11 +13,14 @@ import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.ShootingCooldownUser;
+import net.balamah.voiddim.interfaces.MagnetTargetUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.sound.ModSounds;
 
-public class EyeBrightEntity extends CorruptedHostileEntity implements ShootingCooldownUser {
+public class EyeBrightEntity extends CorruptedHostileEntity
+	implements ShootingCooldownUser, MagnetTargetUser
+{
 	public final AnimationState idleAnimationState = new AnimationState();
 	public final AnimationState walkAnimationState = new AnimationState();
 	public final AnimationState attack1AnimationState = new AnimationState();
@@ -34,6 +37,9 @@ public class EyeBrightEntity extends CorruptedHostileEntity implements ShootingC
 
 	protected int shootCoooldown = 80;
 	protected int shootTicks = this.random.nextInt(30);
+
+	protected int magnetTargetCoooldown = 80;
+	protected int magnetTargetTicks = this.random.nextInt(100);
 	
 	protected AnimationState[] attackAnimations = {
 		this.attack1AnimationState, this.attack2AnimationState, this.attack3AnimationState
@@ -73,6 +79,21 @@ public class EyeBrightEntity extends CorruptedHostileEntity implements ShootingC
 	}
 
 	@Override
+	public int getMagnetTargetCooldown() {
+		return this.magnetTargetCoooldown;
+	}
+
+	@Override
+	public int getMagnetTargetTicks() {
+		return this.magnetTargetTicks;
+	}
+
+	@Override
+	public void setMagnetTargetTicks(int ticks) {
+		this.magnetTargetTicks = ticks;
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 
@@ -82,6 +103,10 @@ public class EyeBrightEntity extends CorruptedHostileEntity implements ShootingC
 
 		if (this.shootTicks > 0) {
 			this.shootTicks--;
+		}
+
+		if (this.magnetTargetTicks > 0) {
+			this.magnetTargetTicks--;
 		}
 	}
 
@@ -138,12 +163,13 @@ public class EyeBrightEntity extends CorruptedHostileEntity implements ShootingC
 	protected void initGoals() {
 		super.initGoals();
 
-		Goal shootingGoal = new EyeBrightShootHeadGoal(
-			this, SoundEvents.ENTITY_PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE,
-			2, 6
+		// TODO: Fix magnetting
+		this.goalSelector.add(1, new MagnetTargetGoal<EyeBrightEntity>(this, 10, 15));
+		this.goalSelector.add(
+			2, new EyeBrightShootHeadGoal(
+				this, SoundEvents.ENTITY_PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE, 2, 6
+			)
 		);
-
-		this.goalSelector.add(2, shootingGoal);
 	}
 
 	protected void setupAnimationStates() {
