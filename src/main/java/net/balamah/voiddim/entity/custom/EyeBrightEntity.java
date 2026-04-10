@@ -55,7 +55,7 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.FOLLOW_RANGE, 20)
+			.add(EntityAttributes.FOLLOW_RANGE, 25)
 			.add(EntityAttributes.STEP_HEIGHT, 1)
 			.add(EntityAttributes.ATTACK_DAMAGE, 15.0F)
 			.add(EntityAttributes.MOVEMENT_SPEED, 0.2f)
@@ -152,7 +152,7 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 				this.playRandomAnimation(this.shootAnimations);
 				break;
 			case ModEntityStatuses.SPECIAL_ATTACK:
-				this.magnettedAttackAnimationState.start(status);
+				this.magnettedAttackAnimationState.start(this.age);
 				break;
 			default:
 				super.handleStatus(status);	
@@ -164,12 +164,14 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 		super.initGoals();
 
 		// TODO: Fix magnetting
-		this.goalSelector.add(1, new MagnetTargetGoal<EyeBrightEntity>(this, 10, 15));
-		this.goalSelector.add(
-			2, new EyeBrightShootHeadGoal(
-				this, SoundEvents.ENTITY_PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE, 2, 6
-			)
-		);
+		this.goalSelector.add(1, new MagnetTargetGoal<EyeBrightEntity>(this, 10, 20, 0.3));
+
+		// TODO: Restore EyeBrightShootHeadGoal adding
+		// this.goalSelector.add(
+		// 	2, new EyeBrightShootHeadGoal(
+		// 		this, SoundEvents.ENTITY_PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE, 2, 6
+		// 	)
+		// );
 	}
 
 	protected void setupAnimationStates() {
