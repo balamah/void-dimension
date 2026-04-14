@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.block.Block;
 
 import net.balamah.voiddim.custom.NonLivingEntitySpecs;
+import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.custom.BipedEntitySpecs;
 import net.balamah.voiddim.custom.EntitySpecs;
 import net.balamah.voiddim.entity.ModEntities;
@@ -165,6 +166,8 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		this.createBipedEntityRenders(this.bipedEntitySpecs);
 		this.createEntityRenders(this.nonLivingEntitySpecs);
 		this.createBlocksTransparency(this.blocksForTransparency);
+
+		ModParticleTypes.registerModParticles();
 
 		EntityRendererFactories.register(ModEntities.BEDROCK_BOMB, BedrockBombRenderer::new);
 		EntityRendererFactories.register(ModEntities.VOID_LIGHTNING_BOLT, VoidLightningEntityRenderer::new);
