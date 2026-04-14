@@ -230,6 +230,12 @@ public class ModItems {
 	public static final Item ENTITY303_SPAWN_EGG =
 		registerSpawnEgg("entity303_spawn_egg", ModEntities.ENTITY303);
 
+	public static final Item HOLLOWED_ALPHA_STEVE_SPAWN_EGG =
+		registerSpawnEgg("hollowed_alpha_steve_spawn_egg", ModEntities.HOLLOWED_ALPHA_STEVE);
+
+	public static final Item ZOMBIFIED_ALPHA_STEVE_SPAWN_EGG =
+		registerSpawnEgg("zombified_alpha_steve_spawn_egg", ModEntities.ZOMBIFIED_ALPHA_STEVE);
+
 	public static final Item VOID_HORSE_ARMOR =
 		register(
 			"void_horse_armor",

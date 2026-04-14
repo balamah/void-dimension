@@ -37,7 +37,7 @@ public class AggressiveNullEntity extends CorruptedHostileEntity {
 
 		Goal randomPlaceSignsGoal =
 			new RandomPlaceSignsGoal<AggressiveNullEntity>(
-				this, new String[]{"NULL", "NULL", "NULL", "NULL"}, 100, 6
+				this, new String[]{"NULL", "NULL", "NULL", "NULL"}, 17, 6, 5
 			);
 
 		this.goalSelector.add(1, randomPlaceSignsGoal);
