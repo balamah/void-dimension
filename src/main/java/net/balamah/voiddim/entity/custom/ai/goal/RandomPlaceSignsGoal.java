@@ -19,29 +19,31 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 	protected final String[] signLines;
 	protected final int upperBondChance;
 	protected final int maxPlacingRadius;
+	protected final int maxSignsCount;
 
 	protected int finalTick;
 
 	public RandomPlaceSignsGoal(
-		T entity, String[] signLines, int upperBondChance, int maxPlacingRadius
+		T entity, String[] signLines, int upperBondChance, int maxPlacingRadius, int maxSignsCount
 	) {
 		super(entity);
 
 		this.signLines = signLines;
 		this.upperBondChance = upperBondChance;
 		this.maxPlacingRadius = maxPlacingRadius;
+		this.maxSignsCount = maxSignsCount;
 	}
 
 	@Override
 	public boolean canStart() {
 		int randomNumber = this.random.nextInt(this.upperBondChance);
 
-		return randomNumber == this.upperBondChance - 1;
+		return randomNumber == this.upperBondChance - 1 && this.entity.getTarget() != null;
 	}
 
 	@Override
 	public boolean shouldContinue() {
-		return !this.placedSigns;
+		return !this.placedSigns && this.entity.getTarget() != null;
 	}
 
 	@Override
@@ -55,13 +57,16 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 	public void tick() {
 		super.tick();
 
-		int randomSignCount = this.random.nextInt(2);
+		int randomSignCount = this.random.nextInt(this.maxSignsCount);
 		int signCount = Math.max(1, randomSignCount);
 
 		for (int i = 0; i < signCount; i++) {
 			BlockPos tableBlockPos = this.getRandomBlockPos(this.world, this.maxPlacingRadius);
-			this.world.setBlockState(tableBlockPos, Blocks.PALE_OAK_SIGN.getDefaultState());
+			if (!(McCodeHelper.getBlock(world, tableBlockPos).getDefaultState().isAir())) {
+				continue;
+			}
 
+			this.world.setBlockState(tableBlockPos, Blocks.PALE_OAK_SIGN.getDefaultState());
 			BlockEntity blockEntity = this.world.getBlockEntity(tableBlockPos);
 			SignBlockEntity signBlockEntity = (SignBlockEntity) blockEntity;
 			if (signBlockEntity == null) {

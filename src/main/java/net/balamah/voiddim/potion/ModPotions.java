@@ -23,6 +23,7 @@ public class ModPotions {
 		VoidDimension.LOGGER.info("Registering mod potions for " + VoidDimension.MOD_ID);
 
 		buildRecipe(Potions.AWKWARD, ModItems.VOIDIUM, VOID_SALVATION_POTION);
+		buildRecipe(Potions.AWKWARD, ModItems.VOID_SHARD, VOID_SALVATION_POTION);
 	}
 
 	protected static Potion getPotion(

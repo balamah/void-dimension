@@ -233,6 +233,12 @@ public class ModItems {
 	public static final Item EYE_BRIGHT_SPAWN_EGG =
 		registerSpawnEgg("eye_bright_spawn_egg", ModEntities.EYE_BRIGHT);
 
+	public static final Item HOLLOWED_ALPHA_STEVE_SPAWN_EGG =
+		registerSpawnEgg("hollowed_alpha_steve_spawn_egg", ModEntities.HOLLOWED_ALPHA_STEVE);
+
+	public static final Item ZOMBIFIED_ALPHA_STEVE_SPAWN_EGG =
+		registerSpawnEgg("zombified_alpha_steve_spawn_egg", ModEntities.ZOMBIFIED_ALPHA_STEVE);
+
 	public static final Item VOID_HORSE_ARMOR =
 		register(
 			"void_horse_armor",
@@ -273,6 +279,7 @@ public class ModItems {
 		return item;
 	}
 
+	@SuppressWarnings("deprecation")
 	protected static Item registerBlockItem(
 		Block block, BiFunction<Block, Item.Settings, Item> factory, Item.Settings settings
 	) {
