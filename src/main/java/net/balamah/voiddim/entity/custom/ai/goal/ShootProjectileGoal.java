@@ -8,12 +8,12 @@ import net.minecraft.world.World;
 
 import com.google.common.base.Function;
 
+import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
-import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
 public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends ProjectileEntity>
-	extends TickingGoal<E>
+	extends SlowMovementGoal<E>
 {
 	protected final Function<ServerWorld, T> projectileFactory;
 	protected final SoundEvent shootPrepareSound;
@@ -107,7 +107,7 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 			double dy = target.getBodyY(heightScale) - this.entity.getChargeY();
 			double dz = target.getZ() - this.entity.getZ();
 
-			this.sendEntityStatus(ModEntityStatuses.VOID_SPHERE_SHOOT);
+			this.sendEntityStatus(ModEntityStatuses.SHOOT);
 
 			this.spawnProjectile(serverWorld, dx, dy, dz);
 			this.entity.attackCount++;
