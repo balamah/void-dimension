@@ -96,16 +96,16 @@ public class VoidDimensionRecipeProvider extends FabricRecipeProvider {
 
 				this.createShapeless(RecipeCategory.MISC, ModItems.CORRUPTED_TORCH, 1)
 					.input(Items.TORCH)
-					.input(ModItems.VOID_SHARD)
-					.criterion(hasItem(ModItems.VOID_SHARD),
-							   this.conditionsFromItem(ModItems.VOID_SHARD))
+					.input(ModItems.VOIDIUM)
+					.criterion(hasItem(ModItems.VOIDIUM),
+							   this.conditionsFromItem(ModItems.VOIDIUM))
 					.offerTo(exporter);
 
 				this.createShapeless(RecipeCategory.MISC, ModBlocks.VOID_FLOWER, 1)
 					.input(Items.POPPY)
-					.input(ModItems.VOID_SHARD)
-					.criterion(hasItem(ModItems.VOID_SHARD),
-							   this.conditionsFromItem(ModItems.VOID_SHARD))
+					.input(ModItems.VOIDIUM)
+					.criterion(hasItem(ModItems.VOIDIUM),
+							   this.conditionsFromItem(ModItems.VOIDIUM))
 						.offerTo(exporter);
 
 				this.createShaped(RecipeCategory.MISC, ModBlocks.BEDROCK_BOMB, 1)
@@ -113,9 +113,9 @@ public class VoidDimensionRecipeProvider extends FabricRecipeProvider {
 					.pattern("121")
 					.pattern("111")
 					.input('1', Items.TNT)
-					.input('2', ModItems.VOID_SHARD)
-					.criterion(hasItem(ModItems.VOID_SHARD),
-							   this.conditionsFromItem(ModItems.VOID_SHARD))
+					.input('2', ModItems.VOIDIUM)
+					.criterion(hasItem(ModItems.VOIDIUM),
+							   this.conditionsFromItem(ModItems.VOIDIUM))
 					.offerTo(exporter);
 			}
 

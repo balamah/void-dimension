@@ -7,11 +7,11 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_void_shard": {
+    "has_voidium": {
       "conditions": {
         "items": [
           {
-            "items": "void-dimension:void_shard"
+            "items": "void-dimension:voidium"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_void_shard"
+      "has_voidium"
     ]
   ],
   "rewards": {
