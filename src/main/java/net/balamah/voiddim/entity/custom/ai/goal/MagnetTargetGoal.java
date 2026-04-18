@@ -1,7 +1,9 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Box;
@@ -91,6 +93,21 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		}
 	}
 
+	// protected void pullEntities(World world, Box box) {
+	// 	for (Entity victim : world.getOtherEntities(entity, box)) {
+	// 		Vec3d directionToAttacker = this.entity.getEntityPos()
+	// 			.subtract(victim.getEntityPos()).normalize();
+
+	// 		double distanceToAttacker = victim.distanceTo(this.entity);
+	// 		double strength = Math.min(1.0, 1.0 / distanceToAttacker * 2);
+	// 		Vec3d velocityToAttacker = directionToAttacker.multiply(strength);
+
+	// 		Vec3d newVelocity = victim.getVelocity().add(velocityToAttacker).multiply(2);
+
+	// 		victim.setVelocity(newVelocity);
+	// 	}
+	// }
+
 	protected void pullEntities(World world, Box box) {
 		for (Entity victim : world.getOtherEntities(entity, box)) {
 			Vec3d directionToAttacker = this.entity.getEntityPos()
@@ -99,10 +116,14 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 			double distanceToAttacker = victim.distanceTo(this.entity);
 			double strength = Math.min(1.0, 1.0 / distanceToAttacker * 2);
 			Vec3d velocityToAttacker = directionToAttacker.multiply(strength);
-
-			Vec3d newVelocity = victim.getVelocity().add(velocityToAttacker).multiply(2);
+			Vec3d newVelocity = victim.getVelocity().add(velocityToAttacker);
 
 			victim.setVelocity(newVelocity);
+
+			// Make players move also
+			if (victim instanceof ServerPlayerEntity player) {
+				player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player));
+			}
 		}
 	}
 
