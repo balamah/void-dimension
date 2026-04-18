@@ -5,7 +5,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.AnimationState;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Entity;
@@ -36,10 +35,10 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	protected int idleAnimationTimeout;
 	protected int attackInterval;
 
-	protected int shootCoooldown = 80;
+	protected int shootCoooldown = 60;
 	protected int shootTicks = this.random.nextInt(30);
 
-	protected int magnetTargetCoooldown = 80;
+	protected int magnetTargetCoooldown = 150;
 	protected int magnetTargetTicks = this.random.nextInt(100);
 	
 	protected AnimationState[] attackAnimations = {
@@ -164,17 +163,16 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	protected void initGoals() {
 		super.initGoals();
 
-		// TODO: Fix magnetting
 		this.goalSelector.add(
 			1, new MagnetTargetGoal<EyeBrightEntity>(this, 10, 20, 1, ModParticleTypes.CORRUPTION)
 		);
 
-		// TODO: Restore EyeBrightShootHeadGoal
-		// this.goalSelector.add(
-		// 	2, new EyeBrightShootHeadGoal(
-		// 		this, SoundEvents.ENTITY_PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE, 2, 6
-		// 	)
-		// );
+		this.goalSelector.add(
+			2,
+			new EyeBrightShootHeadGoal(
+				this, SoundEvents.ENTITY_PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE, 2, 6
+			)
+		);
 	}
 
 	protected void setupAnimationStates() {
