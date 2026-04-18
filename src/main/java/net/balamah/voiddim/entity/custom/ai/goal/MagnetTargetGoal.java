@@ -22,12 +22,12 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 	extends OneShotDamageGoal<T>
 {
 	protected final Random random = new Random();
+
 	protected final int preparationTick;
 	protected final int executionTick;
 	protected final double magnetBoxSize;
 	protected final ParticleEffect boxParticleIndicator;
 
-	protected boolean pulledEntitiesInMagnet;
 	protected boolean finishedGoal;
 	protected Box magnetBox;
 
@@ -68,13 +68,12 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		super.stop();
 
 		this.finishedGoal = false;
-		this.pulledEntitiesInMagnet = false;
 		this.removeModifier(this.attributeInstance, this.attributeModifier);
 	}
 
 	@Override
 	public boolean shouldContinue() {
-		return this.entity.getTarget() != null;
+		return this.entity.getTarget() != null && !this.finishedGoal;
 	}
 
 	@Override
@@ -92,8 +91,6 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 			this.entity.playSound(SoundEvents.BLOCK_ANVIL_USE);
 			this.sendEntityStatus(ModEntityStatuses.SPECIAL_ATTACK);
 			this.pullEntities(world, this.magnetBox);
-
-			this.pulledEntitiesInMagnet = true;
 		}
 
 		if (this.tick > this.executionTick ||
