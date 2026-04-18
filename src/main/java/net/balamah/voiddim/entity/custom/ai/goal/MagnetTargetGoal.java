@@ -1,9 +1,9 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
+import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Box;
@@ -24,19 +24,15 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 	protected final Random random = new Random();
 	protected final int preparationTick;
 	protected final int executionTick;
-	protected final double magnetStrength;
 
 	protected boolean pulledEntitiesInMagnet;
 	protected Box magnetBox;
 
-	public MagnetTargetGoal(
-		T entity, int preparationTick, int executionTick, double magnetStrength
-	) {
+	public MagnetTargetGoal(T entity, int preparationTick, int executionTick) {
 		super(entity);
 
 		this.preparationTick = preparationTick;
 		this.executionTick = executionTick;
-		this.magnetStrength = magnetStrength;
 	}
 
 	@Override
@@ -72,12 +68,11 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		return this.entity.getTarget() != null && !this.pulledEntitiesInMagnet;
 	}
 
-	// TODO: Add code in conditions
 	@Override
 	public void tick() {
 		super.tick();
 
-		this.displayParticles(this.world, this.magnetBox.getMinPos());
+		this.displayParticles(this.world, this.magnetBox.getCenter());
 
 		if (this.tick == this.preparationTick) {
 			this.addModifier(this.attributeInstance, this.attributeId, this.attributeModifier);
@@ -89,42 +84,40 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 			this.sendEntityStatus(ModEntityStatuses.SPECIAL_ATTACK);
 			this.pullEntities(world, this.magnetBox);
 
+			// TODO: Move variable assignment after damaging entities, or after cooldown of 30 ticks
 			this.pulledEntitiesInMagnet = true;
 		}
 	}
 
-	// protected void pullEntities(World world, Box box) {
-	// 	for (Entity victim : world.getOtherEntities(entity, box)) {
-	// 		Vec3d directionToAttacker = this.entity.getEntityPos()
-	// 			.subtract(victim.getEntityPos()).normalize();
-
-	// 		double distanceToAttacker = victim.distanceTo(this.entity);
-	// 		double strength = Math.min(1.0, 1.0 / distanceToAttacker * 2);
-	// 		Vec3d velocityToAttacker = directionToAttacker.multiply(strength);
-
-	// 		Vec3d newVelocity = victim.getVelocity().add(velocityToAttacker).multiply(2);
-
-	// 		victim.setVelocity(newVelocity);
-	// 	}
-	// }
-
 	protected void pullEntities(World world, Box box) {
 		for (Entity victim : world.getOtherEntities(entity, box)) {
-			Vec3d directionToAttacker = this.entity.getEntityPos()
-				.subtract(victim.getEntityPos()).normalize();
+			double heightOffset = this.getHeightOffset(victim);
 
 			double distanceToAttacker = victim.distanceTo(this.entity);
-			double strength = Math.min(1.0, 1.0 / distanceToAttacker * 2);
-			Vec3d velocityToAttacker = directionToAttacker.multiply(strength);
+			Vec3d directionToAttacker = this.entity.getEntityPos()
+					.subtract(victim.getEntityPos()).normalize();
+
+			double pullingStrength = (distanceToAttacker - heightOffset) / 2;
+			Vec3d velocityToAttacker = directionToAttacker.multiply(pullingStrength);
 			Vec3d newVelocity = victim.getVelocity().add(velocityToAttacker);
 
 			victim.setVelocity(newVelocity);
 
-			// Make players move also
+			// Pull players also. Player's velocity cannot be changed,
+			// unless EntityVelocityUpdateS2CPacket is sent
 			if (victim instanceof ServerPlayerEntity player) {
 				player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player));
 			}
 		}
+	}
+
+	protected double getHeightOffset(Entity victim) {
+		double heightOffset = 0;
+		if (victim.getY() > this.entity.getY()) {
+			heightOffset = (victim.getY() - this.entity.getY()) / 1.1;
+		}
+
+		return heightOffset;
 	}
 
 	protected void createMagnetBox() {
@@ -135,8 +128,8 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		double z = target.getZ();
 
 		this.magnetBox = new Box(
-			x, y, z,
-			x, y + 2, z
+			x - 0.5, y, z - 0.5,
+			x + 0.5, y + 2, z + 0.5
 		);
 	}
 

@@ -164,9 +164,9 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 		super.initGoals();
 
 		// TODO: Fix magnetting
-		this.goalSelector.add(1, new MagnetTargetGoal<EyeBrightEntity>(this, 10, 20, 0.3));
+		this.goalSelector.add(1, new MagnetTargetGoal<EyeBrightEntity>(this, 10, 20));
 
-		// TODO: Restore EyeBrightShootHeadGoal adding
+		// TODO: Restore EyeBrightShootHeadGoal
 		// this.goalSelector.add(
 		// 	2, new EyeBrightShootHeadGoal(
 		// 		this, SoundEvents.ENTITY_PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE, 2, 6
