@@ -348,5 +348,17 @@
 				"volume": 0.3
 			}
 		]
+	},
+	"special_attacks.magnet_prepare": {
+		"subtitle": "sound.void-dimension.special_attack.magnet_prepare",
+		"sounds": [
+			"void-dimension:special_attacks/magnet_prepare"
+		]
+	},
+	"special_attacks.magnet_execute": {
+		"subtitle": "sound.void-dimension.special_attack.magnet_execute",
+		"sounds": [
+			"void-dimension:special_attacks/magnet_execute"
+		]
 	}
 }

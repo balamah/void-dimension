@@ -302,13 +302,27 @@ public class McCodeHelper {
 
 		if (stack.isOf(Items.SHIELD)) {
 			EquipmentSlot slot = (player.getActiveHand() == Hand.MAIN_HAND)
-				? EquipmentSlot.MAINHAND
-				: EquipmentSlot.OFFHAND;
+					? EquipmentSlot.MAINHAND
+					: EquipmentSlot.OFFHAND;
 
 			stack.damage(150, player, slot);
 
 			McCodeHelper.playSoundFromEntity(target, SoundEvents.ITEM_SHIELD_BREAK);
 		}
+	}
+
+	public static void playSound(
+		World world, SoundEvent sound, Vec3d position, SoundCategory category,
+		float volume, float pitch
+	) {
+		playSound(world, sound, position.x, position.y, position.z, category, volume, pitch);
+	}
+
+	public static void playSound(
+		World world, SoundEvent sound, double x, double y, double z, SoundCategory category,
+		float volume, float pitch
+	) {
+		world.playSound(null, x, y, z, sound, category, volume, pitch);
 	}
 
 	public static void sendMessageToNearbyPlayers(

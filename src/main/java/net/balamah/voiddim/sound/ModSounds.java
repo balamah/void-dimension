@@ -132,6 +132,9 @@ public class ModSounds {
 	public static final SoundEvent EYE_BRIGHT_SHOOT_PREPARE =
 		register("eye_bright.shoot_prepare");
 
+	public static final SoundEvent MAGNET_PREPARE = register("special_attacks.magnet_prepare");
+	public static final SoundEvent MAGNET_EXECUTE = register("special_attacks.magnet_execute");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}

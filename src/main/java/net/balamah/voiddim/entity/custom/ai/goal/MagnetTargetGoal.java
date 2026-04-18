@@ -5,6 +5,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Box;
@@ -14,6 +16,8 @@ import net.minecraft.world.World;
 import net.balamah.voiddim.entity.custom.ai.goal.base.OneShotDamageGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.MagnetTargetUser;
+import net.balamah.voiddim.sound.ModSounds;
+import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
 import java.util.Random;
@@ -88,18 +92,18 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 
 		if (this.tick == this.preparationTick) {
 			this.addModifier(this.attributeInstance, this.attributeId, this.attributeModifier);
-			this.entity.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
+
+			this.playSound(ModSounds.MAGNET_PREPARE);
 		}
 
 		if (this.tick == this.executionTick) {
-			this.entity.playSound(SoundEvents.BLOCK_ANVIL_USE);
 			this.sendEntityStatus(ModEntityStatuses.SPECIAL_ATTACK);
 			this.pullEntities(world, this.magnetBox);
+
+			this.playSound(ModSounds.MAGNET_EXECUTE);
 		}
 
-		if (this.tick > this.executionTick ||
-			this.entity.distanceTo(this.entity.getTarget()) < 10)
-		{
+		if (this.tick > this.executionTick) {
 			this.finishedGoal = true;
 		}
 	}
@@ -158,7 +162,12 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		double vz = (random.nextDouble() - 0.5) * 0.01;
 
 		serverWorld.spawnParticles(
-			this.boxParticleIndicator, position.x, position.y, position.z, 5, vz, vx, vy, 0.1
+				this.boxParticleIndicator, position.x, position.y, position.z, 5, vz, vx, vy, 0.1);
+	}
+
+	protected void playSound(SoundEvent sound) {
+		McCodeHelper.playSound(
+			this.world, sound, this.magnetBox.getCenter(), SoundCategory.AMBIENT, 1, 1
 		);
 	}
 }
