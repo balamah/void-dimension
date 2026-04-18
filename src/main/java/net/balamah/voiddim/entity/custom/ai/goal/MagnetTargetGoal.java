@@ -26,6 +26,7 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 	protected final int executionTick;
 
 	protected boolean pulledEntitiesInMagnet;
+	protected boolean finishedGoal;
 	protected Box magnetBox;
 
 	public MagnetTargetGoal(T entity, int preparationTick, int executionTick) {
@@ -59,13 +60,14 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 	public void stop() {
 		super.stop();
 
+		this.finishedGoal = false;
 		this.pulledEntitiesInMagnet = false;
 		this.removeModifier(this.attributeInstance, this.attributeModifier);
 	}
 
 	@Override
 	public boolean shouldContinue() {
-		return this.entity.getTarget() != null && !this.pulledEntitiesInMagnet;
+		return this.entity.getTarget() != null;
 	}
 
 	@Override
@@ -84,8 +86,14 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 			this.sendEntityStatus(ModEntityStatuses.SPECIAL_ATTACK);
 			this.pullEntities(world, this.magnetBox);
 
-			// TODO: Move variable assignment after damaging entities, or after cooldown of 30 ticks
 			this.pulledEntitiesInMagnet = true;
+		}
+
+		if (this.pulledEntitiesInMagnet) {
+			double targetDistance = this.entity.distanceTo(this.entity.getTarget());
+			if (targetDistance < 10 || this.tick > this.executionTick * 1.5) {
+				this.finishedGoal = true;
+			}
 		}
 	}
 

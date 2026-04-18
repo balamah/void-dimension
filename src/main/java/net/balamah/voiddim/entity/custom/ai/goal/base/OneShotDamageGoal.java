@@ -12,7 +12,7 @@ public abstract class OneShotDamageGoal<T extends CorruptedHostileEntity>
 {
 	protected final Identifier attributeId = Identifier.ofVanilla("attacking");
 	protected final EntityAttributeModifier attributeModifier = this.getAttributeModifier(
-		this.attributeId, 10f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+		this.attributeId, 10.5f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
 	);
 
 	protected final EntityAttributeInstance attributeInstance;
