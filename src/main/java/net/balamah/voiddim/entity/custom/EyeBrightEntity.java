@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.ShootingCooldownUser;
 import net.balamah.voiddim.interfaces.MagnetTargetUser;
+import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.sound.ModSounds;
@@ -164,7 +165,9 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 		super.initGoals();
 
 		// TODO: Fix magnetting
-		this.goalSelector.add(1, new MagnetTargetGoal<EyeBrightEntity>(this, 10, 20));
+		this.goalSelector.add(1, new MagnetTargetGoal<EyeBrightEntity>(
+								  this, 10, 20, 1, ModParticleTypes.CORRUPTION
+							  ));
 
 		// TODO: Restore EyeBrightShootHeadGoal
 		// this.goalSelector.add(

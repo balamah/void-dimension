@@ -3,6 +3,7 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
@@ -13,7 +14,6 @@ import net.minecraft.world.World;
 import net.balamah.voiddim.entity.custom.ai.goal.base.OneShotDamageGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.MagnetTargetUser;
-import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
 import java.util.Random;
@@ -24,16 +24,23 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 	protected final Random random = new Random();
 	protected final int preparationTick;
 	protected final int executionTick;
+	protected final double magnetBoxSize;
+	protected final ParticleEffect boxParticleIndicator;
 
 	protected boolean pulledEntitiesInMagnet;
 	protected boolean finishedGoal;
 	protected Box magnetBox;
 
-	public MagnetTargetGoal(T entity, int preparationTick, int executionTick) {
+	public MagnetTargetGoal(
+		T entity, int preparationTick, int executionTick, double magnetBoxSize,
+		ParticleEffect boxParticleIndicator
+	) {
 		super(entity);
 
 		this.preparationTick = preparationTick;
 		this.executionTick = executionTick;
+		this.magnetBoxSize = magnetBoxSize;
+		this.boxParticleIndicator = boxParticleIndicator;
 	}
 
 	@Override
@@ -89,11 +96,10 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 			this.pulledEntitiesInMagnet = true;
 		}
 
-		if (this.pulledEntitiesInMagnet) {
-			double targetDistance = this.entity.distanceTo(this.entity.getTarget());
-			if (targetDistance < 10 || this.tick > this.executionTick * 1.5) {
-				this.finishedGoal = true;
-			}
+		if (this.tick > this.executionTick ||
+			this.entity.distanceTo(this.entity.getTarget()) < 10)
+		{
+			this.finishedGoal = true;
 		}
 	}
 
@@ -136,8 +142,8 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		double z = target.getZ();
 
 		this.magnetBox = new Box(
-			x - 0.5, y, z - 0.5,
-			x + 0.5, y + 2, z + 0.5
+			x - this.magnetBoxSize, y, z - this.magnetBoxSize,
+			x + this.magnetBoxSize, y + 2, z + this.magnetBoxSize
 		);
 	}
 
@@ -151,7 +157,7 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		double vz = (random.nextDouble() - 0.5) * 0.01;
 
 		serverWorld.spawnParticles(
-			ModParticleTypes.CORRUPTION, position.x, position.y, position.z, 10, vz, vx, vy, 0.1
+			this.boxParticleIndicator, position.x, position.y, position.z, 5, vz, vx, vy, 0.1
 		);
 	}
 }
