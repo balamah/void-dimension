@@ -53,7 +53,7 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		LivingEntity target = this.entity.getTarget();
 
 		return target != null && this.entity.distanceTo(target) > 5 &&
-				this.entity.getMagnetTargetTicks() == 0;
+			this.entity.getMagnetTargetTicks() == 0;
 	}
 
 	@Override
@@ -69,6 +69,10 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 
 		this.finishedGoal = false;
 		this.removeModifier(this.attributeInstance, this.attributeModifier);
+
+		this.entity.setMagnetTargetTicks(
+			this.entity.getMagnetTargetCooldown() + this.random.nextInt(20)
+		);
 	}
 
 	@Override
