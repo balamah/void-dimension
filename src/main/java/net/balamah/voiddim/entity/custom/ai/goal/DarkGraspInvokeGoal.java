@@ -8,24 +8,34 @@ import net.minecraft.world.World;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.custom.DarkGraspEntity;
+import net.balamah.voiddim.interfaces.DarkGraspUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
-public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity> extends SlowMovementGoal<T> {
+public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUser>
+	extends SlowMovementGoal<T>
+{
+	protected final int executionTick;
+
 	protected boolean didInvokeGrasp;
 
-	public DarkGraspInvokeGoal(T entity) {
+	public DarkGraspInvokeGoal(T entity, int executionTick) {
 	    super(entity);
+
+		this.executionTick = executionTick;
 	}
 
 	@Override
 	public boolean canStart() {
 		LivingEntity target = this.entity.getTarget();
 
-		return target != null && target.distanceTo(this.entity) >= 6;
+		return target != null && target.distanceTo(this.entity) >= 6 &&
+			this.entity.getDarkGraspInvokeTicks() == 0;
 	}
 
 	@Override
 	public void start() {
+		super.start();
+
 		this.addSpeedModifier();
 
 		this.entity.setStopAttacks(true);
@@ -36,9 +46,15 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity> extends SlowM
 	public void stop() {
 		super.stop();
 
+		this.didInvokeGrasp = false;
+
 		this.removeSpeedModifier();
 		this.entity.setStopAttacks(false);
-		this.sendEntityStatus(ModEntityStatuses.STOP_ATTACK);
+
+		// TODO: Change 20 to this.entity.getDarkGraspInvokeCooldown()
+		this.entity.setDarkGraspInvokeTicks(20);
+
+		this.sendEntityStatus(ModEntityStatuses.STOP_SPECIAL_ATTACK);
 	}
 
 	@Override
@@ -50,7 +66,7 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity> extends SlowM
 	public void tick() {
 		super.tick();
 
-		if (this.tick == 15) {
+		if (this.tick == this.executionTick) {
 			this.cast(world, this.entity.getTarget());
 		}
 	}

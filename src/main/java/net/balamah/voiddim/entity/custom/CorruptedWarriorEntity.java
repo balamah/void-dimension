@@ -11,11 +11,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
-import net.balamah.voiddim.entity.ModEntities;
+import net.balamah.voiddim.interfaces.DarkGraspUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
+import net.balamah.voiddim.entity.ModEntities;
 
-public class CorruptedWarriorEntity extends BossEntity {
+public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser {
 	public final AnimationState idleAnimationState = new AnimationState();
 	public final AnimationState walkAnimationState = new AnimationState();
 	public final AnimationState strongAttackAnimationState = new AnimationState();
@@ -26,7 +27,10 @@ public class CorruptedWarriorEntity extends BossEntity {
 	public final AnimationState normalAttack2AnimationState = new AnimationState();
 	public final AnimationState normalAttack3AnimationState = new AnimationState();
 
+	protected final int darkGraspCooldown = 20;
+
 	protected int attackInterval;
+	protected int darkGraspTicks;
 
 	protected AnimationState[] normalAttackAnimations = {
 		this.normalAttack1AnimationState,
@@ -54,6 +58,21 @@ public class CorruptedWarriorEntity extends BossEntity {
 	}
 
 	@Override
+	public int getDarkGraspInvokeCooldown() {
+		return this.darkGraspCooldown;
+	}
+
+	@Override
+	public int getDarkGraspInvokeTicks() {
+		return this.darkGraspTicks;
+	}
+
+	@Override
+	public void setDarkGraspInvokeTicks(int ticks) {
+		this.darkGraspTicks = ticks;
+	}
+
+	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
 			case ModEntityStatuses.ATTACK:
@@ -65,10 +84,12 @@ public class CorruptedWarriorEntity extends BossEntity {
 				break;
 			case ModEntityStatuses.STOP_ATTACK:
 				this.stopAnimations(this.normalAttackAnimations);
+				this.summonProjectileAnimationState.stop();
+				break;
+			case ModEntityStatuses.STOP_SPECIAL_ATTACK:
 				this.specialAttackAnimationState.stop();
 				this.strongAttackAnimationState.stop();
 				this.strongestAttackAnimationState.stop();
-				this.summonProjectileAnimationState.stop();
 				break;
 			case ModEntityStatuses.STRONG_ATTACK:
 				this.strongAttackAnimationState.start(this.age);
@@ -113,7 +134,7 @@ public class CorruptedWarriorEntity extends BossEntity {
 		);
 
 		this.goalSelector.add(5, summonEntitiesGoal);
-		this.goalSelector.add(4, new DarkGraspInvokeGoal<>(this));
+		this.goalSelector.add(4, new DarkGraspInvokeGoal<>(this, 5));
 	}
 
 	@Override
@@ -121,13 +142,15 @@ public class CorruptedWarriorEntity extends BossEntity {
 		super.mobTick(world);
 
 		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.sendEntityStatus(
-				this, ModEntityStatuses.STOP_ATTACK
-			);
+			world.sendEntityStatus(this, ModEntityStatuses.STOP_ATTACK);
 		}
 
 		if (this.attackInterval > 0) {
 			this.attackInterval--;
+		}
+
+		if (this.darkGraspTicks > 0) {
+			this.darkGraspTicks--;
 		}
 	}
 }
