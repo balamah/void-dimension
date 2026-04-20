@@ -219,28 +219,27 @@ public class ModEntities {
 			.trackingTickInterval(20)
 	);
 
-	// TODO: Restore the code down below
-	// public static final EntityType<CorruptedWarriorEntity> CORRUPTED_WARRIOR =
-	// 	register("corrupted_warrior",
-	// 			 CorruptedWarriorEntity.class,
-	// 			 EntityType.Builder.create(CorruptedWarriorEntity::new, SpawnGroup.CREATURE)
-	// 			 .dimensions(0.6F, 2.9F));
+	public static final EntityType<CorruptedWarriorEntity> CORRUPTED_WARRIOR =
+		register("corrupted_warrior",
+				 CorruptedWarriorEntity.class,
+				 EntityType.Builder.create(CorruptedWarriorEntity::new, SpawnGroup.CREATURE)
+				 .dimensions(0.6F, 2.9F));
 
-	// public static final EntityType<VoidBoundServantEntity> VOID_BOUND_SERVANT =
-	// 	register("void_bound_servant",
-	// 			 VoidBoundServantEntity.class,
-	// 			 EntityType.Builder.create(VoidBoundServantEntity::new, SpawnGroup.CREATURE)
-	// 			 .dimensions(0.8F, 2.3F));
+	public static final EntityType<VoidBoundServantEntity> VOID_BOUND_SERVANT =
+		register("void_bound_servant",
+				 VoidBoundServantEntity.class,
+				 EntityType.Builder.create(VoidBoundServantEntity::new, SpawnGroup.CREATURE)
+				 .dimensions(0.8F, 2.3F));
 	
-	// public static final EntityType<DarkGraspEntity> DARK_GRASP = register(
-	// 	"evoker_fangs",
-	// 	DarkGraspEntity.class,
-	// 	EntityType.Builder.<DarkGraspEntity>create(DarkGraspEntity::new, SpawnGroup.MISC)
-	// 		.dropsNothing()
-	// 		.dimensions(0.5F, 0.8F)
-	// 		.maxTrackingRange(6)
-	// 		.trackingTickInterval(2)
-	// );
+	public static final EntityType<DarkGraspEntity> DARK_GRASP = register(
+		"evoker_fangs",
+		DarkGraspEntity.class,
+		EntityType.Builder.<DarkGraspEntity>create(DarkGraspEntity::new, SpawnGroup.MISC)
+			.dropsNothing()
+			.dimensions(0.5F, 0.8F)
+			.maxTrackingRange(6)
+			.trackingTickInterval(2)
+	);
 
 	public static final EntityType<EyeBrightEntity> EYE_BRIGHT =
 		register(
@@ -296,6 +295,8 @@ public class ModEntities {
 		FabricDefaultAttributeRegistry.register(ModEntities.STARING_CAT, StaringCatEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.STARING_DOG, StaringDogEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.EYE_BRIGHT, EyeBrightEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_WARRIOR, CorruptedWarriorEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.VOID_BOUND_SERVANT, VoidBoundServantEntity.createAttributes());
 	}
 
 	@SuppressWarnings("unchecked")

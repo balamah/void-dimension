@@ -90,7 +90,15 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new EntitySpecs<EyeBrightEntity>(ModEntities.EYE_BRIGHT,
 												  EyeBrightModel.EYE_BRIGHT,
 												  EyeBrightModel.getTexturedModelData(),
-												  EyeBrightRenderer::new)
+												  EyeBrightRenderer::new),
+				new EntitySpecs<CorruptedWarriorEntity>(ModEntities.CORRUPTED_WARRIOR,
+														CorruptedWarriorModel.CORRUPTED_WARRIOR,
+														CorruptedWarriorModel.getTexturedModelData(),
+														CorruptedWarriorRenderer::new),
+				new EntitySpecs<VoidBoundServantEntity>(ModEntities.VOID_BOUND_SERVANT,
+														VoidBoundServantModel.VOID_BOUND_SERVANT,
+														VoidBoundServantModel.getTexturedModelData(),
+														VoidBoundServantRenderer::new)
 				);
 
 

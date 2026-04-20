@@ -6,10 +6,12 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 
@@ -100,14 +102,18 @@ public class CorruptedWarriorEntity extends BossEntity {
 	protected void initGoals() {
 		/*
 		 * TODO: Add goals
-		 * - SummonEntities(VoidBoundServant)
 		 * - ShootProjectiles(ConsumedSoul)
 		 * - DarkGraspInvoke    :: basically like invoker spike attack
 		 * - ThunderWaveInvoke	:: play CorruptedWarriorAnimations.SPECIAL_ATTACK
 		 */
 		super.initGoals();
 
-		this.goalSelector.add(4, new DarkGraspInvokeGoal(this));
+		Goal summonEntitiesGoal = new SummonEntitiesGoal<CorruptedWarriorEntity, VoidBoundServantEntity>(
+			this, VoidBoundServantEntity.class, ModEntities.VOID_BOUND_SERVANT, 10
+		);
+
+		this.goalSelector.add(5, summonEntitiesGoal);
+		this.goalSelector.add(4, new DarkGraspInvokeGoal<>(this));
 	}
 
 	@Override
