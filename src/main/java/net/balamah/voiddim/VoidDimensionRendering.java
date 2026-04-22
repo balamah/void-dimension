@@ -180,6 +180,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		EntityRendererFactories.register(ModEntities.BEDROCK_BOMB, BedrockBombRenderer::new);
 		EntityRendererFactories.register(ModEntities.VOID_LIGHTNING_BOLT, VoidLightningEntityRenderer::new);
 		EntityRendererFactories.register(ModEntities.EYE_BRIGHT_HEAD, EyeBrightHeadRenderer::new);
+		EntityRendererFactories.register(ModEntities.DARK_GRASP, DarkGraspRenderer::new);
 	}
 
 	protected <T extends Entity> void registerSpec(NonLivingEntitySpecs<T> spec) {

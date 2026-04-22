@@ -360,5 +360,11 @@
 		"sounds": [
 			"void-dimension:special_attacks/magnet_execute"
 		]
+	},
+	"corrupted_warrior.dark_grasp_prepare": {
+		"subtitle": "sound.void-dimension.corrupted_warrior.dark_grasp_prepare",
+		"sounds": [
+			"void-dimension:corrupted_warrior/dark_grasp_prepare"
+		]
 	}
 }

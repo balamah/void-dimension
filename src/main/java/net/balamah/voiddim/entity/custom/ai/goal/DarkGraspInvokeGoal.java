@@ -1,8 +1,13 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
@@ -15,20 +20,33 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 	extends SlowMovementGoal<T>
 {
 	protected final int executionTick;
+	protected final int minActivationDistance;
+	protected final int maxActivationDistance;
 
 	protected boolean didInvokeGrasp;
 
-	public DarkGraspInvokeGoal(T entity, int executionTick) {
+	public DarkGraspInvokeGoal(
+		T entity, int executionTick, int minActivationDistance, int maxActivationDistance
+	) {
 	    super(entity);
 
 		this.executionTick = executionTick;
+		this.minActivationDistance = minActivationDistance;
+		this.maxActivationDistance = maxActivationDistance;
 	}
 
 	@Override
 	public boolean canStart() {
 		LivingEntity target = this.entity.getTarget();
 
-		return target != null && target.distanceTo(this.entity) >= 6 &&
+		if (target == null) {
+			return false;
+		}
+
+		double distance = target.distanceTo(this.entity);
+
+		return distance >= this.minActivationDistance &&
+			distance <= this.maxActivationDistance &&
 			this.entity.getDarkGraspInvokeTicks() == 0;
 	}
 
@@ -39,6 +57,7 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 		this.addSpeedModifier();
 
 		this.entity.setStopAttacks(true);
+		this.entity.playSound(this.entity.getDarkGraspSound());
 		this.sendEntityStatus(ModEntityStatuses.SPECIAL_ATTACK);
 	}
 
@@ -50,9 +69,7 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 
 		this.removeSpeedModifier();
 		this.entity.setStopAttacks(false);
-
-		// TODO: Change 20 to this.entity.getDarkGraspInvokeCooldown()
-		this.entity.setDarkGraspInvokeTicks(20);
+		this.entity.setDarkGraspInvokeTicks(this.entity.getDarkGraspInvokeCooldown());
 
 		this.sendEntityStatus(ModEntityStatuses.STOP_SPECIAL_ATTACK);
 	}
@@ -71,13 +88,14 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 		}
 	}
 
+	// TODO: Fix gaps
 	protected void cast(World world, LivingEntity target) {
 		double d = Math.min(target.getY(), this.entity.getY());
 		double e = Math.max(target.getY(), this.entity.getY()) + 1.0;
 		float f = (float)MathHelper.atan2(target.getZ() - this.entity.getZ(), target.getX() - this.entity.getX());
 
 		if (this.entity.squaredDistanceTo(target) < 9.0) {
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 15; i++) {
 				float g = f + i * (float) Math.PI * 0.4F;
 				this.invokeDarkGrasp(
 					world,
@@ -87,7 +105,7 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 				);
 			}
 
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < 15; i++) {
 				float g = f + i * (float) Math.PI * 2.0F / 8.0F + (float) (Math.PI * 2.0 / 5.0);
 				this.invokeDarkGrasp(
 					world,
@@ -114,9 +132,33 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 		World world, double x, double z, double maxY, double y, float yaw, int warmup
 	) {
 		BlockPos blockPos = BlockPos.ofFloored(x, y, z);
+		boolean foundSurface = false;
+		double surfaceHeightOffset = 0.0;
 
-		world.spawnEntity(
-			new DarkGraspEntity(world, x, blockPos.getY(), z, yaw, warmup, this.entity)
-		);
+		do {
+			BlockPos lowBlockPos = blockPos.down();
+			BlockState state = world.getBlockState(lowBlockPos);
+			if (state.isSideSolidFullSquare(world, lowBlockPos, Direction.UP))
+			{
+				BlockState surfaceBlockState = world.getBlockState(blockPos);
+				VoxelShape voxel = surfaceBlockState.getCollisionShape(world, blockPos);
+				if (!voxel.isEmpty()) {
+					surfaceHeightOffset = voxel.getMax(Direction.Axis.Y);
+				}
+
+				foundSurface = true;
+				break;
+			}
+			
+			blockPos = blockPos.down();
+		} while (blockPos.getY() >= MathHelper.floor(maxY) - 1);
+
+		if (foundSurface) {
+			Entity darkGrasp = new DarkGraspEntity(
+				world, x, blockPos.getY() + surfaceHeightOffset, z, yaw, warmup, this.entity
+			);
+
+			world.spawnEntity(darkGrasp);
+		}
 	}
 }

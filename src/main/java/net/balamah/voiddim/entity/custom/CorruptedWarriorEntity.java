@@ -4,6 +4,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.Goal;
@@ -12,6 +13,7 @@ import net.minecraft.world.World;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.DarkGraspUser;
+import net.balamah.voiddim.sound.ModSounds;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.entity.ModEntities;
@@ -73,6 +75,11 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 	}
 
 	@Override
+	public SoundEvent getDarkGraspSound() {
+		return ModSounds.CORRUPTED_WARRIOR_DARK_GRASP_PREPARE;
+	}
+
+	@Override
 	public void handleStatus(byte status) {
 		switch (status) {
 			case ModEntityStatuses.ATTACK:
@@ -124,7 +131,6 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 		/*
 		 * TODO: Add goals
 		 * - ShootProjectiles(ConsumedSoul)
-		 * - DarkGraspInvoke    :: basically like invoker spike attack
 		 * - ThunderWaveInvoke	:: play CorruptedWarriorAnimations.SPECIAL_ATTACK
 		 */
 		super.initGoals();
@@ -134,7 +140,7 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 		);
 
 		this.goalSelector.add(5, summonEntitiesGoal);
-		this.goalSelector.add(4, new DarkGraspInvokeGoal<>(this, 5));
+		this.goalSelector.add(4, new DarkGraspInvokeGoal<>(this, 5, 6, 15));
 	}
 
 	@Override

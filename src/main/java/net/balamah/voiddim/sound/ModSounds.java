@@ -135,6 +135,9 @@ public class ModSounds {
 	public static final SoundEvent MAGNET_PREPARE = register("special_attacks.magnet_prepare");
 	public static final SoundEvent MAGNET_EXECUTE = register("special_attacks.magnet_execute");
 
+	public static final SoundEvent CORRUPTED_WARRIOR_DARK_GRASP_PREPARE =
+		register("corrupted_warrior.dark_grasp_prepare");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}

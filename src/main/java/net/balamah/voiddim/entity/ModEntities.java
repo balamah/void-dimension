@@ -232,7 +232,7 @@ public class ModEntities {
 				 .dimensions(0.8F, 2.3F));
 	
 	public static final EntityType<DarkGraspEntity> DARK_GRASP = register(
-		"evoker_fangs",
+		"dark_grasp",
 		DarkGraspEntity.class,
 		EntityType.Builder.<DarkGraspEntity>create(DarkGraspEntity::new, SpawnGroup.MISC)
 			.dropsNothing()
