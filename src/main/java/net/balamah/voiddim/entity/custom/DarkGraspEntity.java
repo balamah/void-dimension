@@ -13,6 +13,8 @@ import net.balamah.voiddim.effect.ModEffects;
 import net.balamah.voiddim.entity.ModEntities;
 
 public class DarkGraspEntity extends EvokerFangsEntity {
+	protected final float damage = 16f;
+
 	private int warmup = 0;
 
 	public DarkGraspEntity(
@@ -37,7 +39,7 @@ public class DarkGraspEntity extends EvokerFangsEntity {
 		LivingEntity livingEntity = this.getOwner();
 		if (target.isAlive() && !target.isInvulnerable() && target != livingEntity) {
 			if (livingEntity == null) {
-				target.serverDamage(this.getDamageSources().magic(), 6.0F);
+				target.serverDamage(this.getDamageSources().magic(), this.damage);
 			} else {
 				this.damageApplyCorruption(livingEntity, target);
 			}
@@ -48,7 +50,7 @@ public class DarkGraspEntity extends EvokerFangsEntity {
 		DamageSource damageSource = this.getDamageSources().indirectMagic(this, livingEntity);
 
 		if (this.getEntityWorld() instanceof ServerWorld serverWorld &&
-			target.damage(serverWorld, damageSource, 6.0F))
+			target.damage(serverWorld, damageSource, this.damage))
 		{
 			StatusEffectInstance effect = new StatusEffectInstance(ModEffects.CORRUPTION, 60, 1);
 

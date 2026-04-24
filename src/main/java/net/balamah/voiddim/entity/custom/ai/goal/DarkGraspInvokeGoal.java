@@ -3,7 +3,6 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.BlockState;
@@ -88,7 +87,6 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 		}
 	}
 
-	// TODO: Fix gaps
 	protected void cast(World world, LivingEntity target) {
 		double d = Math.min(target.getY(), this.entity.getY());
 		double e = Math.max(target.getY(), this.entity.getY()) + 1.0;

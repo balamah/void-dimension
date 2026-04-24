@@ -29,7 +29,7 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 	public final AnimationState normalAttack2AnimationState = new AnimationState();
 	public final AnimationState normalAttack3AnimationState = new AnimationState();
 
-	protected final int darkGraspCooldown = 20;
+	protected final int darkGraspCooldown = 65;
 
 	protected int attackInterval;
 	protected int darkGraspTicks;
@@ -51,11 +51,11 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return HostileEntity.createHostileAttributes()
 			.add(EntityAttributes.FOLLOW_RANGE, 64)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.3F)
+			.add(EntityAttributes.MOVEMENT_SPEED, 0.28F)
 			.add(EntityAttributes.MAX_HEALTH, 365)
 			.add(EntityAttributes.KNOCKBACK_RESISTANCE, 1.0)
 			.add(EntityAttributes.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0)
-			.add(EntityAttributes.ATTACK_DAMAGE, 14.5F)
+			.add(EntityAttributes.ATTACK_DAMAGE, 11.5F)
 			.add(EntityAttributes.STEP_HEIGHT, 1.0);
 	}
 
@@ -140,7 +140,7 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 		);
 
 		this.goalSelector.add(5, summonEntitiesGoal);
-		this.goalSelector.add(4, new DarkGraspInvokeGoal<>(this, 5, 6, 15));
+		this.goalSelector.add(4, new DarkGraspInvokeGoal<>(this, 5, 0, 7));
 	}
 
 	@Override
