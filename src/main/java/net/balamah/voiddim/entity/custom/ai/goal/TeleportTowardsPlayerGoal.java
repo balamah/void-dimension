@@ -1,10 +1,9 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.TeleportUser;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
 
 public class TeleportTowardsPlayerGoal<T extends CorruptedHostileEntity & TeleportUser>
 	extends Goal
@@ -16,7 +15,7 @@ public class TeleportTowardsPlayerGoal<T extends CorruptedHostileEntity & Telepo
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		float middleHP = this.entity.getMaxHealth() / 2;
 		float currentHP = this.entity.getHealth();
 
@@ -24,12 +23,12 @@ public class TeleportTowardsPlayerGoal<T extends CorruptedHostileEntity & Telepo
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return this.entity.getTarget() != null;
 	}
 
 	@Override
-	public boolean shouldRunEveryTick() {
+	public boolean requiresUpdateEveryTick() {
 		return true;
 	}
 

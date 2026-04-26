@@ -1,15 +1,14 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.model.BlazeEntityModel;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.VoidDimension;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.monster.blaze.BlazeModel;
+import net.minecraft.resources.Identifier;
 
-public class CorruptedBlazeModel extends BlazeEntityModel {
-    public static final EntityModelLayer CORRUPTED_BLAZE =
-		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "corrupted_blaze"),
+public class CorruptedBlazeModel extends BlazeModel {
+    public static final ModelLayerLocation CORRUPTED_BLAZE =
+		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "corrupted_blaze"),
 							 "main");
 
 	public CorruptedBlazeModel(ModelPart modelPart) {

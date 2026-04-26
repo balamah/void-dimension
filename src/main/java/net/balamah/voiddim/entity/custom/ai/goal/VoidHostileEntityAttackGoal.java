@@ -1,14 +1,14 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
 public class VoidHostileEntityAttackGoal extends MeleeAttackGoal {
-	protected final PathAwareEntity entity;
+	protected final PathfinderMob entity;
 	protected int ticks;
 
 	public VoidHostileEntityAttackGoal(
-		PathAwareEntity entity, double speed, boolean pauseWhenMobIdle
+		PathfinderMob entity, double speed, boolean pauseWhenMobIdle
 	) {
 		super(entity, speed, pauseWhenMobIdle);
 
@@ -26,7 +26,7 @@ public class VoidHostileEntityAttackGoal extends MeleeAttackGoal {
 	public void stop() {
 		super.stop();
 
-		this.entity.setAttacking(false);
+		this.entity.setAggressive(false);
 	}
 
 	@Override
@@ -35,10 +35,10 @@ public class VoidHostileEntityAttackGoal extends MeleeAttackGoal {
 
 		this.ticks++;
 
-		if (this.ticks >= 5 && this.getCooldown() < this.getMaxCooldown() / 2) {
-			this.entity.setAttacking(true);
+		if (this.ticks >= 5 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2) {
+			this.entity.setAggressive(true);
 		} else {
-			this.entity.setAttacking(false);
+			this.entity.setAggressive(false);
 		}
 	}
 }

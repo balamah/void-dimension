@@ -1,19 +1,18 @@
 package net.balamah.voiddim.item;
 
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.VoidDimension;
 
 public class ModItemGroups {
-	private static final ItemConvertible[] TAB_ITEMS = {
+	private static final ItemLike[] TAB_ITEMS = {
 		ModItems.VOIDIUM, ModBlocks.DEEPSLATE_VOIDIUM_ORE, ModBlocks.CORRUPT_VOIDIUM_ORE,
 		ModItems.VOID_SHARD, ModItems.VOID_INGOT,
 		ModItems.VOID_UPGRADE_SMITHING_TEMPLATE, ModBlocks.DEEPSLATE_VOID_SHARD_ORE,
@@ -41,32 +40,33 @@ public class ModItemGroups {
 		ModBlocks.OLD_CORPSE, ModBlocks.OLD_CORPSE_PILE
 	};
 	
-	private static final ItemGroup VOID_DIMENSION_TAB =
+	private static final CreativeModeTab VOID_DIMENSION_TAB =
 		getCreativeTab(
 			new ItemStack(ModItems.VOID_SHARD), 
-			Text.translatable("itemgroup.void-dimension.items"), 
+			Component.translatable("itemgroup.void-dimension.items"), 
 			TAB_ITEMS
 		);
 
-	public static final ItemGroup VOID_DIMENSION_ITEMS_GROUP =
-		Registry.register(Registries.ITEM_GROUP,
-						  Identifier.of(VoidDimension.MOD_ID, "void_dimension_items"),
+	public static final CreativeModeTab VOID_DIMENSION_ITEMS_GROUP =
+		Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB,
+						  Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_dimension_items"),
 						  VOID_DIMENSION_TAB);
 
 	public static void registerModItemGroups() {
 		VoidDimension.LOGGER.info("Registering mod groups for " + VoidDimension.MOD_ID);
 	}
 
-	protected static ItemGroup getCreativeTab(
-		ItemStack icon, Text displayName, ItemConvertible[] items
+	protected static CreativeModeTab getCreativeTab(
+		ItemStack icon, Component displayName, ItemLike[] items
 	) {
-		return FabricItemGroup.builder().icon(() -> icon)
-			.displayName(displayName)
-			.entries(((displayContext, entries) -> {
-						for (ItemConvertible item : items) {
-							entries.add(item);	
-						}
-					}))
+		return FabricCreativeModeTab.builder()
+			.icon(() -> icon)
+			.title(displayName)
+			.displayItems((displayParams, output) -> {
+				for (ItemLike item : items) {
+					output.accept(item);
+				}
+			})
 			.build();
 	}
 }

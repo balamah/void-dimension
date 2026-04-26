@@ -1,10 +1,5 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.Vec3d;
-
 import java.util.Random;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
@@ -15,12 +10,16 @@ import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 
 public class ShootLightningGoal<T extends CorruptedHostileEntity & ShootLightningUser>
 	extends TickingGoal<T>
 {
 	protected Random random = new Random();
-	protected Vec3d targetPosition;
+	protected Vec3 targetPosition;
 	protected boolean shotPredicate;
 
 	public ShootLightningGoal(T entity) {
@@ -28,12 +27,12 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity & ShootLightnin
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		return this.entity.getTarget() != null && this.entity.getLightningCooldown() == 0;
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return !this.shotPredicate;
 	}
 
@@ -46,7 +45,7 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity & ShootLightnin
 
 		this.world.playSound(
 			this.entity, targetPosition.x, targetPosition.y, targetPosition.z,
-			ModSounds.LIGHTNING, SoundCategory.HOSTILE
+			ModSounds.LIGHTNING, SoundSource.HOSTILE
 		);
 	}
 
@@ -72,12 +71,12 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity & ShootLightnin
 		}
 	}
 
-	protected Vec3d getTargetPosition(LivingEntity target) {
-		return target.getEntityPos();
+	protected Vec3 getTargetPosition(LivingEntity target) {
+		return target.position();
 	}
 
-	protected void displayParticles(Vec3d position) {
-		if (!(this.world instanceof ServerWorld serverWorld)) {
+	protected void displayParticles(Vec3 position) {
+		if (!(this.world instanceof ServerLevel serverWorld)) {
 			return;
 		}
 
@@ -85,13 +84,13 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity & ShootLightnin
 		double vy = 0.05 + random.nextDouble(5.5) * 0.03;
 		double vz = (random.nextDouble() - 0.5) * 0.01;
 
-		serverWorld.spawnParticles(
+		serverWorld.sendParticles(
 			ModParticleTypes.LIGHTNING, position.x, position.y, position.z, 10, vz, vx, vy, 0.1
 		);
 	}
 
-	protected void summonLightningBolt(Vec3d position) {
-		if (!(this.world instanceof ServerWorld)) {
+	protected void summonLightningBolt(Vec3 position) {
+		if (!(this.world instanceof ServerLevel)) {
 			return;
 		}
 
@@ -99,8 +98,8 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity & ShootLightnin
 			ModEntities.VOID_LIGHTNING_BOLT, this.world
 		);
 
-		lightningBolt.setPosition(position);
-		this.world.spawnEntity(lightningBolt);
+		lightningBolt.setPos(position);
+		this.world.addFreshEntity(lightningBolt);
 		this.shotPredicate = true;
 	}
 
@@ -124,6 +123,6 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity & ShootLightnin
 			zTarget = zt - 5;
 		}
 
-		this.entity.getNavigation().startMovingTo(xTarget, y, zTarget, 1.0);
+		this.entity.getNavigation().moveTo(xTarget, y, zTarget, 1.0);
 	}
 }

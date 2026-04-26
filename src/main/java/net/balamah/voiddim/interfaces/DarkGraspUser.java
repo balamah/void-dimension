@@ -1,6 +1,6 @@
 package net.balamah.voiddim.interfaces;
 
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 
 public interface DarkGraspUser {
 	public int getDarkGraspInvokeCooldown();

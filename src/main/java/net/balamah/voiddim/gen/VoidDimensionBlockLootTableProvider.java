@@ -2,20 +2,19 @@ package net.balamah.voiddim.gen;
 
 import java.util.concurrent.CompletableFuture;
 
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.loot.LootTable;
-import net.minecraft.item.Items;
-
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.balamah.voiddim.custom.McGenHelper;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.item.ModItems;
 
-public class VoidDimensionBlockLootTableProvider extends FabricBlockLootTableProvider {
+public class VoidDimensionBlockLootTableProvider extends FabricBlockLootSubProvider {
 	public VoidDimensionBlockLootTableProvider(
-		FabricDataOutput dataOutput,
-		CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup
+		FabricPackOutput dataOutput,
+		CompletableFuture<HolderLookup.Provider> registryLookup
 	) {
 		super(dataOutput, registryLookup);
 	}
@@ -23,43 +22,43 @@ public class VoidDimensionBlockLootTableProvider extends FabricBlockLootTablePro
 	@Override
 	public void generate() {
 		LootTable.Builder corpseLootTable =
-			LootTable.builder()
-			.pool(
+			LootTable.lootTable()
+			.withPool(
 				McGenHelper.getPool(McGenHelper.constantNumber(1))
-				.with(McGenHelper.getItemEntry(Items.BONE, 2, 5))
+				.add(McGenHelper.getItemEntry(Items.BONE, 2, 5))
 			)
 		;
 
 		LootTable.Builder voidiumLootTable = 
-			LootTable.builder()
-			.pool(
+			LootTable.lootTable()
+			.withPool(
 				McGenHelper.getPool(McGenHelper.constantNumber(1))
-				.with(McGenHelper.getItemEntry(ModItems.VOIDIUM, 1, 3))
+				.add(McGenHelper.getItemEntry(ModItems.VOIDIUM, 1, 3))
 			)
 		;
 
-		this.addDrop(ModBlocks.VOID_SHARD_BLOCK);
-		this.addDrop(ModBlocks.VOID_FLOWER);
-		this.addDrop(ModBlocks.CORRUPT_BLOCK);
-		this.addDrop(ModBlocks.CORRUPTED_LANTERN);
+		this.dropSelf(ModBlocks.VOID_SHARD_BLOCK);
+		this.dropSelf(ModBlocks.VOID_FLOWER);
+		this.dropSelf(ModBlocks.CORRUPT_BLOCK);
+		this.dropSelf(ModBlocks.CORRUPTED_LANTERN);
 
-		this.addDrop(ModBlocks.DEEPSLATE_VOIDIUM_ORE, voidiumLootTable);
-		this.addDrop(ModBlocks.CORRUPT_VOIDIUM_ORE, voidiumLootTable);
+		this.add(ModBlocks.DEEPSLATE_VOIDIUM_ORE, voidiumLootTable);
+		this.add(ModBlocks.CORRUPT_VOIDIUM_ORE, voidiumLootTable);
 
-		this.addDrop(
+		this.add(
 			ModBlocks.WIND_MANIPULATION_BLOCK,
-			LootTable.builder()
-			.pool(
+			LootTable.lootTable()
+			.withPool(
 				McGenHelper.getPool(McGenHelper.constantNumber(1))
-				.with(McGenHelper.getItemEntry(Items.COBBLED_DEEPSLATE, 2, 6))
+				.add(McGenHelper.getItemEntry(Items.COBBLED_DEEPSLATE, 2, 6))
 			)
-			.pool(
+			.withPool(
 				McGenHelper.getPool(McGenHelper.constantNumber(1))
-				.with(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1, 2))
+				.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1, 2))
 			)
 		);
 
-		this.addDrop(ModBlocks.OLD_CORPSE, corpseLootTable);
-		this.addDrop(ModBlocks.OLD_CORPSE_PILE, corpseLootTable);
+		this.add(ModBlocks.OLD_CORPSE, corpseLootTable);
+		this.add(ModBlocks.OLD_CORPSE_PILE, corpseLootTable);
 	}
 }

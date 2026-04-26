@@ -1,56 +1,55 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.state.BipedEntityRenderState;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.animation.Animation;
-import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.client.model.ModelData;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.model.Dilation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.VoidDimension;
+import net.minecraft.client.animation.KeyframeAnimation;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 
 public class HollowedAlphaSteveModel
-	<T extends BipedEntityRenderState> extends BipedEntityModel<T>
+	<T extends HumanoidRenderState> extends HumanoidModel<T>
 {
-    public static final EntityModelLayer HOLLOWED_ALPHA_STEVE =
-		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "hollowed_alpha_steve"), "main");
+    public static final ModelLayerLocation HOLLOWED_ALPHA_STEVE =
+		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "hollowed_alpha_steve"), "main");
 
-    public static final EntityModelLayer ZOMBIFIED_ALPHA_STEVE =
-		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "zombified_alpha_steve"), "main");
+    public static final ModelLayerLocation ZOMBIFIED_ALPHA_STEVE =
+		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "zombified_alpha_steve"), "main");
 
-    public static final EntityModelLayer NULL =
-		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "null_entity"), "main");
+    public static final ModelLayerLocation NULL =
+		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "null_entity"), "main");
 
-	private final Animation walkingAnimation;
+	private final KeyframeAnimation walkingAnimation;
 
 	public HollowedAlphaSteveModel(ModelPart root) {
 		super(root);
 
-		this.walkingAnimation = AlphaSteveAnimations.WALK.createAnimation(root);
+		this.walkingAnimation = AlphaSteveAnimations.WALK.bake(root);
 	}
 
 	@Override
-	public void setAngles(T state) {
+	public void setupAnim(T state) {
 		// If entity doesn't walk, don't apply modifications
-		if (state.limbSwingAmplitude < 0.1F) {
-			super.setAngles(state);
+		if (state.walkAnimationSpeed < 0.1F) {
+			super.setupAnim(state);
 			return;
 		}
 
-		super.setAngles(state);
+		super.setupAnim(state);
 
-		this.walkingAnimation.applyWalking(
-			state.limbSwingAnimationProgress, state.limbSwingAmplitude, 2f, 2.5f
+		this.walkingAnimation.applyWalk(
+			state.walkAnimationPos, state.walkAnimationSpeed, 2f, 2.5f
 		);
 
 		// The below code was taken from OldWalkingAnimation and modified
 		// https://gitlab.com/TecnaGamer/OldWalkingAnimation/-/raw/main/src/main/java/tecna/oldwalkinganimation/mixin/BipedEntityModelMixin.java
-		float limbSwing = state.limbSwingAnimationProgress;
-		float limbSwingAmount = state.limbSwingAmplitude;
+		float limbSwing = state.walkAnimationPos;
+		float limbSwingAmount = state.walkAnimationSpeed;
 
 		float l = 1.0F;
 
@@ -59,16 +58,16 @@ public class HollowedAlphaSteveModel
 		}
 
 		// Cancel vanilla scaling effect
-		this.rightArm.pitch += -MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI)
+		this.rightArm.xRot += -Mth.cos(limbSwing * 0.6662F + (float)Math.PI)
 			* 2.0F * limbSwingAmount * 0.5F / l;
 
-		this.leftArm.pitch += -MathHelper.cos(limbSwing * 0.6662F)
+		this.leftArm.xRot += -Mth.cos(limbSwing * 0.6662F)
 			* 2.0F * limbSwingAmount * 0.5F / l;
 
-		this.rightLeg.pitch += -MathHelper.cos(limbSwing * 0.6662F)
+		this.rightLeg.xRot += -Mth.cos(limbSwing * 0.6662F)
 			* 1.4F * limbSwingAmount / l;
 
-		this.leftLeg.pitch += -MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI)
+		this.leftLeg.xRot += -Mth.cos(limbSwing * 0.6662F + (float)Math.PI)
 			* 1.4F * limbSwingAmount / l;
 
 
@@ -82,36 +81,36 @@ public class HollowedAlphaSteveModel
 
 		if (tpose) {
 			if (arms) {
-				this.leftArm.roll += -tposeAngle - (-tposeAngle * isMoving);
-				this.rightArm.roll +=  tposeAngle - ( tposeAngle * isMoving);
+				this.leftArm.zRot += -tposeAngle - (-tposeAngle * isMoving);
+				this.rightArm.zRot +=  tposeAngle - ( tposeAngle * isMoving);
 			} else {
-				this.leftArm.roll += -tposeAngle;
-				this.rightArm.roll +=  tposeAngle;
+				this.leftArm.zRot += -tposeAngle;
+				this.rightArm.zRot +=  tposeAngle;
 			}
 		}
 
 		if (arms) {
-			this.rightArm.roll += (MathHelper.cos(var8 * 0.2312F) + 1.0F) * isMoving;
-			this.leftArm.roll  += (MathHelper.cos(var8 * 0.2812F) - 1.0F) * isMoving;
+			this.rightArm.zRot += (Mth.cos(var8 * 0.2312F) + 1.0F) * isMoving;
+			this.leftArm.zRot  += (Mth.cos(var8 * 0.2812F) - 1.0F) * isMoving;
 		}
 
-		this.rightArm.pitch += MathHelper.cos(var8 * 0.6662F + (float)Math.PI)
+		this.rightArm.xRot += Mth.cos(var8 * 0.6662F + (float)Math.PI)
 				* 2.0F * isMoving;
 
-		this.leftArm.pitch += MathHelper.cos(var8 * 0.6662F)
+		this.leftArm.xRot += Mth.cos(var8 * 0.6662F)
 				* 2.0F * isMoving;
 
-		this.rightLeg.pitch += MathHelper.cos(var8 * 0.6662F)
+		this.rightLeg.xRot += Mth.cos(var8 * 0.6662F)
 				* 1.4F * isMoving;
 
-		this.leftLeg.pitch += MathHelper.cos(var8 * 0.6662F + (float)Math.PI)
+		this.leftLeg.xRot += Mth.cos(var8 * 0.6662F + (float)Math.PI)
 				* 1.4F * isMoving;
 
 	}
 
-	public static TexturedModelData getTexturedModelData() {
-		ModelData modelData = BipedEntityModel.getModelData(Dilation.NONE, 0f);
+	public static LayerDefinition getTexturedModelData() {
+		MeshDefinition modelData = HumanoidModel.createMesh(CubeDeformation.NONE, 0f);
 
-		return TexturedModelData.of(modelData, 64, 64);
+		return LayerDefinition.create(modelData, 64, 64);
 	}
 }

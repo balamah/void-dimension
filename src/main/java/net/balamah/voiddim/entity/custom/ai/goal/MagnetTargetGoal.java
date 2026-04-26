@@ -1,22 +1,20 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Box;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.ai.goal.base.OneShotDamageGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.MagnetTargetUser;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
@@ -30,14 +28,14 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 	protected final int preparationTick;
 	protected final int executionTick;
 	protected final double magnetBoxSize;
-	protected final ParticleEffect boxParticleIndicator;
+	protected final ParticleOptions boxParticleIndicator;
 
 	protected boolean finishedGoal;
-	protected Box magnetBox;
+	protected AABB magnetBox;
 
 	public MagnetTargetGoal(
 		T entity, int preparationTick, int executionTick, double magnetBoxSize,
-		ParticleEffect boxParticleIndicator
+		ParticleOptions boxParticleIndicator
 	) {
 		super(entity);
 
@@ -48,12 +46,12 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 	}
 
 	@Override
-	public boolean shouldRunEveryTick() {
+	public boolean requiresUpdateEveryTick() {
 		return true;
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
 		return target != null && this.entity.distanceTo(target) > 5 &&
@@ -80,7 +78,7 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return this.entity.getTarget() != null && !this.finishedGoal;
 	}
 
@@ -108,24 +106,24 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		}
 	}
 
-	protected void pullEntities(World world, Box box) {
-		for (Entity victim : world.getOtherEntities(entity, box)) {
+	protected void pullEntities(Level world, AABB box) {
+		for (Entity victim : world.getEntities(entity, box)) {
 			double heightOffset = this.getHeightOffset(victim);
 
 			double distanceToAttacker = victim.distanceTo(this.entity);
-			Vec3d directionToAttacker = this.entity.getEntityPos()
-					.subtract(victim.getEntityPos()).normalize();
+			Vec3 directionToAttacker = this.entity.position()
+					.subtract(victim.position()).normalize();
 
 			double pullingStrength = (distanceToAttacker - heightOffset) / 2;
-			Vec3d velocityToAttacker = directionToAttacker.multiply(pullingStrength);
-			Vec3d newVelocity = victim.getVelocity().add(velocityToAttacker);
+			Vec3 velocityToAttacker = directionToAttacker.scale(pullingStrength);
+			Vec3 newVelocity = victim.getDeltaMovement().add(velocityToAttacker);
 
-			victim.setVelocity(newVelocity);
+			victim.setDeltaMovement(newVelocity);
 
 			// Pull players also. Player's velocity cannot be changed,
 			// unless EntityVelocityUpdateS2CPacket is sent
-			if (victim instanceof ServerPlayerEntity player) {
-				player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player));
+			if (victim instanceof ServerPlayer player) {
+				player.connection.send(new ClientboundSetEntityMotionPacket(player));
 			}
 		}
 	}
@@ -146,14 +144,14 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		double y = target.getY();
 		double z = target.getZ();
 
-		this.magnetBox = new Box(
+		this.magnetBox = new AABB(
 			x - this.magnetBoxSize, y, z - this.magnetBoxSize,
 			x + this.magnetBoxSize, y + 2, z + this.magnetBoxSize
 		);
 	}
 
-	protected void displayParticles(World world, Vec3d position) {
-		if (!(this.world instanceof ServerWorld serverWorld)) {
+	protected void displayParticles(Level world, Vec3 position) {
+		if (!(this.world instanceof ServerLevel serverWorld)) {
 			return;
 		}
 
@@ -161,13 +159,13 @@ public class MagnetTargetGoal<T extends CorruptedHostileEntity & MagnetTargetUse
 		double vy = 0.05 + random.nextDouble(5.5) * 0.03;
 		double vz = (random.nextDouble() - 0.5) * 0.01;
 
-		serverWorld.spawnParticles(
+		serverWorld.sendParticles(
 				this.boxParticleIndicator, position.x, position.y, position.z, 5, vz, vx, vy, 0.1);
 	}
 
 	protected void playSound(SoundEvent sound) {
 		McCodeHelper.playSound(
-			this.world, sound, this.magnetBox.getCenter(), SoundCategory.AMBIENT, 1, 1
+			this.world, sound, this.magnetBox.getCenter(), SoundSource.AMBIENT, 1, 1
 		);
 	}
 }

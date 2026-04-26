@@ -1,57 +1,56 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.projectile.AbstractFireballEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.item.ItemStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.block.custom.CorruptedFireBlock;
 import net.balamah.voiddim.effect.ModEffects;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.item.ModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.projectile.hurtingprojectile.Fireball;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
-public class SmallCorruptedFireballEntity extends AbstractFireballEntity {
+public class SmallCorruptedFireballEntity extends Fireball {
 	public SmallCorruptedFireballEntity(
-		EntityType<? extends SmallCorruptedFireballEntity> entityType, World world
+		EntityType<? extends SmallCorruptedFireballEntity> entityType, Level world
 	) {
 		super(entityType, world);
 	}
 
 	public SmallCorruptedFireballEntity(
-		World world, LivingEntity owner, Vec3d velocity
+		Level world, LivingEntity owner, Vec3 velocity
 	) {
 		super(ModEntities.SMALL_CORRUPTED_FIREBALL, owner, velocity, world);
 	}
 
 	public SmallCorruptedFireballEntity(
-		World world, double x, double y, double z, Vec3d velocity
+		Level world, double x, double y, double z, Vec3 velocity
 	) {
 		super(ModEntities.SMALL_CORRUPTED_FIREBALL, x, y, z, velocity, world);
 	}
 
 	@Override
-	protected void onEntityHit(EntityHitResult entityHitResult) {
-		super.onEntityHit(entityHitResult);
-		if (this.getEntityWorld() instanceof ServerWorld serverWorld) {
+	protected void onHitEntity(EntityHitResult entityHitResult) {
+		super.onHitEntity(entityHitResult);
+		if (this.level() instanceof ServerLevel serverWorld) {
 			Entity target = entityHitResult.getEntity();
 			Entity owner = this.getOwner();
-			int fireTicks = target.getFireTicks();
-			target.setOnFireFor(5.0F);
-			DamageSource damageSource = this.getDamageSources().fireball(this, target);
-			if (!target.damage(serverWorld, damageSource, 5.0F)) {
-				target.setFireTicks(fireTicks);
+			int fireTicks = target.getRemainingFireTicks();
+			target.igniteForSeconds(5.0F);
+			DamageSource damageSource = this.damageSources().fireball(this, target);
+			if (!target.hurtServer(serverWorld, damageSource, 5.0F)) {
+				target.setRemainingFireTicks(fireTicks);
 			} else {
 				this.damageEntity(serverWorld, damageSource, target);
 			}
@@ -59,42 +58,42 @@ public class SmallCorruptedFireballEntity extends AbstractFireballEntity {
 	}
 
 	protected void damageEntity(
-		ServerWorld serverWorld, DamageSource damageSource, Entity entity
+		ServerLevel serverWorld, DamageSource damageSource, Entity entity
 	) {
-		EnchantmentHelper.onTargetDamaged(serverWorld, entity, damageSource);
+		EnchantmentHelper.doPostAttackEffects(serverWorld, entity, damageSource);
 		if (entity instanceof LivingEntity livingEntity) {
-			livingEntity.addStatusEffect(
-				new StatusEffectInstance(ModEffects.CORRUPTION, 60, 1)
+			livingEntity.addEffect(
+				new MobEffectInstance(ModEffects.CORRUPTION, 60, 1)
 			);
 		}
 	}
 
 	@Override
-	protected void onBlockHit(BlockHitResult blockHitResult) {
-		super.onBlockHit(blockHitResult);
+	protected void onHitBlock(BlockHitResult blockHitResult) {
+		super.onHitBlock(blockHitResult);
 
-		World world = this.getEntityWorld();
+		Level world = this.level();
 
-		if (world instanceof ServerWorld serverWorld) {
+		if (world instanceof ServerLevel serverWorld) {
 			Entity entity = this.getOwner();
-			if (!(entity instanceof MobEntity)) {
-				BlockPos blockPos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
-				if (world.isAir(blockPos)) {
-					world.setBlockState(blockPos, CorruptedFireBlock.getState(world, blockPos));
+			if (!(entity instanceof Mob)) {
+				BlockPos blockPos = blockHitResult.getBlockPos().relative(blockHitResult.getDirection());
+				if (world.isEmptyBlock(blockPos)) {
+					world.setBlockAndUpdate(blockPos, CorruptedFireBlock.getState(world, blockPos));
 				}
 			}
 		}
 	}
 
 	@Override
-	protected void onCollision(HitResult hitResult) {
-		super.onCollision(hitResult);
-		if (!this.getEntityWorld().isClient()) {
+	protected void onHit(HitResult hitResult) {
+		super.onHit(hitResult);
+		if (!this.level().isClientSide()) {
 			this.discard();
 		}
 	}
 
-	private ItemStack getItem() {
+	private ItemStack getDefaultItem() {
 		return new ItemStack(ModItems.CORRUPTED_FIRE_CHARGE);
 	}
 }

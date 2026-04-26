@@ -1,20 +1,18 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.ai.goal.base.OneShotDamageGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.StationaryAttackUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.sound.ModSounds;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import java.util.ArrayList;
 
 public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & StationaryAttackUser>
@@ -22,7 +20,7 @@ public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & Station
 {
 	protected final int maxAttackCountBeforeMoving;
 
-	protected final Random random = Random.create();
+	protected final RandomSource random = RandomSource.create();
 
 	protected ArrayList<Byte> sentStatuses = new ArrayList<Byte>();
 	protected double teleportX, teleportY, teleportZ;
@@ -37,13 +35,13 @@ public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & Station
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
 		if (target == null) return false;
 
-		BlockPos blockPos = this.entity.getBlockPos().down();
-		Block block = McCodeHelper.getBlock(this.entity.getEntityWorld(), blockPos);
+		BlockPos blockPos = this.entity.blockPosition().below();
+		Block block = McCodeHelper.getBlock(this.entity.level(), blockPos);
 
 		return this.entity.distanceTo(target) > 1 &&
 			   this.entity.attackCount == this.maxAttackCountBeforeMoving &&
@@ -67,25 +65,25 @@ public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & Station
 	public void tick() {
 		super.tick();
 
-		World world = this.entity.getEntityWorld();
+		Level world = this.entity.level();
 
-		if (!(world instanceof ServerWorld serverWorld)) {
+		if (!(world instanceof ServerLevel serverWorld)) {
 			return;
 		}
 
 		if (this.tick == 5) {
 			world.playSound(
 				null, this.teleportX, this.teleportY, this.teleportZ,
-				ModSounds.WORM_OF_CORRUPTION_DIG_DOWN, SoundCategory.AMBIENT,
+				ModSounds.WORM_OF_CORRUPTION_DIG_DOWN, SoundSource.AMBIENT,
 				2.0F, 1.0F
 			);
 		}
 
 		if (this.tick == 15) {
-			this.entity.teleport(this.teleportX, this.teleportY, this.teleportZ, true);
+			this.entity.randomTeleport(this.teleportX, this.teleportY, this.teleportZ, true);
 			this.entity.setInvulnerable(false);
 
-			this.entity.playSound(ModSounds.WORM_OF_CORRUPTION_DIG_UP);
+			this.entity.makeSound(ModSounds.WORM_OF_CORRUPTION_DIG_UP);
 			this.sendEntityStatus(ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN_STOP);
 
 			this.addModifier(this.attributeInstance, this.attributeId, this.attributeModifier);
@@ -107,7 +105,7 @@ public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & Station
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return this.entity.getTarget() != null && this.tick <= 16;
 	}
 
@@ -117,7 +115,7 @@ public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & Station
 			return;
 		}
 
-		this.world.sendEntityStatus(this.entity, status);
+		this.world.broadcastEntityEvent(this.entity, status);
 
 		this.sentStatuses.add(status);
 	}

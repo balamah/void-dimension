@@ -1,21 +1,20 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.world.World;
-
 import com.google.common.base.Function;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.Level;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
-public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends ProjectileEntity>
+public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Projectile>
 	extends SlowMovementGoal<E>
 {
-	protected final Function<ServerWorld, T> projectileFactory;
+	protected final Function<ServerLevel, T> projectileFactory;
 	protected final SoundEvent shootPrepareSound;
 	protected final SoundEvent shootStartSound;
 	protected final int shootingPrepareCooldown;
@@ -25,7 +24,7 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 
 	public ShootProjectileGoal(
 		E entity,
-		Function<ServerWorld, T> projectileFactory,
+		Function<ServerLevel, T> projectileFactory,
 		SoundEvent shootPrepareSound, SoundEvent shootStartSound,
 		int shootingPrepareCooldown, int shootingCooldown
 	) {
@@ -39,7 +38,7 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
 		return target != null && !this.entity.areAttacksStopped() &&
@@ -47,7 +46,7 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 	}
 
 	@Override
-	public boolean shouldRunEveryTick() {
+	public boolean requiresUpdateEveryTick() {
 		return true;
 	}
 
@@ -58,11 +57,11 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 		LivingEntity target = this.entity.getTarget();
 
 		if (this.tick == this.shootingPrepareCooldown) {
-			this.entity.playSound(this.shootPrepareSound);
+			this.entity.makeSound(this.shootPrepareSound);
 		}
 
 		if (this.tick == this.shootingCooldown) {
-			this.entity.playSound(this.shootStartSound);
+			this.entity.makeSound(this.shootStartSound);
 			this.shootProjectile(this.world, target);
 
 			this.tick = 0;
@@ -70,7 +69,7 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return !this.didShoot && this.entity.getTarget() != null;
 	}
 
@@ -79,14 +78,14 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 		this.didShoot = false;
 	}
 
-	protected void spawnProjectile(ServerWorld serverWorld, double dx, double dy, double dz) {
+	protected void spawnProjectile(ServerLevel serverWorld, double dx, double dy, double dz) {
 		T projectile = projectileFactory.apply(serverWorld);
 		if (projectile == null) {
 			return;
 		}
 
 		projectile.setOwner(this.entity);
-		projectile.setPosition(this.entity.getX(), this.entity.getEyeY(), this.entity.getZ());
+		projectile.setPos(this.entity.getX(), this.entity.getEyeY(), this.entity.getZ());
 
 		double len = Math.sqrt(dx * dx + dy * dy + dz * dz);
 		if (len > 0) {
@@ -95,16 +94,16 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 			dz /= len;
 		}
 
-		projectile.setVelocity(dx, dy, dz, 0.7F, 1.0F);
-		serverWorld.spawnEntity(projectile);
+		projectile.shoot(dx, dy, dz, 0.7F, 1.0F);
+		serverWorld.addFreshEntity(projectile);
 	}
 
-	protected void shootProjectile(World world, LivingEntity target) {
-		if (this.world instanceof ServerWorld serverWorld) {
-			double heightScale = target.hasVehicle() ? 0.8 : 0.3;
+	protected void shootProjectile(Level world, LivingEntity target) {
+		if (this.world instanceof ServerLevel serverWorld) {
+			double heightScale = target.isPassenger() ? 0.8 : 0.3;
 
 			double dx = target.getX() - this.entity.getX();
-			double dy = target.getBodyY(heightScale) - this.entity.getChargeY();
+			double dy = target.getY(heightScale) - this.entity.getChargeY();
 			double dz = target.getZ() - this.entity.getZ();
 
 			this.sendEntityStatus(ModEntityStatuses.SHOOT);

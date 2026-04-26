@@ -1,7 +1,10 @@
 package net.balamah.voiddim.world.feature;
 
-import net.minecraft.world.gen.placementmodifier.*;
-
+import net.minecraft.world.level.levelgen.placement.BiomeFilter;
+import net.minecraft.world.level.levelgen.placement.CountPlacement;
+import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import java.util.List;
 
 public class ModOrePlacement {
@@ -10,21 +13,21 @@ public class ModOrePlacement {
 	) {
         return List.of(
 			countModifier,
-			SquarePlacementModifier.of(),
+			InSquarePlacement.spread(),
 			heightModifier,
-			BiomePlacementModifier.of()
+			BiomeFilter.biome()
 		);
     }
 
     public static List<PlacementModifier> modifiersWithCount(
 		int count, PlacementModifier heightModifier
 	) {
-        return modifiers(CountPlacementModifier.of(count), heightModifier);
+        return modifiers(CountPlacement.of(count), heightModifier);
     }
 
     public static List<PlacementModifier> modifiersWithRarity(
 		int chance, PlacementModifier heightModifier
 	) {
-        return modifiers(RarityFilterPlacementModifier.of(chance), heightModifier);
+        return modifiers(RarityFilter.onAverageOnceEvery(chance), heightModifier);
     }
 }

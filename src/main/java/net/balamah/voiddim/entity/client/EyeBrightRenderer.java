@@ -1,25 +1,24 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.EyeBrightEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
-public class EyeBrightRenderer extends MobEntityRenderer<EyeBrightEntity, EyeBrightRenderState, EyeBrightModel> {
-	public EyeBrightRenderer(EntityRendererFactory.Context context) {
-		super(context, new EyeBrightModel(context.getPart(EyeBrightModel.EYE_BRIGHT)), 0.75f);
+public class EyeBrightRenderer extends MobRenderer<EyeBrightEntity, EyeBrightRenderState, EyeBrightModel> {
+	public EyeBrightRenderer(EntityRendererProvider.Context context) {
+		super(context, new EyeBrightModel(context.bakeLayer(EyeBrightModel.EYE_BRIGHT)), 0.75f);
 		
-		this.addFeature(
+		this.addLayer(
 			new GlowFeatureRenderer<>(this, "textures/entity/glow/eye_bright.png")
 		);
 	}
 
 	@Override
-	public Identifier getTexture(EyeBrightRenderState state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/eye_bright.png");
+	public Identifier getTextureLocation(EyeBrightRenderState state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/eye_bright.png");
 	}
 
 	@Override
@@ -28,10 +27,10 @@ public class EyeBrightRenderer extends MobEntityRenderer<EyeBrightEntity, EyeBri
 	}
 
 	@Override
-	public void updateRenderState(
+	public void extractRenderState(
 		EyeBrightEntity entity, EyeBrightRenderState renderState, float f
 	) {
-		super.updateRenderState(entity, renderState, f);
+		super.extractRenderState(entity, renderState, f);
 
 		renderState.idleAnimationState.copyFrom(entity.idleAnimationState);
 		renderState.walkAnimationState.copyFrom(entity.walkAnimationState);

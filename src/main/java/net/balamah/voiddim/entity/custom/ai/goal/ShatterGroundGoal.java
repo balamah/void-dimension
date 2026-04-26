@@ -1,11 +1,10 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.world.explosion.ExplosionBehavior;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.world.explosion.ExplosionIgnoreEntitiesBehavior;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.Level;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.ShatterGroundUser;
@@ -29,7 +28,7 @@ public class ShatterGroundGoal<T extends BossEntity & ShatterGroundUser>
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		float maxHP = this.entity.getMaxHealth();
 		float middleHP = maxHP / 2;
 		float currentHP = this.entity.getHealth();
@@ -56,7 +55,7 @@ public class ShatterGroundGoal<T extends BossEntity & ShatterGroundUser>
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		LivingEntity target = this.entity.getTarget();
 
 		return target != null && target.distanceTo(this.entity) <= 20 &&
@@ -70,20 +69,20 @@ public class ShatterGroundGoal<T extends BossEntity & ShatterGroundUser>
 		if (this.tick == this.endTick) {
 			this.sendEntityStatus(ModEntityStatuses.GROUND_MANIPULATION_PROCESS);
 
-			ExplosionBehavior behavior = new ExplosionIgnoreEntitiesBehavior(
+			ExplosionDamageCalculator behavior = new ExplosionIgnoreEntitiesBehavior(
 				this.entity.getType(), ModEntities.SHATTERED_SENTINEL
 			);
 
-			this.world.createExplosion(
+			this.world.explode(
 				this.entity,
-				Explosion.createDamageSource(this.world, this.entity),
+				Explosion.getDefaultDamageSource(this.world, this.entity),
 				behavior,
 				this.entity.getX(),
 				this.entity.getY(),
 				this.entity.getZ(),
 				8.0F,
 				false,
-				World.ExplosionSourceType.MOB
+				Level.ExplosionInteraction.MOB
 			);
 		}
 	}

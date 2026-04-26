@@ -1,20 +1,19 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.client.base.BasicRenderState;
 import net.balamah.voiddim.entity.custom.MantisEntity;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.resources.Identifier;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.balamah.voiddim.VoidDimension;
 
-public class MantisRenderer extends MobEntityRenderer<MantisEntity, BasicRenderState, MantisModel> 
+public class MantisRenderer extends MobRenderer<MantisEntity, BasicRenderState, MantisModel> 
 {
-	public MantisRenderer(EntityRendererFactory.Context context) {
-		super(context, new MantisModel(context.getPart(MantisModel.MANTIS)), 0.75f);
+	public MantisRenderer(EntityRendererProvider.Context context) {
+		super(context, new MantisModel(context.bakeLayer(MantisModel.MANTIS)), 0.75f);
 	}
 
 	@Override
@@ -23,22 +22,23 @@ public class MantisRenderer extends MobEntityRenderer<MantisEntity, BasicRenderS
 	}
 
 	@Override
-	public Identifier getTexture(BasicRenderState state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/mantis.png");
+	public Identifier getTextureLocation(BasicRenderState state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/mantis.png");
 	}
 
 	@Override
-	public void render(
-		BasicRenderState state, MatrixStack matrixStack,
-		OrderedRenderCommandQueue orderedRenderCommandQueue,
+	public void submit(
+		BasicRenderState state,
+		PoseStack matrixStack,
+		SubmitNodeCollector orderedRenderCommandQueue,
 		CameraRenderState cameraRenderState
 	) {
-        if (state.baby) {
+        if (state.isBaby) {
             matrixStack.scale(0.5f, 0.5f, 0.5f);
         } else {
             matrixStack.scale(1f, 1f, 1f);
         }
 
-		super.render(state, matrixStack, orderedRenderCommandQueue, cameraRenderState);
+		super.submit(state, matrixStack, orderedRenderCommandQueue, cameraRenderState);
 	}
 }

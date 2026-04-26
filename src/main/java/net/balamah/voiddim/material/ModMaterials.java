@@ -1,9 +1,8 @@
 package net.balamah.voiddim.material;
 
-import net.minecraft.item.ToolMaterial;
-
 import net.balamah.voiddim.material.armor.VoidArmorMaterial;
 import net.balamah.voiddim.tag.ModBlockTags;
+import net.minecraft.world.item.ToolMaterial;
 
 public class ModMaterials {
 	public static ToolMaterial VOID_TOOL_MATERIAL =

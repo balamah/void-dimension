@@ -1,15 +1,5 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.AnimationState;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.ShootingCooldownUser;
 import net.balamah.voiddim.interfaces.MagnetTargetUser;
@@ -17,6 +7,15 @@ import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 
 public class EyeBrightEntity extends CorruptedHostileEntity
 	implements ShootingCooldownUser, MagnetTargetUser
@@ -49,18 +48,18 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 		this.shoot1AnimationState, this.shoot2AnimationState, this.shoot3AnimationState
 	};
 
-	public EyeBrightEntity(EntityType<? extends HostileEntity> entityType, World world) {
+	public EyeBrightEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.FOLLOW_RANGE, 25)
-			.add(EntityAttributes.STEP_HEIGHT, 1)
-			.add(EntityAttributes.ATTACK_DAMAGE, 15.0F)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.2f)
-			.add(EntityAttributes.KNOCKBACK_RESISTANCE, 0.6f)
-			.add(EntityAttributes.MAX_HEALTH, 150);
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.FOLLOW_RANGE, 25)
+			.add(Attributes.STEP_HEIGHT, 1)
+			.add(Attributes.ATTACK_DAMAGE, 15.0F)
+			.add(Attributes.MOVEMENT_SPEED, 0.2f)
+			.add(Attributes.KNOCKBACK_RESISTANCE, 0.6f)
+			.add(Attributes.MAX_HEALTH, 150);
 	}
 
 	@Override
@@ -111,24 +110,24 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	}
 
 	@Override
-	public void mobTick(ServerWorld world) {
-		super.mobTick(world);
+	public void customServerAiStep(ServerLevel world) {
+		super.customServerAiStep(world);
 
-		if (this.getEntityWorld().isClient()) {
+		if (this.level().isClientSide()) {
 			this.setupAnimationStates();
 		}
 
 		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.sendEntityStatus(this, ModEntityStatuses.STOP_ATTACK);
+			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
 		}
 	}
 
 	@Override
-	public boolean tryAttack(ServerWorld world, Entity target) {
-		boolean result = super.tryAttack(world, target);
+	public boolean doHurtTarget(ServerLevel world, Entity target) {
+		boolean result = super.doHurtTarget(world, target);
 		
 		if (result) {
-			world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
+			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
 
 			// A magic number, don't touch
 			this.attackInterval = 8;
@@ -138,7 +137,7 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	}
 
 	@Override
-	public void handleStatus(byte status) {
+	public void handleEntityEvent(byte status) {
 		switch (status) {
 			case ModEntityStatuses.STOP_ATTACK:
 				this.stopAnimations(this.attackAnimations);
@@ -152,25 +151,25 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 				this.playRandomAnimation(this.shootAnimations);
 				break;
 			case ModEntityStatuses.SPECIAL_ATTACK:
-				this.magnettedAttackAnimationState.start(this.age);
+				this.magnettedAttackAnimationState.start(this.tickCount);
 				break;
 			default:
-				super.handleStatus(status);	
+				super.handleEntityEvent(status);	
 		}
 	}
 
 	@Override
-	protected void initGoals() {
-		super.initGoals();
+	protected void registerGoals() {
+		super.registerGoals();
 
-		this.goalSelector.add(
+		this.goalSelector.addGoal(
 			1, new MagnetTargetGoal<EyeBrightEntity>(this, 10, 20, 1, ModParticleTypes.CORRUPTION)
 		);
 
-		this.goalSelector.add(
+		this.goalSelector.addGoal(
 			2,
 			new EyeBrightShootHeadGoal(
-				this, SoundEvents.ENTITY_PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE, 2, 6
+				this, SoundEvents.PLAYER_BREATH, ModSounds.EYE_BRIGHT_SHOOT_PREPARE, 2, 6
 			)
 		);
 	}
@@ -178,7 +177,7 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	protected void setupAnimationStates() {
 		if (this.idleAnimationTimeout <= 0) {
 			this.idleAnimationTimeout = 40;
-			this.idleAnimationState.start(this.age);
+			this.idleAnimationState.start(this.tickCount);
 		} else {
 			--this.idleAnimationTimeout;
 		}

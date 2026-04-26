@@ -2,31 +2,29 @@ package net.balamah.voiddim.item;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
-
-import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.component.type.ConsumableComponent;
-import net.minecraft.world.item.VerticallyAttachableBlockItem;
-import net.minecraft.component.type.FoodComponent;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.equipment.ArmorMaterial;
-import net.minecraft.world.item.equipment.EquipmentType;
-import net.minecraft.world.level.block.jukebox.JukeboxSong;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.math.Direction;
-import net.minecraft.registry.Registries;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.registry.Registry;
-import net.minecraft.entity.EntityType;
 import net.minecraft.world.item.ShovelItem;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.StandingAndWallBlockItem;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
-import net.minecraft.util.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
-
+import net.minecraft.world.item.Rarity;
 import net.balamah.voiddim.item.custom.CorruptedFireChargeItem;
 import net.balamah.voiddim.item.custom.ModSmithingTemplateItem;
 import net.balamah.voiddim.material.armor.VoidArmorMaterial;
@@ -40,13 +38,13 @@ import net.balamah.voiddim.VoidDimension;
 public class ModItems {
 	public static final String MOD_ID = VoidDimension.MOD_ID;
 
-	protected static final Item.Settings prayerItemSettings =
-		new Item.Settings().maxCount(1);
+	protected static final Item.Properties prayerItemSettings =
+		new Item.Properties().stacksTo(1);
 
-	protected static final Function<Item.Settings, Item> crossItemSettings =
+	protected static final Function<Item.Properties, Item> crossItemSettings =
 		settings -> new PrayerItem(settings, 60, 900, 3);
 
-	protected static final Function<Item.Settings, Item> prayerRopeSettings =
+	protected static final Function<Item.Properties, Item> prayerRopeSettings =
 		settings -> new PrayerItem(settings, 240, 7200, 3);
 
 	public static final Item VOIDIUM =
@@ -70,7 +68,7 @@ public class ModItems {
 		registerFoodItem(
 			"spoiled_flesh",
 			ModFoodComponents.SPOILED_FLESH,
-			ConsumableComponents.ROTTEN_FLESH
+			Consumables.ROTTEN_FLESH
 		);
 
 	// This sux
@@ -134,19 +132,19 @@ public class ModItems {
 		);
 
 	public static final Item VOID_HELMET =
-		registerArmor("void_helmet", VoidArmorMaterial.INSTANCE, EquipmentType.HELMET, true);
+		registerArmor("void_helmet", VoidArmorMaterial.INSTANCE, ArmorType.HELMET, true);
 
 	public static final Item VOID_CHESTPLATE =
 		registerArmor(
-			"void_chestplate", VoidArmorMaterial.INSTANCE, EquipmentType.CHESTPLATE, true
+			"void_chestplate", VoidArmorMaterial.INSTANCE, ArmorType.CHESTPLATE, true
 		);
 
 	public static final Item VOID_LEGGINGS =
-		registerArmor("void_leggings", VoidArmorMaterial.INSTANCE, EquipmentType.LEGGINGS, true);
+		registerArmor("void_leggings", VoidArmorMaterial.INSTANCE, ArmorType.LEGGINGS, true);
 
 	public static final Item VOID_BOOTS =
 		registerArmor(
-			"void_boots", VoidArmorMaterial.INSTANCE, EquipmentType.BOOTS, true
+			"void_boots", VoidArmorMaterial.INSTANCE, ArmorType.BOOTS, true
 		);
 
 	public static final Item LATIN_CROSS =
@@ -167,15 +165,15 @@ public class ModItems {
 	public static final Item CORRUPTED_TORCH =
 		registerBlockItem(
 			ModBlocks.CORRUPTED_TORCH,
-			(BiFunction<Block, Item.Settings, Item>)(
-				(block, settings) -> new VerticallyAttachableBlockItem(
+			(BiFunction<Block, Item.Properties, Item>)(
+				(block, settings) -> new StandingAndWallBlockItem(
 					block, ModBlocks.CORRUPTED_WALL_TORCH, Direction.DOWN, settings
 				)),
-			new Item.Settings()
+			new Item.Properties()
 		);
 
 	public static final Item CORRUPTED_FIRE_CHARGE =
-		register("corrupted_fire_charge", CorruptedFireChargeItem::new, new Item.Settings());
+		register("corrupted_fire_charge", CorruptedFireChargeItem::new, new Item.Properties());
 
 	public static final Item CORRUPTED_CREEPER_SPAWN_EGG =
 		registerSpawnEgg("corrupted_creeper_spawn_egg", ModEntities.CORRUPTED_CREEPER);
@@ -257,8 +255,8 @@ public class ModItems {
 		register(
 			"music_disc_calm4",
 			Item::new,
-			new Item.Settings().rarity(Rarity.UNCOMMON)
-			.jukeboxPlayable(ModSounds.MUSIC_CALM4_KEY).maxCount(1)
+			new Item.Properties().rarity(Rarity.UNCOMMON)
+			.jukeboxPlayable(ModSounds.MUSIC_CALM4_KEY).stacksTo(1)
 		);
 
 	public static void registerModItems() {
@@ -266,87 +264,87 @@ public class ModItems {
 	}
 
 	protected static Item register(
-		String name, Function<Item.Settings, Item> itemFactory, Item.Settings settings
+		String name, Function<Item.Properties, Item> itemFactory, Item.Properties settings
 	) {
-		RegistryKey<Item> itemKey = RegistryKey.of(
-			RegistryKeys.ITEM, Identifier.of(MOD_ID, name)
+		ResourceKey<Item> itemKey = ResourceKey.create(
+			Registries.ITEM, Identifier.fromNamespaceAndPath(MOD_ID, name)
 		);
 
-		Item item = itemFactory.apply(settings.registryKey(itemKey));
-
-		Registry.register(Registries.ITEM, itemKey, item);
-
-		return item;
+		Item item = itemFactory.apply(settings);
+		return Registry.register(BuiltInRegistries.ITEM, itemKey, item);
 	}
 
 	@SuppressWarnings("deprecation")
 	protected static Item registerBlockItem(
-		Block block, BiFunction<Block, Item.Settings, Item> factory, Item.Settings settings
+		Block block, BiFunction<Block, Item.Properties, Item> factory, Item.Properties settings
 	) {
+		ResourceKey<Block> blockKey =
+			BuiltInRegistries.BLOCK.getResourceKey(block).orElseThrow();
+
 		return registerByKey(
-			keyOfBlock(block.getRegistryEntry().registryKey()),
+			keyOfBlock(blockKey),
 			itemSettings -> (Item) factory.apply(block, itemSettings),
-			settings.useBlockPrefixedTranslationKey()
+			settings
 		);
 	}
 
 	protected static Item registerByKey(
-		RegistryKey<Item> key, Function<Item.Settings, Item> factory, Item.Settings settings
+		ResourceKey<Item> key, Function<Item.Properties, Item> factory, Item.Properties settings
 	) {
-		Item item = (Item)factory.apply(settings.registryKey(key));
+		Item item = (Item)factory.apply(settings);
 		if (item instanceof BlockItem blockItem) {
-			blockItem.appendBlocks(Item.BLOCK_ITEMS, item);
+			blockItem.registerBlocks(Item.BY_BLOCK, item);
 		}
 
-		return Registry.register(Registries.ITEM, key, item);
+		return Registry.register(BuiltInRegistries.ITEM, key, item);
 	}
 
-	protected static RegistryKey<Item> keyOfBlock(RegistryKey<Block> blockKey) {
-		return RegistryKey.of(RegistryKeys.ITEM, blockKey.getValue());
+	protected static ResourceKey<Item> keyOfBlock(ResourceKey<Block> blockKey) {
+		return ResourceKey.create(Registries.ITEM, blockKey.identifier());
 	}
 
 	protected static Item registerArmor(
-		String name, ArmorMaterial material, EquipmentType type, boolean isVoid
+		String name, ArmorMaterial material, ArmorType type, boolean isVoid
 	) {
-		Item.Settings baseSettings;
+		Item.Properties baseSettings;
 
 		if (!isVoid) {
-			baseSettings = new Item.Settings();
+			baseSettings = new Item.Properties();
 		} else {
 			baseSettings = getVoidItemSettings();
 		}
 
-		Item.Settings settings = baseSettings
-			.maxDamage(type.getMaxDamage(material.durability()));
+		Item.Properties settings = baseSettings
+			.durability(type.getDurability(material.durability()));
 
-		return register(name, Item::new, settings.armor(material, type));
+		return register(name, Item::new, settings.humanoidArmor(material, type));
 	}
 
-	protected static Item registerSpawnEgg(String name, EntityType<? extends MobEntity> mob) {
-		return register(name, SpawnEggItem::new, new Item.Settings().spawnEgg(mob));
+	protected static Item registerSpawnEgg(String name, EntityType<? extends Mob> mob) {
+		return register(name, SpawnEggItem::new, new Item.Properties().spawnEgg(mob));
 	}
 
-	protected static Item registerFoodItem(String name, FoodComponent foodComponent) {
-		return register(name, Item::new, new Item.Settings().food(foodComponent));
+	protected static Item registerFoodItem(String name, FoodProperties foodComponent) {
+		return register(name, Item::new, new Item.Properties().food(foodComponent));
 	}
 
 	protected static Item registerFoodItem(
-		String name, FoodComponent foodComponent, ConsumableComponent consumableComponent
+		String name, FoodProperties foodComponent, Consumable consumableComponent
 	) {
 		return register(
-			name, Item::new, new Item.Settings().food(foodComponent, consumableComponent)
+			name, Item::new, new Item.Properties().food(foodComponent, consumableComponent)
 		);
 	}
 
-	protected static Item registerMusicDisc(String name, RegistryKey<JukeboxSong> song) {
+	protected static Item registerMusicDisc(String name, ResourceKey<JukeboxSong> song) {
 		return register(
 			name,
 			Item::new,
-			new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON).jukeboxPlayable(song)
+			new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).jukeboxPlayable(song)
 		);
 	}
 
-	protected static Item.Settings getVoidItemSettings() {
-		return new Item.Settings().rarity(Rarity.UNCOMMON).fireproof();
+	protected static Item.Properties getVoidItemSettings() {
+		return new Item.Properties().rarity(Rarity.UNCOMMON).fireResistant();
 	}
 }

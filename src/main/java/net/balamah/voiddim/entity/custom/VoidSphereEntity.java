@@ -1,23 +1,5 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.projectile.AbstractWindChargeEntity;
-import net.minecraft.world.explosion.AdvancedExplosionBehavior;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.world.explosion.ExplosionBehavior;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.util.collection.Pool;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.registry.Registries;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
-
 import java.util.function.Function;
 import java.util.Optional;
 
@@ -25,73 +7,90 @@ import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.effect.ModEffects;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.AbstractWindCharge;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.SimpleExplosionDamageCalculator;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 
-public class VoidSphereEntity extends AbstractWindChargeEntity {
-	public static final ExplosionBehavior EXPLOSION_BEHAVIOR =
-		new AdvancedExplosionBehavior(
+public class VoidSphereEntity extends AbstractWindCharge {
+	public static final ExplosionDamageCalculator EXPLOSION_BEHAVIOR =
+		new SimpleExplosionDamageCalculator(
 			true, false,
 			Optional.of(1.22F),
-			Registries.BLOCK.getOptional(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS)
+			BuiltInRegistries.BLOCK.get(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS)
 			.map(Function.identity())
 		);
 
-	public VoidSphereEntity(VoidHarbingerEntity entity, World world) {
+	public VoidSphereEntity(VoidHarbingerEntity entity, Level world) {
 		super(ModEntities.VOID_SPHERE, world, entity, entity.getX(),
 			  entity.getChargeY(), entity.getZ());
 	}
 
-	public VoidSphereEntity(EntityType<? extends VoidSphereEntity> entityType, World world) {
+	public VoidSphereEntity(EntityType<? extends VoidSphereEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected void createExplosion(Vec3d pos) {
-		this.getEntityWorld()
-			.createExplosion(
+	protected void explode(Vec3 pos) {
+		this.level()
+			.explode(
 				this,
 				null,
-				EXPLOSION_BEHAVIOR,
-				pos.getX(),
-				pos.getY(),
-				pos.getZ(),
+				EXPLOSION_DAMAGE_CALCULATOR,
+				pos.x(),
+				pos.y(),
+				pos.z(),
 				1.2F,
 				false,
-				World.ExplosionSourceType.TRIGGER,
+				Level.ExplosionInteraction.TRIGGER,
 				ParticleTypes.GUST_EMITTER_SMALL,
 				ParticleTypes.GUST_EMITTER_LARGE,
-				Pool.empty(),
+				WeightedList.of(),
 				ModSounds.VOID_SPHERE_BURST
 			);
 	}
 
 	@Override
-	protected void onEntityHit(EntityHitResult entityHitResult) {
-		super.onEntityHit(entityHitResult);
+	protected void onHitEntity(EntityHitResult entityHitResult) {
+		super.onHitEntity(entityHitResult);
 
-		if (this.getEntityWorld() instanceof ServerWorld serverWorld) {
+		if (this.level() instanceof ServerLevel serverWorld) {
 			LivingEntity attackerEntity =
 				(this.getOwner() instanceof LivingEntity livingEntity) ?
 				livingEntity : null;
 
 			Entity target = entityHitResult.getEntity();
-			if (attackerEntity != null) attackerEntity.onAttacking(target);
+			if (attackerEntity != null) attackerEntity.setLastHurtMob(target);
 
 			DamageSource damageSource = ModDamageSources.corruption(serverWorld);
-			boolean damage = target.damage(serverWorld, damageSource, 18.5f);
+			boolean damage = target.hurtServer(serverWorld, damageSource, 18.5f);
 
 			if (damage && target instanceof LivingEntity targetLivingEntity) {
-				targetLivingEntity.addStatusEffect(
-					new StatusEffectInstance(ModEffects.CORRUPTION, 20, 1)
+				targetLivingEntity.addEffect(
+					new MobEffectInstance(ModEffects.CORRUPTION, 20, 1)
 				);
 				
-				EnchantmentHelper.onTargetDamaged(
+				EnchantmentHelper.doPostAttackEffects(
 					serverWorld, targetLivingEntity, damageSource
 				);
 			}
 
-			Vec3d position = new Vec3d(this.getX(), this.getY(), this.getZ());
+			Vec3 position = new Vec3(this.getX(), this.getY(), this.getZ());
 
-			this.createExplosion(position);
+			this.explode(position);
 		}
 	}
 }

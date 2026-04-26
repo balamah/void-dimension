@@ -1,15 +1,14 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.model.EvokerFangsEntityModel;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.VoidDimension;
+import net.minecraft.client.model.effects.EvokerFangsModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.resources.Identifier;
 
-public class DarkGraspModel extends EvokerFangsEntityModel {
-    public static final EntityModelLayer DARK_GRASP =
-		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "dark_grasp"),
+public class DarkGraspModel extends EvokerFangsModel {
+    public static final ModelLayerLocation DARK_GRASP =
+		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "dark_grasp"),
 							 "main");
 
 	public DarkGraspModel(ModelPart modelPart) {

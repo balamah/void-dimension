@@ -1,32 +1,31 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.feature.CreeperChargeFeatureRenderer;
-import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
-import net.minecraft.client.render.entity.model.CreeperEntityModel;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.custom.CorruptedCreeperEntity;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.monster.creeper.CreeperModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.CreeperPowerLayer;
+import net.minecraft.client.renderer.entity.state.CreeperRenderState;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.balamah.voiddim.VoidDimension;
 
 public class CorruptedCreeperRenderer
-	extends MobEntityRenderer<CorruptedCreeperEntity, CreeperEntityRenderState, CreeperEntityModel> 
+	extends MobRenderer<CorruptedCreeperEntity, CreeperRenderState, CreeperModel> 
 {
-	public CorruptedCreeperRenderer(EntityRendererFactory.Context context) {
-		super(context, new CreeperEntityModel(context.getPart(EntityModelLayers.CREEPER)), 0.5F);
-		this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
+	public CorruptedCreeperRenderer(EntityRendererProvider.Context context) {
+		super(context, new CreeperModel(context.bakeLayer(ModelLayers.CREEPER)), 0.5F);
+		this.addLayer(new CreeperPowerLayer(this, context.getModelSet()));
 	}
 
 	protected void scale(
-		CreeperEntityRenderState creeperEntityRenderState, MatrixStack matrixStack
+		CreeperRenderState creeperEntityRenderState, PoseStack matrixStack
 	) {
-		float f = creeperEntityRenderState.fuseTime;
-		float g = 1.0F + MathHelper.sin(f * 100.0F) * f * 0.01F;
-		f = MathHelper.clamp(f, 0.0F, 1.0F);
+		float f = creeperEntityRenderState.swelling;
+		float g = 1.0F + Mth.sin(f * 100.0F) * f * 0.01F;
+		f = Mth.clamp(f, 0.0F, 1.0F);
 		f *= f;
 		f *= f;
 		float h = (1.0F + f * 0.4F) * g;
@@ -34,27 +33,30 @@ public class CorruptedCreeperRenderer
 		matrixStack.scale(h, i, h);
 	}
 
-	protected float getAnimationCounter(CreeperEntityRenderState creeperEntityRenderState) {
-		float f = creeperEntityRenderState.fuseTime;
-		return (int)(f * 10.0F) % 2 == 0 ? 0.0F : MathHelper.clamp(f, 0.5F, 1.0F);
+	protected float getAnimationCounter(CreeperRenderState creeperEntityRenderState) {
+		float f = creeperEntityRenderState.swelling;
+		return (int)(f * 10.0F) % 2 == 0 ? 0.0F : Mth.clamp(f, 0.5F, 1.0F);
 	}
 
-	public Identifier getTexture(CreeperEntityRenderState creeperEntityRenderState) {
-		return Identifier.of(
+	@Override
+	public Identifier getTextureLocation(CreeperRenderState creeperEntityRenderState) {
+		return Identifier.fromNamespaceAndPath(
 			VoidDimension.MOD_ID, "textures/entity/corrupted_creeper.png"
 		);
 	}
 
-	public CreeperEntityRenderState createRenderState() {
-		return new CreeperEntityRenderState();
+	@Override
+	public CreeperRenderState createRenderState() {
+		return new CreeperRenderState();
 	}
 
-	public void updateRenderState(
+	@Override
+	public void extractRenderState(
 		CorruptedCreeperEntity creeperEntity,
-		CreeperEntityRenderState creeperEntityRenderState, float f
+		CreeperRenderState creeperEntityRenderState, float f
 	) {
-		super.updateRenderState(creeperEntity, creeperEntityRenderState, f);
-		creeperEntityRenderState.fuseTime = creeperEntity.getLerpedFuseTime(f);
-		creeperEntityRenderState.charged = creeperEntity.isCharged();
+		super.extractRenderState(creeperEntity, creeperEntityRenderState, f);
+		creeperEntityRenderState.swelling = creeperEntity.getSwelling(f);
+		creeperEntityRenderState.isPowered = creeperEntity.isPowered();
 	}
 }

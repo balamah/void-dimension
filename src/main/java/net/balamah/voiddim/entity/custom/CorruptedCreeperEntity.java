@@ -1,23 +1,23 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 
-public class CorruptedCreeperEntity extends CreeperEntity {
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.MAX_HEALTH, 25)
-			.add(EntityAttributes.FOLLOW_RANGE, 25)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.32F)
-			.add(EntityAttributes.STEP_HEIGHT, 1.0);
+public class CorruptedCreeperEntity extends Creeper {
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.MAX_HEALTH, 25)
+			.add(Attributes.FOLLOW_RANGE, 25)
+			.add(Attributes.MOVEMENT_SPEED, 0.32F)
+			.add(Attributes.STEP_HEIGHT, 1.0);
 	}
 
 	public CorruptedCreeperEntity(
-		EntityType<? extends CreeperEntity> entityType, World world
+		EntityType<? extends Creeper> entityType, Level world
 	) {
 		super(entityType, world);
 	}

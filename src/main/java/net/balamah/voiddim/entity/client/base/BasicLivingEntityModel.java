@@ -1,8 +1,8 @@
 package net.balamah.voiddim.entity.client.base;
 
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 public class BasicLivingEntityModel<T extends LivingEntityRenderState>
 	extends EntityModel<T>
@@ -14,10 +14,10 @@ public class BasicLivingEntityModel<T extends LivingEntityRenderState>
 	}
 
     @Override
-	public void setAngles(T state) {
-		super.setAngles(state);
+	public void setupAnim(T state) {
+		super.setupAnim(state);
 
-		this.head.pitch = state.pitch * (float) (Math.PI / 180.0);
-		this.head.yaw = state.relativeHeadYaw * (float) (Math.PI / 180.0);
+		this.head.xRot = state.xRot * (float) (Math.PI / 180.0);
+		this.head.yRot = state.yRot * (float) (Math.PI / 180.0);
 	}
 }

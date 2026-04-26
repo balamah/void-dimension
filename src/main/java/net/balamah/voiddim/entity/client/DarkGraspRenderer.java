@@ -1,71 +1,73 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.state.EvokerFangsEntityRenderState;
-import net.minecraft.client.render.entity.model.EvokerFangsEntityModel;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.mob.EvokerFangsEntity;
-import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.custom.DarkGraspEntity;
+import net.minecraft.client.model.effects.EvokerFangsModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.EvokerFangsRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.Identifier;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.balamah.voiddim.VoidDimension;
 
-public class DarkGraspRenderer extends EntityRenderer<DarkGraspEntity, EvokerFangsEntityRenderState> {
-	private static final Identifier TEXTURE = Identifier.of(
+public class DarkGraspRenderer extends EntityRenderer<DarkGraspEntity, EvokerFangsRenderState> {
+	private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(
 		VoidDimension.MOD_ID, "textures/entity/dark_grasp.png"
 	);
 
-	private final EvokerFangsEntityModel model;
+	private final EvokerFangsModel model;
 
-	public DarkGraspRenderer(EntityRendererFactory.Context context) {
+	public DarkGraspRenderer(EntityRendererProvider.Context context) {
 		super(context);
-		this.model = new EvokerFangsEntityModel(context.getPart(EntityModelLayers.EVOKER_FANGS));
+		this.model = new EvokerFangsModel(context.bakeLayer(ModelLayers.EVOKER_FANGS));
 	}
 
-	public void render(
-		EvokerFangsEntityRenderState evokerFangsEntityRenderState,
-		MatrixStack matrixStack,
-		OrderedRenderCommandQueue orderedRenderCommandQueue,
+	@Override
+	public void submit(
+		EvokerFangsRenderState evokerFangsEntityRenderState,
+		PoseStack matrixStack,
+		SubmitNodeCollector orderedRenderCommandQueue,
 		CameraRenderState cameraRenderState
 	) {
-		float f = evokerFangsEntityRenderState.animationProgress;
+		float f = evokerFangsEntityRenderState.biteProgress;
 		if (f != 0.0F) {
-			matrixStack.push();
-			matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90.0F - evokerFangsEntityRenderState.yaw));
+			matrixStack.pushPose();
+			matrixStack.mulPose(Axis.YP.rotationDegrees(90.0F - evokerFangsEntityRenderState.yRot));
 			matrixStack.scale(-1.0F, -1.0F, 1.0F);
 			matrixStack.translate(0.0F, -1.501F, 0.0F);
 			orderedRenderCommandQueue.submitModel(
 				this.model,
 				evokerFangsEntityRenderState,
 				matrixStack,
-				this.model.getLayer(TEXTURE),
-				evokerFangsEntityRenderState.light,
-				OverlayTexture.DEFAULT_UV,
+				this.model.renderType(TEXTURE),
+				evokerFangsEntityRenderState.lightCoords,
+				OverlayTexture.NO_OVERLAY,
 				evokerFangsEntityRenderState.outlineColor,
 				null
 			);
-			matrixStack.pop();
-			super.render(evokerFangsEntityRenderState, matrixStack, orderedRenderCommandQueue, cameraRenderState);
+			matrixStack.popPose();
 		}
+
+		super.submit(evokerFangsEntityRenderState, matrixStack, orderedRenderCommandQueue, cameraRenderState);
 	}
 
-	public EvokerFangsEntityRenderState createRenderState() {
-		return new EvokerFangsEntityRenderState();
+	@Override
+	public EvokerFangsRenderState createRenderState() {
+		return new EvokerFangsRenderState();
 	}
 
-	public void updateRenderState(
+	@Override
+	public void extractRenderState(
 		DarkGraspEntity evokerFangsEntity,
-		EvokerFangsEntityRenderState evokerFangsEntityRenderState,
+		EvokerFangsRenderState evokerFangsEntityRenderState,
 		float f
 	) {
-		super.updateRenderState(evokerFangsEntity, evokerFangsEntityRenderState, f);
-		evokerFangsEntityRenderState.yaw = evokerFangsEntity.getYaw();
-		evokerFangsEntityRenderState.animationProgress = evokerFangsEntity.getAnimationProgress(f);
+		super.extractRenderState(evokerFangsEntity, evokerFangsEntityRenderState, f);
+		evokerFangsEntityRenderState.yRot = evokerFangsEntity.getYRot();
+		evokerFangsEntityRenderState.biteProgress = evokerFangsEntity.getAnimationProgress(f);
 	}
 }

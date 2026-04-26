@@ -1,20 +1,19 @@
 package net.balamah.voiddim.component;
 
-import net.minecraft.component.ComponentType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-
 import com.mojang.serialization.Codec;
 
 import net.balamah.voiddim.VoidDimension;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 
 public class ModComponents {
-	public static final ComponentType<Integer> KILL_COUNT =
+	public static final DataComponentType<Integer> KILL_COUNT =
 		Registry.register(
-			Registries.DATA_COMPONENT_TYPE,
-			Identifier.of(VoidDimension.MOD_ID, "kill_count"),
-			ComponentType.<Integer>builder().codec(Codec.INT).build()
+			BuiltInRegistries.DATA_COMPONENT_TYPE,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "kill_count"),
+			DataComponentType.<Integer>builder().persistent(Codec.INT).build()
 		);
 
 	public static void registerModComponents() {

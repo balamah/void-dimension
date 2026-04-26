@@ -1,29 +1,28 @@
 package net.balamah.voiddim.entity.client.base;
 
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.custom.WerewolfEntity;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.resources.Identifier;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.balamah.voiddim.VoidDimension;
 
 public abstract class AbstractWerewolfRenderer<T extends WerewolfEntity>
-	extends MobEntityRenderer<T,
+	extends MobRenderer<T,
 							  AbstractWerewolfRenderState,
 							  AbstractWerewolfModel<AbstractWerewolfRenderState>> 
 {
 	protected String texture;
 
-	public AbstractWerewolfRenderer(EntityRendererFactory.Context context,
-									EntityModelLayer modelLayer, String texture)
+	public AbstractWerewolfRenderer(EntityRendererProvider.Context context,
+									ModelLayerLocation modelLayer, String texture)
 	{
 		super(
 			context,
-			new AbstractWerewolfModel<AbstractWerewolfRenderState>(context.getPart(modelLayer)),
+			new AbstractWerewolfModel<AbstractWerewolfRenderState>(context.bakeLayer(modelLayer)),
 			0.75f
 		);
 
@@ -36,25 +35,26 @@ public abstract class AbstractWerewolfRenderer<T extends WerewolfEntity>
 	}
 
 	@Override
-	public Identifier getTexture(AbstractWerewolfRenderState state) {
-		return Identifier.of(VoidDimension.MOD_ID,
+	public Identifier getTextureLocation(AbstractWerewolfRenderState state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID,
 							 String.format("textures/entity/%s.png", this.texture));
 	}
 
 	@Override
-	public void render(
-		AbstractWerewolfRenderState state, MatrixStack matrixStack,
-		OrderedRenderCommandQueue orderedRenderCommandQueue,
+	public void submit(
+		AbstractWerewolfRenderState state,
+		PoseStack matrixStack,
+		SubmitNodeCollector orderedRenderCommandQueue,
 		CameraRenderState cameraRenderState
 	) {
 		matrixStack.scale(1.2f, 1.2f, 1.2f);
 
-		super.render(state, matrixStack, orderedRenderCommandQueue, cameraRenderState);
+		super.submit(state, matrixStack, orderedRenderCommandQueue, cameraRenderState);
 	}
 
 	@Override
-	public void updateRenderState(T entity, AbstractWerewolfRenderState renderState, float f) {
-		super.updateRenderState(entity, renderState, f);
+	public void extractRenderState(T entity, AbstractWerewolfRenderState renderState, float f) {
+		super.extractRenderState(entity, renderState, f);
 
 		renderState.attackHitAnimationState.copyFrom(entity.attackHitAnimationState);
 		renderState.attackBiteAnimationState.copyFrom(entity.attackBiteAnimationState);

@@ -1,56 +1,55 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.EntityType;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.BlockView;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.ModEntities;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.hurtingprojectile.AbstractHurtingProjectile;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.balamah.voiddim.effect.ModEffects;
 
-public class EyeBrightHeadEntity extends ExplosiveProjectileEntity {
+public class EyeBrightHeadEntity extends AbstractHurtingProjectile {
 	public EyeBrightHeadEntity(
-		EntityType<? extends EyeBrightHeadEntity> entityType, World world
+		EntityType<? extends EyeBrightHeadEntity> entityType, Level world
 	) {
 		super(entityType, world);
 	}
 
-	public EyeBrightHeadEntity(World world, LivingEntity owner, Vec3d velocity) {
+	public EyeBrightHeadEntity(Level world, LivingEntity owner, Vec3 velocity) {
 		super(ModEntities.EYE_BRIGHT_HEAD, owner, velocity, world);
 	}
 
 	@Override
-	public float getEffectiveExplosionResistance(
-		Explosion explosion, BlockView world, BlockPos pos,
+	public float getBlockExplosionResistance(
+		Explosion explosion, BlockGetter world, BlockPos pos,
 		BlockState blockState, FluidState fluidState, float max
 	) {
 		return this.canDestroy(blockState) ? Math.min(0.8F, max) : max;
 	}
 
 	protected boolean canDestroy(BlockState block) {
-		return !block.isAir() && !block.isIn(BlockTags.WITHER_IMMUNE);
+		return !block.isAir() && !block.is(BlockTags.WITHER_IMMUNE);
 	}
 
 	@Override
-	protected void onEntityHit(EntityHitResult entityHitResult) {
-		super.onEntityHit(entityHitResult);
+	protected void onHitEntity(EntityHitResult entityHitResult) {
+		super.onHitEntity(entityHitResult);
 
-		if (!(this.getEntityWorld() instanceof ServerWorld serverWorld)) {
+		if (!(this.level() instanceof ServerLevel serverWorld)) {
 			return;
 		}
 
@@ -59,32 +58,32 @@ public class EyeBrightHeadEntity extends ExplosiveProjectileEntity {
 		if (this.getOwner() instanceof LivingEntity livingEntity) {
 			DamageSource damageSource = ModDamageSources.eyeBrightHead(serverWorld);
 			// TODO: Increase damage
-			hitResult = entityHit.damage(serverWorld, damageSource, 8.0F);
+			hitResult = entityHit.hurtServer(serverWorld, damageSource, 8.0F);
 			if (hitResult) {
 				if (entityHit.isAlive()) {
-					EnchantmentHelper.onTargetDamaged(serverWorld, entityHit, damageSource);
+					EnchantmentHelper.doPostAttackEffects(serverWorld, entityHit, damageSource);
 				} else {
 					livingEntity.heal(5.0F);
 				}
 			}
 		} else {
-			hitResult = entityHit.damage(serverWorld, this.getDamageSources().magic(), 5.0F);
+			hitResult = entityHit.hurtServer(serverWorld, this.damageSources().magic(), 5.0F);
 		}
 
 		if (hitResult && entityHit instanceof LivingEntity livingEntityx) {
-			livingEntityx.addStatusEffect(
-				new StatusEffectInstance(ModEffects.CORRUPTION, 20, 1), this.getEffectCause()
+			livingEntityx.addEffect(
+				new MobEffectInstance(ModEffects.CORRUPTION, 20, 1), this.getEffectSource()
 			);
 		}
 	}
 
 	@Override
-	protected void onCollision(HitResult hitResult) {
-		super.onCollision(hitResult);
-		if (!this.getEntityWorld().isClient()) {
-			this.getEntityWorld().createExplosion(
+	protected void onHit(HitResult hitResult) {
+		super.onHit(hitResult);
+		if (!this.level().isClientSide()) {
+			this.level().explode(
 				this, this.getX(), this.getY(), this.getZ(),
-				1.0F, false, World.ExplosionSourceType.MOB
+				1.0F, false, Level.ExplosionInteraction.MOB
 			);
 
 			this.discard();

@@ -1,13 +1,12 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.ThrowBlockUser;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import net.balamah.voiddim.custom.McCodeHelper;
 
 public class ThrowBlockGoal<T extends CorruptedHostileEntity & ThrowBlockUser>
@@ -21,7 +20,7 @@ public class ThrowBlockGoal<T extends CorruptedHostileEntity & ThrowBlockUser>
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
 		return target != null && target.distanceTo(this.entity) >= 4;
@@ -36,15 +35,15 @@ public class ThrowBlockGoal<T extends CorruptedHostileEntity & ThrowBlockUser>
 	public void tick() {
 		super.tick();
 
-		World world = this.entity.getEntityWorld();
+		Level world = this.entity.level();
 		LivingEntity target = this.entity.getTarget();
-		if (!(world instanceof ServerWorld serverWorld)) return;
+		if (!(world instanceof ServerLevel serverWorld)) return;
 
 		if (this.cooldown == 1) {
 			this.entity.setStopAttacks(true);
 
 			if (!this.entityAttributeInstance.hasModifier(this.attributeId)) {
-				this.entityAttributeInstance.addTemporaryModifier(this.attributeModifier);
+				this.entityAttributeInstance.addTransientModifier(this.attributeModifier);
 			}
 
 			BlockPos blockPos = McCodeHelper.getRandomBlockRightOf(entity, 4, 0);
@@ -64,7 +63,7 @@ public class ThrowBlockGoal<T extends CorruptedHostileEntity & ThrowBlockUser>
 		this.removeSpeedModifier();
 	}
 
-	protected void throwBlock(ServerWorld serverWorld, BlockPos blockPos, LivingEntity target) {
+	protected void throwBlock(ServerLevel serverWorld, BlockPos blockPos, LivingEntity target) {
 
 		this.blockThrown = true;
 	}

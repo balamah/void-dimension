@@ -1,41 +1,40 @@
 package net.balamah.voiddim.entity.custom.base;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.ai.goal.RandomAttackGoal;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.balamah.voiddim.custom.McCodeHelper;
 
 public abstract class AlphaSteveEntity extends SunBurningEntity {
 	protected int ticks;
 
-	public AlphaSteveEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+	public AlphaSteveEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return PathAwareEntity.createMobAttributes()
-			.add(EntityAttributes.MAX_HEALTH, 20)
-			.add(EntityAttributes.STEP_HEIGHT, 1.0)
-			.add(EntityAttributes.JUMP_STRENGTH, 0.4f)
-			.add(EntityAttributes.ATTACK_DAMAGE, 7.6f)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.4F);
+	public static AttributeSupplier.Builder createAttributes() {
+		return PathfinderMob.createMobAttributes()
+			.add(Attributes.MAX_HEALTH, 20)
+			.add(Attributes.STEP_HEIGHT, 1.0)
+			.add(Attributes.JUMP_STRENGTH, 0.4f)
+			.add(Attributes.ATTACK_DAMAGE, 7.6f)
+			.add(Attributes.MOVEMENT_SPEED, 0.4F);
 	}
 
 	@Override
-	protected void initGoals() {
-		this.goalSelector.add(3, new RandomAttackGoal(this, 500));
+	protected void registerGoals() {
+		this.goalSelector.addGoal(3, new RandomAttackGoal(this, 500));
 
-		this.targetSelector.add(0, McCodeHelper.getTargetGoal(this, PlayerEntity.class));
-		this.targetSelector.add(2, McCodeHelper.getTargetGoal(this, PassiveEntity.class));
+		this.targetSelector.addGoal(0, McCodeHelper.getTargetGoal(this, Player.class));
+		this.targetSelector.addGoal(2, McCodeHelper.getTargetGoal(this, AgeableMob.class));
 	}
 
 	@Override
@@ -44,10 +43,10 @@ public abstract class AlphaSteveEntity extends SunBurningEntity {
 
 		this.ticks++;
 
-		Vec3d movement = this.getMovement();
+		Vec3 movement = this.getKnownMovement();
 		boolean isMoving = movement.x != 0 || movement.z != 0;
-		if (ticks % 15 == 0 && this.isOnGround() && isMoving) {
-			this.jump();
+		if (ticks % 15 == 0 && this.onGround() && isMoving) {
+			this.jumpFromGround();
 		}
 	}
 

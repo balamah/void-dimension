@@ -1,22 +1,21 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.AnimationState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 
 public class ShatteredSentinelEntity extends CorruptedHostileEntity {
 	public AnimationState idleAnimationState = new AnimationState();
@@ -24,57 +23,57 @@ public class ShatteredSentinelEntity extends CorruptedHostileEntity {
 	public AnimationState stonesFloatAnimationState = new AnimationState();
     protected int idleAnimationTimeout = 0;
 
-	public ShatteredSentinelEntity(EntityType<? extends HostileEntity> entityType, World world) {
+	public ShatteredSentinelEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
-		this.experiencePoints = 15;
+		this.xpReward = 15;
 	}
 
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.MAX_HEALTH, 22)
-			.add(EntityAttributes.FOLLOW_RANGE, 64)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.4F)
-			.add(EntityAttributes.ATTACK_DAMAGE, 6.0F)
-			.add(EntityAttributes.STEP_HEIGHT, 1.0);
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.MAX_HEALTH, 22)
+			.add(Attributes.FOLLOW_RANGE, 64)
+			.add(Attributes.MOVEMENT_SPEED, 0.4F)
+			.add(Attributes.ATTACK_DAMAGE, 6.0F)
+			.add(Attributes.STEP_HEIGHT, 1.0);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (this.getEntityWorld().isClient()) this.setupAnimationStates();
+		if (this.level().isClientSide()) this.setupAnimationStates();
 	}
 
 	@Override
-	public boolean tryAttack(ServerWorld world, Entity target) {
-		world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
+	public boolean doHurtTarget(ServerLevel world, Entity target) {
+		world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
 
-		DamageSource damageSource = this.getDamageSources().mobAttack(this);
+		DamageSource damageSource = this.damageSources().mobAttack(this);
 		float f = this.getAttackDamage();
 		float g = (int)f > 0 ? f / 2.0F + this.random.nextInt((int)f) : f;
-		boolean bl = target.damage(world, damageSource, g);
+		boolean bl = target.hurtServer(world, damageSource, g);
 		if (bl) {
 			double d = (target instanceof LivingEntity livingEntity) ?
-				livingEntity.getAttributeValue(EntityAttributes.KNOCKBACK_RESISTANCE) :
+				livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) :
 				0.0;
 
 			double e = Math.max(0.0, 1.0 - d);
-			target.setVelocity(target.getVelocity().add(0.0, 0.4F * e, 0.0));
-			EnchantmentHelper.onTargetDamaged(world, target, damageSource);
+			target.setDeltaMovement(target.getDeltaMovement().add(0.0, 0.4F * e, 0.0));
+			EnchantmentHelper.doPostAttackEffects(world, target, damageSource);
 		}
 
-		this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
+		this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);
 		return bl;
 	}
 
 	@Override
-	public void handleStatus(byte status) {
+	public void handleEntityEvent(byte status) {
 		switch (status) {
 			case ModEntityStatuses.ATTACK:
-				this.attackAnimationState.start(this.age);
+				this.attackAnimationState.start(this.tickCount);
 				break;
-			default: super.handleStatus(status);
+			default: super.handleEntityEvent(status);
 				break;
 		}
 	}
@@ -92,13 +91,13 @@ public class ShatteredSentinelEntity extends CorruptedHostileEntity {
 	protected void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = 40;
-            this.idleAnimationState.start(this.age);
+            this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeout;
         }
     }
 
 	protected float getAttackDamage() {
-		return (float) this.getAttributeValue(EntityAttributes.ATTACK_DAMAGE);
+		return (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
 	}
 }

@@ -3,25 +3,24 @@ package net.balamah.voiddim.gen;
 import java.util.concurrent.CompletableFuture;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.data.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.item.Items;
-import net.minecraft.item.Item;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.item.ModItems;
 import net.balamah.voiddim.tag.ModItemTags;
 
 public class VoidDimensionRecipeProvider extends FabricRecipeProvider {
 	public VoidDimensionRecipeProvider(
-		FabricDataOutput output,
-		CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture
+		FabricPackOutput output,
+		CompletableFuture<HolderLookup.Provider> registriesFuture
 	) {
 		super(output, registriesFuture);
 	}
@@ -32,22 +31,22 @@ public class VoidDimensionRecipeProvider extends FabricRecipeProvider {
 	}
 
 	@Override
-	protected RecipeGenerator getRecipeGenerator(
-		RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter
+	protected RecipeProvider createRecipeProvider(
+		HolderLookup.Provider registryLookup, RecipeOutput exporter
 	) {
-		return new RecipeGenerator(registryLookup, exporter) {
+		return new RecipeProvider(registryLookup, exporter) {
 			@Override
-			public void generate() {
-				this.createShaped(RecipeCategory.MISC, ModItems.ORTHODOX_CROSS, 1)
+			public void buildRecipes() {
+				this.shaped(RecipeCategory.MISC, ModItems.ORTHODOX_CROSS, 1)
 					.pattern("1")
 					.pattern("2")
 					.pattern("1")
-					.input('1', ItemTags.WOODEN_BUTTONS)
-					.input('2', ModItems.LATIN_CROSS)
+					.define('1', ItemTags.WOODEN_BUTTONS)
+					.define('2', ModItems.LATIN_CROSS)
 					.group("multi_bench")
-					.criterion(hasItem(ModItems.LATIN_CROSS),
-							   this.conditionsFromItem(ModItems.LATIN_CROSS))
-					.offerTo(this.exporter);
+					.unlockedBy(getHasName(ModItems.LATIN_CROSS),
+							   this.has(ModItems.LATIN_CROSS))
+					.save(this.output);
 
 				this.createPrayerRopeRecipe(ModItems.WOOL_PRAYER_ROPE, ItemTags.WOOL);
 				this.createPrayerRopeRecipe(ModItems.WOOD_PRAYER_ROPE, ItemTags.WOODEN_BUTTONS);
@@ -69,91 +68,91 @@ public class VoidDimensionRecipeProvider extends FabricRecipeProvider {
 					Items.NETHERRACK
 				);
 
-				this.createShaped(RecipeCategory.MISC, ModBlocks.VOID_SHARD_BLOCK, 1)
+				this.shaped(RecipeCategory.MISC, ModBlocks.VOID_SHARD_BLOCK, 1)
 					.pattern("111")
 					.pattern("111")
 					.pattern("111")
-					.input('1', ModItems.VOID_INGOT)
-					.criterion(hasItem(ModItems.VOID_INGOT),
-							   this.conditionsFromItem(ModItems.VOID_INGOT))
-					.offerTo(this.exporter);
+					.define('1', ModItems.VOID_INGOT)
+					.unlockedBy(getHasName(ModItems.VOID_INGOT),
+							   this.has(ModItems.VOID_INGOT))
+					.save(this.output);
 
-				this.createShapeless(RecipeCategory.MISC, ModItems.VOID_INGOT, 9)
-					.input(ModBlocks.VOID_SHARD_BLOCK)
-					.criterion(hasItem(ModBlocks.VOID_SHARD_BLOCK),
-							   this.conditionsFromItem(ModBlocks.VOID_SHARD_BLOCK))
-					.offerTo(this.exporter);
+				this.shapeless(RecipeCategory.MISC, ModItems.VOID_INGOT, 9)
+					.requires(ModBlocks.VOID_SHARD_BLOCK)
+					.unlockedBy(getHasName(ModBlocks.VOID_SHARD_BLOCK),
+							   this.has(ModBlocks.VOID_SHARD_BLOCK))
+					.save(this.output);
 
-				this.createShaped(RecipeCategory.MISC, ModBlocks.WIND_MANIPULATION_BLOCK, 1)
+				this.shaped(RecipeCategory.MISC, ModBlocks.WIND_MANIPULATION_BLOCK, 1)
 					.pattern("121")
 					.pattern("121")
 					.pattern("111")
-					.input('1', Items.DEEPSLATE)
-					.input('2', ModItems.VOID_SHARD)
-					.criterion(hasItem(ModItems.VOID_SHARD),
-							   this.conditionsFromItem(ModItems.VOID_SHARD))
-					.offerTo(this.exporter);
+					.define('1', Items.DEEPSLATE)
+					.define('2', ModItems.VOID_SHARD)
+					.unlockedBy(getHasName(ModItems.VOID_SHARD),
+							   this.has(ModItems.VOID_SHARD))
+					.save(this.output);
 
-				this.createShapeless(RecipeCategory.MISC, ModItems.CORRUPTED_TORCH, 1)
-					.input(Items.TORCH)
-					.input(ModItems.VOIDIUM)
-					.criterion(hasItem(ModItems.VOIDIUM),
-							   this.conditionsFromItem(ModItems.VOIDIUM))
-					.offerTo(exporter);
+				this.shapeless(RecipeCategory.MISC, ModItems.CORRUPTED_TORCH, 1)
+					.requires(Items.TORCH)
+					.requires(ModItems.VOIDIUM)
+					.unlockedBy(getHasName(ModItems.VOIDIUM),
+							   this.has(ModItems.VOIDIUM))
+					.save(output);
 
-				this.createShapeless(RecipeCategory.MISC, ModBlocks.VOID_FLOWER, 1)
-					.input(Items.POPPY)
-					.input(ModItems.VOIDIUM)
-					.criterion(hasItem(ModItems.VOIDIUM),
-							   this.conditionsFromItem(ModItems.VOIDIUM))
-						.offerTo(exporter);
+				this.shapeless(RecipeCategory.MISC, ModBlocks.VOID_FLOWER, 1)
+					.requires(Items.POPPY)
+					.requires(ModItems.VOIDIUM)
+					.unlockedBy(getHasName(ModItems.VOIDIUM),
+							   this.has(ModItems.VOIDIUM))
+						.save(output);
 
-				this.createShaped(RecipeCategory.MISC, ModBlocks.BEDROCK_BOMB, 1)
+				this.shaped(RecipeCategory.MISC, ModBlocks.BEDROCK_BOMB, 1)
 					.pattern("111")
 					.pattern("121")
 					.pattern("111")
-					.input('1', Items.TNT)
-					.input('2', ModItems.VOIDIUM)
-					.criterion(hasItem(ModItems.VOIDIUM),
-							   this.conditionsFromItem(ModItems.VOIDIUM))
-					.offerTo(exporter);
+					.define('1', Items.TNT)
+					.define('2', ModItems.VOIDIUM)
+					.unlockedBy(getHasName(ModItems.VOIDIUM),
+							   this.has(ModItems.VOIDIUM))
+					.save(output);
 			}
 
-			protected ShapedRecipeJsonBuilder getPrayerRopeRecipe(
+			protected ShapedRecipeBuilder getPrayerRopeRecipe(
 				Item result, TagKey<Item> material
 			) {
-				return this.createShaped(RecipeCategory.MISC, result, 1)
+				return this.shaped(RecipeCategory.MISC, result, 1)
 					.pattern("112")
 					.pattern("121")
 					.pattern("213")
-					.input('1', Items.STRING)
-					.input('2', material)
-					.input('3', ModItemTags.CROSS_ITEMS)
+					.define('1', Items.STRING)
+					.define('2', material)
+					.define('3', ModItemTags.CROSS_ITEMS)
 					.group("multi_bench")
-					.criterion(hasItem(Items.STRING),
-							   this.conditionsFromItem(Items.STRING));
+					.unlockedBy(getHasName(Items.STRING),
+							   this.has(Items.STRING));
 			}
 
 			protected void createPrayerRopeRecipe(Item result, TagKey<Item> material) {
-				this.getPrayerRopeRecipe(result, material).offerTo(this.exporter);
+				this.getPrayerRopeRecipe(result, material).save(this.output);
 			}
 
-			protected ShapedRecipeJsonBuilder getSmithingTemplateRecipe(
+			protected ShapedRecipeBuilder getSmithingTemplateRecipe(
 				Item result, Item base, Item upperItem
 			) {
-				return this.createShaped(RecipeCategory.MISC, result, 1)
+				return this.shaped(RecipeCategory.MISC, result, 1)
 					.pattern("131")
 					.pattern("121")
 					.pattern("111")
-					.input('1', Items.DIAMOND)
-					.input('2', base)
-					.input('3', upperItem)
+					.define('1', Items.DIAMOND)
+					.define('2', base)
+					.define('3', upperItem)
 					.group("multi_bench")
-					.criterion(hasItem(base), this.conditionsFromItem(base));
+					.unlockedBy(getHasName(base), this.has(base));
 			}
 
 			protected void createSmithingTemplateRecipe(Item result, Item base, Item upperItem) {
-				this.getSmithingTemplateRecipe(result, base, upperItem).offerTo(this.exporter);
+				this.getSmithingTemplateRecipe(result, base, upperItem).save(this.output);
 			}
 		};
 	}

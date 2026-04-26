@@ -4,29 +4,27 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.Mixin;
-
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LightningEntity;
-import net.minecraft.entity.Entity;
-
 import net.balamah.voiddim.entity.custom.VoidLightningEntity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LightningBolt;
 
 @Mixin(Entity.class)
 public class EntityMixin {
-	@Inject(method = "onStruckByLightning", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "thunderHit", at = @At("HEAD"), cancellable = true)
 	private void onStruckByLightning(
-		ServerWorld world, LightningEntity lightning, CallbackInfo ci
+		ServerLevel world, LightningBolt lightning, CallbackInfo ci
 	) {
 		Entity struckEntity = (Entity)(Object)this;
 
-		struckEntity.setFireTicks(struckEntity.getFireTicks() + 1);
-		if (struckEntity.getFireTicks() == 0) {
-			struckEntity.setOnFireFor(8.0F);
+		struckEntity.setRemainingFireTicks(struckEntity.getRemainingFireTicks() + 1);
+		if (struckEntity.getRemainingFireTicks() == 0) {
+			struckEntity.igniteForSeconds(8.0F);
 		}
 
 		float damage = (lightning instanceof VoidLightningEntity) ? 16f : 5f;
 
-		struckEntity.damage(world, struckEntity.getDamageSources().lightningBolt(), damage);
+		struckEntity.hurtServer(world, struckEntity.damageSources().lightningBolt(), damage);
 
 		ci.cancel();
 	}

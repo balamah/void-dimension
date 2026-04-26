@@ -1,69 +1,67 @@
 package net.balamah.voiddim.block;
 
 import com.google.common.base.Function;
-
-import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.block.ExperienceDroppingBlock;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.block.WallTorchBlock;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.block.LanternBlock;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.block.FlowerBlock;
-import net.minecraft.block.TorchBlock;
-import net.minecraft.util.Identifier;
-import net.minecraft.item.BlockItem;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-
 import net.balamah.voiddim.block.custom.WindManipulationBlock;
 import net.balamah.voiddim.block.custom.CorruptedFireBlock;
 import net.balamah.voiddim.block.custom.BedrockBombBlock;
 import net.balamah.voiddim.block.custom.CorruptOreBlock;
 import net.balamah.voiddim.block.custom.CorruptBlock;
 import net.balamah.voiddim.particle.ModParticleTypes;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.TorchBlock;
+import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.balamah.voiddim.block.custom.CorpseBlock;
 import net.balamah.voiddim.effect.ModEffects;
 import net.balamah.voiddim.VoidDimension;
 
 public class ModBlocks {
-	protected static final AbstractBlock.Settings corpseBlockSettings =
-		AbstractBlock.Settings.create()
-		.strength(1.2f).sounds(BlockSoundGroup.BONE)
-		.nonOpaque()
+	protected static final BlockBehaviour.Properties corpseBlockSettings =
+		BlockBehaviour.Properties.of()
+		.strength(1.2f).sound(SoundType.BONE_BLOCK)
+		.noOcclusion()
 		;
 
-	protected static final AbstractBlock.Settings flowerBlockSettings =
-		AbstractBlock.Settings.create()
-		.mapColor(MapColor.PALE_GREEN)
+	protected static final BlockBehaviour.Properties flowerBlockSettings =
+		BlockBehaviour.Properties.of()
+		.mapColor(MapColor.GRASS)
 		.noCollision()
-		.breakInstantly()
-		.sounds(BlockSoundGroup.GRASS)
-		.offset(AbstractBlock.OffsetType.XZ)
-		.pistonBehavior(PistonBehavior.DESTROY)
-		.nonOpaque();
+		.instabreak()
+		.sound(SoundType.GRASS)
+		.offsetType(BlockBehaviour.OffsetType.XZ)
+		.pushReaction(PushReaction.DESTROY)
+		.noOcclusion();
 
 	protected static final IntProvider deepslateVoidShardOreIntProvider =
-		UniformIntProvider.create(4, 7);
+		UniformInt.of(4, 7);
 
 	protected static final int corruptedFlowerLuminance = 3;
 
 	public static final Block DEEPSLATE_VOIDIUM_ORE =
 		register(
 			"deepslate_voidium_ore",
-			settings -> new ExperienceDroppingBlock(
+			settings -> new DropExperienceBlock(
 				deepslateVoidShardOreIntProvider, settings
 			),
-			AbstractBlock.Settings.create().strength(3.5F, 3.0F).requiresTool()
-			.sounds(BlockSoundGroup.DEEPSLATE),
+			BlockBehaviour.Properties.of().strength(3.5F, 3.0F).requiresCorrectToolForDrops()
+			.sound(SoundType.DEEPSLATE),
 			true, false
 		);
 
@@ -73,19 +71,19 @@ public class ModBlocks {
 			settings -> new CorruptOreBlock(
 				deepslateVoidShardOreIntProvider, settings
 			),
-			AbstractBlock.Settings.create().strength(3.5F, 3.0F).requiresTool()
-			.sounds(BlockSoundGroup.DEEPSLATE),
+			BlockBehaviour.Properties.of().strength(3.5F, 3.0F).requiresCorrectToolForDrops()
+			.sound(SoundType.DEEPSLATE),
 			true, false
 		);
 
 	public static final Block DEEPSLATE_VOID_SHARD_ORE =
 		register(
 			"deepslate_void_shard_ore",
-			settings -> new ExperienceDroppingBlock(
+			settings -> new DropExperienceBlock(
 				deepslateVoidShardOreIntProvider, settings
 			),
-			AbstractBlock.Settings.create().strength(4.5F, 3.0F).requiresTool()
-			.sounds(BlockSoundGroup.DEEPSLATE),
+			BlockBehaviour.Properties.of().strength(4.5F, 3.0F).requiresCorrectToolForDrops()
+			.sound(SoundType.DEEPSLATE),
 			true, false
 		);
 
@@ -95,8 +93,8 @@ public class ModBlocks {
 			settings -> new CorruptOreBlock(
 				deepslateVoidShardOreIntProvider, settings
 			),
-			AbstractBlock.Settings.create().strength(4.5F, 3.0F).requiresTool()
-			.sounds(BlockSoundGroup.SCULK),
+			BlockBehaviour.Properties.of().strength(4.5F, 3.0F).requiresCorrectToolForDrops()
+			.sound(SoundType.SCULK),
 			true, false
 		);
 
@@ -104,8 +102,8 @@ public class ModBlocks {
 		register(
 			"void_shard_block",
 			Block::new,
-			AbstractBlock.Settings.create().requiresTool().strength(50.0F, 1200.0F)
-			.sounds(BlockSoundGroup.NETHERITE),
+			BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(50.0F, 1200.0F)
+			.sound(SoundType.NETHERITE_BLOCK),
 			true, false
 		);
 
@@ -113,7 +111,7 @@ public class ModBlocks {
 		register(
 			"void_flower",
 			settings -> new FlowerBlock(ModEffects.CORRUPTION, 3.0F, settings),
-			flowerBlockSettings.luminance(state -> corruptedFlowerLuminance),
+			flowerBlockSettings.lightLevel(state -> corruptedFlowerLuminance),
 			true, false
 		);
 
@@ -121,8 +119,8 @@ public class ModBlocks {
 		register(
 			"potted_void_flower",
 			settings -> new FlowerPotBlock(VOID_FLOWER, settings),
-			Blocks.createFlowerPotSettings()
-			.luminance(state -> corruptedFlowerLuminance),
+			Blocks.flowerPotProperties()
+			.lightLevel(state -> corruptedFlowerLuminance),
 			false, false
 		);
 
@@ -130,9 +128,9 @@ public class ModBlocks {
 		register(
 			"corrupted_torch",
 			settings -> new TorchBlock(ModParticleTypes.CORRUPTED_FLAME, settings),
-			AbstractBlock.Settings.create().noCollision().breakInstantly()
-			.luminance(state -> 14).sounds(BlockSoundGroup.WOOD)
-			.pistonBehavior(PistonBehavior.DESTROY),
+			BlockBehaviour.Properties.of().noCollision().instabreak()
+			.lightLevel(state -> 14).sound(SoundType.WOOD)
+			.pushReaction(PushReaction.DESTROY),
 			false, false
 		);
 
@@ -142,9 +140,9 @@ public class ModBlocks {
 			settings -> new WallTorchBlock(
 				ModParticleTypes.CORRUPTED_FLAME, settings
 			),
-			copyLootTable(CORRUPTED_TORCH, true).noCollision().breakInstantly()
-			.luminance(state -> 14).sounds(BlockSoundGroup.WOOD)
-			.pistonBehavior(PistonBehavior.DESTROY),
+			copyLootTable(CORRUPTED_TORCH, true).noCollision().instabreak()
+			.lightLevel(state -> 14).sound(SoundType.WOOD)
+			.pushReaction(PushReaction.DESTROY),
 			false, false
 		);
 
@@ -152,14 +150,14 @@ public class ModBlocks {
 		register(
 			"corrupted_lantern",
 			LanternBlock::new,
-			AbstractBlock.Settings.create()
-				.mapColor(MapColor.IRON_GRAY)
-				.solid()
+			BlockBehaviour.Properties.of()
+				.mapColor(MapColor.METAL)
+				.forceSolidOn()
 				.strength(1.5F)
-				.sounds(BlockSoundGroup.LANTERN)
-				.luminance(state -> 15)
-				.nonOpaque()
-				.pistonBehavior(PistonBehavior.DESTROY),
+				.sound(SoundType.LANTERN)
+				.lightLevel(state -> 15)
+				.noOcclusion()
+				.pushReaction(PushReaction.DESTROY),
 			true, false
 		);
 
@@ -167,11 +165,11 @@ public class ModBlocks {
 		register(
 			"corrupted_fire",
 			CorruptedFireBlock::new,
-			AbstractBlock.Settings.create().mapColor(MapColor.BRIGHT_RED)
-			.replaceable().noCollision().breakInstantly()
-			.luminance(state -> 15).sounds(BlockSoundGroup.WOOL)
-			.pistonBehavior(PistonBehavior.DESTROY)
-			.nonOpaque(),
+			BlockBehaviour.Properties.of().mapColor(MapColor.FIRE)
+			.replaceable().noCollision().instabreak()
+			.lightLevel(state -> 15).sound(SoundType.WOOL)
+			.pushReaction(PushReaction.DESTROY)
+			.noOcclusion(),
 			false, false
 			);
 
@@ -179,8 +177,8 @@ public class ModBlocks {
 		register(
 			"wind_manipulation_block",
 			WindManipulationBlock::new,
-			AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE)
-			.requiresTool().strength(2.6F, 4.7F),
+			BlockBehaviour.Properties.of().sound(SoundType.STONE)
+			.requiresCorrectToolForDrops().strength(2.6F, 4.7F),
 			true, true
 			);
 
@@ -188,8 +186,8 @@ public class ModBlocks {
 		register(
 			"corrupt_block",
 			CorruptBlock::new,
-			AbstractBlock.Settings.create().sounds(BlockSoundGroup.SCULK)
-			.requiresTool().strength(2.6F, 4.7F),
+			BlockBehaviour.Properties.of().sound(SoundType.SCULK)
+			.requiresCorrectToolForDrops().strength(2.6F, 4.7F),
 			true, false
 			);
 
@@ -197,9 +195,9 @@ public class ModBlocks {
 		register(
 			"bedrock_bomb",
 			BedrockBombBlock::new,
-			AbstractBlock.Settings.create()
-			.mapColor(MapColor.GRAY).breakInstantly()
-			.sounds(BlockSoundGroup.GRASS),
+			BlockBehaviour.Properties.of()
+			.mapColor(MapColor.COLOR_GRAY).instabreak()
+			.sound(SoundType.GRASS),
 			true, false
 		);
 
@@ -214,63 +212,63 @@ public class ModBlocks {
 	}
 
 	protected static Block register(
-		String name, Function<AbstractBlock.Settings, Block> blockFactory,
-		AbstractBlock.Settings settings, boolean shouldRegisterItem,
+		String name, Function<BlockBehaviour.Properties, Block> blockFactory,
+		BlockBehaviour.Properties settings, boolean shouldRegisterItem,
 		boolean isItemUnstackable
 	) {
-		RegistryKey<Block> blockKey = keyOfBlock(name);
-		Block block = blockFactory.apply(settings.registryKey(blockKey));
+		ResourceKey<Block> blockKey = keyOfBlock(name);
+		Block block = blockFactory.apply(settings.setId(blockKey));
 
 		if (shouldRegisterItem) {
 			registerItem(name, block, isItemUnstackable);
 		}
 
-		return Registry.register(Registries.BLOCK, blockKey, block);
+		return Registry.register(BuiltInRegistries.BLOCK, blockKey, block);
 	}
 
 	protected static void registerItem(
 		String name, Block block, boolean isItemUnstackable
 	) {
-		RegistryKey<Item> itemKey = keyOfItem(name);
+		ResourceKey<Item> itemKey = keyOfItem(name);
 
-		Item.Settings settings = new Item.Settings();
+		Item.Properties settings = new Item.Properties();
 
 		if (isItemUnstackable) {
-			settings = settings.maxCount(1);
+			settings = settings.stacksTo(1);
 		}
 
-		BlockItem blockItem = new BlockItem(block, settings.registryKey(itemKey));
+		BlockItem blockItem = new BlockItem(block, settings.setId(itemKey));
 
-		Registry.register(Registries.ITEM, itemKey, blockItem);
+		Registry.register(BuiltInRegistries.ITEM, itemKey, blockItem);
 	}
 
-	protected static AbstractBlock.Settings copyLootTable(
+	protected static BlockBehaviour.Properties copyLootTable(
 		Block block, boolean copyTranslationKey
 	) {
 		/*
 		 * NOTE: Don't touch this.
 		 * This piece was borrowed from minecraft's code
 		 */
-		AbstractBlock.Settings settings = block.getSettings();
-		AbstractBlock.Settings settings2 = AbstractBlock.Settings.create()
-			.lootTable(block.getLootTableKey());
+		BlockBehaviour.Properties settings = block.properties();
+		BlockBehaviour.Properties settings2 = BlockBehaviour.Properties.of()
+			.overrideLootTable(block.getLootTable());
 
 		if (copyTranslationKey) {
-			settings2 = settings2.overrideTranslationKey(block.getTranslationKey());
+			settings2 = settings2.overrideDescription(block.getDescriptionId());
 		}
 
 		return settings2;
 	}
 
-	protected static RegistryKey<Block> keyOfBlock(String name) {
-		return RegistryKey.of(
-			RegistryKeys.BLOCK, Identifier.of(VoidDimension.MOD_ID, name)
+	protected static ResourceKey<Block> keyOfBlock(String name) {
+		return ResourceKey.create(
+			Registries.BLOCK, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 	}
 	
-	protected static RegistryKey<Item> keyOfItem(String name) {
-		return RegistryKey.of(
-			RegistryKeys.ITEM, Identifier.of(VoidDimension.MOD_ID, name)
+	protected static ResourceKey<Item> keyOfItem(String name) {
+		return ResourceKey.create(
+			Registries.ITEM, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 	}
 }

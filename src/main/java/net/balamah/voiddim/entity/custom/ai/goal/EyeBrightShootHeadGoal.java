@@ -1,9 +1,8 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundEvent;
-
 import net.balamah.voiddim.entity.custom.EyeBrightHeadEntity;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.LivingEntity;
 import net.balamah.voiddim.entity.custom.EyeBrightEntity;
 import net.balamah.voiddim.entity.ModEntities;
 
@@ -24,7 +23,7 @@ public class EyeBrightShootHeadGoal
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
 		return target != null && this.entity.getShootTicks() == 0;

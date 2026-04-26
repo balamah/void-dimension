@@ -1,18 +1,5 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LightningEntity;
-import net.minecraft.entity.AnimationState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.EntityType;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.DodgeAttackUser;
 import net.balamah.voiddim.interfaces.ShockWaveUser;
@@ -22,6 +9,18 @@ import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class Entity303 extends BossEntity
 	implements ShockWaveUser, DodgeAttackUser, ShootLightningUser
@@ -40,33 +39,33 @@ public class Entity303 extends BossEntity
 		"Do not be fooled, I am never truly gone"
 	};
 
-	public Entity303(EntityType<? extends HostileEntity> entityType, World world) {
+	public Entity303(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.FOLLOW_RANGE, 32)
-			.add(EntityAttributes.STEP_HEIGHT, 2)
-			.add(EntityAttributes.ATTACK_DAMAGE, 7.0F)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.3f)
-			.add(EntityAttributes.MAX_HEALTH, 315);
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.FOLLOW_RANGE, 32)
+			.add(Attributes.STEP_HEIGHT, 2)
+			.add(Attributes.ATTACK_DAMAGE, 7.0F)
+			.add(Attributes.MOVEMENT_SPEED, 0.3f)
+			.add(Attributes.MAX_HEALTH, 315);
 	}
 
 	@Override
-	public void handleStatus(byte status) {
+	public void handleEntityEvent(byte status) {
 		switch (status) {
 			case ModEntityStatuses.LIGHTNING_INVOKE:
-				this.lightningInvokeAnimationState.start(this.age);
+				this.lightningInvokeAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.SHOCK_WAVE_INVOKE:
-				this.shockwaveInvokeAnimationState.start(this.age);
+				this.shockwaveInvokeAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.GROUND_MANIPULATION_BEGIN:
-				this.groundCorruptionAnimationState.start(this.age);
+				this.groundCorruptionAnimationState.start(this.tickCount);
 				break;
 			default:
-				super.handleStatus(status);
+				super.handleEntityEvent(status);
 				break;
 		}
 	}
@@ -93,15 +92,15 @@ public class Entity303 extends BossEntity
 	}
 	
 	@Override
-	public void tickMovement() {
-		super.tickMovement();
+	public void aiStep() {
+		super.aiStep();
 
 		if (this.isSecondPhase()) {
-			BlockPos blockToCorruptPos = this.getBlockPos().add(0, -1, 0);
-			World world = this.getEntityWorld();
+			BlockPos blockToCorruptPos = this.blockPosition().offset(0, -1, 0);
+			Level world = this.level();
 			Block blockToCorrupt = McCodeHelper.getBlock(world, blockToCorruptPos);
 			if (McCodeHelper.isBlockReplaceable(blockToCorrupt)) {
-				this.corruptBlock(this.getEntityWorld(), blockToCorruptPos);
+				this.corruptBlock(this.level(), blockToCorruptPos);
 			}
 		}
 	}
@@ -131,17 +130,17 @@ public class Entity303 extends BossEntity
 	}
 
 	@Override
-	public void onDamaged(DamageSource damageSource) {
-		super.onDamaged(damageSource);
+	public void handleDamageEvent(DamageSource damageSource) {
+		super.handleDamageEvent(damageSource);
 	}
 
 	@Override
-	public boolean isFireImmune() {
+	public boolean fireImmune() {
 		return true;
 	}
 
 	@Override
-	public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
+	public void thunderHit(ServerLevel world, LightningBolt lightning) {
 		this.heal(5);
 	}
 
@@ -161,26 +160,26 @@ public class Entity303 extends BossEntity
 	}
 
 	@Override
-	public void onDeath(DamageSource damageSource) {
-		super.onDeath(damageSource);
+	public void die(DamageSource damageSource) {
+		super.die(damageSource);
 
-		if (this.getEntityWorld() instanceof ServerWorld serverWorld) {
+		if (this.level() instanceof ServerLevel serverWorld) {
 			int randomMessageIndex = this.random.nextInt(this.deathMessages.length);
 
 			McCodeHelper.sendMessageToNearbyPlayers(
-				serverWorld, this.getEntityPos(), 10, this.deathMessages[randomMessageIndex]
+				serverWorld, this.position(), 10, this.deathMessages[randomMessageIndex]
 			);
 		}
 	}
 
 	@Override
-	protected void initGoals() {
-		super.initGoals();
+	protected void registerGoals() {
+		super.registerGoals();
 
-		this.goalSelector.add(1, new DodgeAttackGoal<Entity303>(this, 15, 2.0, 13f));
-		this.goalSelector.add(2, new ShockWaveInvokeGoal<Entity303>(this, 12, 10));
-		this.goalSelector.add(3, new ShootLightningGoal<Entity303>(this));
-		this.goalSelector.add(
+		this.goalSelector.addGoal(1, new DodgeAttackGoal<Entity303>(this, 15, 2.0, 13f));
+		this.goalSelector.addGoal(2, new ShockWaveInvokeGoal<Entity303>(this, 12, 10));
+		this.goalSelector.addGoal(3, new ShootLightningGoal<Entity303>(this));
+		this.goalSelector.addGoal(
 			2,
 			new SummonEntitiesGoal<Entity303, AggressiveNullEntity>(
 				this, AggressiveNullEntity.class, ModEntities.AGGRESSIVE_NULL, 5

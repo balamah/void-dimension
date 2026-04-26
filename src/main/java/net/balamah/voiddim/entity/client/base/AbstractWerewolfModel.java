@@ -1,16 +1,15 @@
 package net.balamah.voiddim.entity.client.base;
 
-import net.minecraft.client.render.entity.animation.Animation;
-import net.minecraft.client.model.ModelPart;
-
 import net.balamah.voiddim.entity.client.WerewolfAnimations;
+import net.minecraft.client.animation.KeyframeAnimation;
+import net.minecraft.client.model.geom.ModelPart;
 
 public class AbstractWerewolfModel
 	<T extends AbstractWerewolfRenderState> extends BasicLivingEntityModel<T>
 {
-	protected final Animation attackHitAnimation;
-	protected final Animation attackBiteAnimation;
-	protected final Animation walkingAnimation;
+	protected final KeyframeAnimation attackHitAnimation;
+	protected final KeyframeAnimation attackBiteAnimation;
+	protected final KeyframeAnimation walkingAnimation;
 	
 	protected final ModelPart body;
 	protected final ModelPart mouth;
@@ -63,20 +62,20 @@ public class AbstractWerewolfModel
 		 * private final ModelPart ears;
 		 * this.ears = this.head.getChild("ears");
 		 */
-		this.attackHitAnimation = WerewolfAnimations.ATTACK_HIT.createAnimation(root);
-		this.attackBiteAnimation = WerewolfAnimations.ATTACK_BITE.createAnimation(root);
-		this.walkingAnimation = WerewolfAnimations.WALK.createAnimation(root);
+		this.attackHitAnimation = WerewolfAnimations.ATTACK_HIT.bake(root);
+		this.attackBiteAnimation = WerewolfAnimations.ATTACK_BITE.bake(root);
+		this.walkingAnimation = WerewolfAnimations.WALK.bake(root);
 	}
 
-    @Override
-    public void setAngles(T state) {
-        super.setAngles(state);
+	    @Override
+	    public void setupAnim(T state) {
+	        super.setupAnim(state);
 
-		this.walkingAnimation.applyWalking(
-			state.limbSwingAnimationProgress, state.limbSwingAmplitude, 2f, 2.5f
+		this.walkingAnimation.applyWalk(
+			state.walkAnimationPos, state.walkAnimationSpeed, 2f, 2.5f
 		);
 
-		this.attackHitAnimation.apply(state.attackHitAnimationState, state.age, 1f);
-		this.attackBiteAnimation.apply(state.attackBiteAnimationState, state.age, 1f);
+		this.attackHitAnimation.apply(state.attackHitAnimationState, state.ageInTicks, 1f);
+		this.attackBiteAnimation.apply(state.attackBiteAnimationState, state.ageInTicks, 1f);
     }
 }

@@ -1,33 +1,32 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory.Context;
-import net.minecraft.client.render.entity.state.LightningEntityRenderState;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.LightningEntityRenderer;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.util.math.random.Random;
-
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.entity.LightningBoltRenderer;
+import net.minecraft.client.renderer.entity.state.LightningBoltRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.util.RandomSource;
 import org.joml.Matrix4f;
 
-public class VoidLightningEntityRenderer extends LightningEntityRenderer {
+public class VoidLightningEntityRenderer extends LightningBoltRenderer {
 	public VoidLightningEntityRenderer(Context context) {
 		super(context);
 	}
 
-	public void render(
-		LightningEntityRenderState lightningEntityRenderState,
-		MatrixStack matrixStack,
-		OrderedRenderCommandQueue orderedRenderCommandQueue,
+	public void submit(
+		LightningBoltRenderState lightningEntityRenderState,
+		PoseStack matrixStack,
+		SubmitNodeCollector orderedRenderCommandQueue,
 		CameraRenderState cameraRenderState
 	) {
 		float[] fs = new float[8];
 		float[] gs = new float[8];
 		float f = 0.0F;
 		float g = 0.0F;
-		Random random = Random.create(lightningEntityRenderState.seed);
+		RandomSource random = RandomSource.create(lightningEntityRenderState.seed);
 
 		for (int i = 7; i >= 0; i--) {
 			fs[i] = f;
@@ -38,11 +37,11 @@ public class VoidLightningEntityRenderer extends LightningEntityRenderer {
 
 		float h = f;
 		float j = g;
-		orderedRenderCommandQueue.submitCustom(matrixStack, RenderLayers.lightning(), (matricesEntry, vertexConsumer) -> {
-			Matrix4f matrix4f = matricesEntry.getPositionMatrix();
+		orderedRenderCommandQueue.submitCustomGeometry(matrixStack, RenderTypes.lightning(), (matricesEntry, vertexConsumer) -> {
+			Matrix4f matrix4f = matricesEntry.pose();
 
 			for (int i = 0; i < 4; i++) {
-				Random randomx = Random.create(lightningEntityRenderState.seed);
+				RandomSource randomx = RandomSource.create(lightningEntityRenderState.seed);
 
 				for (int jx = 0; jx < 3; jx++) {
 					int k = 7;
@@ -83,17 +82,17 @@ public class VoidLightningEntityRenderer extends LightningEntityRenderer {
 							v *= (n - 1.0F) * 0.1F + 1.0F;
 						}
 
-						drawBranch(matrix4f, vertexConsumer, hx, m, n, o, p, 0.45F, 0.45F, 0.5F, u, v, false, false, true, false);
-						drawBranch(matrix4f, vertexConsumer, hx, m, n, o, p, 0.45F, 0.45F, 0.5F, u, v, true, false, true, true);
-						drawBranch(matrix4f, vertexConsumer, hx, m, n, o, p, 0.45F, 0.45F, 0.5F, u, v, true, true, false, true);
-						drawBranch(matrix4f, vertexConsumer, hx, m, n, o, p, 0.45F, 0.45F, 0.5F, u, v, false, true, false, false);
+						quad(matrix4f, vertexConsumer, hx, m, n, o, p, 0.45F, 0.45F, 0.5F, u, v, false, false, true, false);
+						quad(matrix4f, vertexConsumer, hx, m, n, o, p, 0.45F, 0.45F, 0.5F, u, v, true, false, true, true);
+						quad(matrix4f, vertexConsumer, hx, m, n, o, p, 0.45F, 0.45F, 0.5F, u, v, true, true, false, true);
+						quad(matrix4f, vertexConsumer, hx, m, n, o, p, 0.45F, 0.45F, 0.5F, u, v, false, true, false, false);
 					}
 				}
 			}
 		});
 	}
 	
-	private static void drawBranch(
+	private static void quad(
 		Matrix4f matrix, VertexConsumer buffer,
 		float x1, float z1, int y, float x2, float z2,
 		float red, float green, float blue,
@@ -106,9 +105,9 @@ public class VoidLightningEntityRenderer extends LightningEntityRenderer {
 		float color3 = 0.00F;
 		float transparency = 0.9F;
 
-		buffer.vertex(matrix, x1 + (shiftEast1 ? offset1 : -offset1), (float)(y * 16), z1 + (shiftSouth1 ? offset1 : -offset1)).color(color1, color2, color3, transparency);
-		buffer.vertex(matrix, x2 + (shiftEast1 ? offset2 : -offset2), (float)((y + 1) * 16), z2 + (shiftSouth1 ? offset2 : -offset2)).color(color1, color2, color3, transparency);
-		buffer.vertex(matrix, x2 + (shiftEast2 ? offset2 : -offset2), (float)((y + 1) * 16), z2 + (shiftSouth2 ? offset2 : -offset2)).color(color1, color2, color3, transparency);
-		buffer.vertex(matrix, x1 + (shiftEast2 ? offset1 : -offset1), (float)(y * 16), z1 + (shiftSouth2 ? offset1 : -offset1)).color(color1, color2, color3, transparency);
+		buffer.addVertex(matrix, x1 + (shiftEast1 ? offset1 : -offset1), (float)(y * 16), z1 + (shiftSouth1 ? offset1 : -offset1)).setColor(color1, color2, color3, transparency);
+		buffer.addVertex(matrix, x2 + (shiftEast1 ? offset2 : -offset2), (float)((y + 1) * 16), z2 + (shiftSouth1 ? offset2 : -offset2)).setColor(color1, color2, color3, transparency);
+		buffer.addVertex(matrix, x2 + (shiftEast2 ? offset2 : -offset2), (float)((y + 1) * 16), z2 + (shiftSouth2 ? offset2 : -offset2)).setColor(color1, color2, color3, transparency);
+		buffer.addVertex(matrix, x1 + (shiftEast2 ? offset1 : -offset1), (float)(y * 16), z1 + (shiftSouth2 ? offset1 : -offset1)).setColor(color1, color2, color3, transparency);
 	}
 }

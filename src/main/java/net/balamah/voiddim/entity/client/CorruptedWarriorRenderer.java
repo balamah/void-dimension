@@ -1,17 +1,16 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.custom.CorruptedWarriorEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
 public class CorruptedWarriorRenderer
-	extends MobEntityRenderer<CorruptedWarriorEntity, CorruptedWarriorRenderState, CorruptedWarriorModel> 
+	extends MobRenderer<CorruptedWarriorEntity, CorruptedWarriorRenderState, CorruptedWarriorModel> 
 {
-	public CorruptedWarriorRenderer(EntityRendererFactory.Context context) {
-		super(context, new CorruptedWarriorModel(context.getPart(CorruptedWarriorModel.CORRUPTED_WARRIOR)), 0.75f);
+	public CorruptedWarriorRenderer(EntityRendererProvider.Context context) {
+		super(context, new CorruptedWarriorModel(context.bakeLayer(CorruptedWarriorModel.CORRUPTED_WARRIOR)), 0.75f);
 	}
 
 	@Override
@@ -20,16 +19,16 @@ public class CorruptedWarriorRenderer
 	}
 
 	@Override
-	public Identifier getTexture(CorruptedWarriorRenderState state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/corrupted_warrior.png");
+	public Identifier getTextureLocation(CorruptedWarriorRenderState state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_warrior.png");
 	}
 
 	@Override
-	public void updateRenderState(
+	public void extractRenderState(
 		CorruptedWarriorEntity entity, CorruptedWarriorRenderState renderState,
 		float f
 	) {
-		super.updateRenderState(entity, renderState, f);
+		super.extractRenderState(entity, renderState, f);
 
 		renderState.idleAnimationState.copyFrom(entity.idleAnimationState);
 		renderState.walkAnimationState.copyFrom(entity.walkAnimationState);

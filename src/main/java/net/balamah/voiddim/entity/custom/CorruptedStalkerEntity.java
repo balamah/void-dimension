@@ -1,58 +1,57 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 
 public class CorruptedStalkerEntity extends CorruptedHostileEntity {
-	protected Identifier ATTACKING_SPEED_MODIFIER_ID = Identifier.ofVanilla("attacking");
-	protected EntityAttributeModifier ATTACKING_SPEED_BOOST =
-		new EntityAttributeModifier(
+	protected Identifier ATTACKING_SPEED_MODIFIER_ID = Identifier.withDefaultNamespace("attacking");
+	protected AttributeModifier ATTACKING_SPEED_BOOST =
+		new AttributeModifier(
 			ATTACKING_SPEED_MODIFIER_ID,
 			0.15F,
-			EntityAttributeModifier.Operation.ADD_VALUE
+			AttributeModifier.Operation.ADD_VALUE
 	);
 
-	protected RegistryEntry<StatusEffect> effect = StatusEffects.INVISIBILITY;
-	protected EntityAttributeInstance entityAttributeInstance =
-		this.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
+	protected Holder<MobEffect> effect = MobEffects.INVISIBILITY;
+	protected AttributeInstance entityAttributeInstance =
+		this.getAttribute(Attributes.MOVEMENT_SPEED);
 
-	public CorruptedStalkerEntity(EntityType<? extends HostileEntity> entityType, World world) {
+	public CorruptedStalkerEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
-		this.experiencePoints = 15;
+		this.xpReward = 15;
 	}
 
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.MAX_HEALTH, 35)
-			.add(EntityAttributes.FOLLOW_RANGE, 15)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.3F)
-			.add(EntityAttributes.ATTACK_DAMAGE, 10.5F)
-			.add(EntityAttributes.STEP_HEIGHT, 1.0);
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.MAX_HEALTH, 35)
+			.add(Attributes.FOLLOW_RANGE, 15)
+			.add(Attributes.MOVEMENT_SPEED, 0.3F)
+			.add(Attributes.ATTACK_DAMAGE, 10.5F)
+			.add(Attributes.STEP_HEIGHT, 1.0);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		World world = this.getEntityWorld();
+		Level world = this.level();
 
-		if (world.isClient()) {
+		if (world.isClientSide()) {
 			return;
 		}
 
@@ -63,16 +62,16 @@ public class CorruptedStalkerEntity extends CorruptedHostileEntity {
 		if (this.getTarget() == null) {
 			this.entityAttributeInstance.removeModifier(ATTACKING_SPEED_MODIFIER_ID);
 
-			if (!this.hasStatusEffect(effect)) {
-				this.addStatusEffect(new StatusEffectInstance(this.effect, 200, 0, false, false));
+			if (!this.hasEffect(effect)) {
+				this.addEffect(new MobEffectInstance(this.effect, 200, 0, false, false));
 			}
 		} else {
 			if (!this.entityAttributeInstance.hasModifier(ATTACKING_SPEED_MODIFIER_ID)) {
-				this.entityAttributeInstance.addTemporaryModifier(ATTACKING_SPEED_BOOST);
+				this.entityAttributeInstance.addTransientModifier(ATTACKING_SPEED_BOOST);
 			}
 
-			if (this.hasStatusEffect(effect)) {
-				this.removeStatusEffect(effect);
+			if (this.hasEffect(effect)) {
+				this.removeEffect(effect);
 
 				this.playSoundCurrentLocation(ModSounds.CORRUPTED_STALKER_ATTACK);
 			}

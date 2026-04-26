@@ -1,12 +1,11 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundEvents;
-
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.ShockWaveUser;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.LivingEntity;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.custom.McCodeHelper;
 
@@ -20,13 +19,13 @@ public class ShockWaveInvokeGoal<T extends BossEntity & ShockWaveUser> extends S
 		super(entity);
 
 		this.invocationTickCooldown = invocationTickCooldown;
-		this.entitySpeed = this.entity.getMovementSpeed();
+		this.entitySpeed = this.entity.getSpeed();
 
 		this.radius = radius;
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
 		return target != null &&
@@ -40,12 +39,12 @@ public class ShockWaveInvokeGoal<T extends BossEntity & ShockWaveUser> extends S
 		this.tick = 0;
 
 		if (!this.entityAttributeInstance.hasModifier(this.attributeId)) {
-			this.entityAttributeInstance.addTemporaryModifier(this.attributeModifier);
+			this.entityAttributeInstance.addTransientModifier(this.attributeModifier);
 		}
 
 		this.entity.setStopAttacks(true);
 		this.addSpeedModifier();
-		this.entity.playSound(SoundEvents.ENTITY_PLAYER_BREATH, 4, 1);
+		this.entity.playSound(SoundEvents.PLAYER_BREATH, 4, 1);
 		this.sendEntityStatus(ModEntityStatuses.SHOCK_WAVE_INVOKE);
 	}
 
@@ -53,7 +52,7 @@ public class ShockWaveInvokeGoal<T extends BossEntity & ShockWaveUser> extends S
 	public void tick() {
 		super.tick();
 
-		if (!(this.world instanceof ServerWorld serverWorld)) {
+		if (!(this.world instanceof ServerLevel serverWorld)) {
 			return;
 		}
 
@@ -79,7 +78,7 @@ public class ShockWaveInvokeGoal<T extends BossEntity & ShockWaveUser> extends S
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return this.tick <= this.invocationTickCooldown;
 	}
 }

@@ -1,15 +1,14 @@
 package net.balamah.voiddim.custom;
 
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-
-import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.EntityType;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 
 public record EntitySpecs<T extends LivingEntity>(
 	EntityType<T> entity,
-	EntityModelLayer modelLayer,
-	TexturedModelData texturedModelData,
-	EntityRendererFactory<T> entityRendererFactory
+	ModelLayerLocation modelLayer,
+	LayerDefinition texturedModelData,
+	EntityRendererProvider<T> entityRendererFactory
 ) {}

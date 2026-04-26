@@ -1,5 +1,5 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.state.BipedEntityRenderState;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 
-public class HollowedAlphaSteveRenderState extends BipedEntityRenderState {}
+public class HollowedAlphaSteveRenderState extends HumanoidRenderState {}

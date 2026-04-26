@@ -1,19 +1,18 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.entity.AnimationState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.DarkGraspUser;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.entity.ModEntities;
@@ -41,22 +40,22 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 	};
 
 	public CorruptedWarriorEntity(
-		EntityType<? extends HostileEntity> entityType, World world
+		EntityType<? extends Monster> entityType, Level world
 	) {
 		super(entityType, world);
 
-		this.experiencePoints = 15;
+		this.xpReward = 15;
 	}
 
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.FOLLOW_RANGE, 64)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.28F)
-			.add(EntityAttributes.MAX_HEALTH, 365)
-			.add(EntityAttributes.KNOCKBACK_RESISTANCE, 1.0)
-			.add(EntityAttributes.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0)
-			.add(EntityAttributes.ATTACK_DAMAGE, 11.5F)
-			.add(EntityAttributes.STEP_HEIGHT, 1.0);
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.FOLLOW_RANGE, 64)
+			.add(Attributes.MOVEMENT_SPEED, 0.28F)
+			.add(Attributes.MAX_HEALTH, 365)
+			.add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
+			.add(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0)
+			.add(Attributes.ATTACK_DAMAGE, 11.5F)
+			.add(Attributes.STEP_HEIGHT, 1.0);
 	}
 
 	@Override
@@ -80,14 +79,14 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 	}
 
 	@Override
-	public void handleStatus(byte status) {
+	public void handleEntityEvent(byte status) {
 		switch (status) {
 			case ModEntityStatuses.ATTACK:
 				this.stopAnimations(this.normalAttackAnimations);
 				this.playRandomAnimation(this.normalAttackAnimations);
 				break;
 			case ModEntityStatuses.SPECIAL_ATTACK:
-				this.specialAttackAnimationState.start(this.age);
+				this.specialAttackAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.STOP_ATTACK:
 				this.stopAnimations(this.normalAttackAnimations);
@@ -99,25 +98,25 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 				this.strongestAttackAnimationState.stop();
 				break;
 			case ModEntityStatuses.STRONG_ATTACK:
-				this.strongAttackAnimationState.start(this.age);
+				this.strongAttackAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.STRONGEST_ATTACK:
-				this.strongestAttackAnimationState.start(this.age);
+				this.strongestAttackAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.PROJECTILE_INVOKE:
-				this.summonProjectileAnimationState.start(this.age);
+				this.summonProjectileAnimationState.start(this.tickCount);
 				break;
-			default: super.handleStatus(status);
+			default: super.handleEntityEvent(status);
 				break;
 		}
 	}
 
 	@Override
-	public boolean tryAttack(ServerWorld world, Entity target) {
-		boolean result = super.tryAttack(world, target);
+	public boolean doHurtTarget(ServerLevel world, Entity target) {
+		boolean result = super.doHurtTarget(world, target);
 		
 		if (result) {
-			world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
+			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
 
 			// A magic number, don't touch
 			this.attackInterval = 8;
@@ -127,28 +126,28 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 	}
 
 	@Override
-	protected void initGoals() {
+	protected void registerGoals() {
 		/*
 		 * TODO: Add goals
 		 * - ShootProjectiles(ConsumedSoul)
 		 * - ThunderWaveInvoke	:: play CorruptedWarriorAnimations.SPECIAL_ATTACK
 		 */
-		super.initGoals();
+		super.registerGoals();
 
 		Goal summonEntitiesGoal = new SummonEntitiesGoal<CorruptedWarriorEntity, VoidBoundServantEntity>(
 			this, VoidBoundServantEntity.class, ModEntities.VOID_BOUND_SERVANT, 10
 		);
 
-		this.goalSelector.add(5, summonEntitiesGoal);
-		this.goalSelector.add(4, new DarkGraspInvokeGoal<>(this, 5, 0, 7));
+		this.goalSelector.addGoal(5, summonEntitiesGoal);
+		this.goalSelector.addGoal(4, new DarkGraspInvokeGoal<>(this, 5, 0, 7));
 	}
 
 	@Override
-	protected void mobTick(ServerWorld world) {
-		super.mobTick(world);
+	protected void customServerAiStep(ServerLevel world) {
+		super.customServerAiStep(world);
 
 		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.sendEntityStatus(this, ModEntityStatuses.STOP_ATTACK);
+			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
 		}
 
 		if (this.attackInterval > 0) {

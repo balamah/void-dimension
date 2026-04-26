@@ -1,19 +1,25 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.animation.Animation;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.*;
-
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.entity.client.base.BasicLivingEntityModel;
 import net.balamah.voiddim.VoidDimension;
 
 public class ShatteredSentinelMasterModel
 	extends BasicLivingEntityModel<ShatteredSentinelMasterRenderState>
 {
-	public static final EntityModelLayer SHATTERED_SENTINEL_MASTER =
-		new EntityModelLayer(
-			Identifier.of(VoidDimension.MOD_ID, "shattered_sentinel_master"),
+	public static final ModelLayerLocation SHATTERED_SENTINEL_MASTER =
+		new ModelLayerLocation(
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "shattered_sentinel_master"),
 			"main"
 		);
 
@@ -34,16 +40,16 @@ public class ShatteredSentinelMasterModel
 	private final ModelPart left_calf;
 	private final ModelPart left_foot;
 
-	private final Animation walkAnimation;
-	private final Animation attackAnimation;
-	private final Animation idleAnimation;
-	private final Animation stonesFloatAnimation;
+	private final KeyframeAnimation walkAnimation;
+	private final KeyframeAnimation attackAnimation;
+	private final KeyframeAnimation idleAnimation;
+	private final KeyframeAnimation stonesFloatAnimation;
 
-	private final Animation shatterGroundBeginAnimation;
-	private final Animation shatterGroundPushAnimation;
-	private final Animation shatterGroundEndAnimation;
-	private final Animation shockWaveInvokeAnimation;
-	private final Animation throwBlockAnimation;
+	private final KeyframeAnimation shatterGroundBeginAnimation;
+	private final KeyframeAnimation shatterGroundPushAnimation;
+	private final KeyframeAnimation shatterGroundEndAnimation;
+	private final KeyframeAnimation shockWaveInvokeAnimation;
+	private final KeyframeAnimation throwBlockAnimation;
 
 	public ShatteredSentinelMasterModel(ModelPart root) {
 		super(root);
@@ -66,123 +72,123 @@ public class ShatteredSentinelMasterModel
 		this.left_calf = this.left_leg.getChild("left_calf");
 		this.left_foot = this.left_calf.getChild("left_foot");
 
-		this.walkAnimation = ShatteredSentinelMasterAnimations.WALK.createAnimation(root);
-		this.attackAnimation = ShatteredSentinelMasterAnimations.ATTACK.createAnimation(root);
-		this.idleAnimation = ShatteredSentinelMasterAnimations.IDLE.createAnimation(root);
-		this.stonesFloatAnimation = ShatteredSentinelMasterAnimations.STONES_FLOAT.createAnimation(root);
+		this.walkAnimation = ShatteredSentinelMasterAnimations.WALK.bake(root);
+		this.attackAnimation = ShatteredSentinelMasterAnimations.ATTACK.bake(root);
+		this.idleAnimation = ShatteredSentinelMasterAnimations.IDLE.bake(root);
+		this.stonesFloatAnimation = ShatteredSentinelMasterAnimations.STONES_FLOAT.bake(root);
 
-		this.shatterGroundBeginAnimation = ShatteredSentinelMasterAnimations.SHATTER_GROUND_BEGIN.createAnimation(root);
-		this.shatterGroundPushAnimation = ShatteredSentinelMasterAnimations.SHATTER_GROUND_PUSH.createAnimation(root);
-		this.shatterGroundEndAnimation = ShatteredSentinelMasterAnimations.SHATTER_GROUND_END.createAnimation(root);
-		this.shockWaveInvokeAnimation = ShatteredSentinelMasterAnimations.SHOCK_WAVE_INVOKE.createAnimation(root);
-		this.throwBlockAnimation = ShatteredSentinelMasterAnimations.THROW_BLOCK.createAnimation(root);
+		this.shatterGroundBeginAnimation = ShatteredSentinelMasterAnimations.SHATTER_GROUND_BEGIN.bake(root);
+		this.shatterGroundPushAnimation = ShatteredSentinelMasterAnimations.SHATTER_GROUND_PUSH.bake(root);
+		this.shatterGroundEndAnimation = ShatteredSentinelMasterAnimations.SHATTER_GROUND_END.bake(root);
+		this.shockWaveInvokeAnimation = ShatteredSentinelMasterAnimations.SHOCK_WAVE_INVOKE.bake(root);
+		this.throwBlockAnimation = ShatteredSentinelMasterAnimations.THROW_BLOCK.bake(root);
 	}
 
-	public static TexturedModelData getTexturedModelData() {
-		ModelData modelData = new ModelData();
-		ModelPartData modelPartData = modelData.getRoot();
-		ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.origin(0.0F, 24.0F, 0.0F));
+	public static LayerDefinition getTexturedModelData() {
+		MeshDefinition modelData = new MeshDefinition();
+		PartDefinition modelPartData = modelData.getRoot();
+		PartDefinition root = modelPartData.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(0, 20).cuboid(-8.0F, -2.0F, -4.0F, 16.0F, 2.0F, 8.0F, new Dilation(0.0F))
-		.uv(0, 0).cuboid(-7.0F, -15.0F, -3.5F, 14.0F, 13.0F, 7.0F, new Dilation(0.0F))
-		.uv(0, 30).cuboid(-7.0F, -20.0F, -3.5F, 14.0F, 5.0F, 7.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, -16.0F, 0.0F));
+		PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 20).addBox(-8.0F, -2.0F, -4.0F, 16.0F, 2.0F, 8.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 0).addBox(-7.0F, -15.0F, -3.5F, 14.0F, 13.0F, 7.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 30).addBox(-7.0F, -20.0F, -3.5F, 14.0F, 5.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -16.0F, 0.0F));
 
-		ModelPartData head = body.addChild("head", ModelPartBuilder.create().uv(0, 42).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, -20.0F, 0.0F));
+		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 42).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -20.0F, 0.0F));
 
-		ModelPartData stones = body.addChild("stones", ModelPartBuilder.create(), ModelTransform.of(-0.5F, -20.0F, 4.0F, -0.131F, -0.0433F, 0.0057F));
+		PartDefinition stones = body.addOrReplaceChild("stones", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.5F, -20.0F, 4.0F, -0.131F, -0.0433F, 0.0057F));
 
-		ModelPartData cube_r1 = stones.addChild("cube_r1", ModelPartBuilder.create().uv(24, 62).cuboid(0.0F, -2.0F, 0.0F, 1.0F, 2.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(-9.0F, -3.0F, 3.0F, 0.0452F, 0.2615F, 0.2299F));
+		PartDefinition cube_r1 = stones.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(24, 62).addBox(0.0F, -2.0F, 0.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.0F, -3.0F, 3.0F, 0.0452F, 0.2615F, 0.2299F));
 
-		ModelPartData cube_r2 = stones.addChild("cube_r2", ModelPartBuilder.create().uv(42, 15).cuboid(0.0F, -2.0F, 0.0F, 1.0F, 2.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(-4.0F, -8.0F, 6.0F, 0.1745F, 0.2182F, 0.0F));
+		PartDefinition cube_r2 = stones.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(42, 15).addBox(0.0F, -2.0F, 0.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.0F, -8.0F, 6.0F, 0.1745F, 0.2182F, 0.0F));
 
-		ModelPartData cube_r3 = stones.addChild("cube_r3", ModelPartBuilder.create().uv(64, 50).cuboid(0.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(-10.0F, -4.0F, 6.0F, 0.1273F, -0.5932F, -0.1632F));
+		PartDefinition cube_r3 = stones.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(64, 50).addBox(0.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-10.0F, -4.0F, 6.0F, 0.1273F, -0.5932F, -0.1632F));
 
-		ModelPartData cube_r4 = stones.addChild("cube_r4", ModelPartBuilder.create().uv(28, 64).cuboid(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(10.0F, -2.0F, 0.0F, -0.0324F, 1.0763F, -0.2542F));
+		PartDefinition cube_r4 = stones.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(28, 64).addBox(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(10.0F, -2.0F, 0.0F, -0.0324F, 1.0763F, -0.2542F));
 
-		ModelPartData cube_r5 = stones.addChild("cube_r5", ModelPartBuilder.create().uv(28, 62).cuboid(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(5.0F, -6.0F, 4.0F, 0.4403F, 0.8869F, 0.2924F));
+		PartDefinition cube_r5 = stones.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(28, 62).addBox(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(5.0F, -6.0F, 4.0F, 0.4403F, 0.8869F, 0.2924F));
 
-		ModelPartData cube_r6 = stones.addChild("cube_r6", ModelPartBuilder.create().uv(42, 18).cuboid(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(7.0F, -6.0F, 0.0F, 0.1273F, 0.5932F, 0.1632F));
+		PartDefinition cube_r6 = stones.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(42, 18).addBox(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(7.0F, -6.0F, 0.0F, 0.1273F, 0.5932F, 0.1632F));
 
-		ModelPartData cube_r7 = stones.addChild("cube_r7", ModelPartBuilder.create().uv(42, 12).cuboid(-1.0F, -2.0F, 0.0F, 1.0F, 2.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(13.0F, 1.0F, 1.0F, 0.1904F, 0.9812F, 0.2507F));
+		PartDefinition cube_r7 = stones.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(42, 12).addBox(-1.0F, -2.0F, 0.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(13.0F, 1.0F, 1.0F, 0.1904F, 0.9812F, 0.2507F));
 
-		ModelPartData cube_r8 = stones.addChild("cube_r8", ModelPartBuilder.create().uv(24, 58).cuboid(-1.0F, -2.0F, 0.0F, 2.0F, 2.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(12.0F, -4.0F, 3.0F, 0.315F, 0.7769F, 0.1298F));
+		PartDefinition cube_r8 = stones.addOrReplaceChild("cube_r8", CubeListBuilder.create().texOffs(24, 58).addBox(-1.0F, -2.0F, 0.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(12.0F, -4.0F, 3.0F, 0.315F, 0.7769F, 0.1298F));
 
-		ModelPartData cube_r9 = stones.addChild("cube_r9", ModelPartBuilder.create().uv(56, 50).cuboid(-1.0F, -2.0F, 0.0F, 2.0F, 2.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-7.0F, -6.0F, 4.0F, 0.315F, -0.7769F, -0.1298F));
+		PartDefinition cube_r9 = stones.addOrReplaceChild("cube_r9", CubeListBuilder.create().texOffs(56, 50).addBox(-1.0F, -2.0F, 0.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-7.0F, -6.0F, 4.0F, 0.315F, -0.7769F, -0.1298F));
 
-		ModelPartData lats = body.addChild("lats", ModelPartBuilder.create().uv(64, 66).cuboid(7.0F, -31.0F, -0.5F, 1.0F, 5.0F, 4.0F, new Dilation(0.0F))
-		.uv(32, 71).cuboid(-8.0F, -31.0F, -0.5F, 1.0F, 5.0F, 4.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, 16.0F, 0.0F));
+		PartDefinition lats = body.addOrReplaceChild("lats", CubeListBuilder.create().texOffs(64, 66).addBox(7.0F, -31.0F, -0.5F, 1.0F, 5.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(32, 71).addBox(-8.0F, -31.0F, -0.5F, 1.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, 0.0F));
 
-		ModelPartData arms = lats.addChild("arms", ModelPartBuilder.create(), ModelTransform.origin(0.0F, -35.0F, 0.0F));
+		PartDefinition arms = lats.addOrReplaceChild("arms", CubeListBuilder.create(), PartPose.offset(0.0F, -35.0F, 0.0F));
 
-		ModelPartData left_arm = arms.addChild("left_arm", ModelPartBuilder.create().uv(48, 12).cuboid(-1.0F, -2.0F, -3.5F, 5.0F, 5.0F, 7.0F, new Dilation(0.0F))
-		.uv(66, 24).cuboid(0.5F, 3.0F, -1.5F, 3.0F, 7.0F, 3.0F, new Dilation(0.0F)), ModelTransform.origin(8.0F, 1.0F, 0.0F));
+		PartDefinition left_arm = arms.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(48, 12).addBox(-1.0F, -2.0F, -3.5F, 5.0F, 5.0F, 7.0F, new CubeDeformation(0.0F))
+		.texOffs(66, 24).addBox(0.5F, 3.0F, -1.5F, 3.0F, 7.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(8.0F, 1.0F, 0.0F));
 
-		ModelPartData right_elbow = left_arm.addChild("right_elbow", ModelPartBuilder.create().uv(16, 66).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 9.0F, 4.0F, new Dilation(0.0F)), ModelTransform.origin(2.0F, 10.0F, 0.0F));
+		PartDefinition right_elbow = left_arm.addOrReplaceChild("right_elbow", CubeListBuilder.create().texOffs(16, 66).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 9.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 10.0F, 0.0F));
 
-		ModelPartData right_arm = arms.addChild("right_arm", ModelPartBuilder.create().uv(32, 42).cuboid(-5.0F, -2.0F, -3.5F, 5.0F, 5.0F, 7.0F, new Dilation(0.0F))
-		.uv(66, 0).cuboid(-4.5F, 3.0F, -1.5F, 3.0F, 7.0F, 3.0F, new Dilation(0.0F)), ModelTransform.origin(-7.0F, 1.0F, 0.0F));
+		PartDefinition right_arm = arms.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(32, 42).addBox(-5.0F, -2.0F, -3.5F, 5.0F, 5.0F, 7.0F, new CubeDeformation(0.0F))
+		.texOffs(66, 0).addBox(-4.5F, 3.0F, -1.5F, 3.0F, 7.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-7.0F, 1.0F, 0.0F));
 
-		ModelPartData left_elbow = right_arm.addChild("left_elbow", ModelPartBuilder.create().uv(0, 66).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 9.0F, 4.0F, new Dilation(0.0F)), ModelTransform.origin(-3.0F, 10.0F, 0.0F));
+		PartDefinition left_elbow = right_arm.addOrReplaceChild("left_elbow", CubeListBuilder.create().texOffs(0, 66).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 9.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.0F, 10.0F, 0.0F));
 
-		ModelPartData legs = root.addChild("legs", ModelPartBuilder.create(), ModelTransform.origin(0.0F, -15.0F, -2.0F));
+		PartDefinition legs = root.addOrReplaceChild("legs", CubeListBuilder.create(), PartPose.offset(0.0F, -15.0F, -2.0F));
 
-		ModelPartData right_leg = legs.addChild("right_leg", ModelPartBuilder.create().uv(32, 66).cuboid(-2.0F, 6.0F, -2.0F, 4.0F, 1.0F, 4.0F, new Dilation(0.0F))
-		.uv(32, 54).cuboid(-2.5F, 0.0F, -3.0F, 5.0F, 6.0F, 6.0F, new Dilation(0.0F)), ModelTransform.origin(-5.0F, -1.0F, 2.0F));
+		PartDefinition right_leg = legs.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(32, 66).addBox(-2.0F, 6.0F, -2.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(32, 54).addBox(-2.5F, 0.0F, -3.0F, 5.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, -1.0F, 2.0F));
 
-		ModelPartData right_calf = right_leg.addChild("right_calf", ModelPartBuilder.create().uv(42, 0).cuboid(-3.0F, 0.0F, -4.0F, 6.0F, 6.0F, 6.0F, new Dilation(0.0F))
-		.uv(48, 24).cuboid(-2.0F, 6.0F, -3.0F, 4.0F, 1.0F, 4.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, 7.0F, 1.0F));
+		PartDefinition right_calf = right_leg.addOrReplaceChild("right_calf", CubeListBuilder.create().texOffs(42, 0).addBox(-3.0F, 0.0F, -4.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.0F))
+		.texOffs(48, 24).addBox(-2.0F, 6.0F, -3.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 7.0F, 1.0F));
 
-		ModelPartData right_foot = right_calf.addChild("right_foot", ModelPartBuilder.create().uv(56, 42).cuboid(-2.0F, 0.0F, -3.0F, 6.0F, 2.0F, 6.0F, new Dilation(0.0F)), ModelTransform.origin(-1.0F, 7.0F, -1.0F));
+		PartDefinition right_foot = right_calf.addOrReplaceChild("right_foot", CubeListBuilder.create().texOffs(56, 42).addBox(-2.0F, 0.0F, -3.0F, 6.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, 7.0F, -1.0F));
 
-		ModelPartData left_leg = legs.addChild("left_leg", ModelPartBuilder.create().uv(48, 66).cuboid(-2.0F, 6.0F, -2.0F, 4.0F, 1.0F, 4.0F, new Dilation(0.0F))
-		.uv(54, 54).cuboid(-2.5F, 0.0F, -3.0F, 5.0F, 6.0F, 6.0F, new Dilation(0.0F)), ModelTransform.origin(5.0F, -1.0F, 2.0F));
+		PartDefinition left_leg = legs.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(48, 66).addBox(-2.0F, 6.0F, -2.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(54, 54).addBox(-2.5F, 0.0F, -3.0F, 5.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(5.0F, -1.0F, 2.0F));
 
-		ModelPartData left_calf = left_leg.addChild("left_calf", ModelPartBuilder.create().uv(66, 34).cuboid(-2.0F, 6.0F, -3.0F, 4.0F, 1.0F, 4.0F, new Dilation(0.0F))
-		.uv(42, 30).cuboid(-3.0F, 0.0F, -4.0F, 6.0F, 6.0F, 6.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, 7.0F, 1.0F));
+		PartDefinition left_calf = left_leg.addOrReplaceChild("left_calf", CubeListBuilder.create().texOffs(66, 34).addBox(-2.0F, 6.0F, -3.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(42, 30).addBox(-3.0F, 0.0F, -4.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 7.0F, 1.0F));
 
-		ModelPartData left_foot = left_calf.addChild("left_foot", ModelPartBuilder.create().uv(0, 58).cuboid(-3.0F, 0.0F, -3.0F, 6.0F, 2.0F, 6.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, 7.0F, -1.0F));
-		return TexturedModelData.of(modelData, 88, 88);
+		PartDefinition left_foot = left_calf.addOrReplaceChild("left_foot", CubeListBuilder.create().texOffs(0, 58).addBox(-3.0F, 0.0F, -3.0F, 6.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 7.0F, -1.0F));
+		return LayerDefinition.create(modelData, 88, 88);
 	}
 
 	@Override
-	public void setAngles(ShatteredSentinelMasterRenderState state) {
-		super.setAngles(state);
+	public void setupAnim(ShatteredSentinelMasterRenderState state) {
+		super.setupAnim(state);
 
-		this.walkAnimation.applyWalking(
-			state.limbSwingAnimationProgress, state.limbSwingAmplitude, 2f, 2.5f
+		this.walkAnimation.applyWalk(
+			state.walkAnimationPos, state.walkAnimationSpeed, 2f, 2.5f
 		);
 
 		this.idleAnimation.apply(
-			state.idleAnimationState, state.age, 1f
+			state.idleAnimationState, state.ageInTicks, 1f
 		);
 
 		this.attackAnimation.apply(
-			state.attackAnimationState, state.age, 1f
+			state.attackAnimationState, state.ageInTicks, 1f
 		);
 
 		this.shockWaveInvokeAnimation.apply(
-			state.shockWaveInvokeState, state.age, 1f
+			state.shockWaveInvokeState, state.ageInTicks, 1f
 		);
 
 		this.shatterGroundBeginAnimation.apply(
-			state.shatterGroundBeginAnimationState, state.age, 1f
+			state.shatterGroundBeginAnimationState, state.ageInTicks, 1f
 		);
 
 		this.stonesFloatAnimation.apply(
-			state.stonesFloatAnimationState, state.age
+			state.stonesFloatAnimationState, state.ageInTicks
 		);
 
 		this.shatterGroundPushAnimation.apply(
-			state.shatterGroundPushAnimationState, state.age, 1f
+			state.shatterGroundPushAnimationState, state.ageInTicks, 1f
 		);
 
 		this.shatterGroundEndAnimation.apply(
-			state.shatterEndAnimationStateGround, state.age, 1f
+			state.shatterEndAnimationStateGround, state.ageInTicks, 1f
 		);
 
 		this.stonesFloatAnimation.apply(
 			state.stonesFloatAnimationState,
-			state.age
+			state.ageInTicks
 		);
 	}
 }

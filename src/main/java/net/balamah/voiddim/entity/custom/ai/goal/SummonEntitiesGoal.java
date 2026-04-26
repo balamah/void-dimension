@@ -1,21 +1,20 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.custom.McCodeHelper;
 
@@ -37,18 +36,18 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
-		Vec3d position = new Vec3d(this.entity.getX(), this.entity.getY(), this.entity.getZ());;
+		Vec3 position = new Vec3(this.entity.getX(), this.entity.getY(), this.entity.getZ());;
 
 		return target != null &&
 			   target.distanceTo(this.entity) > this.maxTargetDistance &&
-			   !this.areMobsSpawned(this.entity.getEntityWorld(), position, 15);
+			   !this.areMobsSpawned(this.entity.level(), position, 15);
 	}
 
 	@Override
-	public boolean shouldRunEveryTick() {
+	public boolean requiresUpdateEveryTick() {
 		return true;
 	}
 
@@ -85,8 +84,8 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
 		}
 	}
 
-	protected void spawnEntities(World defaultWorld) {
-		if (!(defaultWorld instanceof ServerWorld world)) {
+	protected void spawnEntities(Level defaultWorld) {
+		if (!(defaultWorld instanceof ServerLevel world)) {
 			return;
 		}
 
@@ -103,7 +102,7 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
 
 		T firstEntity = entityType.create(
 			world, null, new BlockPos((int) x, (int) y, (int) z),
-			SpawnReason.MOB_SUMMONED, true, false
+			EntitySpawnReason.MOB_SUMMONED, true, false
 		);
 
 		T secondEntity = firstEntity;
@@ -116,24 +115,24 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
  			Double stalkerPos = entry.getValue();
  
  			if (sideCoordinate == x) {
- 				entityForSpawn.setPosition(stalkerPos, y, z);
+ 				entityForSpawn.setPos(stalkerPos, y, z);
  			} else if (sideCoordinate == z) {
- 				entityForSpawn.setPosition(x, y, stalkerPos);
+ 				entityForSpawn.setPos(x, y, stalkerPos);
  			}
  
- 			world.spawnEntity(entityForSpawn);
+ 			world.addFreshEntity(entityForSpawn);
  		}
 
 		this.tick = -100;
 	}
 
-    protected boolean areMobsSpawned(World world, Vec3d position, double radius) {
-        Box box = new Box(
+    protected boolean areMobsSpawned(Level world, Vec3 position, double radius) {
+        AABB box = new AABB(
 			position.x - radius, position.y - radius, position.z - radius,
 			position.x + radius, position.y + radius, position.z + radius
         );
 
-		List<T> mobs = world.getEntitiesByClass(
+		List<T> mobs = world.getEntitiesOfClass(
 			this.entityClass, box, entity -> entity.isAlive()
 		);
 

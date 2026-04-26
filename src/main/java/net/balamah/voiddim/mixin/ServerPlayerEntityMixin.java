@@ -4,25 +4,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.Mixin;
-
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.WriteView;
-import net.minecraft.nbt.NbtCompound;
-
 import net.balamah.voiddim.interfaces.VoidPrayerDataAccess;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.storage.ValueOutput;
 
-@Mixin(ServerPlayerEntity.class)
+@Mixin(ServerPlayer.class)
 public class ServerPlayerEntityMixin implements VoidPrayerDataAccess {
-    protected final NbtCompound voidPrayerData = new NbtCompound();
+    protected final CompoundTag voidPrayerData = new CompoundTag();
 	protected final String nbtKey = "VoidPrayerData";
 
-    @Inject(method = "writeCustomData", at = @At("TAIL"))
-    protected void writePrayerData(WriteView writeView, CallbackInfo ci) {
-		writeView.put(this.nbtKey, NbtCompound.CODEC, this.voidPrayerData);
+    @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
+    protected void writePrayerData(ValueOutput writeView, CallbackInfo ci) {
+		writeView.store(this.nbtKey, CompoundTag.CODEC, this.voidPrayerData);
     }
 
     @Override
-    public NbtCompound getVoidPrayerData() {
+    public CompoundTag getVoidPrayerData() {
         return this.voidPrayerData;
     }
 }

@@ -1,8 +1,7 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.entity.AnimationState;
-
 import net.balamah.voiddim.entity.client.base.BasicRenderState;
+import net.minecraft.world.entity.AnimationState;
 
 public class ShatteredSentinelRenderState extends BasicRenderState {
 	public AnimationState walkAnimationState = new AnimationState();

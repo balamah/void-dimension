@@ -1,16 +1,15 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.custom.VoidMawEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
-public class VoidMawRenderer extends MobEntityRenderer<VoidMawEntity, VoidMawRenderState, VoidMawModel> 
+public class VoidMawRenderer extends MobRenderer<VoidMawEntity, VoidMawRenderState, VoidMawModel> 
 {
-	public VoidMawRenderer(EntityRendererFactory.Context context) {
-		super(context, new VoidMawModel(context.getPart(VoidMawModel.VOID_MAW)), 0.75f);
+	public VoidMawRenderer(EntityRendererProvider.Context context) {
+		super(context, new VoidMawModel(context.bakeLayer(VoidMawModel.VOID_MAW)), 0.75f);
 	}
 
 	@Override
@@ -19,15 +18,15 @@ public class VoidMawRenderer extends MobEntityRenderer<VoidMawEntity, VoidMawRen
 	}
 
 	@Override
-	public Identifier getTexture(VoidMawRenderState state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/void_maw.png");
+	public Identifier getTextureLocation(VoidMawRenderState state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/void_maw.png");
 	}
 
 	@Override
-	public void updateRenderState(VoidMawEntity entity,
+	public void extractRenderState(VoidMawEntity entity,
 								  VoidMawRenderState renderState, float f)
 	{
-		super.updateRenderState(entity, renderState, f);
+		super.extractRenderState(entity, renderState, f);
 
 		renderState.attackAnimationState.copyFrom(entity.attackAnimationState);
 	}

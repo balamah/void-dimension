@@ -1,10 +1,10 @@
 package net.balamah.voiddim.tag;
 
 import net.balamah.voiddim.VoidDimension;
-import net.minecraft.block.Block;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 public class ModBlockTags {
 	public static final TagKey<Block> INCORRECT_FOR_VOID_TOOL =
@@ -21,6 +21,6 @@ public class ModBlockTags {
 	}
 
 	protected static TagKey<Block> register(String id) {
-		return TagKey.of(RegistryKeys.BLOCK, Identifier.of(VoidDimension.MOD_ID, id));
+		return TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id));
 	}
 }

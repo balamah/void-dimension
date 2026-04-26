@@ -1,26 +1,25 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.model.WolfEntityModel;
-import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.client.model.ModelData;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.model.Dilation;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.VoidDimension;
+import net.minecraft.client.model.animal.wolf.AdultWolfModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.resources.Identifier;
 
-public class StaringDogModel extends WolfEntityModel {
-    public static final EntityModelLayer STARING_DOG =
-		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "staring_dog"), "main");
+public class StaringDogModel extends AdultWolfModel {
+    public static final ModelLayerLocation STARING_DOG =
+		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "staring_dog"), "main");
 
 	public StaringDogModel(ModelPart modelPart) {
 		super(modelPart);
 	}
 
-	public static TexturedModelData getTexturedModelData() {
-		ModelData modelData = WolfEntityModel.getTexturedModelData(Dilation.NONE);
+	public static LayerDefinition getTexturedModelData() {
+		MeshDefinition modelData = AdultWolfModel.createBodyLayer(CubeDeformation.NONE);
 
-		return TexturedModelData.of(modelData, 64, 32);
+		return LayerDefinition.create(modelData, 64, 32);
 	}
 }

@@ -28,8 +28,15 @@ dependencies {
 	
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	// Fabric API modules (the fabric-api meta jar is jar-in-jar and does not expose API classes at compile time).
+	implementation "net.fabricmc.fabric-api:fabric-api-base:2.0.3+ece063234c"
+	implementation "net.fabricmc.fabric-api:fabric-biome-api-v1:18.0.4+35c80edc4c"
+	implementation "net.fabricmc.fabric-api:fabric-content-registries-v0:11.0.12+d871b99e4c"
+	implementation "net.fabricmc.fabric-api:fabric-creative-tab-api-v1:5.0.10+d871b99e4c"
+	implementation "net.fabricmc.fabric-api:fabric-data-generation-api-v1:24.0.18+35c80edc4c"
+	implementation "net.fabricmc.fabric-api:fabric-object-builder-api-v1:23.0.14+b95dd56e4c"
+	implementation "net.fabricmc.fabric-api:fabric-particles-v1:5.0.14+b61fef434c"
+	implementation "net.fabricmc.fabric-api:fabric-rendering-v1:23.0.5+08c26e364c"
 	
 }
 

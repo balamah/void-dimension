@@ -1,44 +1,50 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.state.WolfEntityRenderState;
-import net.minecraft.client.render.entity.AgeableMobEntityRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.model.WolfEntityModel;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.StaringDogEntity;
+import net.minecraft.client.model.animal.wolf.AdultWolfModel;
+import net.minecraft.client.model.animal.wolf.BabyWolfModel;
+import net.minecraft.client.model.animal.wolf.WolfModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.WolfRenderState;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
 @SuppressWarnings("deprecation")
 public class StaringDogRenderer
-	extends AgeableMobEntityRenderer<StaringDogEntity, WolfEntityRenderState, WolfEntityModel>
+	extends AgeableMobRenderer<StaringDogEntity, WolfRenderState, WolfModel>
 {
-	public StaringDogRenderer(EntityRendererFactory.Context context) {
+	public StaringDogRenderer(EntityRendererProvider.Context context) {
 		super(
-			context, new WolfEntityModel(context.getPart(EntityModelLayers.WOLF)),
-			new WolfEntityModel(context.getPart(EntityModelLayers.WOLF_BABY)), 0.5F
+			context,
+			new AdultWolfModel(context.bakeLayer(ModelLayers.WOLF)),
+			new BabyWolfModel(context.bakeLayer(ModelLayers.WOLF_BABY)),
+			0.5F
 		);
 
-		this.addFeature(
+		this.addLayer(
 			new GlowFeatureRenderer<>(this, "textures/entity/glow/staring_dog.png")
 		);
 	}
 
-	public Identifier getTexture(WolfEntityRenderState dogRenderState) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/staring_dog.png");
+	@Override
+	public Identifier getTextureLocation(WolfRenderState dogRenderState) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/staring_dog.png");
 	}
 
-	public WolfEntityRenderState createRenderState() {
-		return new WolfEntityRenderState();
+	@Override
+	public WolfRenderState createRenderState() {
+		return new WolfRenderState();
 	}
 
-	public void updateRenderState(
-		StaringDogEntity dog, WolfEntityRenderState dogRenderState, float f
+	@Override
+	public void extractRenderState(
+		StaringDogEntity dog, WolfRenderState dogRenderState, float f
 	) {
-		super.updateRenderState(dog, dogRenderState, f);
+		super.extractRenderState(dog, dogRenderState, f);
 
-		dogRenderState.inSittingPose = dog.isInSittingPose();
+		dogRenderState.isSitting = dog.isInSittingPose();
 	}
 }

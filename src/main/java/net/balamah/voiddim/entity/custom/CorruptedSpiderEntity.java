@@ -1,35 +1,35 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.SpiderEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.balamah.voiddim.custom.McCodeHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.spider.Spider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
-public class CorruptedSpiderEntity extends SpiderEntity {
-	public CorruptedSpiderEntity(EntityType<? extends SpiderEntity> entityType, World world) {
+public class CorruptedSpiderEntity extends Spider {
+	public CorruptedSpiderEntity(EntityType<? extends Spider> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.MAX_HEALTH, 35)
-			.add(EntityAttributes.ATTACK_DAMAGE, 12)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.39F);
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.MAX_HEALTH, 35)
+			.add(Attributes.ATTACK_DAMAGE, 12)
+			.add(Attributes.MOVEMENT_SPEED, 0.39F);
 	}
 
 	@Override
-	public boolean tryAttack(ServerWorld world, Entity target) {
-		boolean hit = super.tryAttack(world, target);
+	public boolean doHurtTarget(ServerLevel world, Entity target) {
+		boolean hit = super.doHurtTarget(world, target);
 
 		if (hit &&
-			target instanceof PlayerEntity playerEntity &&
-			this.getEntityWorld() instanceof ServerWorld serverWorld
+			target instanceof Player playerEntity &&
+			this.level() instanceof ServerLevel serverWorld
 		) {
 			McCodeHelper.disableShield(playerEntity);
 		}

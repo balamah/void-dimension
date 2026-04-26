@@ -1,25 +1,24 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.projectile.AbstractWindChargeEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Blocks;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.ModEntities;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.AbstractWindCharge;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 
-public class ThrownBlockEntity extends AbstractWindChargeEntity {
+public class ThrownBlockEntity extends AbstractWindCharge {
 	protected final BlockState blockState;
 
 	public ThrownBlockEntity(
-		ShatteredSentinelMasterEntity entity, World world, BlockState blockState
+		ShatteredSentinelMasterEntity entity, Level world, BlockState blockState
 	) {
 		super(
 			ModEntities.THROWN_BLOCK, world,
@@ -29,31 +28,31 @@ public class ThrownBlockEntity extends AbstractWindChargeEntity {
 		this.blockState = blockState;
 	}
 
-	public ThrownBlockEntity(EntityType<? extends ThrownBlockEntity> entityType, World world) {
+	public ThrownBlockEntity(EntityType<? extends ThrownBlockEntity> entityType, Level world) {
 		super(entityType, world);
 
-		this.blockState = Blocks.STONE.getDefaultState();
+		this.blockState = Blocks.STONE.defaultBlockState();
 	}
 
 	@Override
-	protected void createExplosion(Vec3d pos) {}
+	protected void explode(Vec3 pos) {}
 
 	@Override
-	protected void onEntityHit(EntityHitResult entityHitResult) {
-		super.onEntityHit(entityHitResult);
+	protected void onHitEntity(EntityHitResult entityHitResult) {
+		super.onHitEntity(entityHitResult);
 
-		if (this.getEntityWorld() instanceof ServerWorld serverWorld) {
+		if (this.level() instanceof ServerLevel serverWorld) {
 			LivingEntity livingEntity2 =
 				(this.getOwner() instanceof LivingEntity livingEntity) ?
 							livingEntity : null;
 
 			Entity entity = entityHitResult.getEntity();
-			if (livingEntity2 != null) livingEntity2.onAttacking(entity);
+			if (livingEntity2 != null) livingEntity2.setLastHurtMob(entity);
 
 			DamageSource damageSource = ModDamageSources.thrownBlock(serverWorld);
-			float damage = this.blockState.getBlock().getHardness();
+			float damage = this.blockState.getBlock().defaultDestroyTime();
 
-			entity.damage(serverWorld, damageSource, damage);
+			entity.hurtServer(serverWorld, damageSource, damage);
 		}
 	}
 }

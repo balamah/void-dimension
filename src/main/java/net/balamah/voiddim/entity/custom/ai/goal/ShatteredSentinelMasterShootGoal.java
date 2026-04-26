@@ -20,8 +20,8 @@ public class ShatteredSentinelMasterShootGoal
 	}
 
 	@Override
-	public boolean canStart() {
-		if (!super.canStart()) {
+	public boolean canUse() {
+		if (!super.canUse()) {
 			return false;
 		}
 

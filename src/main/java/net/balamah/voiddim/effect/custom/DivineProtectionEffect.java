@@ -1,15 +1,15 @@
 package net.balamah.voiddim.effect.custom;
 
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
-public class DivineProtectionEffect extends StatusEffect {
+public class DivineProtectionEffect extends MobEffect {
 	public DivineProtectionEffect() {
-		super(StatusEffectCategory.BENEFICIAL, 0xFFADD8E6);
+		super(MobEffectCategory.BENEFICIAL, 0xFFADD8E6);
 	}
 
 	@Override
-	public boolean canApplyUpdateEffect(int duration, int amplifier) {
+	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
 		return true;
 	}
 }

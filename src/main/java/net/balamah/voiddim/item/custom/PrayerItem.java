@@ -1,24 +1,22 @@
 package net.balamah.voiddim.item.custom;
 
 import java.util.function.Consumer;
-
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.item.consume.UseAction;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.text.MutableText;
-import net.minecraft.util.Formatting;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraft.util.Hand;
-import net.minecraft.text.Text;
-import net.minecraft.item.Item;
-
 import net.balamah.voiddim.interfaces.VoidPrayerDataAccess;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.Level;
 import net.balamah.voiddim.effect.ModEffects;
 
 public class PrayerItem extends Item {
@@ -27,7 +25,7 @@ public class PrayerItem extends Item {
 	protected int prayersHourMax;
 
 	public PrayerItem(
-		Settings settings, int prayerTime, int buffTime, int prayersHourMax
+		Properties settings, int prayerTime, int buffTime, int prayersHourMax
 	) {
 		super(settings);
 
@@ -37,46 +35,46 @@ public class PrayerItem extends Item {
 	}
 
 	@Override
-	public ActionResult use(World world, PlayerEntity user, Hand hand) {
-		user.setCurrentHand(hand);
+	public InteractionResult use(Level world, Player user, InteractionHand hand) {
+		user.startUsingItem(hand);
 
-		return ActionResult.CONSUME;
+		return InteractionResult.CONSUME;
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.BLOCK;
+	public ItemUseAnimation getUseAnimation(ItemStack stack) {
+		return ItemUseAnimation.BLOCK;
 	}
 
 	@Override
-	public void appendTooltip(
-		ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent,
-		Consumer<Text> textConsumer, TooltipType type
+	public void appendHoverText(
+		ItemStack stack, TooltipContext context, TooltipDisplay displayComponent,
+		Consumer<Component> textConsumer, TooltipFlag type
 	) {
 		int seconds = this.prayerTime / 20;
 
-		MutableText text =
-			Text.translatable("item.void-dimension.prayer_item.info.time", seconds)
-			.formatted(Formatting.GOLD);
+		MutableComponent text =
+			Component.translatable("item.void-dimension.prayer_item.info.time", seconds)
+			.withStyle(ChatFormatting.GOLD);
 
 		textConsumer.accept(text);
 	}
 
 	@Override
-	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+	public int getUseDuration(ItemStack stack, LivingEntity user) {
 		return this.prayerTime;
 	}
 
 	@Override
-	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!(user instanceof PlayerEntity player) || world.isClient()) {
+	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
+		if (!(user instanceof Player player) || world.isClientSide()) {
 			return stack;
 		}
 
 		String message;
-		Formatting color;
+		ChatFormatting color;
 
-		NbtCompound data = ((VoidPrayerDataAccess) player).getVoidPrayerData();
+		CompoundTag data = ((VoidPrayerDataAccess) player).getVoidPrayerData();
 
 		long currentHour = System.currentTimeMillis() / (1000 * 60 * 60);
 
@@ -91,20 +89,20 @@ public class PrayerItem extends Item {
 
 		if (prayCount < this.prayersHourMax) {
 			message = "text.void-dimension.prayer_success";
-			color = Formatting.GOLD;
+			color = ChatFormatting.GOLD;
 
-			StatusEffectInstance effect =
-				new StatusEffectInstance(ModEffects.DIVINE_PROTECTION, this.buffTime, 1);
+			MobEffectInstance effect =
+				new MobEffectInstance(ModEffects.DIVINE_PROTECTION, this.buffTime, 1);
 
-			player.addStatusEffect(effect);
+			player.addEffect(effect);
 
 			data.putInt("PrayerCount", prayCount + 1);
 		} else {
 			message = "text.void-dimension.prayer_failure";
-			color = Formatting.RED;
+			color = ChatFormatting.RED;
 		}
 
-		player.sendMessage(Text.translatable(message).formatted(color), true);
+			player.sendOverlayMessage(Component.translatable(message).withStyle(color));
 
 		return stack;
 	}

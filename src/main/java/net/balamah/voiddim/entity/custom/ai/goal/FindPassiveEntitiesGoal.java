@@ -3,52 +3,50 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 import java.util.function.Predicate;
 import java.util.Comparator;
 import java.util.List;
-
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Entity;
-
 import net.balamah.voiddim.interfaces.MinecraftEntityDongle;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 
-public class FindPassiveEntitiesGoal<T extends MobEntity & MinecraftEntityDongle>
+public class FindPassiveEntitiesGoal<T extends Mob & MinecraftEntityDongle>
 	extends Goal
 {
 	protected final T entity;
 
-	protected final TargetPredicate predicate = TargetPredicate.createAttackable().setBaseMaxDistance(64.0);
-	protected int delay = toGoalTicks(20);
+	protected final TargetingConditions predicate = TargetingConditions.forCombat().range(64.0);
+	protected int delay = reducedTickDelay(20);
 
 	public FindPassiveEntitiesGoal(T entity) {
 		this.entity = entity;
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		if (this.delay > 0) {
 			this.delay--;
 			return false;
 		} else {
-			this.delay = toGoalTicks(60);
-			ServerWorld serverWorld = castToServerWorld(this.entity.getEntityWorld());
+			this.delay = reducedTickDelay(60);
+			ServerLevel serverWorld = getServerLevel(this.entity.level());
 
-			Predicate<PassiveEntity> predicate =
+			Predicate<AgeableMob> predicate =
 				target -> this.entity.testPredicate(serverWorld, target, this.predicate);
 
-			List<PassiveEntity> list = this.entity.getEntityWorld().getEntitiesByClass(
-				PassiveEntity.class,
-				this.entity.getBoundingBox().expand(16.0, 64.0, 16.0),
+			List<AgeableMob> list = this.entity.level().getEntitiesOfClass(
+				AgeableMob.class,
+				this.entity.getBoundingBox().inflate(16.0, 64.0, 16.0),
 				predicate
 			);
 
 			if (!list.isEmpty()) {
-				list.sort(Comparator.comparing(Entity::getY).reversed());
+				list.sort(Comparator.<AgeableMob>comparingDouble(e -> e.getY()).reversed());
 
-				for (PassiveEntity passiveEntity : list) {
-					if (this.entity.testPredicate(serverWorld, passiveEntity, TargetPredicate.DEFAULT)) {
+				for (AgeableMob passiveEntity : list) {
+					if (this.entity.testPredicate(serverWorld, passiveEntity, TargetingConditions.DEFAULT)) {
 						this.entity.setTarget(passiveEntity);
 						return true;
 					}
@@ -60,10 +58,10 @@ public class FindPassiveEntitiesGoal<T extends MobEntity & MinecraftEntityDongle
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		LivingEntity livingEntity = this.entity.getTarget();
 		return livingEntity != null
-			? this.entity.testPredicate(castToServerWorld(this.entity.getEntityWorld()), livingEntity, TargetPredicate.DEFAULT)
+			? this.entity.testPredicate(getServerLevel(this.entity.level()), livingEntity, TargetingConditions.DEFAULT)
 			: false;
 	}
 }

@@ -1,24 +1,23 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory.Context;
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.SpiderEntityRenderer;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.client.renderFeature.CorruptedSpiderEyesFeatureRenderer;
 import net.balamah.voiddim.entity.custom.CorruptedSpiderEntity;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.entity.SpiderRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
-public class CorruptedSpiderRenderer extends SpiderEntityRenderer<CorruptedSpiderEntity> {
+public class CorruptedSpiderRenderer extends SpiderRenderer<CorruptedSpiderEntity> {
 	public CorruptedSpiderRenderer(Context context) {
-		super(context, EntityModelLayers.SPIDER);
+		super(context, ModelLayers.SPIDER);
 
-		this.addFeature(new CorruptedSpiderEyesFeatureRenderer<>(this));
+		this.addLayer(new CorruptedSpiderEyesFeatureRenderer<>(this));
 	}
 
 	@Override
-	public Identifier getTexture(LivingEntityRenderState state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/corrupted_spider.png");
+	public Identifier getTextureLocation(LivingEntityRenderState state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_spider.png");
 	}
 }

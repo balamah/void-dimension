@@ -8,29 +8,32 @@ import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
-import net.minecraft.registry.RegistryWrapper.WrapperLookup;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.advancement.AdvancementRequirements;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.advancement.AdvancementEntry;
-import net.minecraft.advancement.AdvancementFrame;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.criterion.*;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.Identifier;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.block.Blocks;
-import net.minecraft.world.World;
-import net.minecraft.item.Items;
-import net.minecraft.item.Item;
-import net.minecraft.text.Text;
-
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.criterion.ChangeDimensionTrigger;
+import net.minecraft.advancements.criterion.ConsumeItemTrigger;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.KilledTrigger;
+import net.minecraft.advancements.criterion.RecipeCraftedTrigger;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.balamah.voiddim.world.dimension.ModDimensions;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.block.ModBlocks;
@@ -41,94 +44,94 @@ import net.balamah.voiddim.tag.ModItemTags;
 
 public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider {
 	public VoidDimensionAdvancementProvider(
-		FabricDataOutput output, CompletableFuture<WrapperLookup> registryLookup
+		FabricPackOutput output, CompletableFuture<Provider> registryLookup
 	) {
 		super(output, registryLookup);
 	}
 
 	@Override
 	public void generateAdvancement(
-		WrapperLookup wrapperLookup, Consumer<AdvancementEntry> consumer
+		Provider wrapperLookup, Consumer<AdvancementHolder> consumer
 	) {
-		final RegistryWrapper.Impl<Item> itemLookup = wrapperLookup.getOrThrow(RegistryKeys.ITEM);
-		final RegistryWrapper.Impl<EntityType<?>> entityLookup = wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE);
+		final HolderLookup.RegistryLookup<Item> itemLookup = wrapperLookup.lookupOrThrow(Registries.ITEM);
+		final HolderLookup.RegistryLookup<EntityType<?>> entityLookup = wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE);
 
 		Item voidSalvationPotion = McCodeHelper.getPotionItemStack(Items.POTION, "void_salvation").getItem();
 		Item voidSalvationSplashPotion = McCodeHelper.getPotionItemStack(Items.SPLASH_POTION, "void_salvation").getItem();
 		Item voidSalvationLingeringPotion = McCodeHelper.getPotionItemStack(Items.LINGERING_POTION, "void_salvation").getItem();
 
 		ItemPredicate voidSalvationPotionPredicate =
-			ItemPredicate.Builder.create().items(itemLookup, voidSalvationPotion, voidSalvationSplashPotion, voidSalvationLingeringPotion).build();
+			ItemPredicate.Builder.item().of(itemLookup, voidSalvationPotion, voidSalvationSplashPotion, voidSalvationLingeringPotion).build();
 
 		ItemPredicate prayerItemsPredicate =
-			ItemPredicate.Builder.create().tag(itemLookup, ModItemTags.PRAYER_ITEMS).build();
+			ItemPredicate.Builder.item().of(itemLookup, ModItemTags.PRAYER_ITEMS).build();
 
-		AdvancementEntry voidDimensionRoot = this.getAdvancementEntry(
+		AdvancementHolder voidDimensionRoot = this.getAdvancementEntry(
 			ModItems.VOIDIUM, "void_dimension",
-			Identifier.of(VoidDimension.MOD_ID, "gui/advancements/deepslate"),
-			AdvancementFrame.TASK,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "gui/advancements/deepslate"),
+			AdvancementType.TASK,
             false, "got_voidium",
-            InventoryChangedCriterion.Conditions.items(ModItems.VOIDIUM),
+            InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOIDIUM),
             consumer, "void_dimension/root"
         );
 
-		AdvancementEntry firstPreparations = this.getAdvancementBuilder(
+		AdvancementHolder firstPreparations = this.getAdvancementBuilder(
 			ModItems.ORTHODOX_CROSS, "first_preparations",
-			null, AdvancementFrame.TASK, false
+			null, AdvancementType.TASK, false
 		)
 		.parent(voidDimensionRoot)
-		.criterion("got_void_salvation_potion", InventoryChangedCriterion.Conditions.items(voidSalvationPotionPredicate))
-		.criterion("got_prayer_item", InventoryChangedCriterion.Conditions.items(prayerItemsPredicate))
+		.addCriterion("got_void_salvation_potion", InventoryChangeTrigger.TriggerInstance.hasItems(voidSalvationPotionPredicate))
+		.addCriterion("got_prayer_item", InventoryChangeTrigger.TriggerInstance.hasItems(prayerItemsPredicate))
 		.requirements(AdvancementRequirements.allOf(
 			List.of("got_void_salvation_potion", "got_prayer_item"))
 		)
-		.build(consumer, VoidDimension.MOD_ID + "get_saving_items")
+		.save(consumer, this.namespaced("get_saving_items"))
 		;
 
-		AdvancementEntry aForsakenPlace = this.getAdvancementEntry(
+		AdvancementHolder aForsakenPlace = this.getAdvancementEntry(
 			Items.DEEPSLATE, "a_forsaken_place", firstPreparations,
-			null, AdvancementFrame.GOAL, false, "got_into_void",
-			ChangedDimensionCriterion.Conditions.to(ModDimensions.VOID_WORLD),
+			null, AdvancementType.GOAL, false, "got_into_void",
+			ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(ModDimensions.VOID_WORLD),
 			consumer, "get_into_void"
 		);
 
-		AdvancementEntry cannibalism = this.getAdvancementEntry(
+		AdvancementHolder cannibalism = this.getAdvancementEntry(
 			ModItems.COOKED_FLESH, "cannibalism", aForsakenPlace,
-			null, AdvancementFrame.TASK, false, "ate_alpha_steve_flesh",
-			ConsumeItemCriterion.Conditions.item(itemLookup, ModItems.COOKED_FLESH),
+			null, AdvancementType.TASK, false, "ate_alpha_steve_flesh",
+			ConsumeItemTrigger.TriggerInstance.usedItem(itemLookup, ModItems.COOKED_FLESH),
 			consumer, "eat_alpha_steve_cooked_flesh"
 		);
 
-		AdvancementEntry isThisHowZombiesAreCreated = this.getAdvancementEntry(
+		AdvancementHolder isThisHowZombiesAreCreated = this.getAdvancementEntry(
 			ModItems.SPOILED_FLESH, "is_this_how_zombies_are_created", cannibalism,
-			null, AdvancementFrame.TASK, true, "ate_zombified_steve_flesh",
-            InventoryChangedCriterion.Conditions.items(ModItems.SPOILED_FLESH),
+			null, AdvancementType.TASK, true, "ate_zombified_steve_flesh",
+            InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SPOILED_FLESH),
 			consumer, "eat_zombified_steve_cooked_flesh"
 		);
 
-		AdvancementEntry firstSteps = this.getAdvancementEntry(
+		AdvancementHolder firstSteps = this.getAdvancementEntry(
 			ModItems.VOID_SHARD, "first_steps", aForsakenPlace,
-			null, AdvancementFrame.TASK, false, "got_void_shard",
-            InventoryChangedCriterion.Conditions.items(ModItems.VOID_SHARD),
+			null, AdvancementType.TASK, false, "got_void_shard",
+            InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_SHARD),
 			consumer, "get_void_shard"
 		);
 
-		AdvancementEntry voidUpgrade = this.getAdvancementBuilder(
+		AdvancementHolder voidUpgrade = this.getAdvancementBuilder(
 			ModItems.VOID_UPGRADE_SMITHING_TEMPLATE, "void_upgrade",
-			null, AdvancementFrame.GOAL, false
+			null, AdvancementType.GOAL, false
 		)
 		.parent(firstSteps)
-		.criterion("upgrade_netherite_horse_armor"	, this.getRecipeCraftedCondition("void_horse_armor_smithing"))
-		.criterion("upgrade_netherite_boots"		, this.getRecipeCraftedCondition("void_boots_smithing"))
-		.criterion("upgrade_netherite_pickaxe"		, this.getRecipeCraftedCondition("void_pickaxe_smithing"))
-		.criterion("upgrade_netherite_shovel"		, this.getRecipeCraftedCondition("void_shovel_smithing"))
-		.criterion("upgrade_netherite_leggings"		, this.getRecipeCraftedCondition("void_leggings_smithing"))
-		.criterion("upgrade_netherite_axe"			, this.getRecipeCraftedCondition("void_axe_smithing"))
-		.criterion("upgrade_netherite_chestplate"	, this.getRecipeCraftedCondition("void_chestplate_smithing"))
-		.criterion("upgrade_netherite_sword"		, this.getRecipeCraftedCondition("void_sword_smithing"))
-		.criterion("upgrade_netherite_hoe"			, this.getRecipeCraftedCondition("void_hoe_smithing"))
-		.criterion("upgrade_netherite_helmet"		, this.getRecipeCraftedCondition("void_helmet_smithing"))
-		.criterion("upgrade_netherite_spear"		, this.getRecipeCraftedCondition("void_spear_smithing"))
+		.addCriterion("upgrade_netherite_horse_armor"	, this.getRecipeCraftedCondition("void_horse_armor_smithing"))
+		.addCriterion("upgrade_netherite_boots"		, this.getRecipeCraftedCondition("void_boots_smithing"))
+		.addCriterion("upgrade_netherite_pickaxe"		, this.getRecipeCraftedCondition("void_pickaxe_smithing"))
+		.addCriterion("upgrade_netherite_shovel"		, this.getRecipeCraftedCondition("void_shovel_smithing"))
+		.addCriterion("upgrade_netherite_leggings"		, this.getRecipeCraftedCondition("void_leggings_smithing"))
+		.addCriterion("upgrade_netherite_axe"			, this.getRecipeCraftedCondition("void_axe_smithing"))
+		.addCriterion("upgrade_netherite_chestplate"	, this.getRecipeCraftedCondition("void_chestplate_smithing"))
+		.addCriterion("upgrade_netherite_sword"		, this.getRecipeCraftedCondition("void_sword_smithing"))
+		.addCriterion("upgrade_netherite_hoe"			, this.getRecipeCraftedCondition("void_hoe_smithing"))
+		.addCriterion("upgrade_netherite_helmet"		, this.getRecipeCraftedCondition("void_helmet_smithing"))
+		.addCriterion("upgrade_netherite_spear"		, this.getRecipeCraftedCondition("void_spear_smithing"))
 		.requirements(AdvancementRequirements.anyOf(
 			List.of("upgrade_netherite_horse_armor",
 					"upgrade_netherite_boots",
@@ -142,13 +145,13 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 					"upgrade_netherite_helmet",
 					"upgrade_netherite_spear"))
 		)
-		.build(consumer, VoidDimension.MOD_ID + "upgraded_netherite")
+		.save(consumer, this.namespaced("upgraded_netherite"))
 		;
 
-		AdvancementEntry coverMeInVoid = this.getAdvancementEntry(
+		AdvancementHolder coverMeInVoid = this.getAdvancementEntry(
 			ModItems.VOID_CHESTPLATE, "cover_me_in_void", voidUpgrade,
-			null, AdvancementFrame.CHALLENGE, false, "got_void_armor",
-			InventoryChangedCriterion.Conditions.items(
+			null, AdvancementType.CHALLENGE, false, "got_void_armor",
+			InventoryChangeTrigger.TriggerInstance.hasItems(
 				ModItems.VOID_HELMET, ModItems.VOID_CHESTPLATE, ModItems.VOID_LEGGINGS,
 				ModItems.VOID_BOOTS
 			),
@@ -164,64 +167,64 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		Optional<EntityPredicate> shatteredSentinelMasterPredicate =
 			this.getEntityPredicate(entityLookup, ModEntities.SHATTERED_SENTINEL_MASTER);
 
-		AdvancementEntry harbingerOfOblivion = this.getAdvancementEntry(
+		AdvancementHolder harbingerOfOblivion = this.getAdvancementEntry(
 			ModItems.VOID_HARBINGER_SPAWN_EGG, "harbinger_of_oblivion", aForsakenPlace,
-			null, AdvancementFrame.CHALLENGE, false, "killed_void_harbinger",
-			OnKilledCriterion.Conditions.createPlayerKilledEntity(voidHarbingerPredicate),
+			null, AdvancementType.CHALLENGE, false, "killed_void_harbinger",
+			KilledTrigger.TriggerInstance.playerKilledEntity(voidHarbingerPredicate),
 			consumer, "kill_void_harbinger"
 		);
 
-		AdvancementEntry masterOfTheShattered = this.getAdvancementEntry(
+		AdvancementHolder masterOfTheShattered = this.getAdvancementEntry(
 			ModItems.SHATTERED_SENTINEL_SPAWN_EGG, "master_of_the_shattered", aForsakenPlace,
-			null, AdvancementFrame.CHALLENGE, false, "killed_shattered_sentinel_master",
-			OnKilledCriterion.Conditions.createPlayerKilledEntity(shatteredSentinelMasterPredicate),
+			null, AdvancementType.CHALLENGE, false, "killed_shattered_sentinel_master",
+			KilledTrigger.TriggerInstance.playerKilledEntity(shatteredSentinelMasterPredicate),
 			consumer, "kill_shattered_sentinel_master"
 		);
 
-		AdvancementEntry anomalyBeaten = this.getAdvancementEntry(
+		AdvancementHolder anomalyBeaten = this.getAdvancementEntry(
 			ModItems.ENTITY303_SPAWN_EGG, "anomaly_beaten", aForsakenPlace,
-			null, AdvancementFrame.CHALLENGE, false, "killed_entity303",
-			OnKilledCriterion.Conditions.createPlayerKilledEntity(entity303Predicate),
+			null, AdvancementType.CHALLENGE, false, "killed_entity303",
+			KilledTrigger.TriggerInstance.playerKilledEntity(entity303Predicate),
 			consumer, "kill_entity303"
 		);
 
-		AdvancementEntry exodusPreparation = this.getAdvancementBuilder(
+		AdvancementHolder exodusPreparation = this.getAdvancementBuilder(
 			ModBlocks.BEDROCK_BOMB, "exodus_preparation",
-			null, AdvancementFrame.TASK, false
+			null, AdvancementType.TASK, false
 		)
 		.parent(firstSteps)
-		.criterion("got_bedrock_bomb", InventoryChangedCriterion.Conditions.items(ModBlocks.BEDROCK_BOMB))
-		.criterion("got_flint_and_steel", InventoryChangedCriterion.Conditions.items(Items.FLINT_AND_STEEL))
-		.criterion("got_void_salvation_potion", InventoryChangedCriterion.Conditions.items(voidSalvationPotionPredicate))
+		.addCriterion("got_bedrock_bomb", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.BEDROCK_BOMB))
+		.addCriterion("got_flint_and_steel", InventoryChangeTrigger.TriggerInstance.hasItems(Items.FLINT_AND_STEEL))
+		.addCriterion("got_void_salvation_potion", InventoryChangeTrigger.TriggerInstance.hasItems(voidSalvationPotionPredicate))
 		.requirements(AdvancementRequirements.allOf(List.of("got_bedrock_bomb", "got_flint_and_steel", "got_void_salvation_potion")))
-		.build(consumer, VoidDimension.MOD_ID + "get_bedrock_bomb_flint_and_steel")
+		.save(consumer, this.namespaced("get_bedrock_bomb_flint_and_steel"))
 			;
 
-		AdvancementEntry exodus = this.getAdvancementBuilder(
+		AdvancementHolder exodus = this.getAdvancementBuilder(
 			Blocks.NETHERRACK, "exodus",
-			null, AdvancementFrame.GOAL, false
+			null, AdvancementType.GOAL, false
 		)
 		.parent(exodusPreparation)
-		.criterion("went_from_void", ChangedDimensionCriterion.Conditions.from(ModDimensions.VOID_WORLD))
-		.criterion("went_to_nether", ChangedDimensionCriterion.Conditions.to(World.NETHER))
+		.addCriterion("went_from_void", ChangeDimensionTrigger.TriggerInstance.changedDimensionFrom(ModDimensions.VOID_WORLD))
+		.addCriterion("went_to_nether", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(Level.NETHER))
 		.requirements(AdvancementRequirements.allOf(List.of("went_from_void", "went_to_nether")))
-		.build(consumer, VoidDimension.MOD_ID + "go_to_nether")
+		.save(consumer, this.namespaced("go_to_nether"))
 			;
 	}
 
 	protected Advancement.Builder getAdvancementBuilder(
-		ItemConvertible icon, String advancementLocale,
+		ItemLike icon, String advancementLocale,
 		@Nullable Identifier background,
-		AdvancementFrame type, boolean hidden
+		AdvancementType type, boolean hidden
 	) {
 		String titleString = this.getLocaleString(advancementLocale, "title");
 		String descriptionString = this.getLocaleString(advancementLocale, "description");
 
-		return Advancement.Builder.create()
+		return Advancement.Builder.advancement()
 			.display(
 				icon, // The display icon
-				Text.translatable(titleString), // The title
-				Text.translatable(descriptionString), // The description
+				Component.translatable(titleString), // The title
+				Component.translatable(descriptionString), // The description
 				background, // Background image for the tab in the advancements page, if this is a root advancement (has no parent)
 				type, // TASK, CHALLENGE, or GOAL
 				true, // Show the toast when completing it
@@ -231,35 +234,41 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			;
 	}
 
-	protected AdvancementEntry getAdvancementEntry(
-		ItemConvertible icon, String advancementLocale,
-		@Nullable AdvancementEntry parent,
+	protected AdvancementHolder getAdvancementEntry(
+		ItemLike icon, String advancementLocale,
+		@Nullable AdvancementHolder parent,
 		@Nullable Identifier background,
-		AdvancementFrame type, boolean hidden,
-		String criteaName, AdvancementCriterion<?> criterion,
-		Consumer<AdvancementEntry> consumer, String id
+		AdvancementType type, boolean hidden,
+		String criteaName, Criterion<?> criterion,
+		Consumer<AdvancementHolder> consumer, String id
 	) {
 		return
 			this.getAdvancementBuilder(icon, advancementLocale, background, type, hidden)
 			.parent(parent)
-			.criterion(criteaName, criterion)
-			.build(consumer, VoidDimension.MOD_ID + id);
+			.addCriterion(criteaName, criterion)
+			.save(consumer, this.namespaced(id));
 	}
 
-	protected AdvancementEntry getAdvancementEntry(
-		ItemConvertible icon, String advancementLocale,
+	protected AdvancementHolder getAdvancementEntry(
+		ItemLike icon, String advancementLocale,
 		@Nullable Identifier background,
-		AdvancementFrame type, boolean hidden,
-		String criteaName, AdvancementCriterion<?> criterion,
-		Consumer<AdvancementEntry> consumer, String id
+		AdvancementType type, boolean hidden,
+		String criteaName, Criterion<?> criterion,
+		Consumer<AdvancementHolder> consumer, String id
 	) {
 		return
 			this.getAdvancementBuilder(icon, advancementLocale, background, type, hidden)
-			.criterion(criteaName, criterion)
-			.build(consumer, VoidDimension.MOD_ID + id);
+			.addCriterion(criteaName, criterion)
+			.save(consumer, this.namespaced(id));
 	}
 
-	/**
+	protected String namespaced(String id) {
+		if (id.indexOf(':') >= 0) {
+			return id;
+		}
+		return VoidDimension.MOD_ID + ":" + id;
+	}
+
 	/**
 	 * @param advancementLocale
 	 * @param value Title or Description
@@ -271,28 +280,28 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		return String.format(titleKey, baseAdvancementLocaleKey, advancementLocale);
 	}
 
-	protected RegistryKey<Recipe<?>> getRecipeKey(String id) {
-		return RegistryKey.of(
-			RegistryKeys.RECIPE,
-			Identifier.of(VoidDimension.MOD_ID, id)
+	protected ResourceKey<Recipe<?>> getRecipeKey(String id) {
+		return ResourceKey.create(
+			Registries.RECIPE,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id)
 		);
 	}
 
-	protected AdvancementCriterion<RecipeCraftedCriterion.Conditions>
+	protected Criterion<RecipeCraftedTrigger.TriggerInstance>
 		getRecipeCraftedCondition(String id)
 	{
-		return RecipeCraftedCriterion.Conditions.create(this.getRecipeKey(id));
+		return RecipeCraftedTrigger.TriggerInstance.craftedItem(this.getRecipeKey(id));
 	}
 
 	protected EntityPredicate.Builder getEntityPredicateBuilder(
-		RegistryWrapper.Impl<EntityType<?>> entityLookup,
+		HolderLookup.RegistryLookup<EntityType<?>> entityLookup,
 		EntityType<?> entityType
 	) {
-		return EntityPredicate.Builder.create().type(entityLookup, entityType);
+		return EntityPredicate.Builder.entity().of(entityLookup, entityType);
 	}
 
 	protected Optional<EntityPredicate> getEntityPredicate(
-		RegistryWrapper.Impl<EntityType<?>> entityLookup,
+		HolderLookup.RegistryLookup<EntityType<?>> entityLookup,
 		EntityType<?> entityType
 	) {
 		return Optional.of(this.getEntityPredicateBuilder(entityLookup, entityType).build());

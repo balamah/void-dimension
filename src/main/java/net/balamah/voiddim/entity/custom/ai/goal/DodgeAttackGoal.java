@@ -1,17 +1,16 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.block.Block;
-
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.DodgeAttackUser;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.Vec3;
 
 public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 	extends SlowMovementGoal<T>
@@ -20,10 +19,10 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 	protected final double dashSpeed;
 	protected final float counterAttackBonusDamage;
 	protected boolean dodgedAndHit;
-	protected Vec3d targetPosition;
+	protected Vec3 targetPosition;
 
-	protected final Identifier attackAttributeId = Identifier.ofVanilla("attacking");
-	protected final EntityAttributeModifier attackAttributeModifier;
+	protected final Identifier attackAttributeId = Identifier.withDefaultNamespace("attacking");
+	protected final AttributeModifier attackAttributeModifier;
 
 	public DodgeAttackGoal(
 		T entity, int counterAttackDelay, double dashSpeed, float counterAttackBonusDamage
@@ -37,18 +36,18 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 		this.attackAttributeModifier = this.getAttributeModifier(
 			this.attackAttributeId,
 			this.counterAttackBonusDamage,
-			EntityAttributeModifier.Operation.ADD_VALUE
+			AttributeModifier.Operation.ADD_VALUE
 		);
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		return this.entity.getTarget() != null && this.entity.getDodgeAttackTicks() == 0 &&
 			this.entity.attackCount >= 4;
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return !this.dodgedAndHit && this.entity.getTarget() != null;
 	}
 
@@ -56,8 +55,8 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 	public void start() {
 		super.start();
 
-		Vec3d targetVelocity = this.entity.getTarget().getVelocity();
-		Vec3d newVelocity = targetVelocity.add(0, 0, 1);
+		Vec3 targetVelocity = this.entity.getTarget().getDeltaMovement();
+		Vec3 newVelocity = targetVelocity.add(0, 0, 1);
 		if (!this.isDodgingPositionSafe(newVelocity.x, newVelocity.y, newVelocity.z)) {
 			newVelocity = targetVelocity.add(1, 0, 0);
 		} else {
@@ -75,7 +74,7 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 			newVelocityElevations++;
 		}
 
-		this.entity.setVelocity(newVelocity);
+		this.entity.setDeltaMovement(newVelocity);
 		this.addSpeedModifier();
 	}
 
@@ -109,14 +108,14 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 	 */
 	@SuppressWarnings("deprecation")
 	protected boolean isDodgingPositionSafe(double x, double y, double z) {
-		BlockPos.Mutable mutable = new BlockPos.Mutable(x, y, z);
+		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, y, z);
 
 		if (!this.isDodgingToWall(x, y, z)) {
 			return false;
 		}
 
-		while (mutable.getY() > this.world.getBottomY() &&
-				!this.world.getBlockState(mutable).blocksMovement())
+		while (mutable.getY() > this.world.getMinY() &&
+				!this.world.getBlockState(mutable).blocksMotion())
 		{
 			double heightDifference = this.entity.getY() - mutable.getY();
 			Block block = this.world.getBlockState(mutable).getBlock();
@@ -142,18 +141,18 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 	}
 
 	protected void prepareDashAttack() {
-		this.entity.playSound(ModSounds.COUNTER_ATTACK);
+		this.entity.makeSound(ModSounds.COUNTER_ATTACK);
 		this.addModifier(
 			this.entityAttributeInstance, this.attackAttributeId, this.attackAttributeModifier
 		);
 
-		this.targetPosition = this.entity.getTarget().getEntityPos();
+		this.targetPosition = this.entity.getTarget().position();
 	}
 
 	protected void performDashAttack() {
-		Vec3d dashDirection = this.targetPosition.subtract(this.entity.getEntityPos()).normalize();
+		Vec3 dashDirection = this.targetPosition.subtract(this.entity.position()).normalize();
 
-		this.entity.setVelocity(dashDirection.multiply(this.dashSpeed));
+		this.entity.setDeltaMovement(dashDirection.scale(this.dashSpeed));
 
 		this.dodgedAndHit = true;
 	}

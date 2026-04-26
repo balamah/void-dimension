@@ -1,10 +1,6 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.state.TntEntityRenderState;
-import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.entity.state.TntRenderState;
 
-import net.balamah.voiddim.block.ModBlocks;
-
-public class BedrockBombRenderState extends TntEntityRenderState {
-	public BlockState blockState = ModBlocks.BEDROCK_BOMB.getDefaultState();
+public class BedrockBombRenderState extends TntRenderState {
 }

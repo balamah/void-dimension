@@ -1,61 +1,60 @@
 package net.balamah.voiddim.effect;
 
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.effect.custom.DivineProtectionEffect;
 import net.balamah.voiddim.effect.custom.VoidSalvationEffect;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.effect.MobEffect;
 import net.balamah.voiddim.effect.custom.CorruptionEffect;
 
 import net.balamah.voiddim.VoidDimension;
 
 public class ModEffects {
-	public static final RegistryKey<DamageType> CORRUPTION_DAMAGE =
+	public static final ResourceKey<DamageType> CORRUPTION_DAMAGE =
 		registerDamageType("corruption");
 
-	public static final RegistryKey<DamageType> SHOCKWAVE_DAMAGE =
+	public static final ResourceKey<DamageType> SHOCKWAVE_DAMAGE =
 		registerDamageType("shockwave");
 
-	public static final RegistryKey<DamageType> THROWN_BLOCK_DAMAGE =
+	public static final ResourceKey<DamageType> THROWN_BLOCK_DAMAGE =
 		registerDamageType("thrown_block");
 
-	public static final RegistryKey<DamageType> VOID_SLASH_DAMAGE =
+	public static final ResourceKey<DamageType> VOID_SLASH_DAMAGE =
 		registerDamageType("void_slash");
 
-	public static final RegistryKey<DamageType> EYE_BRIGHT_HEAD_DAMAGE =
+	public static final ResourceKey<DamageType> EYE_BRIGHT_HEAD_DAMAGE =
 		registerDamageType("eye_bright_head");
 
-	public static final RegistryEntry<StatusEffect> CORRUPTION =
+	public static final Holder<MobEffect> CORRUPTION =
 		register("corruption", new CorruptionEffect());
 
-	public static final RegistryEntry<StatusEffect> VOID_SALVATION =
+	public static final Holder<MobEffect> VOID_SALVATION =
 		register("void_salvation", new VoidSalvationEffect());
 
-	public static final RegistryEntry<StatusEffect> DIVINE_PROTECTION =
+	public static final Holder<MobEffect> DIVINE_PROTECTION =
 		register("divine_protection", new DivineProtectionEffect());
 
 	public static void registerModEffects() {
 		VoidDimension.LOGGER.info("Registering mod effects for " + VoidDimension.MOD_ID);
 	}
 		
-	protected static RegistryEntry<StatusEffect> register(String name, StatusEffect entry) {
-		return Registry.registerReference(
-			Registries.STATUS_EFFECT,
-			Identifier.of(VoidDimension.MOD_ID, name),
+	protected static Holder<MobEffect> register(String name, MobEffect entry) {
+		return Registry.registerForHolder(
+			BuiltInRegistries.MOB_EFFECT,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name),
 			entry
 		);
 	}
 
-	protected static RegistryKey<DamageType> registerDamageType(String name) {
-		return RegistryKey.of(
-			RegistryKeys.DAMAGE_TYPE,
-			Identifier.of(VoidDimension.MOD_ID, name)
+	protected static ResourceKey<DamageType> registerDamageType(String name) {
+		return ResourceKey.create(
+			Registries.DAMAGE_TYPE,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 	}
 }

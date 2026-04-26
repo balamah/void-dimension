@@ -1,9 +1,8 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory.Context;
-import net.minecraft.util.Identifier;
-   
 import net.balamah.voiddim.entity.custom.base.AlphaSteveEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
 public class ZombifiedAlphaSteveRenderer
@@ -15,7 +14,7 @@ public class ZombifiedAlphaSteveRenderer
 	}
 
 	@Override
-	public Identifier getTexture(S state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/zombified_alpha_steve.png");
+	public Identifier getTextureLocation(S state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/zombified_alpha_steve.png");
 	}
 }

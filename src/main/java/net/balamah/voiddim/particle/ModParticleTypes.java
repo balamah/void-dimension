@@ -1,14 +1,13 @@
 package net.balamah.voiddim.particle;
 
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.client.particle.EndRodParticle;
 import net.minecraft.client.particle.FlameParticle;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
 public class ModParticleTypes {
@@ -20,10 +19,10 @@ public class ModParticleTypes {
 	public static void registerModParticles() {
 		VoidDimension.LOGGER.info("Registering mod particles for " + VoidDimension.MOD_ID);
 
-		ParticleFactoryRegistry.getInstance().register(CORRUPTED_FLAME, FlameParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(CORRUPTION, EndRodParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(LIGHTNING, EndRodParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(VOID_SLASH_AREA, EndRodParticle.Factory::new);
+		ParticleProviderRegistry.getInstance().register(CORRUPTED_FLAME, FlameParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(CORRUPTION, EndRodParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(LIGHTNING, EndRodParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(VOID_SLASH_AREA, EndRodParticle.Provider::new);
 	}
 
 	public static void registerParticlesServer() {
@@ -39,8 +38,8 @@ public class ModParticleTypes {
 
 	protected static void registerParticle(String particleName, SimpleParticleType particleType) {
 		Registry.register(
-			Registries.PARTICLE_TYPE,
-			Identifier.of(VoidDimension.MOD_ID, particleName),
+			BuiltInRegistries.PARTICLE_TYPE,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, particleName),
 			particleType
 		);
 	}

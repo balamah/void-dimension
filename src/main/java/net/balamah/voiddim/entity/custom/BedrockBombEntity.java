@@ -1,23 +1,21 @@
 package net.balamah.voiddim.entity.custom;
 
 import org.jetbrains.annotations.Nullable;
-
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.EntityType;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.TntEntity;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.block.ModBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class BedrockBombEntity extends TntEntity {
-	public BedrockBombEntity(EntityType<? extends BedrockBombEntity> entityType, World world) {
+public class BedrockBombEntity extends PrimedTnt {
+	public BedrockBombEntity(EntityType<? extends BedrockBombEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	public BedrockBombEntity(
-		World world, double x, double y, double z, @Nullable LivingEntity igniter
+		Level world, double x, double y, double z, @Nullable LivingEntity igniter
 	) {
 		super(world, x, y, z, igniter);
 	}
@@ -26,9 +24,9 @@ public class BedrockBombEntity extends TntEntity {
 	public void tick() {
 		super.tick();
 
-		if (!this.getEntityWorld().isClient() && this.getFuse() <= 0) {
-			World world = this.getEntityWorld();
-			BlockPos center = this.getBlockPos();
+		if (!this.level().isClientSide() && this.getFuse() <= 0) {
+			Level world = this.level();
+			BlockPos center = this.blockPosition();
 			int radius = 4;
 
 			this.breakBlocks(world, center, radius);
@@ -37,13 +35,13 @@ public class BedrockBombEntity extends TntEntity {
 
 	@Override
 	public BlockState getBlockState() {
-		return ModBlocks.BEDROCK_BOMB.getDefaultState();
+		return ModBlocks.BEDROCK_BOMB.defaultBlockState();
 	}
 
-	protected void breakBlocks(World world, BlockPos center, int radius) {
-		for (BlockPos pos : BlockPos.iterateOutwards(center, radius, radius, radius)) {
-			if (pos.getSquaredDistance(center) <= radius * radius) {
-				world.breakBlock(pos, false);
+	protected void breakBlocks(Level world, BlockPos center, int radius) {
+		for (BlockPos pos : BlockPos.withinManhattan(center, radius, radius, radius)) {
+			if (pos.distSqr(center) <= radius * radius) {
+				world.destroyBlock(pos, false);
 			}
 		}
 	}

@@ -1,18 +1,17 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.entity.custom.DarkGraspEntity;
 import net.balamah.voiddim.interfaces.DarkGraspUser;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
 public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUser>
@@ -35,7 +34,7 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
 		if (target == null) {
@@ -56,7 +55,7 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 		this.addSpeedModifier();
 
 		this.entity.setStopAttacks(true);
-		this.entity.playSound(this.entity.getDarkGraspSound());
+		this.entity.makeSound(this.entity.getDarkGraspSound());
 		this.sendEntityStatus(ModEntityStatuses.SPECIAL_ATTACK);
 	}
 
@@ -74,7 +73,7 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return this.entity.getTarget() != null && !this.didInvokeGrasp;
 	}
 
@@ -87,18 +86,18 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 		}
 	}
 
-	protected void cast(World world, LivingEntity target) {
+	protected void cast(Level world, LivingEntity target) {
 		double d = Math.min(target.getY(), this.entity.getY());
 		double e = Math.max(target.getY(), this.entity.getY()) + 1.0;
-		float f = (float)MathHelper.atan2(target.getZ() - this.entity.getZ(), target.getX() - this.entity.getX());
+		float f = (float)Mth.atan2(target.getZ() - this.entity.getZ(), target.getX() - this.entity.getX());
 
-		if (this.entity.squaredDistanceTo(target) < 9.0) {
+		if (this.entity.distanceToSqr(target) < 9.0) {
 			for (int i = 0; i < 15; i++) {
 				float g = f + i * (float) Math.PI * 0.4F;
 				this.invokeDarkGrasp(
 					world,
-					this.entity.getX() + MathHelper.cos(g) * 1.5,
-					this.entity.getZ() + MathHelper.sin(g) * 1.5,
+					this.entity.getX() + Mth.cos(g) * 1.5,
+					this.entity.getZ() + Mth.sin(g) * 1.5,
 					d, e, g, 0
 				);
 			}
@@ -107,8 +106,8 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 				float g = f + i * (float) Math.PI * 2.0F / 8.0F + (float) (Math.PI * 2.0 / 5.0);
 				this.invokeDarkGrasp(
 					world,
-					this.entity.getX() + MathHelper.cos(g) * 2.5,
-					this.entity.getZ() + MathHelper.sin(g) * 2.5, d, e, g, 3
+					this.entity.getX() + Mth.cos(g) * 2.5,
+					this.entity.getZ() + Mth.sin(g) * 2.5, d, e, g, 3
 				);
 			}
 		} else {
@@ -117,8 +116,8 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 				int j = 1 * i;
 				this.invokeDarkGrasp(
 					world,
-					this.entity.getX() + MathHelper.cos(f) * h,
-					this.entity.getZ() + MathHelper.sin(f) * h, d, e, f, j
+					this.entity.getX() + Mth.cos(f) * h,
+					this.entity.getZ() + Mth.sin(f) * h, d, e, f, j
 				);
 			}
 		}
@@ -127,36 +126,36 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 	}
 
 	protected void invokeDarkGrasp(
-		World world, double x, double z, double maxY, double y, float yaw, int warmup
+		Level world, double x, double z, double maxY, double y, float yaw, int warmup
 	) {
-		BlockPos blockPos = BlockPos.ofFloored(x, y, z);
+		BlockPos blockPos = BlockPos.containing(x, y, z);
 		boolean foundSurface = false;
 		double surfaceHeightOffset = 0.0;
 
 		do {
-			BlockPos lowBlockPos = blockPos.down();
+			BlockPos lowBlockPos = blockPos.below();
 			BlockState state = world.getBlockState(lowBlockPos);
-			if (state.isSideSolidFullSquare(world, lowBlockPos, Direction.UP))
+			if (state.isFaceSturdy(world, lowBlockPos, Direction.UP))
 			{
 				BlockState surfaceBlockState = world.getBlockState(blockPos);
 				VoxelShape voxel = surfaceBlockState.getCollisionShape(world, blockPos);
 				if (!voxel.isEmpty()) {
-					surfaceHeightOffset = voxel.getMax(Direction.Axis.Y);
+					surfaceHeightOffset = voxel.max(Direction.Axis.Y);
 				}
 
 				foundSurface = true;
 				break;
 			}
 			
-			blockPos = blockPos.down();
-		} while (blockPos.getY() >= MathHelper.floor(maxY) - 1);
+			blockPos = blockPos.below();
+		} while (blockPos.getY() >= Mth.floor(maxY) - 1);
 
 		if (foundSurface) {
 			Entity darkGrasp = new DarkGraspEntity(
 				world, x, blockPos.getY() + surfaceHeightOffset, z, yaw, warmup, this.entity
 			);
 
-			world.spawnEntity(darkGrasp);
+			world.addFreshEntity(darkGrasp);
 		}
 	}
 }

@@ -1,31 +1,29 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
 import java.util.EnumSet;
-
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.BlazeEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.world.WorldEvents;
-import net.minecraft.util.math.Vec3d;
-
 import net.balamah.voiddim.entity.custom.SmallCorruptedFireballEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.world.phys.Vec3;
 
 public class ShootCorruptedFireballGoal extends Goal {
-	private final BlazeEntity blaze;
+	private final Blaze blaze;
 	private int fireballsFired;
 	private int fireballCooldown;
 	private int targetNotVisibleTicks;
 
-	public ShootCorruptedFireballGoal(BlazeEntity blaze) {
+	public ShootCorruptedFireballGoal(Blaze blaze) {
 		this.blaze = blaze;
-		this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity livingEntity = this.blaze.getTarget();
-		return livingEntity != null && livingEntity.isAlive() && this.blaze.canTarget(livingEntity);
+		return livingEntity != null && livingEntity.isAlive() && this.blaze.canAttack(livingEntity);
 	}
 
 	@Override
@@ -39,7 +37,7 @@ public class ShootCorruptedFireballGoal extends Goal {
 	}
 
 	@Override
-	public boolean shouldRunEveryTick() {
+	public boolean requiresUpdateEveryTick() {
 		return true;
 	}
 
@@ -48,14 +46,14 @@ public class ShootCorruptedFireballGoal extends Goal {
 		this.fireballCooldown--;
 		LivingEntity livingEntity = this.blaze.getTarget();
 		if (livingEntity != null) {
-			boolean bl = this.blaze.getVisibilityCache().canSee(livingEntity);
+			boolean bl = this.blaze.getSensing().hasLineOfSight(livingEntity);
 			if (bl) {
 				this.targetNotVisibleTicks = 0;
 			} else {
 				this.targetNotVisibleTicks++;
 			}
 
-			double d = this.blaze.squaredDistanceTo(livingEntity);
+			double d = this.blaze.distanceToSqr(livingEntity);
 			if (d < 4.0) {
 				if (!bl) {
 					return;
@@ -63,13 +61,13 @@ public class ShootCorruptedFireballGoal extends Goal {
 
 				if (this.fireballCooldown <= 0) {
 					this.fireballCooldown = 20;
-					this.blaze.tryAttack(getServerWorld(this.blaze), livingEntity);
+					this.blaze.doHurtTarget(getServerLevel(this.blaze), livingEntity);
 				}
 
-				this.blaze.getMoveControl().moveTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), 1.0);
+				this.blaze.getMoveControl().setWantedPosition(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), 1.0);
 			} else if (d < this.getFollowRange() * this.getFollowRange() && bl) {
 				double e = livingEntity.getX() - this.blaze.getX();
-				double f = livingEntity.getBodyY(0.5) - this.blaze.getBodyY(0.5);
+				double f = livingEntity.getY(0.5) - this.blaze.getY(0.5);
 				double g = livingEntity.getZ() - this.blaze.getZ();
 				if (this.fireballCooldown <= 0) {
 					this.fireballsFired++;
@@ -85,21 +83,21 @@ public class ShootCorruptedFireballGoal extends Goal {
 					if (this.fireballsFired > 1) {
 						double h = Math.sqrt(Math.sqrt(d)) * 0.5;
 						if (!this.blaze.isSilent()) {
-							this.blaze.getEntityWorld().syncWorldEvent(null, WorldEvents.BLAZE_SHOOTS, this.blaze.getBlockPos(), 0);
+							this.blaze.level().levelEvent(null, LevelEvent.SOUND_BLAZE_FIREBALL, this.blaze.blockPosition(), 0);
 						}
 
 						for (int i = 0; i < 3; i++) {
-							Vec3d vec3d = new Vec3d(this.blaze.getRandom().nextTriangular(e, 2.297 * h), f, this.blaze.getRandom().nextTriangular(g, 2.297 * h));
-							SmallCorruptedFireballEntity smallFireballEntity = new SmallCorruptedFireballEntity(this.blaze.getEntityWorld(), this.blaze, vec3d.normalize());
-							smallFireballEntity.setPosition(smallFireballEntity.getX(), this.blaze.getBodyY(0.5) + 0.5, smallFireballEntity.getZ());
-							this.blaze.getEntityWorld().spawnEntity(smallFireballEntity);
+							Vec3 vec3d = new Vec3(this.blaze.getRandom().triangle(e, 2.297 * h), f, this.blaze.getRandom().triangle(g, 2.297 * h));
+							SmallCorruptedFireballEntity smallFireballEntity = new SmallCorruptedFireballEntity(this.blaze.level(), this.blaze, vec3d.normalize());
+							smallFireballEntity.setPos(smallFireballEntity.getX(), this.blaze.getY(0.5) + 0.5, smallFireballEntity.getZ());
+							this.blaze.level().addFreshEntity(smallFireballEntity);
 						}
 					}
 				}
 
-				this.blaze.getLookControl().lookAt(livingEntity, 10.0F, 10.0F);
+				this.blaze.getLookControl().setLookAt(livingEntity, 10.0F, 10.0F);
 			} else if (this.targetNotVisibleTicks < 5) {
-				this.blaze.getMoveControl().moveTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), 1.0);
+				this.blaze.getMoveControl().setWantedPosition(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), 1.0);
 			}
 
 			super.tick();
@@ -107,6 +105,6 @@ public class ShootCorruptedFireballGoal extends Goal {
 	}
 
 	private double getFollowRange() {
-		return this.blaze.getAttributeValue(EntityAttributes.FOLLOW_RANGE);
+		return this.blaze.getAttributeValue(Attributes.FOLLOW_RANGE);
 	}
 }

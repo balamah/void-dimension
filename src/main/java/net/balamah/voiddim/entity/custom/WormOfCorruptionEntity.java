@@ -1,21 +1,22 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.AnimationState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.EntityType;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.StationaryAttackUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
@@ -34,30 +35,30 @@ public class WormOfCorruptionEntity extends CorruptedHostileEntity
 	public AnimationState digUpAnimationState = new AnimationState();
 	public AnimationState digDownAnimationState = new AnimationState();
 
-	public WormOfCorruptionEntity(EntityType<? extends HostileEntity> entityType, World world) {
+	public WormOfCorruptionEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.FOLLOW_RANGE, 64)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0)
-			.add(EntityAttributes.ATTACK_DAMAGE, 14.0F)
-			.add(EntityAttributes.KNOCKBACK_RESISTANCE, 1.0)
-			.add(EntityAttributes.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0)
-			.add(EntityAttributes.MAX_HEALTH, 55)
-			.add(EntityAttributes.STEP_HEIGHT, 1.0);
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.FOLLOW_RANGE, 64)
+			.add(Attributes.MOVEMENT_SPEED, 0)
+			.add(Attributes.ATTACK_DAMAGE, 14.0F)
+			.add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
+			.add(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0)
+			.add(Attributes.MAX_HEALTH, 55)
+			.add(Attributes.STEP_HEIGHT, 1.0);
 	}
 
 	@Override
-	protected void initGoals() {
+	protected void registerGoals() {
 		super.initTargets();
 
-		this.goalSelector.add(7, new LookAtEntityGoal(this, PlayerEntity.class, 64F));
-		this.goalSelector.add(7, new LookAtEntityGoal(this, PassiveEntity.class, 64F));
-		this.goalSelector.add(8, new LookAroundGoal(this));
+		this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 64F));
+		this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, AgeableMob.class, 64F));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 
-		this.goalSelector.add(2, new VoidHostileEntityAttackGoal(this, 1.0, false));
+		this.goalSelector.addGoal(2, new VoidHostileEntityAttackGoal(this, 1.0, false));
 
 		Goal shootingGoal = new ShootProjectileGoal<WormOfCorruptionEntity, VoidSphereEntity>(
 			this, world -> new VoidSphereEntity(ModEntities.VOID_SPHERE, world),
@@ -66,56 +67,56 @@ public class WormOfCorruptionEntity extends CorruptedHostileEntity
 			50, 70
 		);
 
-		this.goalSelector.add(1, shootingGoal);
-		this.goalSelector.add(3, new WormOfCorruptionMoveGoal(this, 4));
+		this.goalSelector.addGoal(1, shootingGoal);
+		this.goalSelector.addGoal(3, new WormOfCorruptionMoveGoal(this, 4));
 	}
 
 	@Override
-	public boolean tryAttack(ServerWorld world, Entity target) {
-		world.sendEntityStatus(this, ModEntityStatuses.ATTACK);
+	public boolean doHurtTarget(ServerLevel world, Entity target) {
+		world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
 
-		this.playSound(ModSounds.WORM_OF_CORRUPTION_ATTACK);
+		this.makeSound(ModSounds.WORM_OF_CORRUPTION_ATTACK);
 
-		return super.tryAttack(world, target);
+		return super.doHurtTarget(world, target);
 	}
 
 	@Override
-	public void tickMovement() {
-		super.tickMovement();
-		if (!(this.getEntityWorld() instanceof ServerWorld serverWorld)) return;
+	public void aiStep() {
+		super.aiStep();
+		if (!(this.level() instanceof ServerLevel serverWorld)) return;
 
 		for (int i = 0; i < 4; i++) {
 			BlockPos blockPos = McCodeHelper.getBlockPosUnderEntity(this, i);
-			Block block = McCodeHelper.getBlock(this.getEntityWorld(), blockPos);
+			Block block = McCodeHelper.getBlock(this.level(), blockPos);
 
 			if (McCodeHelper.isBlockReplaceable(block)) {
-				serverWorld.setBlockState(blockPos, ModBlocks.CORRUPT_BLOCK.getDefaultState());
+				serverWorld.setBlockAndUpdate(blockPos, ModBlocks.CORRUPT_BLOCK.defaultBlockState());
 			}
 		}
 	}
 
 	@Override
-	public void handleStatus(byte status) {
+	public void handleEntityEvent(byte status) {
 		switch (status) {
 			case ModEntityStatuses.ATTACK:
-				this.attackAnimationState.start(this.age);
+				this.attackAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.SHOOT:
-				this.shootAnimationState.start(this.age);
+				this.shootAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN:
-				this.digDownAnimationState.start(this.age);
+				this.digDownAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN_STOP:
 				this.digDownAnimationState.stop();
 				break;
 			case ModEntityStatuses.WORM_OF_CORRUPTION_DIG_UP:
-				this.digUpAnimationState.start(this.age);
+				this.digUpAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.WORM_OF_CORRUPTION_IDLE:
-				this.idleAnimationState.start(this.age);
+				this.idleAnimationState.start(this.tickCount);
 				break;
-			default: super.handleStatus(status);
+			default: super.handleEntityEvent(status);
 				break;
 		}
 	}
