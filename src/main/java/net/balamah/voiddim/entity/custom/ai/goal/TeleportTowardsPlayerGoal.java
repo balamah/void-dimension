@@ -39,11 +39,10 @@ public class TeleportTowardsPlayerGoal<T extends CorruptedHostileEntity & Telepo
 		double targetDistance = this.entity.distanceTo(target);
 		int attackCount = this.entity.attackCount;
 
-		if (targetDistance < 5 || targetDistance > 10 ||
-			(attackCount > 0 && attackCount % 4 == 0)
-		) {
-			System.out.println("Void harbinger: goal teleporting");
-			this.entity.teleportTo(target);
+			if (targetDistance < 5 || targetDistance > 10 ||
+				(attackCount > 0 && attackCount % 4 == 0)
+			) {
+				this.entity.teleportTo(target);
+			}
 		}
 	}
-}

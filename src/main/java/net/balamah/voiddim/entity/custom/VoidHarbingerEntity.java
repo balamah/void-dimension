@@ -26,7 +26,6 @@ import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
-// TODO: Nerf VoidHarbingerEntity teleportation
 public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	protected final int teleportCooldown = 140;
 	protected int teleportTicks;
@@ -59,6 +58,10 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	public boolean teleportRandomly() {
 		int teleportationRadius = 13;
 
+		if (this.teleportTicks > 0) {
+			return false;
+		}
+
 		if (!this.level().isClientSide() && this.isAlive()) {
 			double newY = this.getY() + (this.random.nextInt(teleportationRadius));
 
@@ -73,6 +76,10 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	}
 
 	public boolean teleportTo(Entity entity) {
+		if (this.teleportTicks > 0) {
+			return false;
+		}
+
 		Vec3 vec3d = new Vec3(
 			this.getX() - entity.getX(), 
 			this.getY(0.5) - entity.getEyeY(), 
@@ -103,6 +110,10 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 
 	@SuppressWarnings("deprecation")
 	public boolean teleportTo(double x, double y, double z, boolean ignoreLimitPredicate) {
+		if (this.teleportTicks > 0) {
+			return false;
+		}
+
 		BlockPos.MutableBlockPos mutable = this.getMutableCoordinate(x, y, z, ignoreLimitPredicate);
 		if (mutable == null) {
 			return false;
@@ -115,11 +126,12 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 		}
 
 		Vec3 vec3d = new Vec3(this.getX(), this.getY(), this.getZ());
-		boolean didTeleport = this.randomTeleport(x, y, z, true);
-		if (didTeleport) {
-			this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));
-			this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
-		}
+			boolean didTeleport = this.randomTeleport(x, y, z, true);
+			if (didTeleport) {
+				this.teleportTicks = this.teleportCooldown;
+				this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));
+				this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
+			}
 
 		return didTeleport;
 	}
@@ -132,7 +144,10 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 			this.teleportTicks--;
 		}
 
-		if (McCodeHelper.shouldTeleportTo(this, this.getTarget())) {
+		if (!this.level().isClientSide() &&
+			this.teleportTicks <= 0 &&
+			McCodeHelper.shouldTeleportTo(this, this.getTarget())
+		) {
 			this.teleportTo(this.getTarget());
 		}
 	}

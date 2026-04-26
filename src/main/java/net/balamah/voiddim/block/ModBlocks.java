@@ -33,21 +33,19 @@ import net.balamah.voiddim.effect.ModEffects;
 import net.balamah.voiddim.VoidDimension;
 
 public class ModBlocks {
-	protected static final BlockBehaviour.Properties corpseBlockSettings =
-		BlockBehaviour.Properties.of()
-		.strength(1.2f).sound(SoundType.BONE_BLOCK)
-		.noOcclusion()
-		;
+	protected static BlockBehaviour.Properties corpseBlockSettings = BlockBehaviour.Properties.of()
+			.strength(1.2f)
+			.sound(SoundType.BONE_BLOCK)
+			.noOcclusion();
 
-	protected static final BlockBehaviour.Properties flowerBlockSettings =
-		BlockBehaviour.Properties.of()
-		.mapColor(MapColor.GRASS)
-		.noCollision()
-		.instabreak()
-		.sound(SoundType.GRASS)
-		.offsetType(BlockBehaviour.OffsetType.XZ)
-		.pushReaction(PushReaction.DESTROY)
-		.noOcclusion();
+	protected static BlockBehaviour.Properties flowerBlockSettings = BlockBehaviour.Properties.of()
+			.mapColor(MapColor.GRASS)
+			.noCollision()
+			.instabreak()
+			.sound(SoundType.GRASS)
+			.offsetType(BlockBehaviour.OffsetType.XZ)
+			.pushReaction(PushReaction.DESTROY)
+			.noOcclusion();
 
 	protected static final IntProvider deepslateVoidShardOreIntProvider =
 		UniformInt.of(4, 7);
@@ -242,6 +240,7 @@ public class ModBlocks {
 		Registry.register(BuiltInRegistries.ITEM, itemKey, blockItem);
 	}
 
+	@SuppressWarnings("unused")
 	protected static BlockBehaviour.Properties copyLootTable(
 		Block block, boolean copyTranslationKey
 	) {

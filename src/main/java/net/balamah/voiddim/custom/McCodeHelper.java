@@ -182,18 +182,17 @@ public class McCodeHelper {
 
 		Level world = entity.level();
 
-		int x = (int) entity.getX();
-		int y = (int) entity.getY();
-		int z = (int) entity.getZ();
+		BlockPos blockPos = entity.blockPosition();
+		int y = blockPos.getY();
 
-		BlockPos elevatedPosition = new BlockPos(x, y + 1, z);
-		Block elevatedBlock = world.getBlockState(elevatedPosition).getBlock();
+		BlockPos underEntity = blockPos.below();
+		Block blockUnderEntity = world.getBlockState(underEntity).getBlock();
 
 		/**
 		 * Blocks.AIR is included in {@link #dangerousBlocks} to prevent hit combos.
 		 * Which makes fights with the entity better
 		 */
-		if (dangerousBlocks.contains(elevatedBlock) || target.getY() > y ||
+		if (dangerousBlocks.contains(blockUnderEntity) || target.getY() > y ||
 			target.distanceTo(entity) > 10
 		) {
 			return true;
@@ -202,8 +201,8 @@ public class McCodeHelper {
 		for (int i = 1; i <= 10; i++) {
 			int selectedY = y - i;
 
-			BlockPos blockPos = new BlockPos(x, selectedY, z);
-			Block selectedBlock = McCodeHelper.getBlock(entity.level(), blockPos);
+			BlockPos selectedPos = new BlockPos(blockPos.getX(), selectedY, blockPos.getZ());
+			Block selectedBlock = McCodeHelper.getBlock(entity.level(), selectedPos);
 
 			if (!dangerousBlocks.contains(selectedBlock)) {
 				return false;

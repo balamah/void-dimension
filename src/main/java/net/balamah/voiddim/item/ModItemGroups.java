@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.VoidDimension;
+import java.util.function.Supplier;
 
 public class ModItemGroups {
 	private static final ItemLike[] TAB_ITEMS = {
@@ -42,7 +43,7 @@ public class ModItemGroups {
 	
 	private static final CreativeModeTab VOID_DIMENSION_TAB =
 		getCreativeTab(
-			new ItemStack(ModItems.VOID_SHARD), 
+			() -> new ItemStack(ModItems.VOID_SHARD),
 			Component.translatable("itemgroup.void-dimension.items"), 
 			TAB_ITEMS
 		);
@@ -57,10 +58,10 @@ public class ModItemGroups {
 	}
 
 	protected static CreativeModeTab getCreativeTab(
-		ItemStack icon, Component displayName, ItemLike[] items
+		Supplier<ItemStack> iconFactory, Component displayName, ItemLike[] items
 	) {
 		return FabricCreativeModeTab.builder()
-			.icon(() -> icon)
+			.icon(iconFactory)
 			.title(displayName)
 			.displayItems((displayParams, output) -> {
 				for (ItemLike item : items) {
