@@ -1,6 +1,7 @@
 package net.balamah.voiddim;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.world.item.Items;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.LoggerFactory;

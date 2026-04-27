@@ -91,5 +91,29 @@ eclipse {
   classpath {
     downloadSources = true
     downloadJavadoc = true
+	file {
+	  whenMerged { classpath ->
+		// Fabric Loom creates Minecraft jars in `.gradle/loom-cache`. They often have a sibling
+		// `-sources.jar`, but Gradle's Eclipse model won't automatically attach it since these
+		// aren't normal published Maven source artifacts.
+		classpath.entries.findAll { entry ->
+		  entry instanceof org.gradle.plugins.ide.eclipse.model.Library &&
+			entry.path.contains("minecraft-merged") &&
+			entry.path.endsWith(".jar")
+			}.each { lib ->
+			  def sourcesJarPath = lib.path.replaceAll(/\.jar$/, "-sources.jar")
+			  def sourcesJarFile = file(sourcesJarPath)
+			  if (sourcesJarFile.exists()) {
+				def fileRefFactory = new org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory()
+				lib.sourcePath = fileRefFactory.fromFile(sourcesJarFile)
+			  }
+			}
+		  }
+		}
   }
+}
+
+// Ensure the Minecraft `-sources.jar` exists before Eclipse `.classpath` is generated.
+tasks.matching { it.name == "eclipseClasspath" }.configureEach {
+  dependsOn "genSources"
 }
