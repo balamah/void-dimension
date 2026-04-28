@@ -21,6 +21,9 @@ bin/
 .classpath
 .project
 
+# emacs
+.emacs/config.local.el
+
 # fabric
 run/
 
@@ -49,3 +52,5 @@ node_modules/
 venv/
 .DS_store
 desktop.ini
+
+.codex

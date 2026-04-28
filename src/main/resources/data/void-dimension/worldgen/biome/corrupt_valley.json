@@ -13,6 +13,9 @@
 				"sound": "void-dimension:music.void"
 			}
 		},
+		"minecraft:visual/fog_color": "#000000",
+		"minecraft:visual/sky_color": "#000000",
+		"minecraft:visual/water_fog_color": "#000000",
 		"minecraft:visual/ambient_particles": [
 			{
 				"particle": {
@@ -93,11 +96,8 @@
 		}
 	},
 	"effects": {
-		"foliage_color": -16777216,
-		"grass_color": 15395305,
-		"sky_color": -16777216,
-		"fog_color": -16777216,
-		"water_color": -16777216,
-		"water_fog_color": -16777216
+		"foliage_color": "#000000",
+		"grass_color": "#eae9e9",
+		"water_color": "#000000"
 	}
 }

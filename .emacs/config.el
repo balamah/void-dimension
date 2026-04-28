@@ -50,7 +50,7 @@
 
 (global-set-key (kbd "M-<f10>") 'run-project-sources-regenerate)
 
-(defvar project-current-world "dimension-test"
+(defvar project-current-world "26_1-migration-test"
   "The variable specifies a world, whose void dimension data will be removed when
 `run-project-remove-dimension' is executed")
 
