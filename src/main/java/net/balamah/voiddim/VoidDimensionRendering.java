@@ -1,7 +1,6 @@
 package net.balamah.voiddim;
 
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -161,7 +160,11 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new NonLivingEntitySpecs<>(ModEntities.SMALL_CORRUPTED_FIREBALL,
 										   SmallCorruptedFireballModel.SMALL_CORRUPTED_FIREBALL,
 										   SmallCorruptedFireballModel.getTexturedModelData(),
-										   SmallCorruptedFireballRenderer::new)
+										   SmallCorruptedFireballRenderer::new),
+				new NonLivingEntitySpecs<ConsumedSoulEntity>(ModEntities.CONSUMED_SOUL,
+													ConsumedSoulModel.CONSUMED_SOUL,
+													ConsumedSoulModel.getTexturedModelData(),
+													ConsumedSoulRenderer::new)
 				);
 
 	@Override

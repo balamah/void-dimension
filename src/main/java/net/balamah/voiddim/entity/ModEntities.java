@@ -270,6 +270,15 @@ public class ModEntities {
 			.updateInterval(10)
 	);
 
+	public static final EntityType<ConsumedSoulEntity> CONSUMED_SOUL =
+		register(
+			"consumed_soul",
+			ConsumedSoulEntity.class,
+			EntityType.Builder.<ConsumedSoulEntity>of(ConsumedSoulEntity::new, MobCategory.MISC)
+			.noLootTable().sized(0.3125F, 0.3125F)
+			.eyeHeight(0.0F) .clientTrackingRange(4).updateInterval(10)
+		);
+
 	// Looks bad, but it should be this way.
 	// Otherwise entities will not spawn on servers
 	public static void registerEntityAttributes() {

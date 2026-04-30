@@ -95,7 +95,8 @@ The order is going from brightest colors to the darkest
 - alpha steve walking :: [[https://gitlab.com/TecnaGamer/OldWalkingAnimation][OldWalkingAnimation]]
 
 ** Models
-- rana :: https://github.com/sakiiiiika/ranamod
+- rana          :: https://github.com/sakiiiiika/ranamod
+- consumed soul :: https://sketchfab.com/3d-models/minecraft-skull-53635f2ee6ae4508b06ae226cde7548c (inspired)
 
 * Credits
 ** Programmers
