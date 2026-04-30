@@ -3,7 +3,6 @@ package net.balamah.voiddim.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.balamah.voiddim.VoidDimension;
-import net.balamah.voiddim.entity.client.base.ProjectileCustomModelRenderer;
 import net.balamah.voiddim.entity.custom.ConsumedSoulEntity;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -35,8 +34,11 @@ public class ConsumedSoulRenderer
 	) {
 		matrixStack.pushPose();
 
-		matrixStack.mulPose(Axis.YP.rotationDegrees(state.yaw));
+		matrixStack.translate(0f, 0f + 1.5, 0f);
+
 		matrixStack.mulPose(Axis.XP.rotationDegrees(state.pitch));
+		matrixStack.mulPose(Axis.YP.rotationDegrees(state.yaw + 180f));
+		matrixStack.mulPose(Axis.ZP.rotationDegrees(180f));
 
 		orderedRenderCommandQueue.submitModel(
 			this.model,
@@ -60,12 +62,14 @@ public class ConsumedSoulRenderer
 
 	@Override
 	public void extractRenderState(
-		ConsumedSoulEntity entity,
-		ConsumedSoulRenderState renderState,
-		float f
+		ConsumedSoulEntity entity, ConsumedSoulRenderState renderState, float f
 	) {
 		super.extractRenderState(entity, renderState, f);
 		renderState.yaw = entity.getYRot(f);
 		renderState.pitch = entity.getXRot(f);
+
+		renderState.x = entity.getX();
+		renderState.y = entity.getY();
+		renderState.z = entity.getZ();
 	}
 }

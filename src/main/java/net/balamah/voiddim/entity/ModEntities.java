@@ -275,7 +275,7 @@ public class ModEntities {
 			"consumed_soul",
 			ConsumedSoulEntity.class,
 			EntityType.Builder.<ConsumedSoulEntity>of(ConsumedSoulEntity::new, MobCategory.MISC)
-			.noLootTable().sized(0.3125F, 0.3125F)
+			.noLootTable().sized(0.5f, 0.5f)
 			.eyeHeight(0.0F) .clientTrackingRange(4).updateInterval(10)
 		);
 
