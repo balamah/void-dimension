@@ -6,21 +6,28 @@
   "Current project directory")
 
 ;; make java working normally
-(setq lsp-java-java-path "/usr/lib/jvm/java-25-openjdk/bin/java"
+(setq lsp-java-java-path "/usr/lib/jvm/java-26-openjdk/bin/java"
 	  lsp-java-import-gradle-enabled nil
 	  lsp-java-import-gradle-wrapper-enabled t
 	  lsp-java-import-maven-enabled nil
-	  lsp-java-project-import-on-startup nil
+	  lsp-java-project-import-on-startup t
+	  lsp-response-timeout 30
+	  lsp-enable-file-watchers t
 	  lsp-java-configuration-runtimes [(:name "JavaSE-25"
 										:path "/usr/lib/jvm/java-25-openjdk"
 										:default t)
 									   (:name "JavaSE-26"
-										:path "/usr/lib/jvm/java-26-openjdk")
+										:path "/usr/lib/jvm/java-26-openjdk"
+										:default t)
 									   (:name "JavaSE-21"
 										:path "/usr/lib/jvm/java-21-openjdk")
 									   (:name "JavaSE-17"
 										:path "/usr/lib/jvm/java-17-openjdk")]
-	  lsp-java-vmargs '("-noverify" "-Xmx4G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication")
+	  lsp-java-vmargs '("-Xmx4G" "-XX:MaxGCPauseMillis=200"
+						"-Dsun.zip.disableMemoryMapping=true" "-XX:+UseG1GC"
+						"-XX:+UseStringDeduplication"
+						"-Djava.import.generatesMetadataFilesAtProjectRoot=false"
+						"-Dfile.encoding=UTF-8")
 	  )
 
 ;; run project

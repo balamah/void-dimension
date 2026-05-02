@@ -134,12 +134,22 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 		 */
 		super.registerGoals();
 
-		Goal summonEntitiesGoal = new SummonEntitiesGoal<CorruptedWarriorEntity, VoidBoundServantEntity>(
-			this, VoidBoundServantEntity.class, ModEntities.VOID_BOUND_SERVANT, 10
+		Goal summonEntitiesGoal =
+			new SummonEntitiesGoal<CorruptedWarriorEntity, VoidBoundServantEntity>(
+				this, VoidBoundServantEntity.class, ModEntities.VOID_BOUND_SERVANT, 10
+			);
+
+		// TODO: Replace with ShootProjectiles
+		Goal shootingGoal = new ShootProjectileGoal<CorruptedWarriorEntity, ConsumedSoulEntity>(
+			this, world -> new ConsumedSoulEntity(ModEntities.CONSUMED_SOUL, world),
+			ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
+			ModSounds.VOID_HARBINGER_SHOOT,
+			50, 60
 		);
 
-		this.goalSelector.addGoal(5, summonEntitiesGoal);
+		this.goalSelector.addGoal(1, shootingGoal);
 		this.goalSelector.addGoal(4, new DarkGraspInvokeGoal<>(this, 5, 0, 7));
+		this.goalSelector.addGoal(5, summonEntitiesGoal);
 	}
 
 	@Override
