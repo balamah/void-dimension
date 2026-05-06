@@ -128,6 +128,8 @@ public class ModSounds {
 
 	public static final SoundEvent ENTITY303_DEATH = register("entity303.death");
 
+	public static final SoundEvent CONSUMED_SOUL_HIT = register("consumed_soul.hit");
+
 	public static final SoundEvent EYE_BRIGHT_SHOOT_PREPARE =
 		register("eye_bright.shoot_prepare");
 

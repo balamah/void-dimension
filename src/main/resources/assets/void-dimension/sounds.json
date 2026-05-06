@@ -366,5 +366,14 @@
 		"sounds": [
 			"void-dimension:corrupted_warrior/dark_grasp_prepare"
 		]
+	},
+	"consumed_soul.hit": {
+		"subtitle": "sound.void-dimension.consumed_soul.hit",
+		"sounds": [
+			"void-dimension:consumed_soul/hit1",
+			"void-dimension:consumed_soul/hit2",
+			"void-dimension:consumed_soul/hit3",
+			"void-dimension:consumed_soul/hit4"
+		]
 	}
 }
