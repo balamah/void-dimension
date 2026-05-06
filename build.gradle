@@ -115,5 +115,9 @@ eclipse {
 
 // Ensure the Minecraft `-sources.jar` exists before Eclipse `.classpath` is generated.
 tasks.matching { it.name == "eclipseClasspath" }.configureEach {
-  dependsOn "genSources"
+  dependsOn "genSourcesWithFernFlower"
+}
+
+tasks.named("sourcesJar") {
+    dependsOn("compileJava")
 }
