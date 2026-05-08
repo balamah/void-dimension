@@ -26,9 +26,11 @@ public class LivingEntityTickMixin {
 	protected float modifyDamage(float damage, ServerLevel level, final DamageSource source) {
 		LivingEntity entity = (LivingEntity)(Object) this;
 		MobEffectInstance soulBurnEffect = entity.getEffect(ModEffects.SOUL_BURN);
+		float damageReductionMultiplier =
+			(entity.hasEffect(ModEffects.DIVINE_PROTECTION)) ? 0.6f : 1;
 
 		if (soulBurnEffect != null) {
-			float damageMultiplier = 1.7f + soulBurnEffect.getAmplifier();
+			float damageMultiplier = (1.7f + soulBurnEffect.getAmplifier()) * damageReductionMultiplier;
 			damage *= damageMultiplier;
 		}
 
