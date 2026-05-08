@@ -148,8 +148,9 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 		);
 
 		this.goalSelector.addGoal(1, shootingGoal);
-		this.goalSelector.addGoal(4, new DarkGraspInvokeGoal<>(this, 5, 0, 7));
-		this.goalSelector.addGoal(5, summonEntitiesGoal);
+		// TODO: Restore goals
+		// this.goalSelector.addGoal(4, new DarkGraspInvokeGoal<>(this, 5, 0, 7));
+		// this.goalSelector.addGoal(5, summonEntitiesGoal);
 	}
 
 	@Override

@@ -53,14 +53,17 @@
 	"item.minecraft.potion.effect.corruption": "Corruption potion",
 	"item.minecraft.potion.effect.divine_protection": "Divine protection potion",
 	"item.minecraft.potion.effect.void_salvation": "Void salvation potion",
+	"item.minecraft.potion.effect.soul_burn": "Soul burn potion",
 
 	"item.minecraft.splash_potion.effect.corruption": "Corruption splash potion",
 	"item.minecraft.splash_potion.effect.divine_protection": "Divine protection splash potion",
 	"item.minecraft.splash_potion.effect.void_salvation": "Void salvation splash potion",
+	"item.minecraft.splash_potion.effect.soul_burn": "Soul burn splash potion",
 
 	"item.minecraft.lingering_potion.effect.corruption": "Corruption lingering potion",
 	"item.minecraft.lingering_potion.effect.divine_protection": "Divine protection lingering potion",
 	"item.minecraft.lingering_potion.effect.void_salvation": "Void salvation lingering potion",
+	"item.minecraft.lingering_potion.effect.soul_burn": "Soul burn lingering potion",
 
 	"item.minecraft.tipped_arrow.effect.corruption": "Corruption tipped arrow",
 	"item.minecraft.tipped_arrow.effect.divine_protection": "Divine protection tipped arrow",

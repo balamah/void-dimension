@@ -1,7 +1,6 @@
 package net.balamah.voiddim.effect;
 
-import net.balamah.voiddim.effect.custom.DivineProtectionEffect;
-import net.balamah.voiddim.effect.custom.VoidSalvationEffect;
+import net.balamah.voiddim.effect.custom.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -10,13 +9,15 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
-import net.balamah.voiddim.effect.custom.CorruptionEffect;
 
 import net.balamah.voiddim.VoidDimension;
 
 public class ModEffects {
 	public static final ResourceKey<DamageType> CORRUPTION_DAMAGE =
 		registerDamageType("corruption");
+
+	public static final ResourceKey<DamageType> SOUL_BURN_DAMAGE =
+		registerDamageType("soul_burn");
 
 	public static final ResourceKey<DamageType> SHOCKWAVE_DAMAGE =
 		registerDamageType("shockwave");
@@ -38,6 +39,9 @@ public class ModEffects {
 
 	public static final Holder<MobEffect> DIVINE_PROTECTION =
 		register("divine_protection", new DivineProtectionEffect());
+
+	public static final Holder<MobEffect> SOUL_BURN =
+		register("soul_burn", new SoulburnEffect());
 
 	public static void registerModEffects() {
 		VoidDimension.LOGGER.info("Registering mod effects for " + VoidDimension.MOD_ID);

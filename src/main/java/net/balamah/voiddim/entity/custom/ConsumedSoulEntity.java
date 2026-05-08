@@ -1,10 +1,12 @@
 package net.balamah.voiddim.entity.custom;
 
 import net.minecraft.world.entity.projectile.hurtingprojectile.AbstractHurtingProjectile;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.SimpleExplosionDamageCalculator;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.BlockHitResult;
@@ -18,15 +20,22 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.tags.BlockTags;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
 
 import org.jspecify.annotations.Nullable;
 
 import net.balamah.voiddim.effect.ModDamageSources;
+import net.balamah.voiddim.effect.ModEffects;
+import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
 public class ConsumedSoulEntity extends AbstractHurtingProjectile {
+	protected final EntityType<?>[] immuneEntities = {
+		ModEntities.DARK_GRASP, ModEntities.VOID_BOUND_SERVANT
+	};
+
 	public static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR =
 		new SimpleExplosionDamageCalculator(
 			false, false, Optional.empty(),
@@ -47,10 +56,25 @@ public class ConsumedSoulEntity extends AbstractHurtingProjectile {
 				livingEntity : null;
 
 			Entity target = hitResult.getEntity();
-			if (attackerEntity != null) attackerEntity.setLastHurtMob(target);
+
+			if (Arrays.asList(this.immuneEntities).contains(target.getType())) {
+				return;
+			}
+
+			if (attackerEntity != null) {
+				attackerEntity.setLastHurtMob(target);
+			}
 
 			DamageSource damageSource = ModDamageSources.corruption(world);
-			target.hurtServer(world, damageSource, 18.5f);
+			boolean damage = target.hurtServer(world, damageSource, 18.5f);
+
+			if (damage && target instanceof LivingEntity targetLivingEntity) {
+				targetLivingEntity.addEffect(
+					new MobEffectInstance(ModEffects.CORRUPTION, 20, 1)
+				);
+				
+				EnchantmentHelper.doPostAttackEffects(world, targetLivingEntity, damageSource);
+			}
 			
 			this.disappear();
 		}
@@ -66,8 +90,9 @@ public class ConsumedSoulEntity extends AbstractHurtingProjectile {
 	}
 	
 	protected void disappear() {
+		this.explode(this.position());
+
 		this.discard();
-		this.playSound(ModSounds.CONSUMED_SOUL_HIT);
 	}
 
 	protected void explode(Vec3 pos) {
@@ -85,7 +110,7 @@ public class ConsumedSoulEntity extends AbstractHurtingProjectile {
 				ParticleTypes.GUST_EMITTER_SMALL,
 				ParticleTypes.GUST_EMITTER_LARGE,
 				WeightedList.of(),
-				ModSounds.VOID_SPHERE_BURST
+				ModSounds.CONSUMED_SOUL_HIT
 			);
 	}
 

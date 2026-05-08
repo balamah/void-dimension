@@ -1,7 +1,8 @@
 package net.balamah.voiddim.event;
 
-import net.balamah.voiddim.event.custom.CorruptionInDarknessCallback;
 import net.balamah.voiddim.world.dimension.ModDimensions;
+import net.balamah.voiddim.event.custom.*;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -39,6 +40,10 @@ public class ModEvents {
 				return InteractionResult.SUCCESS;
 			}
 
+			return InteractionResult.PASS;
+		});
+
+		SoulburnEffectDamageDamageIncreaseCallback.EVENT.register((entity) -> {
 			return InteractionResult.PASS;
 		});
 	}
