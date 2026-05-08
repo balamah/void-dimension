@@ -42,10 +42,6 @@ public class ModEvents {
 
 			return InteractionResult.PASS;
 		});
-
-		SoulburnEffectDamageDamageIncreaseCallback.EVENT.register((entity) -> {
-			return InteractionResult.PASS;
-		});
 	}
 
 	protected static boolean isPlayerInSurvival(LivingEntity entity) {

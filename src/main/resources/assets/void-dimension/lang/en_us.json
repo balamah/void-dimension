@@ -87,6 +87,7 @@
 	"effect.void-dimension.void_salvation": "Void salvation",
 	"effect.void-dimension.divine_protection": "Divine protection",
 	"effect.void-dimension.corruption": "Corruption",
+	"effect.void-dimension.soul_burn": "Soul burn",
 
 	"death.attack.corruption": "%1$s died from corruption",
 	"death.attack.corruption.player": "%1$s died from corruption",

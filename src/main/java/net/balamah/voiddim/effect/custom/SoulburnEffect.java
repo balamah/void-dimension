@@ -59,7 +59,7 @@ public class SoulburnEffect extends MobEffect {
 		if (!(entity instanceof CorruptedHostileEntity)) {
 			// DamageSource damageSource = ModDamageSources.soulBurn(world);
 			// entity.hurtServer(world, damageSource, 8.0f * (amplifier + 1));
-			entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS));
+			entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 15, amplifier + 1));
 		}
 
 		return true;

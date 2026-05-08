@@ -1,11 +1,16 @@
 package net.balamah.voiddim.mixin;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.Mixin;
-import net.balamah.voiddim.event.custom.CorruptionInDarknessCallback;
+
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.server.level.ServerLevel;
+
+import net.balamah.voiddim.event.custom.CorruptionInDarknessCallback;
+import net.balamah.voiddim.effect.ModEffects;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityTickMixin {
@@ -14,5 +19,19 @@ public class LivingEntityTickMixin {
 		LivingEntity entity = (LivingEntity) (Object) this;
 
 		CorruptionInDarknessCallback.EVENT.invoker().interact(entity);
+	}
+	
+	// Give bonus damage when soul burn effect is applied
+	@ModifyVariable(method = "hurtServer", at = @At("HEAD"), argsOnly = true)
+	protected float modifyDamage(float damage, ServerLevel level, final DamageSource source) {
+		LivingEntity entity = (LivingEntity)(Object) this;
+		MobEffectInstance soulBurnEffect = entity.getEffect(ModEffects.SOUL_BURN);
+
+		if (soulBurnEffect != null) {
+			float damageMultiplier = 1.7f + soulBurnEffect.getAmplifier();
+			damage *= damageMultiplier;
+		}
+
+		return damage;
 	}
 }
