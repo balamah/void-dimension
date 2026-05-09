@@ -2,14 +2,15 @@ package net.balamah.voiddim.entity.custom;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.DarkGraspUser;
+import net.balamah.voiddim.interfaces.MultipleProjectileShootUser;
 import net.balamah.voiddim.sound.ModSounds;
+
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
@@ -17,7 +18,7 @@ import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.entity.ModEntities;
 
-public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser {
+public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser, MultipleProjectileShootUser {
 	public final AnimationState idleAnimationState = new AnimationState();
 	public final AnimationState walkAnimationState = new AnimationState();
 	public final AnimationState strongAttackAnimationState = new AnimationState();
@@ -28,10 +29,13 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 	public final AnimationState normalAttack2AnimationState = new AnimationState();
 	public final AnimationState normalAttack3AnimationState = new AnimationState();
 
+	// TODO: Change to 125
+	protected final int multipleProjectilesShootCooldown = 30;
 	protected final int darkGraspCooldown = 65;
 
 	protected int attackInterval;
 	protected int darkGraspTicks;
+	protected int multipleProjectilesShootTicks;
 
 	protected AnimationState[] normalAttackAnimations = {
 		this.normalAttack1AnimationState,
@@ -74,8 +78,18 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 	}
 
 	@Override
-	public SoundEvent getDarkGraspSound() {
-		return ModSounds.CORRUPTED_WARRIOR_DARK_GRASP_PREPARE;
+	public int getShootMultipleProjectilesCooldown() {
+		return this.multipleProjectilesShootCooldown;
+	}
+
+	@Override
+	public int getShootMultipleProjectilesTicks() {
+		return this.multipleProjectilesShootTicks;
+	}
+
+	@Override
+	public void setShootMultipleProjectilesTicks(int ticks) {
+		this.multipleProjectilesShootTicks = ticks;
 	}
 
 	@Override
@@ -90,12 +104,12 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 				break;
 			case ModEntityStatuses.STOP_ATTACK:
 				this.stopAnimations(this.normalAttackAnimations);
-				this.summonProjectileAnimationState.stop();
 				break;
 			case ModEntityStatuses.STOP_SPECIAL_ATTACK:
 				this.specialAttackAnimationState.stop();
 				this.strongAttackAnimationState.stop();
 				this.strongestAttackAnimationState.stop();
+				this.summonProjectileAnimationState.stop();
 				break;
 			case ModEntityStatuses.STRONG_ATTACK:
 				this.strongAttackAnimationState.start(this.tickCount);
@@ -129,7 +143,7 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 	protected void registerGoals() {
 		/*
 		 * TODO: Add goals
-		 * - ShootProjectiles(ConsumedSoul)
+		 * - ShootMultipleProjectiles(ConsumedSoul)
 		 * - ThunderWaveInvoke	:: play CorruptedWarriorAnimations.SPECIAL_ATTACK
 		 */
 		super.registerGoals();
@@ -140,16 +154,20 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 			);
 
 		// TODO: Replace with ShootProjectiles
-		Goal shootingGoal = new ShootProjectileGoal<CorruptedWarriorEntity, ConsumedSoulEntity>(
-			this, world -> new ConsumedSoulEntity(ModEntities.CONSUMED_SOUL, world),
-			ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
-			ModSounds.VOID_HARBINGER_SHOOT,
-			50, 60
-		);
+		Goal shootingGoal =
+			new ShootMultipleProjectilesGoal <CorruptedWarriorEntity, ConsumedSoulEntity>(
+				this, world -> new ConsumedSoulEntity(ModEntities.CONSUMED_SOUL, world),
+				ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
+				ModSounds.VOID_HARBINGER_SHOOT,
+				1, 6
+			);
 
 		this.goalSelector.addGoal(1, shootingGoal);
 		// TODO: Restore goals
-		// this.goalSelector.addGoal(4, new DarkGraspInvokeGoal<>(this, 5, 0, 7));
+		// this.goalSelector.addGoal(
+			// 4,
+			// new DarkGraspInvokeGoal<>(this, 5, 0, 7, ModSounds.CORRUPTED_WARRIOR_DARK_GRASP_PREPARE)
+		// );
 		// this.goalSelector.addGoal(5, summonEntitiesGoal);
 	}
 
@@ -167,6 +185,10 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser 
 
 		if (this.darkGraspTicks > 0) {
 			this.darkGraspTicks--;
+		}
+
+		if (this.multipleProjectilesShootTicks > 0) {
+			this.multipleProjectilesShootTicks--;
 		}
 	}
 }

@@ -6,6 +6,7 @@ import net.balamah.voiddim.entity.custom.DarkGraspEntity;
 import net.balamah.voiddim.interfaces.DarkGraspUser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,17 +21,21 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 	protected final int executionTick;
 	protected final int minActivationDistance;
 	protected final int maxActivationDistance;
+	protected final SoundEvent invocationSound;
 
 	protected boolean didInvokeGrasp;
 
 	public DarkGraspInvokeGoal(
-		T entity, int executionTick, int minActivationDistance, int maxActivationDistance
+		T entity, int executionTick, int minActivationDistance, int maxActivationDistance,
+		SoundEvent invocationSound
 	) {
 	    super(entity);
 
 		this.executionTick = executionTick;
 		this.minActivationDistance = minActivationDistance;
 		this.maxActivationDistance = maxActivationDistance;
+
+		this.invocationSound = invocationSound;
 	}
 
 	@Override
@@ -55,7 +60,7 @@ public class DarkGraspInvokeGoal<T extends CorruptedHostileEntity & DarkGraspUse
 		this.addSpeedModifier();
 
 		this.entity.setStopAttacks(true);
-		this.entity.makeSound(this.entity.getDarkGraspSound());
+		this.entity.makeSound(this.invocationSound);
 		this.sendEntityStatus(ModEntityStatuses.SPECIAL_ATTACK);
 	}
 

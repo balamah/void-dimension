@@ -44,13 +44,6 @@ public class SoulburnEffect extends MobEffect {
 		return true;
 	}
 
-	// TODO: Implement the effect
-	// Healing is reduced (natural regen + potions + golden apples)
-	// Every time the player takes damage, they take a small extra
-	// “soul tick” damage (like 0.5 hearts)
-	// Player becomes slightly slower (like Slowness 1)
-	// Their screen gets a subtle dark pulse / vignette effect
-	// (client-side optional)
 	@Override
 	public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
 		if (!(entity instanceof CorruptedHostileEntity)) {

@@ -74,8 +74,17 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 	}
 
 	@Override
+	public void start() {
+		super.start();
+
+		this.sendEntityStatus(ModEntityStatuses.PROJECTILE_INVOKE);
+	}
+
+	@Override
 	public void stop() {
 		this.didShoot = false;
+
+		this.sendEntityStatus(ModEntityStatuses.STOP_SPECIAL_ATTACK);
 	}
 
 	protected void spawnProjectile(ServerLevel serverWorld, double dx, double dy, double dz) {
