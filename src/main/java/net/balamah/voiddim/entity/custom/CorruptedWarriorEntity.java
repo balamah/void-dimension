@@ -43,8 +43,7 @@ public class CorruptedWarriorEntity extends BossEntity
 	public final AnimationState normalAttack2AnimationState = new AnimationState();
 	public final AnimationState normalAttack3AnimationState = new AnimationState();
 
-	// TODO: Change to 125
-	protected final int multipleProjectilesShootCooldown = 30;
+	protected final int multipleProjectilesShootCooldown = 125;
 	protected final int darkGraspCooldown = 65;
 	protected final int teleportCooldown = 140;
 
@@ -59,12 +58,10 @@ public class CorruptedWarriorEntity extends BossEntity
 		this.normalAttack3AnimationState
 	};
 
-	public CorruptedWarriorEntity(
-		EntityType<? extends Monster> entityType, Level world
-	) {
+	public CorruptedWarriorEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
-		this.xpReward = 15;
+		this.xpReward = 500;
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
