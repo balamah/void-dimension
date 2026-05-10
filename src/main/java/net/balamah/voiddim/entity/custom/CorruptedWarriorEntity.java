@@ -18,6 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
 import net.balamah.voiddim.interfaces.MultipleProjectileShootUser;
+import net.balamah.voiddim.interfaces.StrongAttackUser;
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.DarkGraspUser;
 import net.balamah.voiddim.interfaces.TeleportUser;
@@ -31,7 +32,7 @@ import net.balamah.voiddim.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 
 public class CorruptedWarriorEntity extends BossEntity
-	implements DarkGraspUser, MultipleProjectileShootUser, TeleportUser
+	implements DarkGraspUser, MultipleProjectileShootUser, TeleportUser, StrongAttackUser
 {
 	public final AnimationState idleAnimationState = new AnimationState();
 	public final AnimationState walkAnimationState = new AnimationState();
@@ -46,11 +47,13 @@ public class CorruptedWarriorEntity extends BossEntity
 	protected final int multipleProjectilesShootCooldown = 175;
 	protected final int darkGraspCooldown = 65;
 	protected final int teleportCooldown = 140;
+	protected final int strongAttackCooldown = 90;
 
 	protected int attackInterval;
 	protected int darkGraspTicks;
 	protected int multipleProjectilesShootTicks;
 	protected int teleportTicks;
+	protected int strongAttackTicks = 50;
 
 	protected AnimationState[] normalAttackAnimations = {
 		this.normalAttack1AnimationState,
@@ -103,6 +106,21 @@ public class CorruptedWarriorEntity extends BossEntity
 	@Override
 	public void setShootMultipleProjectilesTicks(int ticks) {
 		this.multipleProjectilesShootTicks = ticks;
+	}
+
+	@Override
+	public int getStrongAttackCooldown() {
+		return this.strongAttackCooldown;
+	}
+
+	@Override
+	public int getStrongAttackTicks() {
+		return this.strongAttackTicks;
+	}
+
+	@Override
+	public void setStrongAttackTicks(int ticks) {
+		this.strongAttackTicks = ticks;
 	}
 
 	@Override
@@ -241,11 +259,14 @@ public class CorruptedWarriorEntity extends BossEntity
 			);
 
 		this.goalSelector.addGoal(1, new TeleportTowardsPlayerGoal<>(this));
-		this.goalSelector.addGoal(2, shootingGoal);
+		this.goalSelector.addGoal(
+			2, new StrongAttackGoal<>(this, 5, 3, 7, ModSounds.CORRUPTED_WARRIOR_LONG_EFFORT)
+		);
+		// this.goalSelector.addGoal(2, shootingGoal);
 		// TODO: Restore goals
 		// this.goalSelector.addGoal(
 			// 4,
-			// new DarkGraspInvokeGoal<>(this, 5, 0, 7, ModSounds.CORRUPTED_WARRIOR_EFFORT_1)
+			// new DarkGraspInvokeGoal<>(this, 5, 4, 7, ModSounds.CORRUPTED_WARRIOR_EFFORT_1)
 		// );
 		// this.goalSelector.addGoal(5, summonEntitiesGoal);
 	}
@@ -272,6 +293,14 @@ public class CorruptedWarriorEntity extends BossEntity
 
 		if (this.teleportTicks > 0) {
 			this.teleportTicks--;
+		}
+
+		if (this.teleportTicks > 0) {
+			this.teleportTicks--;
+		}
+
+		if (this.strongAttackTicks > 0) {
+			this.strongAttackTicks--;
 		}
 	}
 
