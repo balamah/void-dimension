@@ -2,11 +2,14 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 
 import com.google.common.base.Function;
 
+import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.MultipleProjectileShootUser;
 
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 
@@ -53,25 +56,67 @@ public class ShootMultipleProjectilesGoal
 	}
 
 	@Override
-	protected void spawnProjectile(ServerLevel serverWorld, double dx, double dy, double dz) {
-		for (int i = 0; i < 3; i++) {
-			T projectile = projectileFactory.apply(serverWorld);
+	protected void spawnProjectile(ServerLevel level, double dx, double dy, double dz) {
+		Vec3 forward = new Vec3(dx, dy, dz).normalize();
+		Vec3 side = new Vec3(-forward.z, 0, forward.x).normalize();
+
+		double spread = 0.4D;
+
+		for (int i = -1; i <= 1; i++) {
+			T projectile = projectileFactory.apply(level);
 			if (projectile == null) {
-				return;
+				continue;
 			}
 
 			projectile.setOwner(this.entity);
-			projectile.setPos(this.entity.getX(), this.entity.getEyeY(), this.entity.getZ());
+			projectile.setPos(
+				this.entity.getX(),
+				this.entity.getEyeY(),
+				this.entity.getZ()
+			);
 
-			double len = Math.sqrt(dx * dx + dy * dy + dz * dz);
-			if (len > 0) {
-				dx /= len;
-				dy /= len;
-				dz /= len;
-			}
+			Vec3 shootDirection = forward.add(side.scale(i * spread)).normalize();
 
-			projectile.shoot(dx, dy, dz, 0.7F, 1.0F);
-			serverWorld.addFreshEntity(projectile);
+			projectile.shoot(
+				shootDirection.x,
+				shootDirection.y,
+				shootDirection.z,
+				0.7F,
+				1.0F
+			);
+
+			level.addFreshEntity(projectile);
 		}
+	}
+
+	protected Vec3 getProjectileOffset(
+		Direction entityDirection, Vec3 projectileDirection, int iteration
+	) {
+		double spreadAmount = 0.3 * iteration;
+		Vec3 velocity;
+
+		switch (entityDirection) {
+			case NORTH, SOUTH:
+				velocity = new Vec3(
+					projectileDirection.x,
+					projectileDirection.y,
+					projectileDirection.z * spreadAmount
+				);
+				break;
+
+			case EAST, WEST:
+				velocity = new Vec3(
+					projectileDirection.x * spreadAmount,
+					projectileDirection.y,
+					projectileDirection.z
+				);
+				break;
+		
+			default:
+				velocity = projectileDirection;
+				break;
+		}
+
+		return velocity;
 	}
 }

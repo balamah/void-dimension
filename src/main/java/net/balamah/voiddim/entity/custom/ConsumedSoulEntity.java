@@ -70,7 +70,7 @@ public class ConsumedSoulEntity extends AbstractHurtingProjectile {
 
 			if (damage && target instanceof LivingEntity targetLivingEntity) {
 				targetLivingEntity.addEffect(
-					new MobEffectInstance(ModEffects.CORRUPTION, 20, 1)
+					new MobEffectInstance(ModEffects.SOUL_BURN, 100, 1)
 				);
 				
 				EnchantmentHelper.doPostAttackEffects(world, targetLivingEntity, damageSource);

@@ -18,7 +18,9 @@ import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.entity.ModEntities;
 
-public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser, MultipleProjectileShootUser {
+public class CorruptedWarriorEntity extends BossEntity
+	implements DarkGraspUser, MultipleProjectileShootUser
+{
 	public final AnimationState idleAnimationState = new AnimationState();
 	public final AnimationState walkAnimationState = new AnimationState();
 	public final AnimationState strongAttackAnimationState = new AnimationState();
@@ -159,7 +161,7 @@ public class CorruptedWarriorEntity extends BossEntity implements DarkGraspUser,
 				this, world -> new ConsumedSoulEntity(ModEntities.CONSUMED_SOUL, world),
 				ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
 				ModSounds.VOID_HARBINGER_SHOOT,
-				1, 6
+				1, 4
 			);
 
 		this.goalSelector.addGoal(1, shootingGoal);

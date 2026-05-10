@@ -284,7 +284,7 @@ public class McCodeHelper {
 			}
 
 			for (Holder<MobEffect> effect : shockWaveEffects) {
-				int amplifier = (effect != MobEffects.WEAKNESS) ? 2 : 1;
+				int amplifier = (effect != MobEffects.WEAKNESS) ? 2 : 0;
 				target.addEffect(new MobEffectInstance(effect, 1200, amplifier));
 				target.hurtServer(world, ModDamageSources.shockWave(world), 15f);
 
