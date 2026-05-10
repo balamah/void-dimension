@@ -5,12 +5,17 @@ import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.StrongAttackUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.sounds.SoundEvent;
 
 public class StrongAttackGoal<T extends CorruptedHostileEntity & StrongAttackUser>
 	extends OneShotDamageGoal<T>
 {
+	protected AttributeModifier attributeModifier = this.getAttributeModifier(
+		this.attributeId, 9, AttributeModifier.Operation.ADD_VALUE
+	);
+
 	protected final int stopTick;
 	protected final int maxDistance;
 	protected final int minAttackActivationCount;

@@ -10,7 +10,7 @@ public abstract class OneShotDamageGoal<T extends CorruptedHostileEntity>
 	extends EntityAttributeModifierGoal<T>
 {
 	protected final Identifier attributeId = Identifier.withDefaultNamespace("attacking");
-	protected final AttributeModifier attributeModifier = this.getAttributeModifier(
+	protected AttributeModifier attributeModifier = this.getAttributeModifier(
 		this.attributeId, 10.5f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE
 	);
 

@@ -46,7 +46,7 @@ public class CorruptedWarriorEntity extends BossEntity
 
 	protected final int multipleProjectilesShootCooldown = 175;
 	protected final int darkGraspCooldown = 65;
-	protected final int teleportCooldown = 140;
+	protected final int teleportCooldown = 150;
 	protected final int strongAttackCooldown = 90;
 
 	protected int attackInterval;
