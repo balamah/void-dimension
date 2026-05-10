@@ -43,7 +43,7 @@ public class CorruptedWarriorEntity extends BossEntity
 	public final AnimationState normalAttack2AnimationState = new AnimationState();
 	public final AnimationState normalAttack3AnimationState = new AnimationState();
 
-	protected final int multipleProjectilesShootCooldown = 125;
+	protected final int multipleProjectilesShootCooldown = 175;
 	protected final int darkGraspCooldown = 65;
 	protected final int teleportCooldown = 140;
 
@@ -219,8 +219,11 @@ public class CorruptedWarriorEntity extends BossEntity
 	protected void registerGoals() {
 		/*
 		 * TODO: Add goals
-		 * - ShootMultipleProjectiles(ConsumedSoul)
 		 * - ThunderWaveInvoke	:: play CorruptedWarriorAnimations.SPECIAL_ATTACK
+		 * - StrongAttack		:: play CorruptedWarriorAnimations.STRONG_ATTACK
+			 Second phase has a chance of invoking even stronger attack
+			 with CorruptedWarriorAnimations.STRONGEST_ATTACK.
+			 It should have the same cooldown as teleport attack
 		 */
 		super.registerGoals();
 
