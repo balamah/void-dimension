@@ -361,31 +361,48 @@
 			"void-dimension:special_attacks/magnet_execute"
 		]
 	},
-	"corrupted_warrior.dark_grasp_prepare": {
-		"subtitle": "sound.void-dimension.corrupted_warrior.dark_grasp_prepare",
+	"corrupted_warrior.effort1": {
+		"subtitle": "sound.void-dimension.corrupted_warrior.effort1",
 		"sounds": [
-			"void-dimension:corrupted_warrior/dark_grasp_prepare"
+			"void-dimension:corrupted_warrior/effort1"
+		]
+	},
+	"corrupted_warrior.effort": {
+		"subtitle": "sound.void-dimension.corrupted_warrior.effort",
+		"sounds": [
+			"void-dimension:corrupted_warrior/effort1",
+			"void-dimension:corrupted_warrior/effort2",
+			"void-dimension:corrupted_warrior/effort3"
+		]
+	},
+	"corrupted_warrior.long_effort": {
+		"subtitle": "sound.void-dimension.corrupted_warrior.long_effort",
+		"sounds": [
+			"void-dimension:corrupted_warrior/long_effort1",
+			"void-dimension:corrupted_warrior/long_effort2",
+			"void-dimension:corrupted_warrior/long_effort3",
+			"void-dimension:corrupted_warrior/long_effort4"
+		]
+	},
+	"corrupted_warrior.death": {
+		"subtitle": "sound.void-dimension.corrupted_warrior.death",
+		"sounds": [
+			"void-dimension:corrupted_warrior/death"
+		]
+	},
+	"armor.hit": {
+		"subtitle": "sound.void-dimension.armor.hit",
+		"sounds": [
+			"void-dimension:armor/hit"
 		]
 	},
 	"consumed_soul.hit": {
 		"subtitle": "sound.void-dimension.consumed_soul.hit",
 		"sounds": [
-			{
-				"name": "void-dimension:consumed_soul/hit1",
-				"volume": 0.1
-			},
-			{
-				"name": "void-dimension:consumed_soul/hit2",
-				"volume": 0.1
-			},
-			{
-				"name": "void-dimension:consumed_soul/hit3",
-				"volume": 0.1
-			},
-			{
-				"name": "void-dimension:consumed_soul/hit4",
-				"volume": 0.1
-			}
+			"void-dimension:consumed_soul/hit1",
+			"void-dimension:consumed_soul/hit2",
+			"void-dimension:consumed_soul/hit3",
+			"void-dimension:consumed_soul/hit4"
 		]
 	}
 }

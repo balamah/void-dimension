@@ -8,6 +8,8 @@ import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -155,12 +157,11 @@ public class CorruptedWarriorEntity extends BossEntity
 				this, VoidBoundServantEntity.class, ModEntities.VOID_BOUND_SERVANT, 10
 			);
 
-		// TODO: Replace with ShootProjectiles
 		Goal shootingGoal =
 			new ShootMultipleProjectilesGoal <CorruptedWarriorEntity, ConsumedSoulEntity>(
 				this, world -> new ConsumedSoulEntity(ModEntities.CONSUMED_SOUL, world),
-				ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
-				ModSounds.VOID_HARBINGER_SHOOT,
+				ModSounds.CORRUPTED_WARRIOR_EFFORT_1,
+				ModSounds.CORRUPTED_WARRIOR_EFFORT,
 				1, 4
 			);
 
@@ -192,5 +193,15 @@ public class CorruptedWarriorEntity extends BossEntity
 		if (this.multipleProjectilesShootTicks > 0) {
 			this.multipleProjectilesShootTicks--;
 		}
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.CORRUPTED_WARRIOR_DEATH;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.ARMOR_HIT;
 	}
 }

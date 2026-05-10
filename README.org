@@ -66,22 +66,23 @@ The order is going from brightest colors to the darkest
 
 * Sources
 ** Sounds
-- music.1                              :: blade of darkness (ATMOSFERA8)
-- music.2                              :: blade of darkness (ATMOSFERA19)
-- music.3                              :: blade of darkness (SORPRESA7)
-- void_harbinger.shoot_prepare         :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (4))
-- void_harbinger.shoot                 :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (1))
-- void_harbinger.teleport              :: blade of darkness (desaparece-vamp1.wav)
-- shattered_sentinel_master.death      :: https://depositphotos.com/sound-effect/rumbling-impact-ancient-stony-stride-784492644.html
-- staring_entity.death                 :: blade of darkness (muerte-Ldm.wav)
-- special_attacks.lightning            :: https://pixabay.com/sound-effects/search/lightning/ (Yodguard:Lightning Magic (1))
-- special_attacks.counter_attack       :: https://pixabay.com/sound-effects/search/power%20attack/ (Yodguard:Powerful Bear Attack with Roar (1))
-- entity303.death                      :: nazgul screams from The lord of the rings
-- eye_bright.shoot_prepare             :: https://pixabay.com/sound-effects/search/pain/ (Universfield:Man Scream)
-- special_attacks.magnet_prepare       :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (6))
-- special_attacks.magnet_execute       :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (3))
-- corrupted_warrior.dark_grasp_prepare :: blade of darkness (esfuerzo-chk1)
-- consumed_soul.hit                    :: https://pixabay.com/sound-effects/search/ghost/
+- music.1                         :: blade of darkness (ATMOSFERA8)
+- music.2                         :: blade of darkness (ATMOSFERA19)
+- music.3                         :: blade of darkness (SORPRESA7)
+- void_harbinger.shoot_prepare    :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (4))
+- void_harbinger.shoot            :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (1))
+- void_harbinger.teleport         :: blade of darkness (desaparece-vamp1.wav)
+- shattered_sentinel_master.death :: https://depositphotos.com/sound-effect/rumbling-impact-ancient-stony-stride-784492644.html
+- staring_entity.death            :: blade of darkness (muerte-Ldm.wav)
+- special_attacks.lightning       :: https://pixabay.com/sound-effects/search/lightning/ (Yodguard:Lightning Magic (1))
+- special_attacks.counter_attack  :: https://pixabay.com/sound-effects/search/power%20attack/ (Yodguard:Powerful Bear Attack with Roar (1))
+- entity303.death                 :: nazgul screams from The lord of the rings
+- eye_bright.shoot_prepare        :: https://pixabay.com/sound-effects/search/pain/ (Universfield:Man Scream)
+- special_attacks.magnet_prepare  :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (6))
+- special_attacks.magnet_execute  :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (3))
+- corrupted_warrior.*             :: blade of darkness (\*chk1*wav)
+- armor.hit                       :: blade of darkness (golpe-maza-armfort.wav)
+- consumed_soul.hit               :: https://pixabay.com/sound-effects/search/ghost/
   + hit1 :: (DRAGON-STUDIO:Ghost Whisper)
   + hit2 :: (DRAGON-STUDIO:Ghost Whisper)
   + hit3 :: (DRAGON-STUDIO:Halloween Ghost Whisper)
