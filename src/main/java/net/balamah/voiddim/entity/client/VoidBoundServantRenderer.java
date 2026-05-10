@@ -1,11 +1,14 @@
 package net.balamah.voiddim.entity.client;
 
-import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.VoidBoundServantEntity;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import net.balamah.voiddim.VoidDimension;
+
+
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
 
 public class VoidBoundServantRenderer
@@ -18,6 +21,10 @@ public class VoidBoundServantRenderer
 
 		this.addLayer(
 			new ItemInHandLayer<VoidBoundServantRenderState, VoidBoundServantModel>(this)
+		);
+
+		this.addLayer(
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/void_bound_servant.png")
 		);
 	}
 

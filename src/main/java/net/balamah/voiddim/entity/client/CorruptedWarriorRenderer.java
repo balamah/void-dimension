@@ -1,6 +1,8 @@
 package net.balamah.voiddim.entity.client;
 
+import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.CorruptedWarriorEntity;
+
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
@@ -11,6 +13,10 @@ public class CorruptedWarriorRenderer
 {
 	public CorruptedWarriorRenderer(EntityRendererProvider.Context context) {
 		super(context, new CorruptedWarriorModel(context.bakeLayer(CorruptedWarriorModel.CORRUPTED_WARRIOR)), 0.75f);
+
+		this.addLayer(
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/corrupted_warrior.png")
+		);
 	}
 
 	@Override
