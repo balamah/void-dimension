@@ -70,11 +70,11 @@ public class CorruptedWarriorEntity extends BossEntity
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes()
 			.add(Attributes.FOLLOW_RANGE, 64)
-			.add(Attributes.MOVEMENT_SPEED, 0.28F)
+			.add(Attributes.MOVEMENT_SPEED, 0.27F)
 			.add(Attributes.MAX_HEALTH, 365)
 			.add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
 			.add(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0)
-			.add(Attributes.ATTACK_DAMAGE, 11.5F)
+			.add(Attributes.ATTACK_DAMAGE, 10.5F)
 			.add(Attributes.STEP_HEIGHT, 1.0);
 	}
 
