@@ -35,8 +35,13 @@ public class ConsumedSoulRenderer
 	) {
 		matrixStack.pushPose();
 
-		matrixStack.translate(0f, 0f + 1.5, 0f);
+		matrixStack.translate(0.0f, 1.5f, 0.0f);
 
+		// Apply entity rotation
+		matrixStack.mulPose(Axis.YP.rotationDegrees(-state.yaw));
+		matrixStack.mulPose(Axis.XP.rotationDegrees(state.pitch));
+
+		// Keep your existing flip if needed
 		matrixStack.mulPose(Axis.ZP.rotationDegrees(180f));
 
 		orderedRenderCommandQueue.submitModel(
@@ -64,6 +69,7 @@ public class ConsumedSoulRenderer
 		ConsumedSoulEntity entity, ConsumedSoulRenderState renderState, float f
 	) {
 		super.extractRenderState(entity, renderState, f);
+
 		renderState.yaw = entity.getYRot(f);
 		renderState.pitch = entity.getXRot(f);
 
