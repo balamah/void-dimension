@@ -55,7 +55,7 @@ import net.balamah.voiddim.VoidDimension;
 import java.util.List;
 
 public class McCodeHelper {
-	public static final List<Holder<MobEffect>> effects = List.of(
+	public static final List<Holder<MobEffect>> shockWaveEffects = List.of(
 		MobEffects.SLOWNESS,
 		MobEffects.BLINDNESS,
 		MobEffects.WEAKNESS
@@ -283,8 +283,9 @@ public class McCodeHelper {
 				continue;
 			}
 
-			for (Holder<MobEffect> effect : effects) {
-				target.addEffect(new MobEffectInstance(effect, 1200, 2));
+			for (Holder<MobEffect> effect : shockWaveEffects) {
+				int amplifier = (effect != MobEffects.WEAKNESS) ? 2 : 1;
+				target.addEffect(new MobEffectInstance(effect, 1200, amplifier));
 				target.hurtServer(world, ModDamageSources.shockWave(world), 15f);
 
 				breakShield(target);
