@@ -108,7 +108,7 @@ public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Pro
 	}
 
 	protected void shootProjectile(Level world, LivingEntity target) {
-		if (this.world instanceof ServerLevel serverWorld) {
+		if (this.world instanceof ServerLevel serverWorld && target != null) {
 			double heightScale = target.isPassenger() ? 0.8 : 0.3;
 
 			double dx = target.getX() - this.entity.getX();

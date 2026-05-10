@@ -1,27 +1,37 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.balamah.voiddim.entity.custom.base.BossEntity;
-import net.balamah.voiddim.interfaces.DarkGraspUser;
-import net.balamah.voiddim.interfaces.MultipleProjectileShootUser;
-import net.balamah.voiddim.sound.ModSounds;
-
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+
+import net.balamah.voiddim.interfaces.MultipleProjectileShootUser;
+import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.interfaces.DarkGraspUser;
+import net.balamah.voiddim.interfaces.TeleportUser;
+import net.balamah.voiddim.sound.ModSounds;
+
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
+import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 
+import org.jetbrains.annotations.Nullable;
+
 public class CorruptedWarriorEntity extends BossEntity
-	implements DarkGraspUser, MultipleProjectileShootUser
+	implements DarkGraspUser, MultipleProjectileShootUser, TeleportUser
 {
 	public final AnimationState idleAnimationState = new AnimationState();
 	public final AnimationState walkAnimationState = new AnimationState();
@@ -36,10 +46,12 @@ public class CorruptedWarriorEntity extends BossEntity
 	// TODO: Change to 125
 	protected final int multipleProjectilesShootCooldown = 30;
 	protected final int darkGraspCooldown = 65;
+	protected final int teleportCooldown = 140;
 
 	protected int attackInterval;
 	protected int darkGraspTicks;
 	protected int multipleProjectilesShootTicks;
+	protected int teleportTicks;
 
 	protected AnimationState[] normalAttackAnimations = {
 		this.normalAttack1AnimationState,
@@ -144,6 +156,69 @@ public class CorruptedWarriorEntity extends BossEntity
 	}
 
 	@Override
+	public boolean teleportTo(Entity entity) {
+		if (this.teleportTicks > 0) {
+			return false;
+		}
+
+		Vec3 vec3d = new Vec3(
+			this.getX() - entity.getX(), 
+			this.getY(0.5) - entity.getEyeY(), 
+			this.getZ() - entity.getZ()
+		);
+
+		vec3d = vec3d.normalize();
+
+		double teleportDiameter = 7.0;
+
+		int randomYoffset = (this.random.nextInt(16) - 8);
+
+		double x, y, z;
+		for (int i = 0; i < 10; i++) {
+			double randomY = this.getY() + randomYoffset - vec3d.y * teleportDiameter;
+
+			x = this.getRandomCoordinate(this.getX(), vec3d.x, teleportDiameter);
+			y = Math.max(entity.getY(), randomY);
+			z = this.getRandomCoordinate(this.getZ(), vec3d.z, teleportDiameter);
+
+			if (McCodeHelper.isTeleportationSafe(entity, entity.getY(), x, y, z)) {
+				return this.teleportTo(x, y, z, false);
+			}
+		}
+
+		return false;
+	}
+
+	@SuppressWarnings("deprecation")
+	public boolean teleportTo(double x, double y, double z, boolean ignoreLimitPredicate) {
+		if (this.teleportTicks > 0) {
+			return false;
+		}
+
+		BlockPos.MutableBlockPos mutable = this.getMutableCoordinate(x, y, z, ignoreLimitPredicate);
+		if (mutable == null) {
+			return false;
+		}
+
+		BlockState blockState = this.level().getBlockState(mutable);
+		boolean isSolidBlock = blockState.blocksMotion();
+		if (!isSolidBlock) {
+			return false;
+		}
+
+		Vec3 vec3d = new Vec3(this.getX(), this.getY(), this.getZ());
+			boolean didTeleport = this.randomTeleport(x, y, z, true);
+			if (didTeleport) {
+				this.teleportTicks = this.teleportCooldown;
+				this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));
+				this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
+			}
+
+		return didTeleport;
+	}
+
+
+	@Override
 	protected void registerGoals() {
 		/*
 		 * TODO: Add goals
@@ -158,18 +233,19 @@ public class CorruptedWarriorEntity extends BossEntity
 			);
 
 		Goal shootingGoal =
-			new ShootMultipleProjectilesGoal <CorruptedWarriorEntity, ConsumedSoulEntity>(
+			new ShootMultipleProjectilesGoal<CorruptedWarriorEntity, ConsumedSoulEntity>(
 				this, world -> new ConsumedSoulEntity(ModEntities.CONSUMED_SOUL, world),
 				ModSounds.CORRUPTED_WARRIOR_EFFORT_1,
 				ModSounds.CORRUPTED_WARRIOR_EFFORT,
 				1, 4
 			);
 
-		this.goalSelector.addGoal(1, shootingGoal);
+		this.goalSelector.addGoal(1, new TeleportTowardsPlayerGoal<>(this));
+		this.goalSelector.addGoal(2, shootingGoal);
 		// TODO: Restore goals
 		// this.goalSelector.addGoal(
 			// 4,
-			// new DarkGraspInvokeGoal<>(this, 5, 0, 7, ModSounds.CORRUPTED_WARRIOR_DARK_GRASP_PREPARE)
+			// new DarkGraspInvokeGoal<>(this, 5, 0, 7, ModSounds.CORRUPTED_WARRIOR_EFFORT_1)
 		// );
 		// this.goalSelector.addGoal(5, summonEntitiesGoal);
 	}
@@ -193,6 +269,10 @@ public class CorruptedWarriorEntity extends BossEntity
 		if (this.multipleProjectilesShootTicks > 0) {
 			this.multipleProjectilesShootTicks--;
 		}
+
+		if (this.teleportTicks > 0) {
+			this.teleportTicks--;
+		}
 	}
 
 	@Override
@@ -203,5 +283,30 @@ public class CorruptedWarriorEntity extends BossEntity
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.ARMOR_HIT;
+	}
+
+	protected double getRandomCoordinate(double baseCoordinate, double vector, double diameter) {
+		return baseCoordinate + (this.random.nextDouble() - 0.5) * 2 - vector * diameter;
+	}
+
+	@SuppressWarnings("deprecation")
+	protected @Nullable BlockPos.MutableBlockPos getMutableCoordinate(
+		double x, double y, double z, boolean ignoreLimitPredicate
+	) {
+		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, y, z);
+
+		while (mutable.getY() > this.level().getMinY() &&
+			   !this.level().getBlockState(mutable).blocksMotion()
+		) {
+			double heightDifference = this.getY() - mutable.getY();
+
+			if (heightDifference < 30 || ignoreLimitPredicate) {
+				mutable.move(Direction.DOWN);
+			} else {
+				return null;
+			}
+		}
+
+		return mutable;
 	}
 }

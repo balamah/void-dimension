@@ -33,7 +33,7 @@ import net.balamah.voiddim.sound.ModSounds;
 
 public class ConsumedSoulEntity extends AbstractHurtingProjectile {
 	protected final EntityType<?>[] immuneEntities = {
-		ModEntities.DARK_GRASP, ModEntities.VOID_BOUND_SERVANT
+		ModEntities.DARK_GRASP, ModEntities.VOID_BOUND_SERVANT, ModEntities.CORRUPTED_WARRIOR
 	};
 
 	public static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR =

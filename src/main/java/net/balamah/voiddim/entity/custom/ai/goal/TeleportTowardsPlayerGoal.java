@@ -16,10 +16,7 @@ public class TeleportTowardsPlayerGoal<T extends CorruptedHostileEntity & Telepo
 
 	@Override
 	public boolean canUse() {
-		float middleHP = this.entity.getMaxHealth() / 2;
-		float currentHP = this.entity.getHealth();
-
-		return this.entity.getTarget() != null && currentHP < middleHP;
+		return this.entity.getTarget() != null && this.entity.isSecondPhase();
 	}
 
 	@Override
@@ -35,6 +32,10 @@ public class TeleportTowardsPlayerGoal<T extends CorruptedHostileEntity & Telepo
 	@Override
 	public void tick() {
 		LivingEntity target = this.entity.getTarget();
+
+		if (target == null) {
+			return;
+		}
 
 		double targetDistance = this.entity.distanceTo(target);
 		int attackCount = this.entity.attackCount;
