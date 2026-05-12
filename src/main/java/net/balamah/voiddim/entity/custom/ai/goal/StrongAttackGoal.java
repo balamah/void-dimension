@@ -18,21 +18,18 @@ public class StrongAttackGoal<T extends CorruptedHostileEntity & StrongAttackUse
 
 	protected final int stopTick;
 	protected final int maxDistance;
-	protected final int minAttackActivationCount;
 	protected final SoundEvent attackSound;
 
 	protected boolean didAttack;
 
 	public StrongAttackGoal(
-		T entity, int stopTick, int maxDistance, int minAttackActivationCount,
-		SoundEvent attackSound
+		T entity, int stopTick, int maxDistance, SoundEvent attackSound
 	) {
 		super(entity);
 
 		this.stopTick = stopTick;
 		this.attackSound = attackSound;
 		this.maxDistance = maxDistance;
-		this.minAttackActivationCount = minAttackActivationCount;
 	}
 
 	@Override

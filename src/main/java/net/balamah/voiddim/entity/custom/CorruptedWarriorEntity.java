@@ -260,14 +260,14 @@ public class CorruptedWarriorEntity extends BossEntity
 
 		this.goalSelector.addGoal(1, new TeleportTowardsPlayerGoal<>(this));
 		this.goalSelector.addGoal(
-			2, new StrongAttackGoal<>(this, 5, 3, 7, ModSounds.CORRUPTED_WARRIOR_LONG_EFFORT)
+			2, new StrongAttackGoal<>(this, 5, 3, ModSounds.CORRUPTED_WARRIOR_LONG_EFFORT)
 		);
-		// this.goalSelector.addGoal(2, shootingGoal);
+		this.goalSelector.addGoal(2, shootingGoal);
 		// TODO: Restore goals
-		// this.goalSelector.addGoal(
-			// 4,
-			// new DarkGraspInvokeGoal<>(this, 5, 4, 7, ModSounds.CORRUPTED_WARRIOR_EFFORT_1)
-		// );
+		this.goalSelector.addGoal(
+			4,
+			new DarkGraspInvokeGoal<>(this, 5, 2, 8, ModSounds.CORRUPTED_WARRIOR_EFFORT_1)
+		);
 		// this.goalSelector.addGoal(5, summonEntitiesGoal);
 	}
 
