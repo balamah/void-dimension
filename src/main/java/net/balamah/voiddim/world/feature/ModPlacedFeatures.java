@@ -15,13 +15,20 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 public class ModPlacedFeatures {
-    public static final ResourceKey<PlacedFeature> DEEPSLATE_VOID_SHARD_ORE_PLACED_KEY =
+    public static final ResourceKey<PlacedFeature> VOIDIUM_ORE_PLACED_KEY =
+		register("voidium_ore_overworld");
+
+    public static final ResourceKey<PlacedFeature> DEEPSLATE_VOIDIUM_ORE_PLACED_KEY =
 		register("deepslate_voidium_ore_overworld");
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        register(context, DEEPSLATE_VOID_SHARD_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DEEPSLATE_VOID_SHARD_ORE_KEY),
+        register(context, VOIDIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.VOIDIUM_ORE_KEY),
+                ModOrePlacement.modifiersWithCount(14,
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(-80), VerticalAnchor.absolute(80))));
+
+        register(context, DEEPSLATE_VOIDIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DEEPSLATE_VOIDIUM_ORE_KEY),
                 ModOrePlacement.modifiersWithCount(14,
                         HeightRangePlacement.triangle(VerticalAnchor.absolute(-80), VerticalAnchor.absolute(80))));
 	}

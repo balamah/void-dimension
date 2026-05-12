@@ -17,24 +17,38 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 public class ModConfiguredFeatures {
-	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEPSLATE_VOID_SHARD_ORE_KEY =
+	public static final ResourceKey<ConfiguredFeature<?, ?>> VOIDIUM_ORE_KEY =
+		register("voidium_ore");
+
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEPSLATE_VOIDIUM_ORE_KEY =
 		register("deepslate_voidium_ore");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
         RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
 
-        List<OreConfiguration.TargetBlockState> overworldDeepslateVoidShardOres =
+        List<OreConfiguration.TargetBlockState> overworldVoidiumOres =
 			List.of(
 				OreConfiguration.target(
-					deepslateReplaceables, ModBlocks.DEEPSLATE_VOID_SHARD_ORE.defaultBlockState()
+					stoneReplaceables, ModBlocks.VOIDIUM_ORE.defaultBlockState()
+				),
+				OreConfiguration.target(
+					deepslateReplaceables, ModBlocks.DEEPSLATE_VOIDIUM_ORE.defaultBlockState()
 				)
 			);
 
         register(
 			context,
-			DEEPSLATE_VOID_SHARD_ORE_KEY,
+			VOIDIUM_ORE_KEY,
 			Feature.ORE,
-			new OreConfiguration(overworldDeepslateVoidShardOres, 12)
+			new OreConfiguration(overworldVoidiumOres, 12)
+		);
+
+        register(
+			context,
+			DEEPSLATE_VOIDIUM_ORE_KEY,
+			Feature.ORE,
+			new OreConfiguration(overworldVoidiumOres, 12)
 		);
 	}
 

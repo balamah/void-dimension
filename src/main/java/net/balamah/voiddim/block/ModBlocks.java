@@ -52,6 +52,15 @@ public class ModBlocks {
 
 	protected static final int corruptedFlowerLuminance = 3;
 
+	public static final Block VOIDIUM_ORE =
+		register(
+			"voidium_ore",
+			settings -> new DropExperienceBlock(UniformInt.of(2, 3), settings),
+			BlockBehaviour.Properties.of().strength(3.0F, 3.0F).requiresCorrectToolForDrops()
+			.sound(SoundType.DEEPSLATE),
+			true, false
+		);
+
 	public static final Block DEEPSLATE_VOIDIUM_ORE =
 		register(
 			"deepslate_voidium_ore",

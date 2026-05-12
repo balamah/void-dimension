@@ -11,7 +11,13 @@ public class ModWorldGeneration {
         BiomeModifications.addFeature(
 			BiomeSelectors.includeByKey(Biomes.PALE_GARDEN),
 			GenerationStep.Decoration.UNDERGROUND_ORES,
-			ModPlacedFeatures.DEEPSLATE_VOID_SHARD_ORE_PLACED_KEY
+			ModPlacedFeatures.VOIDIUM_ORE_PLACED_KEY
+		);
+
+        BiomeModifications.addFeature(
+			BiomeSelectors.includeByKey(Biomes.PALE_GARDEN),
+			GenerationStep.Decoration.UNDERGROUND_ORES,
+			ModPlacedFeatures.DEEPSLATE_VOIDIUM_ORE_PLACED_KEY
 		);
     }
 }
