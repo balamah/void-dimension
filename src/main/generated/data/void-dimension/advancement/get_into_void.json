@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:void-dimensionget_saving_items",
+  "parent": "void-dimension:get_saving_items",
   "criteria": {
     "got_into_void": {
       "conditions": {
@@ -14,7 +14,6 @@
     },
     "frame": "goal",
     "icon": {
-      "count": 1,
       "id": "minecraft:deepslate"
     },
     "title": {

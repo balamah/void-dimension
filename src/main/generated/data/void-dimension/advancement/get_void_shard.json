@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:void-dimensionget_into_void",
+  "parent": "void-dimension:get_into_void",
   "criteria": {
     "got_void_shard": {
       "conditions": {
@@ -17,7 +17,6 @@
       "translate": "advancement.void-dimension.first_steps.description"
     },
     "icon": {
-      "count": 1,
       "id": "void-dimension:void_shard"
     },
     "title": {

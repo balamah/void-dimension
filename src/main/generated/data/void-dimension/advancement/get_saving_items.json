@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:void-dimensionvoid_dimension/root",
+  "parent": "void-dimension:void_dimension/root",
   "criteria": {
     "got_prayer_item": {
       "conditions": {
@@ -15,6 +15,11 @@
       "conditions": {
         "items": [
           {
+            "components": {
+              "minecraft:potion_contents": {
+                "potion": "void-dimension:void_salvation"
+              }
+            },
             "items": [
               "minecraft:potion",
               "minecraft:splash_potion",
@@ -31,7 +36,6 @@
       "translate": "advancement.void-dimension.first_preparations.description"
     },
     "icon": {
-      "count": 1,
       "id": "void-dimension:orthodox_cross"
     },
     "title": {

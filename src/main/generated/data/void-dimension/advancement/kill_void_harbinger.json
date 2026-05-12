@@ -1,14 +1,14 @@
 {
-  "parent": "minecraft:void-dimensionget_into_void",
+  "parent": "void-dimension:get_into_void",
   "criteria": {
-    "killed_shattered_sentinel_master": {
+    "killed_void_harbinger": {
       "conditions": {
         "entity": [
           {
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "void-dimension:shattered_sentinel_master"
+              "type": "void-dimension:void_harbinger"
             }
           }
         ]
@@ -18,20 +18,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.void-dimension.master_of_the_shattered.description"
+      "translate": "advancement.void-dimension.harbinger_of_oblivion.description"
     },
     "frame": "challenge",
     "icon": {
-      "count": 1,
-      "id": "void-dimension:shattered_sentinel_spawn_egg"
+      "id": "void-dimension:void_harbinger_spawn_egg"
     },
     "title": {
-      "translate": "advancement.void-dimension.master_of_the_shattered.title"
+      "translate": "advancement.void-dimension.harbinger_of_oblivion.title"
     }
   },
   "requirements": [
     [
-      "killed_shattered_sentinel_master"
+      "killed_void_harbinger"
     ]
   ],
   "sends_telemetry_event": true

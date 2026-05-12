@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:void-dimensionget_void_shard",
+  "parent": "void-dimension:get_void_shard",
   "criteria": {
     "got_bedrock_bomb": {
       "conditions": {
@@ -25,6 +25,11 @@
       "conditions": {
         "items": [
           {
+            "components": {
+              "minecraft:potion_contents": {
+                "potion": "void-dimension:void_salvation"
+              }
+            },
             "items": [
               "minecraft:potion",
               "minecraft:splash_potion",
@@ -41,7 +46,6 @@
       "translate": "advancement.void-dimension.exodus_preparation.description"
     },
     "icon": {
-      "count": 1,
       "id": "void-dimension:bedrock_bomb"
     },
     "title": {

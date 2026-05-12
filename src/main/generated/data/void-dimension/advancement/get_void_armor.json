@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:void-dimensionupgraded_netherite",
+  "parent": "void-dimension:upgraded_netherite",
   "criteria": {
     "got_void_armor": {
       "conditions": {
@@ -27,7 +27,6 @@
     },
     "frame": "challenge",
     "icon": {
-      "count": 1,
       "id": "void-dimension:void_chestplate"
     },
     "title": {

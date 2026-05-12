@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:void-dimensionget_bedrock_bomb_flint_and_steel",
+  "parent": "void-dimension:get_bedrock_bomb_flint_and_steel",
   "criteria": {
     "went_from_void": {
       "conditions": {
@@ -20,7 +20,6 @@
     },
     "frame": "goal",
     "icon": {
-      "count": 1,
       "id": "minecraft:netherrack"
     },
     "title": {

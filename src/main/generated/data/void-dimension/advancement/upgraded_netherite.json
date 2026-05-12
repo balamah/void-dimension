@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:void-dimensionget_void_shard",
+  "parent": "void-dimension:get_void_shard",
   "criteria": {
     "upgrade_netherite_axe": {
       "conditions": {
@@ -74,7 +74,6 @@
     },
     "frame": "goal",
     "icon": {
-      "count": 1,
       "id": "void-dimension:void_upgrade_smithing_template"
     },
     "title": {

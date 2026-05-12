@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:void-dimensioneat_alpha_steve_cooked_flesh",
+  "parent": "void-dimension:eat_alpha_steve_cooked_flesh",
   "criteria": {
     "ate_zombified_steve_flesh": {
       "conditions": {
@@ -18,7 +18,6 @@
     },
     "hidden": true,
     "icon": {
-      "count": 1,
       "id": "void-dimension:spoiled_flesh"
     },
     "title": {

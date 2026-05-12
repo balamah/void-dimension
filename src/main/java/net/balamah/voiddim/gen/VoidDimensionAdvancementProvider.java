@@ -16,6 +16,7 @@ import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.ChangeDimensionTrigger;
 import net.minecraft.advancements.criterion.ConsumeItemTrigger;
+import net.minecraft.advancements.criterion.DataComponentMatchers;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
@@ -23,6 +24,8 @@ import net.minecraft.advancements.criterion.KilledTrigger;
 import net.minecraft.advancements.criterion.RecipeCraftedTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.component.DataComponentExactPredicate;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -30,6 +33,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -55,13 +60,30 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 	) {
 		final HolderLookup.RegistryLookup<Item> itemLookup = wrapperLookup.lookupOrThrow(Registries.ITEM);
 		final HolderLookup.RegistryLookup<EntityType<?>> entityLookup = wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE);
+		final HolderLookup.RegistryLookup<Potion> potionLookup = wrapperLookup.lookupOrThrow(Registries.POTION);
 
-		Item voidSalvationPotion = McCodeHelper.getPotionItemStack(Items.POTION, "void_salvation").getItem();
-		Item voidSalvationSplashPotion = McCodeHelper.getPotionItemStack(Items.SPLASH_POTION, "void_salvation").getItem();
-		Item voidSalvationLingeringPotion = McCodeHelper.getPotionItemStack(Items.LINGERING_POTION, "void_salvation").getItem();
+		var voidSalvationPotion = potionLookup.getOrThrow(
+			ResourceKey.create(
+				Registries.POTION,
+				Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_salvation")
+			)
+		);
+
+		DataComponentExactPredicate voidSalvationPotionDataComponent =
+			DataComponentExactPredicate.builder()
+				.expect(DataComponents.POTION_CONTENTS, new PotionContents(voidSalvationPotion))
+				.build();
+
+		DataComponentMatchers potionMatcher =
+			DataComponentMatchers.Builder.components()
+				.exact(voidSalvationPotionDataComponent)
+				.build();
 
 		ItemPredicate voidSalvationPotionPredicate =
-			ItemPredicate.Builder.item().of(itemLookup, voidSalvationPotion, voidSalvationSplashPotion, voidSalvationLingeringPotion).build();
+			ItemPredicate.Builder.item()
+				.of(itemLookup, Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION)
+				.withComponents(potionMatcher)
+				.build();
 
 		ItemPredicate prayerItemsPredicate =
 			ItemPredicate.Builder.item().of(itemLookup, ModItemTags.PRAYER_ITEMS).build();
