@@ -136,6 +136,7 @@ public class ModSounds {
 
 	public static final SoundEvent MAGNET_PREPARE = register("special_attacks.magnet_prepare");
 	public static final SoundEvent MAGNET_EXECUTE = register("special_attacks.magnet_execute");
+	public static final SoundEvent MAGIC_PREPARE = register("special_attacks.magic_prepare");
 
 	public static final SoundEvent CORRUPTED_WARRIOR_EFFORT_1 =
 		register("corrupted_warrior.effort1");

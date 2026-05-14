@@ -12,7 +12,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 
 public class DarkGraspEntity extends EvokerFangs {
-	protected final float damage = 16f;
+	protected final float damage = 12f;
 
 	private int warmup = 0;
 

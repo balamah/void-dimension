@@ -331,6 +331,15 @@
 			}
 		]
 	},
+	"special_attacks.magic_prepare": {
+		"subtitle": "sound.void-dimension.special_attack.magic_prepare",
+		"sounds": [
+			{
+				"name": "void-dimension:special_attacks/magic_prepare",
+				"volume": 0.4
+			}
+		]
+	},
 	"entity303.death": {
 		"subtitle": "sound.void-dimension.entity303.death",
 		"sounds": [

@@ -51,7 +51,7 @@ public class CorruptedWarriorEntity extends BossEntity
 
 	protected int attackInterval;
 	protected int darkGraspTicks;
-	protected int multipleProjectilesShootTicks;
+	protected int multipleProjectilesShootTicks = 25;
 	protected int teleportTicks;
 	protected int strongAttackTicks = 50;
 
@@ -184,7 +184,7 @@ public class CorruptedWarriorEntity extends BossEntity
 
 		vec3d = vec3d.normalize();
 
-		double teleportDiameter = 7.0;
+		double teleportDiameter = 10.0;
 
 		int randomYoffset = (this.random.nextInt(16) - 8);
 
@@ -235,14 +235,6 @@ public class CorruptedWarriorEntity extends BossEntity
 
 	@Override
 	protected void registerGoals() {
-		/*
-		 * TODO: Add goals
-		 * - ThunderWaveInvoke	:: play CorruptedWarriorAnimations.SPECIAL_ATTACK
-		 * - StrongAttack		:: play CorruptedWarriorAnimations.STRONG_ATTACK
-			 Second phase has a chance of invoking even stronger attack
-			 with CorruptedWarriorAnimations.STRONGEST_ATTACK.
-			 It should have the same cooldown as teleport attack
-		 */
 		super.registerGoals();
 
 		Goal summonEntitiesGoal =
@@ -253,22 +245,21 @@ public class CorruptedWarriorEntity extends BossEntity
 		Goal shootingGoal =
 			new ShootMultipleProjectilesGoal<CorruptedWarriorEntity, ConsumedSoulEntity>(
 				this, world -> new ConsumedSoulEntity(ModEntities.CONSUMED_SOUL, world),
-				ModSounds.CORRUPTED_WARRIOR_EFFORT_1,
-				ModSounds.CORRUPTED_WARRIOR_EFFORT,
-				1, 4
+				ModSounds.MAGIC_PREPARE, ModSounds.CORRUPTED_WARRIOR_LONG_EFFORT,
+				3, 15
 			);
 
-		this.goalSelector.addGoal(1, new TeleportTowardsPlayerGoal<>(this));
+		this.goalSelector.addGoal(5, summonEntitiesGoal);
 		this.goalSelector.addGoal(
 			2, new StrongAttackGoal<>(this, 5, 3, ModSounds.CORRUPTED_WARRIOR_LONG_EFFORT)
 		);
-		this.goalSelector.addGoal(2, shootingGoal);
-		// TODO: Restore goals
+
 		this.goalSelector.addGoal(
-			4,
-			new DarkGraspInvokeGoal<>(this, 5, 2, 8, ModSounds.CORRUPTED_WARRIOR_EFFORT_1)
+			4, new DarkGraspInvokeGoal<>(this, 5, 2, 8, ModSounds.CORRUPTED_WARRIOR_EFFORT_1)
 		);
-		// this.goalSelector.addGoal(5, summonEntitiesGoal);
+
+		this.goalSelector.addGoal(1, new TeleportTowardsPlayerGoal<>(this));
+		this.goalSelector.addGoal(2, shootingGoal);
 	}
 
 	@Override
@@ -282,25 +273,26 @@ public class CorruptedWarriorEntity extends BossEntity
 		if (this.attackInterval > 0) {
 			this.attackInterval--;
 		}
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
 
 		if (this.darkGraspTicks > 0) {
 			this.darkGraspTicks--;
 		}
 
-		if (this.multipleProjectilesShootTicks > 0) {
+		if (this.strongAttackTicks > 0) {
+			this.strongAttackTicks--;
+		}
+
+		if (this.multipleProjectilesShootTicks > 0 && this.isSecondPhase()) {
 			this.multipleProjectilesShootTicks--;
 		}
 
 		if (this.teleportTicks > 0) {
 			this.teleportTicks--;
-		}
-
-		if (this.teleportTicks > 0) {
-			this.teleportTicks--;
-		}
-
-		if (this.strongAttackTicks > 0) {
-			this.strongAttackTicks--;
 		}
 	}
 

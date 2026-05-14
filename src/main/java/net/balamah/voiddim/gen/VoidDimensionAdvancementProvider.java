@@ -42,7 +42,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.balamah.voiddim.world.dimension.ModDimensions;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.block.ModBlocks;
-import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.item.ModItems;
 import net.balamah.voiddim.tag.ModItemTags;
@@ -55,6 +54,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 	}
 
 	@Override
+	@SuppressWarnings("unused")
 	public void generateAdvancement(
 		Provider wrapperLookup, Consumer<AdvancementHolder> consumer
 	) {

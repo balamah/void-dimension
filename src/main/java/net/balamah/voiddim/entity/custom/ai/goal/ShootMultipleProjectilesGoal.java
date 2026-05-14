@@ -2,16 +2,15 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 
 import com.google.common.base.Function;
 
-import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.MultipleProjectileShootUser;
 
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.Direction;
 
 public class ShootMultipleProjectilesGoal
 	<E extends CorruptedHostileEntity & MultipleProjectileShootUser, T extends Projectile>
