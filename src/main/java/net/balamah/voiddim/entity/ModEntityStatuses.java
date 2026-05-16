@@ -28,4 +28,7 @@ public class ModEntityStatuses {
 	public static final byte LIGHTNING_INVOKE					= 96;
 	public static final byte LIGHTNING_STOP						= 99;
 	public static final byte PROJECTILE_INVOKE					= 100;
+	public static final byte DEFEND            					= 101;
+	public static final byte STOP_DEFEND       					= 102;
+	public static final byte SUICIDE            				= 103;
 }

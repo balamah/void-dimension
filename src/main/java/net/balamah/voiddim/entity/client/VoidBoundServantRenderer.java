@@ -28,6 +28,22 @@ public class VoidBoundServantRenderer
 
 	@Override
 	public Identifier getTextureLocation(VoidBoundServantRenderState state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/void_bound_servant.png");
+		return Identifier.fromNamespaceAndPath(
+			VoidDimension.MOD_ID, "textures/entity/void_bound_servant.png"
+		);
+	}
+
+	@Override
+	public void extractRenderState(
+		VoidBoundServantEntity entity, VoidBoundServantRenderState state, float f
+	) {
+		super.extractRenderState(entity, state, f);
+
+		state.suicideAnimationState.copyFrom(entity.suicideAnimationState);
+		state.useShieldAnimationState.copyFrom(entity.useShieldAnimationState);
+		state.attack1AnimationState.copyFrom(entity.attack1AnimationState);
+		state.attack2AnimationState.copyFrom(entity.attack2AnimationState);
+		state.attack3AnimationState.copyFrom(entity.attack3AnimationState);
+		state.attack4AnimationState.copyFrom(entity.attack4AnimationState);
 	}
 }

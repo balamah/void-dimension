@@ -195,9 +195,7 @@ public class CorruptedWarriorModel extends EntityModel<CorruptedWarriorRenderSta
 			state.walkAnimationPos, state.walkAnimationSpeed, 2f, 2.5f
 		);
 
-		this.strongAttackAnimation.apply(
-			state.strongAttackAnimationState, state.ageInTicks, 1f
-		);
+		this.strongAttackAnimation.apply(state.strongAttackAnimationState, state.ageInTicks, 1f);
 
 		this.strongestAttackAnimation.apply(
 			state.strongestAttackAnimationState, state.ageInTicks, 1f
@@ -207,21 +205,10 @@ public class CorruptedWarriorModel extends EntityModel<CorruptedWarriorRenderSta
 			state.summonProjectileAnimationState, state.ageInTicks, 1f
 		);
 
-		this.specialAttackAnimation.apply(
-			state.specialAttackAnimationState, state.ageInTicks, 1f
-		);
-
-		this.normalAttack1Animation.apply(
-			state.normalAttack1AnimationState, state.ageInTicks, 1f
-		);
-
-		this.normalAttack2Animation.apply(
-			state.normalAttack2AnimationState, state.ageInTicks, 1f
-		);
-
-		this.normalAttack3Animation.apply(
-			state.normalAttack3AnimationState, state.ageInTicks, 1f
-		);
+		this.specialAttackAnimation.apply(state.specialAttackAnimationState, state.ageInTicks, 1f);
+		this.normalAttack1Animation.apply(state.normalAttack1AnimationState, state.ageInTicks, 1f);
+		this.normalAttack2Animation.apply(state.normalAttack2AnimationState, state.ageInTicks, 1f);
+		this.normalAttack3Animation.apply(state.normalAttack3AnimationState, state.ageInTicks, 1f);
 
         this.setHeadAngles(state.yRot, state.xRot);
 	}

@@ -40,6 +40,11 @@ public class VoidBoundServantModel
 	private final ModelPart decoration;
 
 	private final KeyframeAnimation suicideAnimation;
+	private final KeyframeAnimation useShieldAnimation;
+	private final KeyframeAnimation attack1Animation;
+	private final KeyframeAnimation attack2Animation;
+	private final KeyframeAnimation attack3Animation;
+	private final KeyframeAnimation attack4Animation;
 
 	public VoidBoundServantModel(ModelPart root) {
 		super(root);
@@ -60,6 +65,11 @@ public class VoidBoundServantModel
 		this.decoration = this.bottom.getChild("decoration");
 
 		this.suicideAnimation = VoidBoundServantAnimations.SUICIDE.bake(root);
+		this.useShieldAnimation = VoidBoundServantAnimations.USE_SHIELD.bake(root);
+		this.attack1Animation = VoidBoundServantAnimations.ATTACK_1.bake(root);
+		this.attack2Animation = VoidBoundServantAnimations.ATTACK_2.bake(root);
+		this.attack3Animation = VoidBoundServantAnimations.ATTACK_3.bake(root);
+		this.attack4Animation = VoidBoundServantAnimations.ATTACK_4.bake(root);
 	}
 
 	@Override
@@ -171,6 +181,11 @@ public class VoidBoundServantModel
 		super.setupAnim(state);
 
 		this.suicideAnimation.apply(state.suicideAnimationState, state.ageInTicks);
+		this.useShieldAnimation.apply(state.useShieldAnimationState, state.ageInTicks, 1f);
+		this.attack1Animation.apply(state.attack1AnimationState, state.ageInTicks, 1f);
+		this.attack2Animation.apply(state.attack2AnimationState, state.ageInTicks, 1f);
+		this.attack3Animation.apply(state.attack3AnimationState, state.ageInTicks, 1f);
+		this.attack4Animation.apply(state.attack4AnimationState, state.ageInTicks, 1f);
 
 		this.setHeadAngles(state);
 	}
