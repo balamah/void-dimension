@@ -62,6 +62,27 @@ public class VoidBoundServantModel
 		this.suicideAnimation = VoidBoundServantAnimations.SUICIDE.bake(root);
 	}
 
+	@Override
+	public void translateToHand(
+		VoidBoundServantRenderState state, HumanoidArm arm, PoseStack poseStack
+	) {
+		this.root.translateAndRotate(poseStack);
+		this.body.translateAndRotate(poseStack);
+		this.arms.translateAndRotate(poseStack);
+
+		if (arm == HumanoidArm.RIGHT) {
+			this.right_arm.translateAndRotate(poseStack);
+			this.right_elbow.translateAndRotate(poseStack);
+
+			poseStack.translate(0.08F, -0.1F, 0.0F);
+		} else {
+			this.left_arm.translateAndRotate(poseStack);
+			this.left_elbow.translateAndRotate(poseStack);
+
+			poseStack.translate(-0.08F, -0.1F, 0.0F);
+		}
+	}
+
 	public static LayerDefinition getTexturedModelData() {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
@@ -150,6 +171,13 @@ public class VoidBoundServantModel
 		super.setupAnim(state);
 
 		this.suicideAnimation.apply(state.suicideAnimationState, state.ageInTicks);
+
+		this.setHeadAngles(state);
+	}
+
+	protected void setHeadAngles(VoidBoundServantRenderState state) {
+		this.head.xRot = state.xRot * (float) (Math.PI / 180.0);
+		this.head.yRot = state.yRot * (float) (Math.PI / 180.0);
 	}
 
 	public ModelPart getRightHand() {
@@ -163,7 +191,4 @@ public class VoidBoundServantModel
 	protected ModelPart getAttackingArm(HumanoidArm arm) {
 		return arm == HumanoidArm.LEFT ? this.left_arm : this.right_arm;
 	}
-
-	@Override
-	public void translateToHand(VoidBoundServantRenderState state, HumanoidArm arm, PoseStack matrices) {}
 }

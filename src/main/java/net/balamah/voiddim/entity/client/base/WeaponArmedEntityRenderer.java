@@ -36,9 +36,7 @@ public abstract class WeaponArmedEntityRenderer
 	public abstract S createRenderState();
 	
 	@Override
-	public void extractRenderState(
-		T entity, S state, float f
-	) {
+	public void extractRenderState(T entity, S state, float f) {
 		super.extractRenderState(entity, state, f);
 
 		state.leftArmPose = this.getArmPose(entity, HumanoidArm.LEFT);

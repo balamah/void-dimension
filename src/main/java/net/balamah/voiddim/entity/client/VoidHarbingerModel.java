@@ -164,9 +164,9 @@ public class VoidHarbingerModel extends EntityModel<VoidHarbingerRenderState> {
 		return LayerDefinition.create(modelData, 96, 96);
 	}
 
-	    @Override
-	    public void setupAnim(VoidHarbingerRenderState state) {
-	        super.setupAnim(state);
+	@Override
+	public void setupAnim(VoidHarbingerRenderState state) {
+		super.setupAnim(state);
 
 		this.setHeadAngles(state.yRot, state.xRot);
 
