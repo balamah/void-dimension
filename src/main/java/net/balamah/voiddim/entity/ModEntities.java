@@ -325,7 +325,8 @@ public class ModEntities {
 			ModEntities.NULL,
 			ModEntities.AGGRESSIVE_NULL,
 			ModEntities.STARING_CAT,
-			ModEntities.STARING_DOG
+			ModEntities.STARING_DOG,
+			ModEntities.EYE_BRIGHT
 		};
 
 	public static void registerModEntities() {

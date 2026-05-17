@@ -111,7 +111,13 @@
 			},
 			{
 				"type": "void-dimension:null",
-			"weight": 30,
+				"weight": 30,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:eye_bright",
+				"weight": 8,
 				"minCount": 1,
 				"maxCount": 1
 			}
@@ -157,6 +163,10 @@
 		"void-dimension:null": {
 			"energy_budget": 5.0,
 			"charge": 2.0
+		},
+		"void-dimension:eye_bright": {
+			"energy_budget": 7.0,
+			"charge": 3.0
 		}
 	},
 	"effects": {
