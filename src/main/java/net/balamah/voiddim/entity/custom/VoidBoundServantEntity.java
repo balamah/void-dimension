@@ -31,7 +31,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	public final AnimationState attack3AnimationState = new AnimationState();
 	public final AnimationState attack4AnimationState = new AnimationState();
 
-	protected boolean shouldBlock;
+	protected boolean isDefending;
 	protected int attackInterval;
 
 	protected AnimationState[] attackAnimations = {
@@ -56,21 +56,19 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	public void tick() {
 		super.tick();
 
-		Level world = this.level();
 		LivingEntity target = this.getTarget();
+		boolean shouldDefend = target != null;
 
-		if (target != null) {
-			shouldBlock = true;
-		} else {
-			shouldBlock = false;
-		}
+		if (shouldDefend != this.isDefending) {
+			this.isDefending = shouldDefend;
 
-		if (shouldBlock) {
-			this.startUsingItem(InteractionHand.OFF_HAND);
-			world.broadcastEntityEvent(this, ModEntityStatuses.DEFEND);
-		} else {
-			this.stopUsingItem();
-			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_DEFEND);
+			if (this.isDefending) {
+				this.startUsingItem(InteractionHand.OFF_HAND);
+				this.level().broadcastEntityEvent(this, ModEntityStatuses.DEFEND);
+			} else {
+				this.stopUsingItem();
+				this.level().broadcastEntityEvent(this, ModEntityStatuses.STOP_DEFEND);
+			}
 		}
 	}
 
