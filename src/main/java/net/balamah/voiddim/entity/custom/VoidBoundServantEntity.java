@@ -55,7 +55,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		return Monster.createMonsterAttributes()
 			.add(Attributes.FOLLOW_RANGE, 32)
 			.add(Attributes.MOVEMENT_SPEED, 0.3F)
-			.add(Attributes.ATTACK_DAMAGE, 4.5F)
+			.add(Attributes.ATTACK_DAMAGE, 2.5F)
 			.add(Attributes.STEP_HEIGHT, 1.0)
 			.add(Attributes.MAX_HEALTH, 30);
 	}
