@@ -148,8 +148,11 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
 		Entity attacker = source.getEntity();
 
-		if (this.isBlocking() && attacker instanceof LivingEntity living) {
+		boolean wasBlocking = this.isBlocking();
+
+		if (wasBlocking && attacker instanceof LivingEntity living) {
 			ItemStack weapon = living.getMainHandItem();
+
 			if (weapon.getItem() instanceof AxeItem) {
 				this.stopUsingItem();
 				this.isDefending = false;
@@ -158,7 +161,15 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 				this.playSound(SoundEvents.SHIELD_BREAK.value());
 
 				this.shieldDisabledTicks = 100;
+
+				return super.hurtServer(world, source, amount);
 			}
+		}
+
+		if (this.isBlocking()) {
+			this.playSound(SoundEvents.SHIELD_BLOCK.value());
+
+			return false;
 		}
 
 		return super.hurtServer(world, source, amount);
