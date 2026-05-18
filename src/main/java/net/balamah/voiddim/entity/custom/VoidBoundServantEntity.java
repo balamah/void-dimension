@@ -78,6 +78,9 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 			case ModEntityStatuses.DEFEND:
 				this.useShieldAnimationState.start(this.tickCount);
 				break;
+			case ModEntityStatuses.STOP_DEFEND:
+				this.useShieldAnimationState.stop();
+				break;
 			case ModEntityStatuses.ATTACK:
 				this.stopAnimations(this.attackAnimations);
 				this.playRandomAnimation(this.attackAnimations);
