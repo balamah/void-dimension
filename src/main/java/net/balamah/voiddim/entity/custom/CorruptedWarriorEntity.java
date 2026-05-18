@@ -303,7 +303,7 @@ public class CorruptedWarriorEntity extends BossEntity
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return ModSounds.ARMOR_HIT;
+		return ModSounds.GREAT_ARMOR_HIT;
 	}
 
 	protected double getRandomCoordinate(double baseCoordinate, double vector, double diameter) {

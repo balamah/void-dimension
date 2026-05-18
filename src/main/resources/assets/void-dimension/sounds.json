@@ -399,10 +399,77 @@
 			"void-dimension:corrupted_warrior/death"
 		]
 	},
-	"armor.hit": {
+	"void_bound_servant.death": {
+		"subtitle": "sound.void-dimension.void_bound_servant.death",
+		"sounds": [
+			{
+				"name": "void-dimension:void_bound_servant/death1",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_bound_servant/death2",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_bound_servant/death3",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_bound_servant/death4",
+				"volume": 0.2
+			}
+		]
+	},
+	"void_bound_servant.attack": {
+		"subtitle": "sound.void-dimension.void_bound_servant.attack",
+		"sounds": [
+			{
+				"name": "void-dimension:void_bound_servant/attack1",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_bound_servant/attack2",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_bound_servant/attack3",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_bound_servant/attack4",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_bound_servant/attack5",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_bound_servant/attack6",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:void_bound_servant/attack7",
+				"volume": 0.2
+			}
+		]
+	},
+	"armor.great.hit": {
 		"subtitle": "sound.void-dimension.armor.hit",
 		"sounds": [
-			"void-dimension:armor/hit"
+			"void-dimension:armor/great/hit"
+		]
+	},
+	"armor.small.hit": {
+		"subtitle": "sound.void-dimension.armor.hit",
+		"sounds": [
+			{
+				"name": "void-dimension:armor/small/hit1",
+				"volume": 0.2
+			},
+			{
+				"name": "void-dimension:armor/small/hit2",
+				"volume": 0.2
+			}
 		]
 	},
 	"consumed_soul.hit": {

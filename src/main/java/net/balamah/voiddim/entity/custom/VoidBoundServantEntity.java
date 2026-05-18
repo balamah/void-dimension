@@ -3,6 +3,7 @@ package net.balamah.voiddim.entity.custom;
 import org.jetbrains.annotations.Nullable;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -53,7 +55,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		return Monster.createMonsterAttributes()
 			.add(Attributes.FOLLOW_RANGE, 32)
 			.add(Attributes.MOVEMENT_SPEED, 0.3F)
-			.add(Attributes.ATTACK_DAMAGE, 7.5F)
+			.add(Attributes.ATTACK_DAMAGE, 4.5F)
 			.add(Attributes.STEP_HEIGHT, 1.0)
 			.add(Attributes.MAX_HEALTH, 30);
 	}
@@ -128,6 +130,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		
 		if (result) {
 			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
+			this.playSound(ModSounds.VOID_BOUND_SERVANT_ATTACK);
 
 			// A magic number, don't touch
 			this.attackInterval = 8;
@@ -198,5 +201,15 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		if (this.attackInterval > 0) {
 			this.attackInterval--;
 		}
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.SMALL_ARMOR_HIT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.VOID_BOUND_SERVANT_DEATH;
 	}
 }

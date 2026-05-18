@@ -82,7 +82,9 @@ The order is going from brightest colors to the darkest
 - special_attacks.magnet_execute  :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (3))
 - special_attacks.magic_prepare   :: https://pixabay.com/sound-effects/search/spell/ (RescopicSound:Elemental Magic Spell Impact Outgoing)
 - corrupted_warrior.*             :: blade of darkness (\*chk1*wav)
-- armor.hit                       :: blade of darkness (golpe-maza-armfort.wav)
+- void_bound_servant.*             :: blade of darkness (\*rgn*wav)
+- armor.great.hit                 :: blade of darkness (golpe-maza-armfort.wav)
+- armor.small.hit                 :: blade of darkness (GOLPE-ARMADUR-33.wav)
 - consumed_soul.hit               :: https://pixabay.com/sound-effects/search/ghost/
   + hit1 :: (DRAGON-STUDIO:Ghost Whisper)
   + hit2 :: (DRAGON-STUDIO:Ghost Whisper)

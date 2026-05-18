@@ -141,15 +141,18 @@ public class ModSounds {
 	public static final SoundEvent CORRUPTED_WARRIOR_EFFORT_1 =
 		register("corrupted_warrior.effort1");
 
-	public static final SoundEvent CORRUPTED_WARRIOR_EFFORT =
-		register("corrupted_warrior.effort");
-
+	public static final SoundEvent CORRUPTED_WARRIOR_EFFORT = register("corrupted_warrior.effort");
 	public static final SoundEvent CORRUPTED_WARRIOR_LONG_EFFORT =
 		register("corrupted_warrior.long_effort");
 
 	public static final SoundEvent CORRUPTED_WARRIOR_DEATH = register("corrupted_warrior.death");
 
-	public static final SoundEvent ARMOR_HIT = register("armor.hit");
+	public static final SoundEvent VOID_BOUND_SERVANT_DEATH = register("void_bound_servant.death");
+	public static final SoundEvent VOID_BOUND_SERVANT_ATTACK =
+		register("void_bound_servant.attack");
+
+	public static final SoundEvent GREAT_ARMOR_HIT = register("armor.great.hit");
+	public static final SoundEvent SMALL_ARMOR_HIT = register("armor.small.hit");
 
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
