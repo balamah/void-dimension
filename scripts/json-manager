@@ -4,9 +4,7 @@
 # $2 :: object [item, block, structure, simpleFeature]
 # $3 :: feature name that matches with texture name
 
-printParameters() {
-	cat "$0" | grep -E '^#\s*\$[0-9@#*!{}].*::' | sed 's/^# //' 
-}
+. ./scripts/functions.sh
 
 [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] && printParameters && exit 1
 
@@ -138,7 +136,7 @@ create() {
 	name="$1" && shift
 	
 	for i in "$@"; do
-		originalFile=".templates/$i"
+		originalFile="scripts/templates/$i"
 		destination=$(getFileDestination "$name" "$i")
 
 		if [ ! -f "$destination" ]; then

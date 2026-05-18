@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# $1 :: path to animation blockbench class
+
+. ./scripts/functions.sh
+
+[ -z "$1" ] && printParameters && exit 1
+
+cat "$1" | \
+	sed 's@public static final Animation@&Definition@;
+	s@Animation\.Builder@AnimationDefinition.Builder@g;
+	s@Transformation@AnimationChannel@g;
+	s@AnimationHelper@KeyframeAnimations@g;
+	s@createRotationalVector@degreeVec@g;
+	s@createScalingVector@degreeVec@g;
+	s@Builder.create@Builder.withLength@g;
+	s@TRANSLATE@SCALE@g;
+	s@ROTATE@ROTATION@g;
+	s@createTranslationalVector@posVec@g;
+	s@addBoneAnimation@addAnimation@g
+'
