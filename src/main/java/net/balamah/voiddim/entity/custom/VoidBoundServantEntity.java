@@ -148,9 +148,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
 		Entity attacker = source.getEntity();
 
-		boolean wasBlocking = this.isBlocking();
-
-		if (wasBlocking && attacker instanceof LivingEntity living) {
+		if (this.isBlocking() && attacker instanceof LivingEntity living) {
 			ItemStack weapon = living.getMainHandItem();
 
 			if (weapon.getItem() instanceof AxeItem) {
