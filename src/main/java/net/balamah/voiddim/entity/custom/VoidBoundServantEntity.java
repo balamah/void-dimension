@@ -14,10 +14,14 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Items;
@@ -31,6 +35,8 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	public final AnimationState attack3AnimationState = new AnimationState();
 	public final AnimationState attack4AnimationState = new AnimationState();
 
+	protected boolean hasShield;
+	protected int shieldDisabledTicks = 0;
 	protected boolean isDefending;
 	protected int attackInterval;
 
@@ -45,11 +51,11 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes()
-				.add(Attributes.FOLLOW_RANGE, 32)
-				.add(Attributes.MOVEMENT_SPEED, 0.2F)
-				.add(Attributes.ATTACK_DAMAGE, 8.0F)
-				.add(Attributes.STEP_HEIGHT, 1.0)
-				.add(Attributes.MAX_HEALTH, 35);
+			.add(Attributes.FOLLOW_RANGE, 32)
+			.add(Attributes.MOVEMENT_SPEED, 0.3F)
+			.add(Attributes.ATTACK_DAMAGE, 7.5F)
+			.add(Attributes.STEP_HEIGHT, 1.0)
+			.add(Attributes.MAX_HEALTH, 30);
 	}
 
 	@Override
@@ -57,7 +63,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		super.tick();
 
 		LivingEntity target = this.getTarget();
-		boolean shouldDefend = target != null;
+		boolean shouldDefend = target != null && this.shieldDisabledTicks == 0 && this.hasShield;
 
 		if (shouldDefend != this.isDefending) {
 			this.isDefending = shouldDefend;
@@ -69,6 +75,10 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 				this.stopUsingItem();
 				this.level().broadcastEntityEvent(this, ModEntityStatuses.STOP_DEFEND);
 			}
+		}
+
+		if (this.shieldDisabledTicks > 0) {
+			this.shieldDisabledTicks--;
 		}
 	}
 
@@ -126,12 +136,55 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		return result;
 	}
 
+	/*
+	 * NOTE Methods that will may help in the future:
+	 * boolean isBlocking()
+	 * @Nullable ItemStack getItemBlockingWith()	
+	*/
+	@Override
+	public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
+		Entity attacker = source.getEntity();
+
+		if (this.isBlocking() && attacker instanceof LivingEntity living) {
+			ItemStack weapon = living.getMainHandItem();
+			if (weapon.getItem() instanceof AxeItem) {
+				this.stopUsingItem();
+				this.isDefending = false;
+
+				this.level().broadcastEntityEvent(this, ModEntityStatuses.STOP_DEFEND);
+				this.playSound(SoundEvents.SHIELD_BREAK.value());
+
+				this.shieldDisabledTicks = 100;
+			}
+		}
+
+		return super.hurtServer(world, source, amount);
+	}
+
+	@Override
+	public boolean isLeftHanded() {
+		return false;
+	}
+
 	@Override
 	protected void populateDefaultEquipmentSlots(
 		RandomSource random, DifficultyInstance localDifficulty
 	) {
-		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
-		this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));
+		Item[] weaponPool = {
+			Items.IRON_SWORD, Items.IRON_AXE, Items.DIAMOND_AXE,
+			Items.DIAMOND_SWORD, Items.NETHERITE_SWORD
+		};
+
+		int chosenWeaponIndex = random.nextInt(weaponPool.length);
+		Item chosenWeapon = weaponPool[chosenWeaponIndex];
+
+		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(chosenWeapon));
+
+		if (random.nextInt(2) == 1) {
+			this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));
+
+			this.hasShield = true;
+		}
 	}
 
 	@Override
