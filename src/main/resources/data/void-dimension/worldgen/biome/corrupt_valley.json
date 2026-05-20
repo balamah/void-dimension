@@ -6,13 +6,6 @@
 				"tick_chance": 0.003
 			}
 		},
-		"minecraft:audio/background_music": {
-			"default": {
-				"max_delay": 16000,
-				"min_delay": 12000,
-				"sound": "void-dimension:music.void"
-			}
-		},
 		"minecraft:visual/fog_color": "#000000",
 		"minecraft:visual/sky_color": "#000000",
 		"minecraft:visual/water_fog_color": "#000000",

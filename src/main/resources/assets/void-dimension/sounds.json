@@ -289,25 +289,6 @@
 			}
 		]
 	},
-	"music.void": {
-		"sounds": [
-			{
-				"name": "void-dimension:music/1",
-				"stream": true,
-				"volume": 0.2
-			},
-			{
-				"name": "void-dimension:music/2",
-				"stream": true,
-				"volume": 0.2
-			},
-			{
-				"name": "void-dimension:music/3",
-				"stream": true,
-				"volume": 0.2
-			}
-		]
-	},
 	"music_disc.calm4": {
 		"sounds": [
 			{
