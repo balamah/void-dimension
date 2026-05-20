@@ -42,6 +42,7 @@ import java.util.UUID;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -338,5 +339,14 @@ public class McCodeHelper {
 	                player.sendSystemMessage(Component.literal(message));
 	            }
 	        }
-	    }
+	}
+
+	public static boolean isPlayerInSurvival(LivingEntity entity) {
+		if (!(entity instanceof ServerPlayer playerEntity)) {
+			return true;
+		}
+
+		GameType gamemode = playerEntity.gameMode.getGameModeForPlayer();
+		return gamemode == GameType.SURVIVAL || gamemode == GameType.ADVENTURE;
+	}
 }

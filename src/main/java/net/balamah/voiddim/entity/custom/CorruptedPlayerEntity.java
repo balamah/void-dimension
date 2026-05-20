@@ -1,5 +1,6 @@
 package net.balamah.voiddim.entity.custom;
 
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public class CorruptedPlayerEntity extends Monster {
+public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	protected static final EntityDataAccessor<String> PLAYER_NAME =
 		SynchedEntityData.defineId(CorruptedPlayerEntity.class, EntityDataSerializers.STRING);
 	protected static final EntityDataAccessor<ResolvableProfile> PLAYER_PROFILE =

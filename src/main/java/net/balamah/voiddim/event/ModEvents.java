@@ -4,15 +4,13 @@ import net.balamah.voiddim.world.dimension.ModDimensions;
 import net.balamah.voiddim.event.custom.*;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.balamah.voiddim.effect.ModEffects;
 import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.custom.McCodeHelper;
 
 public class ModEvents {
 	public static void registerModEvents() {
@@ -33,7 +31,7 @@ public class ModEvents {
 
 			int lightLevel = world.getMaxLocalRawBrightness(pos);
 			if (lightLevel == 0 && world.dimension() == ModDimensions.VOID_WORLD &&
-				isPlayerInSurvival(entity)
+				McCodeHelper.isPlayerInSurvival(entity)
 			) {
 				entity.addEffect(new MobEffectInstance(ModEffects.CORRUPTION, 10, 1));
 
@@ -42,14 +40,5 @@ public class ModEvents {
 
 			return InteractionResult.PASS;
 		});
-	}
-
-	protected static boolean isPlayerInSurvival(LivingEntity entity) {
-		if (!(entity instanceof ServerPlayer playerEntity)) {
-			return true;
-		}
-
-		GameType gamemode = playerEntity.gameMode.getGameModeForPlayer();
-		return gamemode == GameType.SURVIVAL || gamemode == GameType.ADVENTURE;
 	}
 }
