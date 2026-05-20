@@ -95,7 +95,11 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new EntitySpecs<VoidBoundServantEntity>(ModEntities.VOID_BOUND_SERVANT,
 														VoidBoundServantModel.VOID_BOUND_SERVANT,
 														VoidBoundServantModel.getTexturedModelData(),
-														VoidBoundServantRenderer::new)
+														VoidBoundServantRenderer::new),
+				new EntitySpecs<CorruptedPlayerEntity>(ModEntities.CORRUPTED_PLAYER,
+														CorruptedPlayerModel.CORRUPTED_PLAYER,
+														CorruptedPlayerModel.getTexturedModelData(),
+														CorruptedPlayerRenderer::new)
 				);
 
 

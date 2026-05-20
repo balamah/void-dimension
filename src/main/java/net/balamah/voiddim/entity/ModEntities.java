@@ -137,6 +137,14 @@ public class ModEntities {
 			.sized(0.6f, 2f)
 		);
 
+	public static final EntityType<CorruptedPlayerEntity> CORRUPTED_PLAYER =
+		register(
+			"corrupted_player",
+			CorruptedPlayerEntity.class,
+			EntityType.Builder.<CorruptedPlayerEntity>of(CorruptedPlayerEntity::new, MobCategory.CREATURE)
+			.sized(0.6f, 1.8f)
+		);
+
 	public static final EntityType<VoidLightningEntity> VOID_LIGHTNING_BOLT = register(
 		"void_lightning_bolt",
 		VoidLightningEntity.class,
@@ -300,6 +308,7 @@ public class ModEntities {
 		FabricDefaultAttributeRegistry.register(ModEntities.NULL, NullEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.AGGRESSIVE_NULL, AggressiveNullEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.ENTITY303, Entity303.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_PLAYER, CorruptedPlayerEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.STARING_CAT, StaringCatEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.STARING_DOG, StaringDogEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.EYE_BRIGHT, EyeBrightEntity.createAttributes());
