@@ -23,16 +23,16 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
 {
 	protected final Class<T> entityClass;
 	protected final EntityType<T> entityType;
-	protected final int maxTargetDistance;
+	protected final int minTargetDistance;
 
 	public SummonEntitiesGoal(
-		E entity, Class<T> entityClass, EntityType<T> entityType, int maxTargetDistance
+		E entity, Class<T> entityClass, EntityType<T> entityType, int minTargetDistance
 	) {
 		super(entity);
 
 		this.entityClass = entityClass;
 		this.entityType = entityType;
-		this.maxTargetDistance = maxTargetDistance;
+		this.minTargetDistance = minTargetDistance;
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
 		Vec3 position = new Vec3(this.entity.getX(), this.entity.getY(), this.entity.getZ());;
 
 		return target != null &&
-			   target.distanceTo(this.entity) > this.maxTargetDistance &&
+			   target.distanceTo(this.entity) > this.minTargetDistance &&
 			   !this.areMobsSpawned(this.entity.level(), position, 15);
 	}
 

@@ -34,6 +34,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -348,5 +349,15 @@ public class McCodeHelper {
 
 		GameType gamemode = playerEntity.gameMode.getGameModeForPlayer();
 		return gamemode == GameType.SURVIVAL || gamemode == GameType.ADVENTURE;
+	}
+
+	public static List<ItemStack> getInventoryArray(Inventory inventory) {
+		List<ItemStack> itemArray = List.of();
+
+		for (int i = 0; i < inventory.getContainerSize(); i++) {
+			itemArray.add(inventory.getItem(i));
+		}
+
+		return itemArray;
 	}
 }

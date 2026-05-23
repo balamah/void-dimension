@@ -239,7 +239,7 @@ public class CorruptedWarriorEntity extends BossEntity
 
 		Goal summonEntitiesGoal =
 			new SummonEntitiesGoal<CorruptedWarriorEntity, VoidBoundServantEntity>(
-				this, VoidBoundServantEntity.class, ModEntities.VOID_BOUND_SERVANT, 10
+				this, VoidBoundServantEntity.class, ModEntities.VOID_BOUND_SERVANT, 4
 			);
 
 		Goal shootingGoal =
@@ -249,13 +249,13 @@ public class CorruptedWarriorEntity extends BossEntity
 				3, 15
 			);
 
-		this.goalSelector.addGoal(5, summonEntitiesGoal);
+		this.goalSelector.addGoal(3, summonEntitiesGoal);
 		this.goalSelector.addGoal(
 			2, new StrongAttackGoal<>(this, 5, 3, ModSounds.CORRUPTED_WARRIOR_LONG_EFFORT)
 		);
 
 		this.goalSelector.addGoal(
-			4, new DarkGraspInvokeGoal<>(this, 5, 2, 8, ModSounds.CORRUPTED_WARRIOR_EFFORT_1)
+			3, new DarkGraspInvokeGoal<>(this, 5, 2, 8, ModSounds.CORRUPTED_WARRIOR_EFFORT_1)
 		);
 
 		this.goalSelector.addGoal(1, new TeleportTowardsPlayerGoal<>(this));

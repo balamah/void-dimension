@@ -1,27 +1,40 @@
 package net.balamah.voiddim.entity.custom;
 
+import org.jetbrains.annotations.Nullable;
+
+import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	protected static final EntityDataAccessor<String> PLAYER_NAME =
 		SynchedEntityData.defineId(CorruptedPlayerEntity.class, EntityDataSerializers.STRING);
+
 	protected static final EntityDataAccessor<ResolvableProfile> PLAYER_PROFILE =
-		SynchedEntityData.defineId(CorruptedPlayerEntity.class, EntityDataSerializers.RESOLVABLE_PROFILE);
+		SynchedEntityData.defineId(
+			CorruptedPlayerEntity.class, EntityDataSerializers.RESOLVABLE_PROFILE
+		);
 
 	protected static final String PLAYER_NAME_KEY = "PlayerName";
 	protected static final String PLAYER_PROFILE_KEY = "PlayerProfile";
+
+	protected ServerPlayer player;
 
 	public CorruptedPlayerEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
@@ -43,6 +56,8 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 		this.setYBodyRot(player.yBodyRot);
 		this.setCustomName(player.getDisplayName());
 		this.setPersistenceRequired();
+
+		this.player = player;
 	}
 
 	public String getPlayerName() {
@@ -59,6 +74,22 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 
 	public void setPlayerProfile(ResolvableProfile profile) {
 		this.entityData.set(PLAYER_PROFILE, profile);
+	}
+
+	@Override
+	@Nullable
+	public SpawnGroupData finalizeSpawn(
+		ServerLevelAccessor world,
+		DifficultyInstance difficulty,
+		EntitySpawnReason spawnReason,
+		@Nullable SpawnGroupData entityData
+	) {
+		entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
+
+		this.populateDefaultEquipmentSlots(this.random, difficulty);
+		this.populateDefaultEquipmentEnchantments(world, this.random, difficulty);
+		
+		return entityData;
 	}
 
 	@Override
@@ -86,5 +117,18 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 					? ResolvableProfile.Static.EMPTY
 					: ResolvableProfile.createUnresolved(playerName))
 		);
+	}
+
+	/*
+	 * TODO: Make the entity have player's inventory
+	 * NOTE: Remember about
+	 * - player.getInventory();
+	 * - this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(item));
+	 */
+	@Override
+	protected void populateDefaultEquipmentSlots(
+		RandomSource random, DifficultyInstance localDifficulty
+	) {
+		this.player.getInventory();
 	}
 }
