@@ -1,11 +1,8 @@
 #+TITLE: README
 #+AUTHOR: Balamah
 
-=WARNING=: Sodium mod is recommended if you set render distance more
-than 20 chunks. The terrain is very cpu heavy, or maybe it is a skill
-issue, idk
-
 * Table of contents :toc:
+- [[#warnings][Warnings]]
 - [[#introduction][Introduction]]
 - [[#setting-up-the-project][Setting up the project]]
   - [[#dependencies][Dependencies]]
@@ -21,6 +18,20 @@ issue, idk
   - [[#programmers][Programmers]]
   - [[#builders][Builders]]
   - [[#3d-modellers][3D modellers]]
+
+* Warnings
+- Sodium mod is recommended if you set render distance more than 20 chunks.
+  The terrain is very cpu heavy, or maybe it is a skill issue, idk.
+- Do not edit directly blockbench models,
+  copy them in a different directory, and edit them in the copied
+  directory. In each blockbench model set texture path to the texture
+  path in the project
+- Do not edit the original Blockbench models directly.
+  Instead, create a copy in a separate working directory before making
+  changes. This prevents accidental loss or corruption of the source
+  models.
+- In every Blockbench model, make sure the texture path points to the
+  correct texture location inside the project resources directory.
 
 * Introduction
 This mod adds a whole new void-based world and new tool material that
@@ -66,30 +77,17 @@ The order is going from brightest colors to the darkest
 
 * Sources
 ** Sounds
-- music.1                         :: blade of darkness (ATMOSFERA8)
-- music.2                         :: blade of darkness (ATMOSFERA19)
-- music.3                         :: blade of darkness (SORPRESA7)
-- void_harbinger.shoot_prepare    :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (4))
-- void_harbinger.shoot            :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (1))
+- void_harbinger.shoot_prepare    :: https://pixabay.com/sound-effects/search/dark%20magic/
+- void_harbinger.shoot            :: https://pixabay.com/sound-effects/search/dark%20magic/
 - void_harbinger.teleport         :: blade of darkness (desaparece-vamp1.wav)
 - shattered_sentinel_master.death :: https://depositphotos.com/sound-effect/rumbling-impact-ancient-stony-stride-784492644.html
 - staring_entity.death            :: blade of darkness (muerte-Ldm.wav)
-- special_attacks.lightning       :: https://pixabay.com/sound-effects/search/lightning/ (Yodguard:Lightning Magic (1))
-- special_attacks.counter_attack  :: https://pixabay.com/sound-effects/search/power%20attack/ (Yodguard:Powerful Bear Attack with Roar (1))
+- special_attack.lightning        :: https://pixabay.com/sound-effects/search/lightning/
+- special_attacks.counter_attack  :: https://pixabay.com/sound-effects/search/power%20attack/
 - entity303.death                 :: nazgul screams from The lord of the rings
-- eye_bright.shoot_prepare        :: https://pixabay.com/sound-effects/search/pain/ (Universfield:Man Scream)
-- special_attacks.magnet_prepare  :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (6))
-- special_attacks.magnet_execute  :: https://pixabay.com/sound-effects/search/dark%20magic/ (Yodguard:Dark magic (3))
-- special_attacks.magic_prepare   :: https://pixabay.com/sound-effects/search/spell/ (RescopicSound:Elemental Magic Spell Impact Outgoing)
-- corrupted_warrior.*             :: blade of darkness (\*chk1*wav)
-- void_bound_servant.*             :: blade of darkness (\*rgn*wav)
-- armor.great.hit                 :: blade of darkness (golpe-maza-armfort.wav)
-- armor.small.hit                 :: blade of darkness (GOLPE-ARMADUR-33.wav)
-- consumed_soul.hit               :: https://pixabay.com/sound-effects/search/ghost/
-  + hit1 :: (DRAGON-STUDIO:Ghost Whisper)
-  + hit2 :: (DRAGON-STUDIO:Ghost Whisper)
-  + hit3 :: (DRAGON-STUDIO:Halloween Ghost Whisper)
-  + hit4 :: (freesound_community:Ghost Scream)
+- music.1                         :: blade of darkness (ATMOSFERA8)
+- music.2                         :: blade of darkness (ATMOSFERA19)
+- music.3                         :: blade of darkness (SORPRESA7)
 
 ** Textures
 - Corrupted mobs black skin :: https://modrinth.com/mod/intothevoid
@@ -104,8 +102,7 @@ The order is going from brightest colors to the darkest
 - alpha steve walking :: [[https://gitlab.com/TecnaGamer/OldWalkingAnimation][OldWalkingAnimation]]
 
 ** Models
-- rana          :: https://github.com/sakiiiiika/ranamod
-- consumed soul :: https://sketchfab.com/3d-models/minecraft-skull-53635f2ee6ae4508b06ae226cde7548c (inspired)
+- rana :: https://github.com/sakiiiiika/ranamod
 
 * Credits
 ** Programmers

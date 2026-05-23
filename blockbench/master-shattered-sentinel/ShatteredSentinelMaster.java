@@ -1,0 +1,101 @@
+// Made with Blockbench 4.12.6
+// Exported for Minecraft version 1.17+ for Yarn
+// Paste this class into your mod and generate all required imports
+public class ShetteredSentinelMasterModel extends EntityModel<Entity> {
+	private final ModelPart root;
+	private final ModelPart head;
+	private final ModelPart body;
+	private final ModelPart stones;
+	private final ModelPart lats;
+	private final ModelPart arms;
+	private final ModelPart left_arm;
+	private final ModelPart right_elbow;
+	private final ModelPart right_arm;
+	private final ModelPart left_elbow;
+	private final ModelPart legs;
+	private final ModelPart right_leg;
+	private final ModelPart left_leg;
+	public ShetteredSentinelMasterModel(ModelPart root) {
+		this.root = root.getChild("root");
+		this.head = this.root.getChild("head");
+		this.body = this.root.getChild("body");
+		this.stones = this.body.getChild("stones");
+		this.lats = this.body.getChild("lats");
+		this.arms = this.root.getChild("arms");
+		this.left_arm = this.arms.getChild("left_arm");
+		this.right_elbow = this.left_arm.getChild("right_elbow");
+		this.right_arm = this.arms.getChild("right_arm");
+		this.left_elbow = this.right_arm.getChild("left_elbow");
+		this.legs = this.root.getChild("legs");
+		this.right_leg = this.legs.getChild("right_leg");
+		this.left_leg = this.legs.getChild("left_leg");
+	}
+	public static TexturedModelData getTexturedModelData() {
+		ModelData modelData = new ModelData();
+		ModelPartData modelPartData = modelData.getRoot();
+		ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+
+		ModelPartData head = root.addChild("head", ModelPartBuilder.create().uv(0, 42).cuboid(-4.0F, -44.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+
+		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(0, 20).cuboid(-8.0F, -18.0F, -4.0F, 16.0F, 2.0F, 8.0F, new Dilation(0.0F))
+		.uv(0, 0).cuboid(-7.0F, -31.0F, -3.5F, 14.0F, 13.0F, 7.0F, new Dilation(0.0F))
+		.uv(0, 30).cuboid(-7.0F, -36.0F, -3.5F, 14.0F, 5.0F, 7.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+
+		ModelPartData stones = body.addChild("stones", ModelPartBuilder.create(), ModelTransform.of(-0.5F, -36.0F, 4.0F, -0.131F, -0.0433F, 0.0057F));
+
+		ModelPartData cube_r1 = stones.addChild("cube_r1", ModelPartBuilder.create().uv(24, 62).cuboid(0.0F, -2.0F, 0.0F, 1.0F, 2.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(-9.0F, -3.0F, 3.0F, 0.0452F, 0.2615F, 0.2299F));
+
+		ModelPartData cube_r2 = stones.addChild("cube_r2", ModelPartBuilder.create().uv(42, 15).cuboid(0.0F, -2.0F, 0.0F, 1.0F, 2.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(-4.0F, -8.0F, 6.0F, 0.1745F, 0.2182F, 0.0F));
+
+		ModelPartData cube_r3 = stones.addChild("cube_r3", ModelPartBuilder.create().uv(64, 50).cuboid(0.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(-10.0F, -4.0F, 6.0F, 0.1273F, -0.5932F, -0.1632F));
+
+		ModelPartData cube_r4 = stones.addChild("cube_r4", ModelPartBuilder.create().uv(28, 64).cuboid(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(10.0F, -2.0F, 0.0F, -0.0324F, 1.0763F, -0.2542F));
+
+		ModelPartData cube_r5 = stones.addChild("cube_r5", ModelPartBuilder.create().uv(28, 62).cuboid(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(5.0F, -6.0F, 4.0F, 0.4403F, 0.8869F, 0.2924F));
+
+		ModelPartData cube_r6 = stones.addChild("cube_r6", ModelPartBuilder.create().uv(42, 18).cuboid(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(7.0F, -6.0F, 0.0F, 0.1273F, 0.5932F, 0.1632F));
+
+		ModelPartData cube_r7 = stones.addChild("cube_r7", ModelPartBuilder.create().uv(42, 12).cuboid(-1.0F, -2.0F, 0.0F, 1.0F, 2.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(13.0F, 1.0F, 1.0F, 0.1904F, 0.9812F, 0.2507F));
+
+		ModelPartData cube_r8 = stones.addChild("cube_r8", ModelPartBuilder.create().uv(24, 58).cuboid(-1.0F, -2.0F, 0.0F, 2.0F, 2.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(12.0F, -4.0F, 3.0F, 0.315F, 0.7769F, 0.1298F));
+
+		ModelPartData cube_r9 = stones.addChild("cube_r9", ModelPartBuilder.create().uv(56, 50).cuboid(-1.0F, -2.0F, 0.0F, 2.0F, 2.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-7.0F, -6.0F, 4.0F, 0.315F, -0.7769F, -0.1298F));
+
+		ModelPartData lats = body.addChild("lats", ModelPartBuilder.create().uv(64, 66).cuboid(7.0F, -31.0F, -0.5F, 1.0F, 5.0F, 4.0F, new Dilation(0.0F))
+		.uv(32, 71).cuboid(-8.0F, -31.0F, -0.5F, 1.0F, 5.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+
+		ModelPartData arms = root.addChild("arms", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+
+		ModelPartData left_arm = arms.addChild("left_arm", ModelPartBuilder.create().uv(48, 12).cuboid(-1.0F, -2.0F, -3.5F, 5.0F, 5.0F, 7.0F, new Dilation(0.0F))
+		.uv(66, 24).cuboid(0.5F, 3.0F, -1.5F, 3.0F, 7.0F, 3.0F, new Dilation(0.0F)), ModelTransform.pivot(8.0F, -34.0F, 0.0F));
+
+		ModelPartData right_elbow = left_arm.addChild("right_elbow", ModelPartBuilder.create().uv(16, 66).cuboid(8.0F, -24.0F, -2.0F, 4.0F, 9.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(-8.0F, 34.0F, 0.0F));
+
+		ModelPartData right_arm = arms.addChild("right_arm", ModelPartBuilder.create().uv(32, 42).cuboid(-5.0F, -2.0F, -3.5F, 5.0F, 5.0F, 7.0F, new Dilation(0.0F))
+		.uv(66, 0).cuboid(-4.5F, 3.0F, -1.5F, 3.0F, 7.0F, 3.0F, new Dilation(0.0F)), ModelTransform.pivot(-7.0F, -34.0F, 0.0F));
+
+		ModelPartData left_elbow = right_arm.addChild("left_elbow", ModelPartBuilder.create().uv(0, 66).cuboid(-12.0F, -24.0F, -2.0F, 4.0F, 9.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(7.0F, 34.0F, 0.0F));
+
+		ModelPartData legs = root.addChild("legs", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -15.0F, -2.0F));
+
+		ModelPartData right_leg = legs.addChild("right_leg", ModelPartBuilder.create().uv(56, 42).cuboid(-8.0F, -2.0F, -3.0F, 6.0F, 2.0F, 6.0F, new Dilation(0.0F))
+		.uv(42, 0).cuboid(-8.0F, -9.0F, -3.0F, 6.0F, 6.0F, 6.0F, new Dilation(0.0F))
+		.uv(48, 24).cuboid(-7.0F, -3.0F, -2.0F, 4.0F, 1.0F, 4.0F, new Dilation(0.0F))
+		.uv(32, 66).cuboid(-7.0F, -10.0F, -2.0F, 4.0F, 1.0F, 4.0F, new Dilation(0.0F))
+		.uv(32, 54).cuboid(-7.5F, -16.0F, -3.0F, 5.0F, 6.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 15.0F, 2.0F));
+
+		ModelPartData left_leg = legs.addChild("left_leg", ModelPartBuilder.create().uv(0, 58).cuboid(2.0F, -2.0F, -3.0F, 6.0F, 2.0F, 6.0F, new Dilation(0.0F))
+		.uv(42, 30).cuboid(2.0F, -9.0F, -3.0F, 6.0F, 6.0F, 6.0F, new Dilation(0.0F))
+		.uv(66, 34).cuboid(3.0F, -3.0F, -2.0F, 4.0F, 1.0F, 4.0F, new Dilation(0.0F))
+		.uv(48, 66).cuboid(3.0F, -10.0F, -2.0F, 4.0F, 1.0F, 4.0F, new Dilation(0.0F))
+		.uv(54, 54).cuboid(2.5F, -16.0F, -3.0F, 5.0F, 6.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 15.0F, 2.0F));
+		return TexturedModelData.of(modelData, 88, 88);
+	}
+	@Override
+	public void setAngles(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	}
+	@Override
+	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+		root.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	}
+}
