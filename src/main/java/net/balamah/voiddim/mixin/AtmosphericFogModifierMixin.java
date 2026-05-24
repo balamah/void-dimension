@@ -21,11 +21,8 @@ public class AtmosphericFogModifierMixin {
 		CallbackInfo ci
 	) {
 		if (world.dimension().equals(ModDimensions.VOID_WORLD)) {
-			data.color.set(0.0f, 0.0f, 0.0f, 1.0f);
-			data.environmentalStart = 0.0f;
-			data.environmentalEnd = Math.min(viewDistance * 0.55f, 48.0f);
-			data.skyEnd = Math.min(data.skyEnd, data.environmentalEnd);
-			data.cloudEnd = Math.min(data.cloudEnd, data.environmentalEnd);
+			data.environmentalStart = viewDistance * 0.05f;
+			data.environmentalEnd = viewDistance * 0.45f;
 		}
 	}
 }
