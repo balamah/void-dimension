@@ -49,20 +49,19 @@ public class CorpseBlock extends HorizontalDirectionalBlock implements SimpleWat
     }
 
     @Override
-    public BlockState updateShape(
+    protected BlockState updateShape(
         BlockState state,
+        Direction direction,
+        BlockState neighborState,
         LevelAccessor level,
         BlockPos pos,
-        Direction direction,
-        BlockPos neighborPos,
-        BlockState neighborState,
-        RandomSource random
+        BlockPos neighborPos
     ) {
         if (state.getValue(BlockStateProperties.WATERLOGGED)) {
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
 
-        return super.updateShape(state, level, pos, direction, neighborPos, neighborState, random);
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
     @Override

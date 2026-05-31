@@ -1,29 +1,32 @@
 package net.balamah.voiddim.material.armor;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import net.balamah.voiddim.VoidDimension;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
-// import net.minecraft.world.item.equipment.ArmorType;
-// import net.minecraft.world.item.equipment.EquipmentAsset;
-// import net.minecraft.world.item.equipment.EquipmentAssets;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 
 public class VoidArmorMaterial {
 	public static final int BASE_DURABILITY = 40;
+	public static final TagKey<Item> REPAIRS_VOID_ARMOR =
+		TagKey.create(
+			Registries.ITEM,
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "repairs_void_armor")
+		);
 
-	public static final Holder<ArmorMaterial> GUIDITE = registerMaterial("void",
+	public static final Holder<ArmorMaterial> INSTANCE = registerMaterial("void",
 			// Defense (protection) point values for each armor piece.
 			Map.of(
 				ArmorItem.Type.HELMET, 5,
@@ -34,7 +37,7 @@ public class VoidArmorMaterial {
 			// Enchantability. For reference, leather has 15, iron has 9, and diamond has 10.
 			15,
 			SoundEvents.ARMOR_EQUIP_NETHERITE,
-			() -> Ingredient.of(ModItems.SUSPICIOUS_SUBSTANCE),
+			() -> Ingredient.of(REPAIRS_VOID_ARMOR),
 			3.5F,
 			0.2F,
 			false);
@@ -48,12 +51,12 @@ public class VoidArmorMaterial {
 			// We can just pass the armor material ID as the texture layer ID.
 			// We have no need for a suffix, so we'll pass an empty string.
 			// We'll pass the dyeable boolean we received as the dyeable parameter.
-			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ExampleMod.MOD_ID, id), "", dyeable)
+			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, id), "", dyeable)
 		);
 
 		ArmorMaterial material = new ArmorMaterial(defensePoints, enchantability, equipSound, repairIngredientSupplier, layers, toughness, knockbackResistance);
 		// Register the material within the ArmorMaterials registry.
-		material = Registry.register(BuiltInRegistries.ARMOR_MATERIAL, ResourceLocation.fromNamespaceAndPath(ExampleMod.MOD_ID, id), material);
+		material = Registry.register(BuiltInRegistries.ARMOR_MATERIAL, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, id), material);
 
 		// The majority of the time, you'll want the RegistryEntry of the material - especially for the ArmorItem constructor.
 		return Holder.direct(material);

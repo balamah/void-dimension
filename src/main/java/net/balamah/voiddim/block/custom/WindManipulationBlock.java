@@ -24,7 +24,6 @@ public class WindManipulationBlock extends Block {
         super(properties);
     }
 
-    @Override
     public void updateEntityMovementAfterFallOn(BlockGetter level, Entity entity) {
         entity.causeFallDamage(entity.fallDistance, 0.0F, entity.damageSources().fall());
         entity.fallDistance = 0.0F;

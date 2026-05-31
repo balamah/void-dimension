@@ -33,6 +33,22 @@ loom {
 	}
 }
 
+sourceSets {
+	main {
+		java {
+			exclude "net/balamah/voiddim/gen/**"
+			exclude "net/balamah/voiddim/VoidDimensionDataGenerator.java"
+		}
+	}
+	client {
+		java {
+			exclude "net/balamah/voiddim/custom/**"
+			exclude "net/balamah/voiddim/entity/client/**"
+			exclude "net/balamah/voiddim/mixin/**"
+		}
+	}
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"

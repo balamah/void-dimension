@@ -16,8 +16,9 @@ public class ModSmithingTemplateItem extends SmithingTemplateItem {
 		Item.Properties settings
 	) {
 		super(appliesToText, ingredientsText,
+			  Component.translatable("upgrade.void-dimension").withStyle(ChatFormatting.GRAY),
 			  baseSlotDescriptionText, additionsSlotDescriptionText,
-			  emptyBaseSlotTextures, emptyAdditionsSlotTextures, settings);
+			  emptyBaseSlotTextures, emptyAdditionsSlotTextures);
 	}
 
 	public static SmithingTemplateItem createVoidUpgrade(Item.Properties settings) {
@@ -26,11 +27,11 @@ public class ModSmithingTemplateItem extends SmithingTemplateItem {
 			.withStyle(ChatFormatting.BLUE),
 			Component.translatable("upgrade.void-dimension.ingredients")
 			.withStyle(ChatFormatting.BLUE),
+			Component.translatable("upgrade.void-dimension").withStyle(ChatFormatting.GRAY),
 			Component.translatable("upgrade.void-dimension.base_slot_description"),
 			Component.translatable("upgrade.void-dimension.additions_slot_description"),
 			getUpgradeEmptyBaseSlotTextures(),
-			List.of(ResourceLocation.withDefaultNamespace("container/slot/ingot")),
-			settings
+			List.of(ResourceLocation.withDefaultNamespace("container/slot/ingot"))
 		);
 	}
 

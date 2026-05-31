@@ -49,7 +49,7 @@ public class DarkGraspEntity extends EvokerFangs {
 		DamageSource damageSource = this.damageSources().indirectMagic(this, livingEntity);
 
 		if (this.level() instanceof ServerLevel serverWorld &&
-			target.hurtServer(serverWorld, damageSource, this.damage))
+			target.hurt(damageSource, this.damage))
 		{
 			MobEffectInstance effect = new MobEffectInstance(ModEffects.CORRUPTION, 60, 1);
 

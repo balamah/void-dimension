@@ -21,7 +21,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.InteractionHand;
@@ -58,7 +57,7 @@ import java.util.List;
 
 public class McCodeHelper {
 	public static final List<Holder<MobEffect>> shockWaveEffects = List.of(
-		MobEffects.SLOWNESS,
+		MobEffects.MOVEMENT_SLOWDOWN,
 		MobEffects.BLINDNESS,
 		MobEffects.WEAKNESS
 	);
@@ -83,7 +82,7 @@ public class McCodeHelper {
 	}
 
 	public static ServerBossEvent getBossBar(Component text, BossBarColor color) {
-		return new ServerBossEvent(UUID.randomUUID(), text, color, BossEvent.BossBarOverlay.PROGRESS);
+		return new ServerBossEvent(text, color, BossEvent.BossBarOverlay.PROGRESS);
 	}
 
 	public static boolean isBlockReplaceable(Block block) {
@@ -153,7 +152,7 @@ public class McCodeHelper {
 		ItemStack activeItemStack = target.getUseItem();
 		Item activeItem = activeItemStack.getItem();
 		if (activeItem == Items.SHIELD) {
-			target.getCooldowns().addCooldown(activeItemStack, 100);
+			target.getCooldowns().addCooldown(activeItem, 100);
 			target.releaseUsingItem();
 			target.stopUsingItem();
 
@@ -229,10 +228,10 @@ public class McCodeHelper {
 		return true;
 	}
 
-	public static Goal getTargetGoal(Mob entity, Class<?> entityTarget) {
-		return new NearestAttackableTargetGoal(
+	public static <T extends LivingEntity> Goal getTargetGoal(Mob entity, Class<T> entityTarget) {
+		return new NearestAttackableTargetGoal<T>(
 			entity, entityTarget, 10, true, false,
-			(target, world) -> Math.abs(target.getY() - target.getY()) <= 25.0
+			target -> Math.abs(target.getY() - entity.getY()) <= 25.0
 		);
 	}
 
@@ -246,7 +245,7 @@ public class McCodeHelper {
 		);
 
 		return PotionContents.createItemStack(
-			potionType, BuiltInRegistries.POTION.getOrThrow(potionRegistryKey)
+			potionType, BuiltInRegistries.POTION.getHolderOrThrow(potionRegistryKey)
 		);
 	}
 
@@ -269,8 +268,7 @@ public class McCodeHelper {
 			entity, null, VoidSphereEntity.EXPLOSION_BEHAVIOR,
 			entity.getX(), entity.getY(), entity.getZ(),
 			radius, false, Level.ExplosionInteraction.TRIGGER,
-			ParticleTypes.GUST_EMITTER_SMALL, ParticleTypes.GUST_EMITTER_LARGE,
-			WeightedList.of(), ModSounds.SHOCKWAVE
+			ParticleTypes.GUST_EMITTER_SMALL, ParticleTypes.GUST_EMITTER_LARGE, ModSounds.SHOCKWAVE
 		);
 
 		List<LivingEntity> entities = entity.level()
@@ -288,7 +286,7 @@ public class McCodeHelper {
 			for (Holder<MobEffect> effect : shockWaveEffects) {
 				int amplifier = (effect != MobEffects.WEAKNESS) ? 2 : 0;
 				target.addEffect(new MobEffectInstance(effect, 1200, amplifier));
-				target.hurtServer(world, ModDamageSources.shockWave(world), 15f);
+				target.hurt(ModDamageSources.shockWave(world), 15f);
 
 				breakShield(target);
 			}

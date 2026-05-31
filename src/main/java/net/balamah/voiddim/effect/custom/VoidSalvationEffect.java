@@ -9,7 +9,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Relative;
+import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,9 +26,9 @@ public class VoidSalvationEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
+	public boolean applyEffectTick(LivingEntity entity, int amplifier) {
 		ResourceKey<Level> currentDimension = entity.level().dimension();
-		String currentDimensionId = currentDimension.identifier().toString();
+		String currentDimensionId = currentDimension.location().toString();
 		ResourceKey<Level> dimensionToTeleport = this.getDimensionToTeleport(currentDimensionId);
 
 		if (entity instanceof ServerPlayer player && entity.getY() < -120 &&
@@ -37,20 +37,18 @@ public class VoidSalvationEffect extends MobEffect {
 			this.teleportPlayer(player, dimensionToTeleport);
 		}
 
-		return super.applyEffectTick(world, entity, amplifier);
+		return super.applyEffectTick(entity, amplifier);
 	}
 
 	protected void teleportPlayer(
 		ServerPlayer player, ResourceKey<Level> dimensionToTeleport
 	) {
-		EnumSet<Relative> flags = EnumSet.of(Relative.X, Relative.Y, Relative.Z);
+		EnumSet<RelativeMovement> flags = EnumSet.of(RelativeMovement.X, RelativeMovement.Y, RelativeMovement.Z);
 		ServerLevel dimension =
 			player.level().getServer().getLevel(dimensionToTeleport);
 
 		if (dimension != null) {
-			player.teleportTo(
-				dimension, 100, 250, 100, flags, player.getYRot(), player.getXRot(), true
-			);
+			player.teleportTo(dimension, 100, 250, 100, flags, player.getYRot(), player.getXRot());
 
 			player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 350, 1));
 		}

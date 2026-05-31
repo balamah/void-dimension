@@ -32,8 +32,8 @@ public class BossEntity extends CorruptedHostileEntity {
 	}
 
 	@Override
-	protected void customServerAiStep(ServerLevel world) {
-		super.customServerAiStep(world);
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
 	}

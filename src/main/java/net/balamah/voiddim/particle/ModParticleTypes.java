@@ -1,10 +1,7 @@
 package net.balamah.voiddim.particle;
 
 import net.balamah.voiddim.VoidDimension;
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.client.particle.EndRodParticle;
-import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -35,27 +32,4 @@ public class ModParticleTypes {
             VOID_SLASH_AREA);
     }
 
-    public static void registerModParticlesClient() {
-        VoidDimension.LOGGER.info("Registering particle factories");
-
-        ParticleFactoryRegistry.getInstance().register(
-            CORRUPTED_FLAME,
-            FlameParticle.Provider::new
-        );
-
-        ParticleFactoryRegistry.getInstance().register(
-            CORRUPTION,
-            EndRodParticle.Provider::new
-        );
-
-        ParticleFactoryRegistry.getInstance().register(
-            LIGHTNING,
-            EndRodParticle.Provider::new
-        );
-
-        ParticleFactoryRegistry.getInstance().register(
-            VOID_SLASH_AREA,
-            EndRodParticle.Provider::new
-        );
-    }
 }

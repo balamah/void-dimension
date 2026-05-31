@@ -9,6 +9,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -30,7 +32,7 @@ public class BedrockBombBlock extends Block {
     }
 
     @Override
-    public void attack(BlockState state, Level level, BlockPos pos, Player player) {
+    protected void attack(BlockState state, Level level, BlockPos pos, Player player) {
         if (!level.isClientSide() && !player.isCreative()) {
             prime((ServerLevel) level, pos, player);
             level.removeBlock(pos, false);
@@ -84,7 +86,7 @@ public class BedrockBombBlock extends Block {
     }
 
     @Override
-    public InteractionResult useItemOn(
+    protected ItemInteractionResult useItemOn(
         ItemStack stack,
         BlockState state,
         Level level,
@@ -103,27 +105,27 @@ public class BedrockBombBlock extends Block {
             Item item = stack.getItem();
 
             if (stack.is(Items.FLINT_AND_STEEL)) {
-                stack.hurtAndBreak(1, player, hand);
+                stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
             } else {
                 stack.shrink(1);
             }
 
             player.awardStat(Stats.ITEM_USED.get(item));
 
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
 
         if (level instanceof ServerLevel serverLevel &&
-            !serverLevel.getGameRules().getBoolean(GameRules.RULE_TNT_EXPLODES)) {
+            false) {
 
             player.displayClientMessage(
                 Component.translatable("block.minecraft.tnt.disabled"),
                 true
             );
 
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
     }
 }

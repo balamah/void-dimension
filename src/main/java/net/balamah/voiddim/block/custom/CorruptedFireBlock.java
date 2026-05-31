@@ -36,12 +36,11 @@ public class CorruptedFireBlock extends BaseFireBlock {
     @Override
     protected BlockState updateShape(
         BlockState state,
-        LevelReader level,
-        BlockPos pos,
         Direction direction,
-        BlockPos neighborPos,
         BlockState neighborState,
-        RandomSource random
+        net.minecraft.world.level.LevelAccessor level,
+        BlockPos pos,
+        BlockPos neighborPos
     ) {
         return this.canSurvive(state, level, pos)
             ? this.defaultBlockState()
@@ -49,7 +48,7 @@ public class CorruptedFireBlock extends BaseFireBlock {
     }
 
     @Override
-    public void entityInside(
+    protected void entityInside(
         BlockState state,
         Level level,
         BlockPos pos,
@@ -67,7 +66,7 @@ public class CorruptedFireBlock extends BaseFireBlock {
                     .getHolderOrThrow(ModEffects.CORRUPTION_DAMAGE)
             );
 
-            entity.hurtServer(serverLevel, damageSource, 7.5F);
+            entity.hurt(damageSource, 7.5F);
 
             if (entity instanceof LivingEntity living) {
                 living.addEffect(new MobEffectInstance(ModEffects.CORRUPTION, 20, 0));

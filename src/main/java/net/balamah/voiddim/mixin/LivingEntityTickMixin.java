@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.server.level.ServerLevel;
 
 import net.balamah.voiddim.event.custom.CorruptionInDarknessCallback;
 import net.balamah.voiddim.effect.ModEffects;
@@ -22,8 +21,8 @@ public class LivingEntityTickMixin {
 	}
 	
 	// Give bonus damage when soul burn effect is applied
-	@ModifyVariable(method = "hurtServer", at = @At("HEAD"), argsOnly = true)
-	protected float modifyDamage(float damage, ServerLevel level, final DamageSource source) {
+	@ModifyVariable(method = "hurt", at = @At("HEAD"), argsOnly = true)
+	protected float modifyDamage(float damage, final DamageSource source) {
 		LivingEntity entity = (LivingEntity)(Object) this;
 		MobEffectInstance soulBurnEffect = entity.getEffect(ModEffects.SOUL_BURN);
 		float damageReductionMultiplier =

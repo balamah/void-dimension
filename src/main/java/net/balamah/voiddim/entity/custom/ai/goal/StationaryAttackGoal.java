@@ -30,7 +30,7 @@ public class StationaryAttackGoal<T extends CorruptedHostileEntity & StationaryA
     public void tick() {
         if (attackCooldown > 0) attackCooldown--;
         if (attackCooldown == 0 && target != null && target.isAlive()) {
-            entity.doHurtTarget((ServerLevel) entity.level(), target);
+            entity.doHurtTarget(target);
             attackCooldown = 20;
         }
     }

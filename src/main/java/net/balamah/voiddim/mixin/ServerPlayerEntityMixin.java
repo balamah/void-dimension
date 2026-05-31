@@ -14,7 +14,6 @@ import net.balamah.voiddim.world.dimension.ModDimensions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.level.storage.ValueOutput;
 
 @Mixin(ServerPlayer.class)
 public class ServerPlayerEntityMixin implements VoidPrayerDataAccess {
@@ -22,8 +21,8 @@ public class ServerPlayerEntityMixin implements VoidPrayerDataAccess {
 	protected final String nbtKey = "VoidPrayerData";
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    protected void writePrayerData(ValueOutput writeView, CallbackInfo ci) {
-		writeView.store(this.nbtKey, CompoundTag.CODEC, this.voidPrayerData);
+    protected void writePrayerData(CompoundTag nbt, CallbackInfo ci) {
+		nbt.put(this.nbtKey, this.voidPrayerData);
     }
 
 	@Inject(method = "die", at = @At("TAIL"))

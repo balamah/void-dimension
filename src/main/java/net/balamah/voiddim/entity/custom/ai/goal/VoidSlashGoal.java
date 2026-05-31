@@ -88,7 +88,7 @@ public class VoidSlashGoal<T extends BossEntity & VoidSlashUser> extends Ticking
 				return;
 			}
 
-			boxEntity.hurtServer(serverWorld, ModDamageSources.voidSlash(serverWorld), 15f);
+			boxEntity.hurt(ModDamageSources.voidSlash(serverWorld), 15f);
 		}
 	}
 

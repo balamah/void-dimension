@@ -61,7 +61,7 @@ public class ShootCorruptedFireballGoal extends Goal {
 
 				if (this.fireballCooldown <= 0) {
 					this.fireballCooldown = 20;
-					this.blaze.doHurtTarget(getServerLevel(this.blaze), livingEntity);
+					this.blaze.doHurtTarget(livingEntity);
 				}
 
 				this.blaze.getMoveControl().setWantedPosition(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), 1.0);

@@ -61,13 +61,13 @@ public class ShatteredSentinelMasterEntity extends BossEntity
 	}
 
 	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
-		world.broadcastEntityEvent(this, ModEntityStatuses.SHATTERED_SENTINEL_MASTER_ATTACK);
+	public boolean doHurtTarget(Entity target) {
+		this.level().broadcastEntityEvent(this, ModEntityStatuses.SHATTERED_SENTINEL_MASTER_ATTACK);
 
 		DamageSource damageSource = this.damageSources().mobAttack(this);
 		float f = this.getAttackDamage();
 		float g = (int)f > 0 ? f / 2.0F + this.random.nextInt((int)f) : f;
-		boolean bl = target.hurtServer(world, damageSource, g);
+		boolean bl = target.hurt(damageSource, g);
 		if (bl) {
 			double d = (target instanceof LivingEntity livingEntity) ?
 				livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) :
@@ -75,7 +75,9 @@ public class ShatteredSentinelMasterEntity extends BossEntity
 
 			double e = Math.max(0.0, 1.0 - d);
 			target.setDeltaMovement(target.getDeltaMovement().add(0.0, 0.4F * e, 0.0));
-			EnchantmentHelper.doPostAttackEffects(world, target, damageSource);
+			if (this.level() instanceof ServerLevel serverLevel) {
+				EnchantmentHelper.doPostAttackEffects(serverLevel, target, damageSource);
+			}
 		}
 
 		this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);

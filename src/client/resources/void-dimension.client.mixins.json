@@ -2,13 +2,8 @@
 	"required": true,
 	"package": "net.balamah.voiddim.mixin",
 	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ExampleMixin",
-		"ServerPlayerEntityMixin",
-		"FlintAndSteelMixin",
-		"LivingEntityTickMixin",
-		"EntityMixin",
-		"FireblockMixin"
+	"client": [
+		"AtmosphericFogModifierMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

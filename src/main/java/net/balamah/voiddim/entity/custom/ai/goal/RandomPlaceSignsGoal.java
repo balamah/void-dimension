@@ -64,7 +64,7 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 				continue;
 			}
 
-			this.world.setBlockAndUpdate(tableBlockPos, Blocks.PALE_OAK_SIGN.defaultBlockState());
+			this.world.setBlockAndUpdate(tableBlockPos, Blocks.OAK_SIGN.defaultBlockState());
 			BlockEntity blockEntity = this.world.getBlockEntity(tableBlockPos);
 			SignBlockEntity signBlockEntity = (SignBlockEntity) blockEntity;
 			if (signBlockEntity == null) {

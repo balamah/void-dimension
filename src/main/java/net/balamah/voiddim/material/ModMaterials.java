@@ -39,7 +39,7 @@ public class ModMaterials {
 
             @Override
             public Ingredient getRepairIngredient() {
-                return VoidArmorMaterial.REPAIRS_VOID_ARMOR;
+                return Ingredient.of(VoidArmorMaterial.REPAIRS_VOID_ARMOR);
             }
         };
 }

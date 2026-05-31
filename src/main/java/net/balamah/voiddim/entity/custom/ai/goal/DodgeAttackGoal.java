@@ -114,7 +114,7 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 			return false;
 		}
 
-		while (mutable.getY() > this.world.getMinY() &&
+		while (mutable.getY() > this.world.getMinBuildHeight() &&
 				!this.world.getBlockState(mutable).blocksMotion())
 		{
 			double heightDifference = this.entity.getY() - mutable.getY();

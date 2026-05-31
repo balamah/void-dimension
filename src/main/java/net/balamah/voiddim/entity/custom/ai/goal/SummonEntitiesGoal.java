@@ -9,7 +9,7 @@ import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -102,7 +102,7 @@ public class SummonEntitiesGoal<E extends CorruptedHostileEntity, T extends Enti
 
 		T firstEntity = entityType.create(
 			world, null, new BlockPos((int) x, (int) y, (int) z),
-			EntitySpawnReason.MOB_SUMMONED, true, false
+			MobSpawnType.MOB_SUMMONED, true, false
 		);
 
 		T secondEntity = firstEntity;

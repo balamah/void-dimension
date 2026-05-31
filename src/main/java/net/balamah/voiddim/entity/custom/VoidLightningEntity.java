@@ -27,7 +27,7 @@ public class VoidLightningEntity extends LightningBolt {
 	private void spawnFire(int spreadAttempts) {
 		if (!this.cosmetic && this.level() instanceof ServerLevel serverWorld) {
 			BlockPos var7 = this.blockPosition();
-			if (serverWorld.canSpreadFireAround(var7)) {
+			if (serverWorld.getBlockState(var7).isAir()) {
 				BlockState blockState = CorruptedFireBlock.getState(serverWorld, var7);
 				if (serverWorld.getBlockState(var7).isAir() && blockState.canSurvive(serverWorld, var7)) {
 					serverWorld.setBlockAndUpdate(var7, blockState);

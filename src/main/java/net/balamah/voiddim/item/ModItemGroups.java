@@ -1,6 +1,6 @@
 package net.balamah.voiddim.item;
 
-import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -60,7 +60,7 @@ public class ModItemGroups {
 	protected static CreativeModeTab getCreativeTab(
 		Supplier<ItemStack> iconFactory, Component displayName, ItemLike[] items
 	) {
-		return FabricCreativeModeTab.builder()
+		return FabricItemGroup.builder()
 			.icon(iconFactory)
 			.title(displayName)
 			.displayItems((displayParams, output) -> {

@@ -22,8 +22,8 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.arrow.Arrow;
-import net.minecraft.world.entity.projectile.hurtingprojectile.LargeFireball;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -96,7 +96,7 @@ public abstract class StaringEntity extends SunBurningEntity {
 
 	protected void disappear(LivingEntity target) {
 		if (target.hasEffect(ModEffects.DIVINE_PROTECTION)) {
-			this.kill((ServerLevel) this.level());
+			this.kill();
 		} else {
 			target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0));
 			this.fade();

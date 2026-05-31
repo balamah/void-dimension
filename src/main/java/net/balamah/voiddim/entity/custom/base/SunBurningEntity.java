@@ -1,7 +1,6 @@
 package net.balamah.voiddim.entity.custom.base;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
@@ -19,7 +18,7 @@ public abstract class SunBurningEntity extends PathfinderMob {
 		super.aiStep();
 
 		if (this.isAlive() && this.isSunBurnTick()) {
-			EquipmentSlot equipmentSlot = this.sunProtectionSlot();
+			EquipmentSlot equipmentSlot = EquipmentSlot.HEAD;
 			ItemStack itemStack = this.getItemBySlot(equipmentSlot);
 			if (!itemStack.isEmpty()) {
 				if (itemStack.isDamageableItem()) {
@@ -38,12 +37,7 @@ public abstract class SunBurningEntity extends PathfinderMob {
 
 	protected boolean isSunBurnTick() {
 		Level world = this.level();
-		Boolean doMonstersBurn = world.environmentAttributes()
-			.getValue(
-				EnvironmentAttributes.MONSTERS_BURN, this.position()
-			);
-
-		if (!world.isClientSide() && doMonstersBurn) {
+		if (!world.isClientSide() && world.dimensionType().hasSkyLight()) {
 			float f = this.getLightLevelDependentMagicValue();
 			BlockPos blockPos = BlockPos.containing(this.getX(), this.getEyeY(), this.getZ());
 			boolean bl = this.isInWaterOrRain() || this.isInPowderSnow || this.wasInPowderSnow;

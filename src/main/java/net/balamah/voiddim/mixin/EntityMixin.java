@@ -24,7 +24,7 @@ public class EntityMixin {
 
 		float damage = (lightning instanceof VoidLightningEntity) ? 16f : 5f;
 
-		struckEntity.hurtServer(world, struckEntity.damageSources().lightningBolt(), damage);
+		struckEntity.hurt(struckEntity.damageSources().lightningBolt(), damage);
 
 		ci.cancel();
 	}
