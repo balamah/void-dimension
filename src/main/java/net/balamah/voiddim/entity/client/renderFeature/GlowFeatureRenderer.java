@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class GlowFeatureRenderer
 	<S extends EntityRenderState, M extends EntityModel<S>>
@@ -25,6 +25,6 @@ public class GlowFeatureRenderer
 
 	@Override
 	public RenderType renderType() {
-		return RenderTypes.eyes(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, this.texturePath));
+		return RenderTypes.eyes(ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, this.texturePath));
 	}
 }

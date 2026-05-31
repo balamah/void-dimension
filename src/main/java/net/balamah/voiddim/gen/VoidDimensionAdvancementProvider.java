@@ -28,7 +28,7 @@ import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -65,7 +65,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		var voidSalvationPotion = potionLookup.getOrThrow(
 			ResourceKey.create(
 				Registries.POTION,
-				Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_salvation")
+				ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_salvation")
 			)
 		);
 
@@ -90,7 +90,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 
 		AdvancementHolder voidDimensionRoot = this.getAdvancementEntry(
 			ModItems.VOIDIUM, "void_dimension",
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "gui/advancements/deepslate"),
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "gui/advancements/deepslate"),
 			AdvancementType.TASK,
             false, "got_voidium",
             InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOIDIUM),
@@ -236,7 +236,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 
 	protected Advancement.Builder getAdvancementBuilder(
 		ItemLike icon, String advancementLocale,
-		@Nullable Identifier background,
+		@Nullable ResourceLocation background,
 		AdvancementType type, boolean hidden
 	) {
 		String titleString = this.getLocaleString(advancementLocale, "title");
@@ -259,7 +259,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 	protected AdvancementHolder getAdvancementEntry(
 		ItemLike icon, String advancementLocale,
 		@Nullable AdvancementHolder parent,
-		@Nullable Identifier background,
+		@Nullable ResourceLocation background,
 		AdvancementType type, boolean hidden,
 		String criteaName, Criterion<?> criterion,
 		Consumer<AdvancementHolder> consumer, String id
@@ -273,7 +273,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 
 	protected AdvancementHolder getAdvancementEntry(
 		ItemLike icon, String advancementLocale,
-		@Nullable Identifier background,
+		@Nullable ResourceLocation background,
 		AdvancementType type, boolean hidden,
 		String criteaName, Criterion<?> criterion,
 		Consumer<AdvancementHolder> consumer, String id
@@ -305,7 +305,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 	protected ResourceKey<Recipe<?>> getRecipeKey(String id) {
 		return ResourceKey.create(
 			Registries.RECIPE,
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id)
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, id)
 		);
 	}
 

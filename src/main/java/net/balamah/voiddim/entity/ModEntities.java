@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -361,12 +361,12 @@ public class ModEntities {
 		register(String name, Class<T> entityClass, EntityType.Builder<T> entityBuilder)
 	{
 		ResourceKey<EntityType<?>> key =
-			ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
+			ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 
 		return Registry.register(
 			BuiltInRegistries.ENTITY_TYPE,
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name),
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name),
 			entityBuilder.build(key)
 		);
 	}

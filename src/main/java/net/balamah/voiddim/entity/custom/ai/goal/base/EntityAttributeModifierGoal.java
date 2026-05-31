@@ -1,7 +1,7 @@
 package net.balamah.voiddim.entity.custom.ai.goal.base;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
@@ -13,13 +13,13 @@ public abstract class EntityAttributeModifierGoal<T extends CorruptedHostileEnti
 	}
 
 	protected AttributeModifier getAttributeModifier(
-		Identifier attributeId, double value, AttributeModifier.Operation operation
+		ResourceLocation attributeId, double value, AttributeModifier.Operation operation
 	) {
 		return new AttributeModifier(attributeId, value, operation);
 	}
 
 	protected void addModifier(
-		AttributeInstance entityAttributeInstance, Identifier attributeId,
+		AttributeInstance entityAttributeInstance, ResourceLocation attributeId,
 		AttributeModifier modifier
 	) {
 		if (!entityAttributeInstance.hasModifier(attributeId)) {

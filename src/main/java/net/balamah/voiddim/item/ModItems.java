@@ -16,7 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -275,7 +275,7 @@ public class ModItems {
 		Supplier<Item.Properties> settingsFactory
 	) {
 		ResourceKey<Item> itemKey = ResourceKey.create(
-			Registries.ITEM, Identifier.fromNamespaceAndPath(MOD_ID, name)
+			Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, name)
 		);
 
 		Item.Properties settings = settingsFactory.get().setId(itemKey);

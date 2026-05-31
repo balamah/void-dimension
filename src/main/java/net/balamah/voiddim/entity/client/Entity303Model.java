@@ -8,7 +8,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class Entity303Model
 	<T extends Entity303RenderState> extends HumanoidModel<T>
@@ -18,7 +18,7 @@ public class Entity303Model
 	private final KeyframeAnimation shockwaveInvokeAnimation;
 
     public static final ModelLayerLocation HEROBRINE =
-		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "herobrine"), "main");
+		new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "herobrine"), "main");
 
 	public Entity303Model(ModelPart root) {
 		super(root);

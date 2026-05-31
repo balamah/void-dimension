@@ -12,15 +12,15 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class SmallCorruptedFireballModel extends EntityModel<EntityRenderState> {
     public static final ModelLayerLocation SMALL_CORRUPTED_FIREBALL =
-		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "small_corrupted_fireball"),
+		new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "small_corrupted_fireball"),
 							 "main");
 
 	public SmallCorruptedFireballModel(
-		ModelPart part, Function<Identifier, RenderType> layerFactory
+		ModelPart part, Function<ResourceLocation, RenderType> layerFactory
 	) {
 		super(part, layerFactory);
 	}

@@ -8,11 +8,11 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class StaringCatModel extends AdultCatModel {
     public static final ModelLayerLocation STARING_CAT =
-		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "staring_cat"), "main");
+		new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "staring_cat"), "main");
 
 	public StaringCatModel(ModelPart modelPart) {
 		super(modelPart);

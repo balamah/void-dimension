@@ -9,14 +9,14 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.AbstractWindCharge;
 
 public class VoidSphereRenderer <T extends AbstractWindCharge>
 	extends EntityRenderer<T, EntityRenderState>
 {
-	private static final Identifier TEXTURE =
-		Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/projectiles/void_sphere.png");
+	private static final ResourceLocation TEXTURE =
+		ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/projectiles/void_sphere.png");
 
 	private final VoidSphereModel model;
 

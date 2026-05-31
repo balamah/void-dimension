@@ -7,7 +7,7 @@ import com.mojang.authlib.GameProfile;
 import net.balamah.voiddim.custom.ImageHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.world.item.component.ResolvableProfile;
 
@@ -35,8 +35,8 @@ public class CorruptedPlayerSkinCache {
 	 * Throw the skin path into corruptor
 	 * Return the corrupted skin
 	 */
-	public static Identifier corruptSkin(String playerName, PlayerSkin skin) {
-		Identifier skinTexturePath = skin.body().texturePath();
+	public static ResourceLocation corruptSkin(String playerName, PlayerSkin skin) {
+		ResourceLocation skinTexturePath = skin.body().texturePath();
 		return ImageHelper.getCorruptedSkin(playerName, skinTexturePath);
 	}
 }

@@ -7,7 +7,7 @@ import net.balamah.voiddim.VoidDimension;
 
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class VoidBoundServantRenderer
 	extends WeaponArmedEntityRenderer<VoidBoundServantEntity, VoidBoundServantRenderState, VoidBoundServantModel>
@@ -27,8 +27,8 @@ public class VoidBoundServantRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(VoidBoundServantRenderState state) {
-		return Identifier.fromNamespaceAndPath(
+	public ResourceLocation getTextureLocation(VoidBoundServantRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(
 			VoidDimension.MOD_ID, "textures/entity/void_bound_servant.png"
 		);
 	}

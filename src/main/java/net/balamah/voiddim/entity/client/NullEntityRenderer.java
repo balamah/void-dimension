@@ -4,7 +4,7 @@ import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.NullEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.VoidDimension;
 
 public class NullEntityRenderer
@@ -20,8 +20,8 @@ public class NullEntityRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(S state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/null.png");
+	public ResourceLocation getTextureLocation(S state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/null.png");
 	}
 
 	@Override

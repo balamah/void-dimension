@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.CatCollarLayer;
 import net.minecraft.client.renderer.entity.state.CatRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -42,8 +42,8 @@ public class StaringCatRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(CatRenderState catEntityRenderState) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/staring_cat.png");
+	public ResourceLocation getTextureLocation(CatRenderState catEntityRenderState) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/staring_cat.png");
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.EyeBrightEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.VoidDimension;
 
 public class EyeBrightRenderer extends MobRenderer<EyeBrightEntity, EyeBrightRenderState, EyeBrightModel> {
@@ -17,8 +17,8 @@ public class EyeBrightRenderer extends MobRenderer<EyeBrightEntity, EyeBrightRen
 	}
 
 	@Override
-	public Identifier getTextureLocation(EyeBrightRenderState state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/eye_bright.png");
+	public ResourceLocation getTextureLocation(EyeBrightRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/eye_bright.png");
 	}
 
 	@Override

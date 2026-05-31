@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class EyeBrightHeadRenderer
 	extends EntityRenderer<EyeBrightHeadEntity, EyeBrightHeadRenderState>
@@ -72,8 +72,8 @@ public class EyeBrightHeadRenderer
 		);
 	}
 
-	private Identifier getTexture(EyeBrightHeadRenderState state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/eye_bright_head.png");
+	private ResourceLocation getTexture(EyeBrightHeadRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/eye_bright_head.png");
 	}
 
 	@Override

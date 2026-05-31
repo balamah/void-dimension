@@ -10,11 +10,11 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.model.monster.creeper.CreeperModel;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class CorruptedCreeperModel extends CreeperModel {
     public static final ModelLayerLocation CORRUPTED_CREEPER =
-		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "corrupted_creeper"),
+		new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "corrupted_creeper"),
 							 "main");
 
 	public CorruptedCreeperModel(ModelPart modelPart) {

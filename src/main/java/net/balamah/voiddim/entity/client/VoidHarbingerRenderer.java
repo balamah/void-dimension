@@ -4,7 +4,7 @@ import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.VoidHarbingerEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.VoidDimension;
 
 public class VoidHarbingerRenderer
@@ -26,8 +26,8 @@ public class VoidHarbingerRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(VoidHarbingerRenderState state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/void_harbinger.png");
+	public ResourceLocation getTextureLocation(VoidHarbingerRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/void_harbinger.png");
 	}
 
 	@Override

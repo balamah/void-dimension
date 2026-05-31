@@ -10,14 +10,14 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.balamah.voiddim.entity.client.base.BasicRenderState;
 import net.balamah.voiddim.VoidDimension;
 
 public class MantisModel extends EntityModel<BasicRenderState> {
     public static final ModelLayerLocation MANTIS =
-		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "mantis"), "main");
+		new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "mantis"), "main");
 
 	private final KeyframeAnimation walkingAnimation;
 	private final KeyframeAnimation idleAnimation;

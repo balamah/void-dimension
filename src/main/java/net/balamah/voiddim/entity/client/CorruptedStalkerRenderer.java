@@ -4,7 +4,7 @@ import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.CorruptedStalkerEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.entity.client.base.BasicRenderState;
 import net.balamah.voiddim.VoidDimension;
 
@@ -26,7 +26,7 @@ public class CorruptedStalkerRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(BasicRenderState state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_stalker.png");
+	public ResourceLocation getTextureLocation(BasicRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_stalker.png");
 	}
 }

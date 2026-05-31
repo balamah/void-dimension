@@ -7,7 +7,7 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.minecraft.data.PackOutput;
 import net.balamah.voiddim.custom.McGenHelper;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.block.ModBlocks;
@@ -15,7 +15,7 @@ import net.balamah.voiddim.item.ModItems;
 
 public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubProvider {
 	public VoidDimensionEntityLootTableProvider(
-		FabricPackOutput output, CompletableFuture<Provider> registryLookup
+		PackOutput output, CompletableFuture<Provider> registryLookup
 	) {
 		super(output, registryLookup);
 	}
@@ -84,7 +84,7 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubPro
 					.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
 				);
 
-		LootPool.Builder bodyPartsPool = 
+		LootPool.Builder bodyPartsPool =
 			McGenHelper.getPool(McGenHelper.constantNumber(3))
 			.add(McGenHelper.getItemEntry(Items.BONE, 1, 3))
 			.add(McGenHelper.getItemEntry(Items.ROTTEN_FLESH, 1, 2))
@@ -125,7 +125,7 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubPro
 			)
 			;
 
-		LootTable.Builder hollowedAlphaSteveTable = 
+		LootTable.Builder hollowedAlphaSteveTable =
 			LootTable.lootTable()
 			.withPool(
 				McGenHelper.getPool(McGenHelper.constantNumber(1))
@@ -133,7 +133,7 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubPro
 			)
 			;
 
-		LootTable.Builder zombifiedAlphaSteveTable = 
+		LootTable.Builder zombifiedAlphaSteveTable =
 			LootTable.lootTable()
 			.withPool(
 				McGenHelper.getPool(McGenHelper.constantNumber(1))

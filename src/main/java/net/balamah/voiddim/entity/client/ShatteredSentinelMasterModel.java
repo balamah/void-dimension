@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.entity.client.base.BasicLivingEntityModel;
 import net.balamah.voiddim.VoidDimension;
 
@@ -19,7 +19,7 @@ public class ShatteredSentinelMasterModel
 {
 	public static final ModelLayerLocation SHATTERED_SENTINEL_MASTER =
 		new ModelLayerLocation(
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "shattered_sentinel_master"),
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "shattered_sentinel_master"),
 			"main"
 		);
 

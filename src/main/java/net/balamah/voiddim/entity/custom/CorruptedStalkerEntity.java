@@ -3,7 +3,7 @@ package net.balamah.voiddim.entity.custom;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -18,7 +18,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
 public class CorruptedStalkerEntity extends CorruptedHostileEntity {
-	protected Identifier ATTACKING_SPEED_MODIFIER_ID = Identifier.withDefaultNamespace("attacking");
+	protected ResourceLocation ATTACKING_SPEED_MODIFIER_ID = ResourceLocation.withDefaultNamespace("attacking");
 	protected AttributeModifier ATTACKING_SPEED_BOOST =
 		new AttributeModifier(
 			ATTACKING_SPEED_MODIFIER_ID,

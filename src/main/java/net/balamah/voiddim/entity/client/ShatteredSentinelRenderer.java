@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.balamah.voiddim.VoidDimension;
 
@@ -27,8 +27,8 @@ public class ShatteredSentinelRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(ShatteredSentinelRenderState state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/shattered_sentinel.png");
+	public ResourceLocation getTextureLocation(ShatteredSentinelRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/shattered_sentinel.png");
 	}
 
 	@Override

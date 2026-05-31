@@ -10,12 +10,12 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.VoidDimension;
 	
 public class WormOfCorruptionModel extends EntityModel<WormOfCorruptionRenderState> {
     public static final ModelLayerLocation WORM_OF_CORRUPTION =
-		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "worm_of_corruption"),
+		new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "worm_of_corruption"),
 							 "main");
 
 	private final ModelPart root;

@@ -9,13 +9,13 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EvokerFangsRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.balamah.voiddim.VoidDimension;
 
 public class DarkGraspRenderer extends EntityRenderer<DarkGraspEntity, EvokerFangsRenderState> {
-	private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(
+	private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
 		VoidDimension.MOD_ID, "textures/entity/dark_grasp.png"
 	);
 

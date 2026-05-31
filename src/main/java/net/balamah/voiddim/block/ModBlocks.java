@@ -10,7 +10,7 @@ import net.balamah.voiddim.particle.ModParticleTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -270,13 +270,13 @@ public class ModBlocks {
 
 	protected static ResourceKey<Block> keyOfBlock(String name) {
 		return ResourceKey.create(
-			Registries.BLOCK, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
+			Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 	}
 	
 	protected static ResourceKey<Item> keyOfItem(String name) {
 		return ResourceKey.create(
-			Registries.ITEM, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
+			Registries.ITEM, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 	}
 }

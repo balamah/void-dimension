@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.balamah.voiddim.VoidDimension;
 
@@ -35,8 +35,8 @@ public abstract class AbstractWerewolfRenderer<T extends WerewolfEntity>
 	}
 
 	@Override
-	public Identifier getTextureLocation(AbstractWerewolfRenderState state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID,
+	public ResourceLocation getTextureLocation(AbstractWerewolfRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID,
 							 String.format("textures/entity/%s.png", this.texture));
 	}
 

@@ -11,7 +11,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -242,7 +242,7 @@ public class McCodeHelper {
 	 */
 	public static ItemStack getPotionItemStack(Item potionType, String potionId) {
 		ResourceKey<Potion> potionRegistryKey = ResourceKey.create(
-			Registries.POTION, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, potionId)
+			Registries.POTION, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, potionId)
 		);
 
 		return PotionContents.createItemStack(

@@ -10,12 +10,12 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class ConsumedSoulModel extends EntityModel<ConsumedSoulRenderState> {
 	public static final ModelLayerLocation CONSUMED_SOUL =
 		new ModelLayerLocation(
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "consumed_soul"),
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "consumed_soul"),
 			"main"
 		);
 

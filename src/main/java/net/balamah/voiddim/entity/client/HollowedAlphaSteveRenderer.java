@@ -3,7 +3,7 @@ package net.balamah.voiddim.entity.client;
 import net.balamah.voiddim.entity.custom.base.AlphaSteveEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.VoidDimension;
 
 public class HollowedAlphaSteveRenderer
@@ -15,8 +15,8 @@ public class HollowedAlphaSteveRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(S state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/alpha_steve.png");
+	public ResourceLocation getTextureLocation(S state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/alpha_steve.png");
 	}
 
 	@Override

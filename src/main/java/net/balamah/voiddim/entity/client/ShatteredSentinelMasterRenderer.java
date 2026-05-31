@@ -4,7 +4,7 @@ import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.ShatteredSentinelMasterEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.VoidDimension;
 
 public class ShatteredSentinelMasterRenderer
@@ -30,8 +30,8 @@ public class ShatteredSentinelMasterRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(ShatteredSentinelMasterRenderState state) {
-		return Identifier.fromNamespaceAndPath(
+	public ResourceLocation getTextureLocation(ShatteredSentinelMasterRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(
 			VoidDimension.MOD_ID, "textures/entity/shattered_sentinel_master.png"
 		);
 	}

@@ -9,7 +9,7 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.WolfRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.VoidDimension;
 
 @SuppressWarnings("deprecation")
@@ -30,8 +30,8 @@ public class StaringDogRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(WolfRenderState dogRenderState) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/staring_dog.png");
+	public ResourceLocation getTextureLocation(WolfRenderState dogRenderState) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/staring_dog.png");
 	}
 
 	@Override

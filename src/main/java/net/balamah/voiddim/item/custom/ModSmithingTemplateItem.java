@@ -3,7 +3,7 @@ package net.balamah.voiddim.item.custom;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SmithingTemplateItem;
 
@@ -11,8 +11,8 @@ public class ModSmithingTemplateItem extends SmithingTemplateItem {
 	public ModSmithingTemplateItem(
 		Component appliesToText, Component ingredientsText,
 		Component baseSlotDescriptionText, Component additionsSlotDescriptionText,
-		List<Identifier> emptyBaseSlotTextures,
-		List<Identifier> emptyAdditionsSlotTextures,
+		List<ResourceLocation> emptyBaseSlotTextures,
+		List<ResourceLocation> emptyAdditionsSlotTextures,
 		Item.Properties settings
 	) {
 		super(appliesToText, ingredientsText,
@@ -29,25 +29,25 @@ public class ModSmithingTemplateItem extends SmithingTemplateItem {
 			Component.translatable("upgrade.void-dimension.base_slot_description"),
 			Component.translatable("upgrade.void-dimension.additions_slot_description"),
 			getUpgradeEmptyBaseSlotTextures(),
-			List.of(Identifier.withDefaultNamespace("container/slot/ingot")),
+			List.of(ResourceLocation.withDefaultNamespace("container/slot/ingot")),
 			settings
 		);
 	}
 
-	private static List<Identifier> getUpgradeEmptyBaseSlotTextures() {
+	private static List<ResourceLocation> getUpgradeEmptyBaseSlotTextures() {
 		return List.of(
-			Identifier.withDefaultNamespace("container/slot/helmet"),
-			Identifier.withDefaultNamespace("container/slot/chestplate"),
-			Identifier.withDefaultNamespace("container/slot/leggings"),
-			Identifier.withDefaultNamespace("container/slot/boots"),
-			Identifier.withDefaultNamespace("container/slot/axe"),
-			Identifier.withDefaultNamespace("container/slot/sword"),
-			Identifier.withDefaultNamespace("container/slot/spear"),
-			Identifier.withDefaultNamespace("container/slot/pickaxe"),
-			Identifier.withDefaultNamespace("container/slot/shovel"),
-			Identifier.withDefaultNamespace("container/slot/hoe"),
-			Identifier.withDefaultNamespace("container/slot/horse_armor"),
-			Identifier.withDefaultNamespace("container/slot/nautilus_armor")
+			ResourceLocation.withDefaultNamespace("container/slot/helmet"),
+			ResourceLocation.withDefaultNamespace("container/slot/chestplate"),
+			ResourceLocation.withDefaultNamespace("container/slot/leggings"),
+			ResourceLocation.withDefaultNamespace("container/slot/boots"),
+			ResourceLocation.withDefaultNamespace("container/slot/axe"),
+			ResourceLocation.withDefaultNamespace("container/slot/sword"),
+			ResourceLocation.withDefaultNamespace("container/slot/spear"),
+			ResourceLocation.withDefaultNamespace("container/slot/pickaxe"),
+			ResourceLocation.withDefaultNamespace("container/slot/shovel"),
+			ResourceLocation.withDefaultNamespace("container/slot/hoe"),
+			ResourceLocation.withDefaultNamespace("container/slot/horse_armor"),
+			ResourceLocation.withDefaultNamespace("container/slot/nautilus_armor")
 		);
 	}
 }

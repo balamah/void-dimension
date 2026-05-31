@@ -1,12 +1,12 @@
 package net.balamah.voiddim.effect;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 
 public class ModDamageSources {
-	protected static DamageSource getBasicDamageSource(ServerLevel world, Identifier identifier) {
+	protected static DamageSource getBasicDamageSource(ServerLevel world, ResourceLocation identifier) {
 		return new DamageSource(
 			world.registryAccess()
 			.lookupOrThrow(Registries.DAMAGE_TYPE)

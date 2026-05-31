@@ -9,12 +9,12 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class ConsumedSoulRenderer
 	extends EntityRenderer<ConsumedSoulEntity, ConsumedSoulRenderState>
 {
-	private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(
+	private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
 		VoidDimension.MOD_ID, "textures/entity/consumed_soul.png"
 	);
 

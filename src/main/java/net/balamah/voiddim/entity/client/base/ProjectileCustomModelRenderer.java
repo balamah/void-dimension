@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.projectile.Projectile;
 
@@ -41,7 +41,7 @@ public abstract class ProjectileCustomModelRenderer
 	@Override
 	public abstract S createRenderState(); 
 
-	public abstract Identifier getTextureLocation(final S state);
+	public abstract ResourceLocation getTextureLocation(final S state);
 
 	public void submit(final S state, final PoseStack poseStack, final SubmitNodeCollector submitNodeCollector, final CameraRenderState camera) {
 		poseStack.pushPose();
@@ -90,7 +90,7 @@ public abstract class ProjectileCustomModelRenderer
 
 	@Nullable
 	protected RenderType getRenderType(final S state, final boolean isBodyVisible, final boolean forceTransparent, final boolean appearGlowing) {
-		Identifier texture = this.getTextureLocation(state);
+		ResourceLocation texture = this.getTextureLocation(state);
 		if (forceTransparent) {
 			return RenderTypes.entityTranslucentCullItemTarget(texture);
 		} else if (isBodyVisible) {

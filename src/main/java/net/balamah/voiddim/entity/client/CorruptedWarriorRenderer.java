@@ -5,7 +5,7 @@ import net.balamah.voiddim.entity.custom.CorruptedWarriorEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.VoidDimension;
 
 public class CorruptedWarriorRenderer
@@ -25,8 +25,8 @@ public class CorruptedWarriorRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(CorruptedWarriorRenderState state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_warrior.png");
+	public ResourceLocation getTextureLocation(CorruptedWarriorRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_warrior.png");
 	}
 
 	@Override

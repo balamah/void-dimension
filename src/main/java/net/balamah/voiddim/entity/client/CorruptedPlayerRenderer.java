@@ -5,7 +5,7 @@ import net.balamah.voiddim.custom.ImageHelper;
 import net.balamah.voiddim.entity.custom.CorruptedPlayerEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.PlayerSkin;
 
 public class CorruptedPlayerRenderer
@@ -25,7 +25,7 @@ public class CorruptedPlayerRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(CorruptedPlayerRenderState state) {
+	public ResourceLocation getTextureLocation(CorruptedPlayerRenderState state) {
 		return state.skinIdentifier;
 	}
 

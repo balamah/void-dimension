@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.layers.SpiderEyesLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class CorruptedSpiderEyesFeatureRenderer<T extends SpiderModel>
 	extends SpiderEyesLayer<T>
@@ -21,7 +21,7 @@ public class CorruptedSpiderEyesFeatureRenderer<T extends SpiderModel>
 	@Override
 	public RenderType renderType() {
 		return RenderTypes.eyes(
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_spider_eyes.png")
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_spider_eyes.png")
 		);
 	}
 }

@@ -13,7 +13,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 
 public class VoidBoundServantModel
@@ -21,7 +21,7 @@ public class VoidBoundServantModel
 	implements ArmedModel<VoidBoundServantRenderState>
 {
     public static final ModelLayerLocation VOID_BOUND_SERVANT =
-		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_bound_servant"),
+		new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_bound_servant"),
 							 "main");
 
 	private final ModelPart root;

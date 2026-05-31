@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.CreeperPowerLayer;
 import net.minecraft.client.renderer.entity.state.CreeperRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.balamah.voiddim.VoidDimension;
@@ -39,8 +39,8 @@ public class CorruptedCreeperRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(CreeperRenderState creeperEntityRenderState) {
-		return Identifier.fromNamespaceAndPath(
+	public ResourceLocation getTextureLocation(CreeperRenderState creeperEntityRenderState) {
+		return ResourceLocation.fromNamespaceAndPath(
 			VoidDimension.MOD_ID, "textures/entity/corrupted_creeper.png"
 		);
 	}

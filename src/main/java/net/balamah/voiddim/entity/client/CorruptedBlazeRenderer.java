@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.monster.Blaze;
 import net.balamah.voiddim.VoidDimension;
 
@@ -22,8 +22,8 @@ public class CorruptedBlazeRenderer
 	}
 
 	@Override
-	public Identifier getTextureLocation(LivingEntityRenderState state) {
-		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_blaze.png");
+	public ResourceLocation getTextureLocation(LivingEntityRenderState state) {
+		return ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_blaze.png");
 	}
 
 	public LivingEntityRenderState createRenderState() {

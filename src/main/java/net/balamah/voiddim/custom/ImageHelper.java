@@ -1,7 +1,7 @@
 package net.balamah.voiddim.custom;
 
 import net.minecraft.server.packs.resources.Resource;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.balamah.voiddim.VoidDimension;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -17,8 +17,8 @@ import javax.imageio.ImageIO;
 import com.mojang.blaze3d.platform.NativeImage;
 
 public class ImageHelper {
-	public static Identifier getCorruptedSkin(
-		String playerName, Identifier skinTexturePath
+	public static ResourceLocation getCorruptedSkin(
+		String playerName, ResourceLocation skinTexturePath
 	) {
 		try {
 			Minecraft minecraft = Minecraft.getInstance();
@@ -53,7 +53,7 @@ public class ImageHelper {
 	}
 
 	public static BufferedImage drawCorruptedEyes(BufferedImage grayImage) throws IOException {
-		Identifier eyesIdentifier = Identifier.fromNamespaceAndPath(
+		ResourceLocation eyesIdentifier = ResourceLocation.fromNamespaceAndPath(
 			VoidDimension.MOD_ID, "textures/misc/blood_eyes.png"
 		);
 
@@ -86,10 +86,10 @@ public class ImageHelper {
 		return path;
 	}
 
-	protected static Identifier registerCorruptedSkin(
+	protected static ResourceLocation registerCorruptedSkin(
 		Minecraft minecraft, String playerName, BufferedImage image
 	) {
-		Identifier corruptedSkinIdentifier = Identifier.fromNamespaceAndPath(
+		ResourceLocation corruptedSkinIdentifier = ResourceLocation.fromNamespaceAndPath(
 			VoidDimension.MOD_ID, "corruption/" + playerName
 		);
 
