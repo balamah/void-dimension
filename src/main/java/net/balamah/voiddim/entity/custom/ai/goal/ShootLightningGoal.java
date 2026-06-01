@@ -44,7 +44,7 @@ public class ShootLightningGoal<T extends CorruptedHostileEntity & ShootLightnin
 		this.sendEntityStatus(ModEntityStatuses.LIGHTNING_INVOKE);
 
 		this.world.playSound(
-			this.entity, targetPosition.x, targetPosition.y, targetPosition.z,
+			null, targetPosition.x, targetPosition.y, targetPosition.z,
 			ModSounds.LIGHTNING, SoundSource.HOSTILE
 		);
 	}

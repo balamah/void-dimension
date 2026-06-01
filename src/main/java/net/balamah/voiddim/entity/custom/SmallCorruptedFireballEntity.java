@@ -12,7 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.projectile.hurtingprojectile.Fireball;
+import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -49,7 +49,7 @@ public class SmallCorruptedFireballEntity extends Fireball {
 			int fireTicks = target.getRemainingFireTicks();
 			target.igniteForSeconds(5.0F);
 			DamageSource damageSource = this.damageSources().fireball(this, target);
-			if (!target.hurtServer(serverWorld, damageSource, 5.0F)) {
+			if (!target.hurt(damageSource, 5.0F)) {
 				target.setRemainingFireTicks(fireTicks);
 			} else {
 				this.damageEntity(serverWorld, damageSource, target);

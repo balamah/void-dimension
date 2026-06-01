@@ -1,10 +1,16 @@
 {
 	"type": "minecraft:smithing_transform",
-	"addition": "void-dimension:void_ingot",
-	"base": "minecraft:netherite_leggings",
+	"addition": {
+		"item": "void-dimension:void_ingot"
+	},
+	"base": {
+		"item": "minecraft:netherite_leggings"
+	},
 	"result": {
 		"count": 1,
 		"id": "void-dimension:void_leggings"
 	},
-	"template": "void-dimension:void_upgrade_smithing_template"
+	"template": {
+		"item": "void-dimension:void_upgrade_smithing_template"
+	}
 }

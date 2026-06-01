@@ -3,7 +3,6 @@ package net.balamah.voiddim.effect.custom;
 import java.util.Arrays;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -33,9 +32,8 @@ public class CorruptionEffect extends MobEffect {
 		EntityType.SKELETON,
 		EntityType.SKELETON_HORSE,
 		EntityType.ZOMBIE_HORSE,
-		EntityType.WITHER,
-		EntityType.WITHER_SKELETON,
-		EntityType.CREAKING
+			EntityType.WITHER,
+			EntityType.WITHER_SKELETON
 	};
 
 	public CorruptionEffect() {
@@ -48,17 +46,17 @@ public class CorruptionEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(
-		ServerLevel world, LivingEntity entity, int amplifier
-	) {
+	public boolean applyEffectTick(LivingEntity entity, int amplifier) {
 		if (!(entity instanceof CorruptedHostileEntity) &&
 			!entity.hasEffect(ModEffects.DIVINE_PROTECTION) &&
 			!Arrays.asList(this.immuneEntities).contains(entity.getType())
 		) {
-			DamageSource damageSource = ModDamageSources.corruption(world);
-			entity.hurtServer(world, damageSource, 8.0f * (amplifier + 1));
+			if (entity.level() instanceof net.minecraft.server.level.ServerLevel world) {
+				DamageSource damageSource = ModDamageSources.corruption(world);
+				entity.hurt(damageSource, 8.0f * (amplifier + 1));
+			}
 		}
 
-		return super.applyEffectTick(world, entity, amplifier);
+		return super.applyEffectTick(entity, amplifier);
 	}
 }

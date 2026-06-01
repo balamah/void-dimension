@@ -1,21 +1,20 @@
 package net.balamah.voiddim.item.custom;
 
-import java.util.function.Consumer;
+import java.util.List;
 import net.balamah.voiddim.interfaces.VoidPrayerDataAccess;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.balamah.voiddim.effect.ModEffects;
 
@@ -35,21 +34,20 @@ public class PrayerItem extends Item {
 	}
 
 	@Override
-	public InteractionResult use(Level world, Player user, InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
 		user.startUsingItem(hand);
 
-		return InteractionResult.CONSUME;
+		return InteractionResultHolder.consume(user.getItemInHand(hand));
 	}
 
 	@Override
-	public ItemUseAnimation getUseAnimation(ItemStack stack) {
-		return ItemUseAnimation.BLOCK;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.BLOCK;
 	}
 
 	@Override
 	public void appendHoverText(
-		ItemStack stack, TooltipContext context, TooltipDisplay displayComponent,
-		Consumer<Component> textConsumer, TooltipFlag type
+		ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type
 	) {
 		int seconds = this.prayerTime / 20;
 
@@ -57,7 +55,7 @@ public class PrayerItem extends Item {
 			Component.translatable("item.void-dimension.prayer_item.info.time", seconds)
 			.withStyle(ChatFormatting.GOLD);
 
-		textConsumer.accept(text);
+		tooltip.add(text);
 	}
 
 	@Override
@@ -78,8 +76,8 @@ public class PrayerItem extends Item {
 
 		long currentHour = System.currentTimeMillis() / (1000 * 60 * 60);
 
-		int prayCount = data.getInt("PrayerCount").orElse(0);
-		long lastHour = data.getLong("LastHour").orElse(0l);
+		int prayCount = data.getInt("PrayerCount");
+		long lastHour = data.getLong("LastHour");
 
 		if (lastHour < currentHour) {
 			prayCount = 0;
@@ -102,7 +100,7 @@ public class PrayerItem extends Item {
 			color = ChatFormatting.RED;
 		}
 
-			player.sendOverlayMessage(Component.translatable(message).withStyle(color));
+			player.displayClientMessage(Component.translatable(message).withStyle(color), true);
 
 		return stack;
 	}

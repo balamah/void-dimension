@@ -55,7 +55,7 @@ public class CorruptedBlazeEntity extends Blaze {
 
 	@Override
 	public boolean causeFallDamage(
-		double fallDistance, float damagePerDistance, DamageSource damageSource
+		float fallDistance, float damagePerDistance, DamageSource damageSource
 	) {
 		return false;
 	}
@@ -83,8 +83,8 @@ public class CorruptedBlazeEntity extends Blaze {
 	}
 
 	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
-		boolean hit = super.doHurtTarget(world, target);
+	public boolean doHurtTarget(Entity target) {
+		boolean hit = super.doHurtTarget(target);
 
 		if (hit && (target instanceof Player playerEntity)) {
 			McCodeHelper.disableShield(playerEntity);

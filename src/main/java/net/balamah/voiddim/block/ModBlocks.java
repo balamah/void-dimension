@@ -10,7 +10,7 @@ import net.balamah.voiddim.particle.ModParticleTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -40,7 +40,7 @@ public class ModBlocks {
 
 	protected static BlockBehaviour.Properties flowerBlockSettings = BlockBehaviour.Properties.of()
 			.mapColor(MapColor.GRASS)
-			.noCollision()
+			.noCollission()
 			.instabreak()
 			.sound(SoundType.GRASS)
 			.offsetType(BlockBehaviour.OffsetType.XZ)
@@ -126,7 +126,7 @@ public class ModBlocks {
 		register(
 			"potted_void_flower",
 			settings -> new FlowerPotBlock(VOID_FLOWER, settings),
-			Blocks.flowerPotProperties()
+			BlockBehaviour.Properties.ofLegacyCopy(Blocks.FLOWER_POT)
 			.lightLevel(state -> corruptedFlowerLuminance),
 			false, false
 		);
@@ -135,7 +135,7 @@ public class ModBlocks {
 		register(
 			"corrupted_torch",
 			settings -> new TorchBlock(ModParticleTypes.CORRUPTED_FLAME, settings),
-			BlockBehaviour.Properties.of().noCollision().instabreak()
+			BlockBehaviour.Properties.of().noCollission().instabreak()
 			.lightLevel(state -> 14).sound(SoundType.WOOD)
 			.pushReaction(PushReaction.DESTROY),
 			false, false
@@ -147,7 +147,7 @@ public class ModBlocks {
 			settings -> new WallTorchBlock(
 				ModParticleTypes.CORRUPTED_FLAME, settings
 			),
-			copyLootTable(CORRUPTED_TORCH, true).noCollision().instabreak()
+			copyLootTable(CORRUPTED_TORCH, true).noCollission().instabreak()
 			.lightLevel(state -> 14).sound(SoundType.WOOD)
 			.pushReaction(PushReaction.DESTROY),
 			false, false
@@ -173,7 +173,7 @@ public class ModBlocks {
 			"corrupted_fire",
 			CorruptedFireBlock::new,
 			BlockBehaviour.Properties.of().mapColor(MapColor.FIRE)
-			.replaceable().noCollision().instabreak()
+			.replaceable().noCollission().instabreak()
 			.lightLevel(state -> 15).sound(SoundType.WOOL)
 			.pushReaction(PushReaction.DESTROY)
 			.noOcclusion(),
@@ -224,7 +224,7 @@ public class ModBlocks {
 		boolean isItemUnstackable
 	) {
 		ResourceKey<Block> blockKey = keyOfBlock(name);
-		Block block = blockFactory.apply(settings.setId(blockKey));
+		Block block = blockFactory.apply(settings);
 
 		if (shouldRegisterItem) {
 			registerItem(name, block, isItemUnstackable);
@@ -244,7 +244,7 @@ public class ModBlocks {
 			settings = settings.stacksTo(1);
 		}
 
-		BlockItem blockItem = new BlockItem(block, settings.setId(itemKey));
+		BlockItem blockItem = new BlockItem(block, settings);
 
 		Registry.register(BuiltInRegistries.ITEM, itemKey, blockItem);
 	}
@@ -258,25 +258,18 @@ public class ModBlocks {
 		 * This piece was borrowed from minecraft's code
 		 */
 		BlockBehaviour.Properties settings = block.properties();
-		BlockBehaviour.Properties settings2 = BlockBehaviour.Properties.of()
-			.overrideLootTable(block.getLootTable());
-
-		if (copyTranslationKey) {
-			settings2 = settings2.overrideDescription(block.getDescriptionId());
-		}
-
-		return settings2;
+		return BlockBehaviour.Properties.ofLegacyCopy(block).dropsLike(block);
 	}
 
 	protected static ResourceKey<Block> keyOfBlock(String name) {
 		return ResourceKey.create(
-			Registries.BLOCK, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
+			Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 	}
 	
 	protected static ResourceKey<Item> keyOfItem(String name) {
 		return ResourceKey.create(
-			Registries.ITEM, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
+			Registries.ITEM, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 	}
 }

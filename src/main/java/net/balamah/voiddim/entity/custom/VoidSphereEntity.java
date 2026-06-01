@@ -11,13 +11,12 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.AbstractWindCharge;
+import net.minecraft.world.entity.projectile.windcharge.AbstractWindCharge;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
@@ -29,9 +28,7 @@ public class VoidSphereEntity extends AbstractWindCharge {
 	public static final ExplosionDamageCalculator EXPLOSION_BEHAVIOR =
 		new SimpleExplosionDamageCalculator(
 			true, false,
-			Optional.of(1.22F),
-			BuiltInRegistries.BLOCK.get(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS)
-			.map(Function.identity())
+			Optional.of(1.22F), Optional.empty()
 		);
 
 	public VoidSphereEntity(VoidHarbingerEntity entity, Level world) {
@@ -58,7 +55,6 @@ public class VoidSphereEntity extends AbstractWindCharge {
 				Level.ExplosionInteraction.TRIGGER,
 				ParticleTypes.GUST_EMITTER_SMALL,
 				ParticleTypes.GUST_EMITTER_LARGE,
-				WeightedList.of(),
 				ModSounds.VOID_SPHERE_BURST
 			);
 	}
@@ -76,7 +72,7 @@ public class VoidSphereEntity extends AbstractWindCharge {
 			if (attackerEntity != null) attackerEntity.setLastHurtMob(target);
 
 			DamageSource damageSource = ModDamageSources.corruption(serverWorld);
-			boolean damage = target.hurtServer(serverWorld, damageSource, 18.5f);
+			boolean damage = target.hurt(damageSource, 18.5f);
 
 			if (damage && target instanceof LivingEntity targetLivingEntity) {
 				targetLivingEntity.addEffect(

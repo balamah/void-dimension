@@ -157,11 +157,11 @@ public class CorruptedWarriorEntity extends BossEntity
 	}
 
 	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
-		boolean result = super.doHurtTarget(world, target);
+	public boolean doHurtTarget(Entity target) {
+		boolean result = super.doHurtTarget(target);
 		
 		if (result) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
+			this.level().broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
 
 			// A magic number, don't touch
 			this.attackInterval = 8;
@@ -263,11 +263,11 @@ public class CorruptedWarriorEntity extends BossEntity
 	}
 
 	@Override
-	protected void customServerAiStep(ServerLevel world) {
-		super.customServerAiStep(world);
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
+			this.level().broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
 		}
 
 		if (this.attackInterval > 0) {
@@ -316,7 +316,7 @@ public class CorruptedWarriorEntity extends BossEntity
 	) {
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, y, z);
 
-		while (mutable.getY() > this.level().getMinY() &&
+		while (mutable.getY() > this.level().getMinBuildHeight() &&
 			   !this.level().getBlockState(mutable).blocksMotion()
 		) {
 			double heightDifference = this.getY() - mutable.getY();

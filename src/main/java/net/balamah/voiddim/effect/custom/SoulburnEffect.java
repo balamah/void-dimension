@@ -1,7 +1,6 @@
 package net.balamah.voiddim.effect.custom;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,8 +30,7 @@ public class SoulburnEffect extends MobEffect {
 		EntityType.SKELETON_HORSE,
 		EntityType.ZOMBIE_HORSE,
 		EntityType.WITHER,
-		EntityType.WITHER_SKELETON,
-		EntityType.CREAKING
+		EntityType.WITHER_SKELETON
 	};
 
 	public SoulburnEffect() {
@@ -45,11 +43,11 @@ public class SoulburnEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
+	public boolean applyEffectTick(LivingEntity entity, int amplifier) {
 		if (!(entity instanceof CorruptedHostileEntity)) {
 			// DamageSource damageSource = ModDamageSources.soulBurn(world);
-			// entity.hurtServer(world, damageSource, 8.0f * (amplifier + 1));
-			entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 15, amplifier + 1));
+			// entity.hurt(damageSource, 8.0f * (amplifier + 1));
+			entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 15, amplifier + 1));
 		}
 
 		return true;

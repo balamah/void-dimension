@@ -1,10 +1,10 @@
 package net.balamah.voiddim.item;
 
-import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -50,7 +50,7 @@ public class ModItemGroups {
 
 	public static final CreativeModeTab VOID_DIMENSION_ITEMS_GROUP =
 		Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB,
-						  Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_dimension_items"),
+						  ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_dimension_items"),
 						  VOID_DIMENSION_TAB);
 
 	public static void registerModItemGroups() {
@@ -60,7 +60,7 @@ public class ModItemGroups {
 	protected static CreativeModeTab getCreativeTab(
 		Supplier<ItemStack> iconFactory, Component displayName, ItemLike[] items
 	) {
-		return FabricCreativeModeTab.builder()
+		return FabricItemGroup.builder()
 			.icon(iconFactory)
 			.title(displayName)
 			.displayItems((displayParams, output) -> {

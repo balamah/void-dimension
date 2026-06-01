@@ -1,6 +1,5 @@
 package net.balamah.voiddim.entity.custom.base;
 
-import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
@@ -44,7 +43,7 @@ public abstract class CorruptedHostileEntity extends Monster {
 		super.aiStep();
 
 		if (this.isAlive() && this.isSunBurnTick()) {
-			EquipmentSlot equipmentSlot = this.sunProtectionSlot();
+			EquipmentSlot equipmentSlot = EquipmentSlot.HEAD;
 			ItemStack itemStack = this.getItemBySlot(equipmentSlot);
 			if (!itemStack.isEmpty()) {
 				if (itemStack.isDamageableItem()) {
@@ -66,8 +65,8 @@ public abstract class CorruptedHostileEntity extends Monster {
 	}
 
 	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
-		boolean hit = super.doHurtTarget(world, target);
+	public boolean doHurtTarget(Entity target) {
+		boolean hit = super.doHurtTarget(target);
 
 		if (hit &&
 			target instanceof Player playerEntity &&
@@ -85,8 +84,8 @@ public abstract class CorruptedHostileEntity extends Monster {
 	}
 
 	@Override
-	public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
-		boolean result = super.hurtServer(world, source, amount);
+	public boolean hurt(DamageSource source, float amount) {
+		boolean result = super.hurt(source, amount);
 
 		if (result) {
 			this.attackCount++;
@@ -180,12 +179,7 @@ public abstract class CorruptedHostileEntity extends Monster {
 
 	protected boolean isSunBurnTick() {
 		Level world = this.level();
-		Boolean doMonstersBurn = world.environmentAttributes()
-			.getValue(
-				EnvironmentAttributes.MONSTERS_BURN, this.position()
-			);
-
-		if (!world.isClientSide() && doMonstersBurn) {
+		if (!world.isClientSide() && world.dimensionType().hasSkyLight()) {
 			float f = this.getLightLevelDependentMagicValue();
 			BlockPos blockPos = BlockPos.containing(this.getX(), this.getEyeY(), this.getZ());
 			boolean bl = this.isInWaterOrRain() || this.isInPowderSnow || this.wasInPowderSnow;

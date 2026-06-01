@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -149,7 +149,7 @@ public class ModEntities {
 		"void_lightning_bolt",
 		VoidLightningEntity.class,
 		EntityType.Builder.of(VoidLightningEntity::new, MobCategory.MISC)
-			.noLootTable()
+			
 			.noSave()
 			.sized(0.0F, 0.0F)
 			.clientTrackingRange(16)
@@ -199,7 +199,7 @@ public class ModEntities {
 				EntityType.Builder.
 				<SmallCorruptedFireballEntity>
 				of(SmallCorruptedFireballEntity::new, MobCategory.MISC)
-				.noLootTable()
+				
 				.sized(0.3125F, 0.3125F)
 				.clientTrackingRange(4)
 				.updateInterval(10)
@@ -210,7 +210,7 @@ public class ModEntities {
 				 VoidSphereEntity.class,
 				 EntityType.Builder.
 				 <VoidSphereEntity>of(VoidSphereEntity::new, MobCategory.MISC)
-				 .noLootTable()
+				 
 				 .sized(0.3125F, 0.3125F)
 				 .eyeHeight(0.0F)
 				 .clientTrackingRange(4)
@@ -220,7 +220,7 @@ public class ModEntities {
 		"thrown_block",
 		ThrownBlockEntity.class,
 		EntityType.Builder.<ThrownBlockEntity>of(ThrownBlockEntity::new, MobCategory.MISC)
-			.noLootTable()
+			
 			.sized(1F, 1F)
 			.clientTrackingRange(10)
 			.updateInterval(20)
@@ -242,7 +242,7 @@ public class ModEntities {
 		"dark_grasp",
 		DarkGraspEntity.class,
 		EntityType.Builder.<DarkGraspEntity>of(DarkGraspEntity::new, MobCategory.MISC)
-			.noLootTable()
+			
 			.sized(0.5F, 0.8F)
 			.clientTrackingRange(6)
 			.updateInterval(2)
@@ -260,7 +260,7 @@ public class ModEntities {
 		"wither_skull",
 		EyeBrightHeadEntity.class,
 		EntityType.Builder.<EyeBrightHeadEntity>of(EyeBrightHeadEntity::new, MobCategory.MISC)
-			.noLootTable()
+			
 			.sized(0.3125F, 0.3125F)
 			.clientTrackingRange(4)
 			.updateInterval(10)
@@ -270,7 +270,7 @@ public class ModEntities {
 		"bedrock_bomb",
 		BedrockBombEntity.class,
 		EntityType.Builder.<BedrockBombEntity>of(BedrockBombEntity::new, MobCategory.MISC)
-			.noLootTable()
+			
 			.fireImmune()
 			.sized(0.98F, 0.98F)
 			.eyeHeight(0.15F)
@@ -283,7 +283,7 @@ public class ModEntities {
 			"consumed_soul",
 			ConsumedSoulEntity.class,
 			EntityType.Builder.<ConsumedSoulEntity>of(ConsumedSoulEntity::new, MobCategory.MISC)
-			.noLootTable().sized(0.5f, 0.5f)
+			.sized(0.5f, 0.5f)
 			.eyeHeight(0.0F) .clientTrackingRange(4).updateInterval(10)
 		);
 
@@ -361,13 +361,13 @@ public class ModEntities {
 		register(String name, Class<T> entityClass, EntityType.Builder<T> entityBuilder)
 	{
 		ResourceKey<EntityType<?>> key =
-			ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
+			ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 
 		return Registry.register(
 			BuiltInRegistries.ENTITY_TYPE,
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name),
-			entityBuilder.build(key)
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name),
+			entityBuilder.build(name)
 		);
 	}
 

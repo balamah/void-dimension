@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "net.balamah.voiddim.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"AtmosphericFogModifierMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

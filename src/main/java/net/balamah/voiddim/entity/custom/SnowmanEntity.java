@@ -4,7 +4,7 @@ import net.balamah.voiddim.item.ModItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -65,7 +65,7 @@ public class SnowmanEntity extends Animal {
 
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-		return ModEntities.SNOWMAN.create(world, EntitySpawnReason.BREEDING);
+		return ModEntities.SNOWMAN.create(world);
 	}
 
 	@Override

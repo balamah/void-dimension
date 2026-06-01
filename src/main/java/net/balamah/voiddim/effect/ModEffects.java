@@ -5,7 +5,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
@@ -50,7 +50,7 @@ public class ModEffects {
 	protected static Holder<MobEffect> register(String name, MobEffect entry) {
 		return Registry.registerForHolder(
 			BuiltInRegistries.MOB_EFFECT,
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name),
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name),
 			entry
 		);
 	}
@@ -58,7 +58,7 @@ public class ModEffects {
 	protected static ResourceKey<DamageType> registerDamageType(String name) {
 		return ResourceKey.create(
 			Registries.DAMAGE_TYPE,
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
+			ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
 	}
 }

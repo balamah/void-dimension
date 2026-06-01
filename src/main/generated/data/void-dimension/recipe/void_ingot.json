@@ -1,11 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    "void-dimension:void_shard_block"
-  ],
-  "result": {
-    "count": 9,
-    "id": "void-dimension:void_ingot"
-  }
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		{
+			"item": "void-dimension:void_shard_block"
+		}
+	],
+	"result": {
+		"count": 9,
+		"id": "void-dimension:void_ingot"
+	}
 }

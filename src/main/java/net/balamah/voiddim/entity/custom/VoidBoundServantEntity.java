@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.balamah.voiddim.entity.ModEntityStatuses;
-import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -113,7 +113,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	public SpawnGroupData finalizeSpawn(
 		ServerLevelAccessor world,
 		DifficultyInstance difficulty,
-		EntitySpawnReason spawnReason,
+		MobSpawnType spawnReason,
 		@Nullable SpawnGroupData entityData
 	) {
 		entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
@@ -125,11 +125,11 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	}
 
 	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
-		boolean result = super.doHurtTarget(world, target);
+	public boolean doHurtTarget(Entity target) {
+		boolean result = super.doHurtTarget(target);
 		
 		if (result) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
+			this.level().broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
 			this.playSound(ModSounds.VOID_BOUND_SERVANT_ATTACK);
 
 			// A magic number, don't touch
@@ -145,7 +145,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	 * @Nullable ItemStack getItemBlockingWith()	
 	*/
 	@Override
-	public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		Entity attacker = source.getEntity();
 
 		if (this.isBlocking() && attacker instanceof LivingEntity living) {
@@ -156,21 +156,21 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 				this.isDefending = false;
 
 				this.level().broadcastEntityEvent(this, ModEntityStatuses.STOP_DEFEND);
-				this.playSound(SoundEvents.SHIELD_BREAK.value());
+				this.playSound(SoundEvents.SHIELD_BREAK);
 
 				this.shieldDisabledTicks = 100;
 
-				return super.hurtServer(world, source, amount);
+				return super.hurt(source, amount);
 			}
 		}
 
 		if (this.isBlocking()) {
-			this.playSound(SoundEvents.SHIELD_BLOCK.value());
+			this.playSound(SoundEvents.SHIELD_BLOCK);
 
 			return false;
 		}
 
-		return super.hurtServer(world, source, amount);
+		return super.hurt(source, amount);
 	}
 
 	@Override
@@ -200,11 +200,11 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	}
 
 	@Override
-	protected void customServerAiStep(ServerLevel world) {
-		super.customServerAiStep(world);
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
+			this.level().broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
 		}
 
 		if (this.attackInterval > 0) {

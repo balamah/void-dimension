@@ -110,24 +110,24 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	}
 
 	@Override
-	public void customServerAiStep(ServerLevel world) {
-		super.customServerAiStep(world);
+	public void customServerAiStep() {
+		super.customServerAiStep();
 
 		if (this.level().isClientSide()) {
 			this.setupAnimationStates();
 		}
 
 		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
+			this.level().broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
 		}
 	}
 
 	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
-		boolean result = super.doHurtTarget(world, target);
+	public boolean doHurtTarget(Entity target) {
+		boolean result = super.doHurtTarget(target);
 		
 		if (result) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
+			this.level().broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
 
 			// A magic number, don't touch
 			this.attackInterval = 8;

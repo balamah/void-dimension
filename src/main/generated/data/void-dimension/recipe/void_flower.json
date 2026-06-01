@@ -1,11 +1,15 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    "minecraft:poppy",
-    "void-dimension:voidium"
-  ],
-  "result": {
-    "id": "void-dimension:void_flower"
-  }
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		{
+			"item": "minecraft:poppy"
+		},
+		{
+			"item": "void-dimension:voidium"
+		}
+	],
+	"result": {
+		"id": "void-dimension:void_flower"
+	}
 }

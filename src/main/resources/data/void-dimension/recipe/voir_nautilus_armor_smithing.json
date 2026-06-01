@@ -1,10 +1,16 @@
 {
 	"type": "minecraft:smithing_transform",
-	"addition": "void-dimension:void_ingot",
-	"base": "minecraft:netherite_nautilus_armor",
+	"addition": {
+		"item": "void-dimension:void_ingot"
+	},
+	"base": {
+		"item": "minecraft:turtle_helmet"
+	},
 	"result": {
 		"count": 1,
 		"id": "void-dimension:void_nautilus_armor"
 	},
-	"template": "void-dimension:void_upgrade_smithing_template"
+	"template": {
+		"item": "void-dimension:void_upgrade_smithing_template"
+	}
 }

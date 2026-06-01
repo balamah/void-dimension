@@ -1,7 +1,7 @@
 package net.balamah.voiddim.entity.custom.ai.goal.base;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -9,7 +9,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 public abstract class SlowMovementGoal<T extends CorruptedHostileEntity>
 	extends EntityAttributeModifierGoal<T>
 {
-	protected final Identifier attributeId = Identifier.withDefaultNamespace("speed");
+	protected final ResourceLocation attributeId = ResourceLocation.withDefaultNamespace("speed");
 	protected final AttributeModifier attributeModifier =
 		this.getAttributeModifier(
 			this.attributeId, -2, AttributeModifier.Operation.ADD_MULTIPLIED_BASE

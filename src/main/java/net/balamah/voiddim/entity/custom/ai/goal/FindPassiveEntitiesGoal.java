@@ -31,7 +31,9 @@ public class FindPassiveEntitiesGoal<T extends Mob & MinecraftEntityDongle>
 			return false;
 		} else {
 			this.delay = reducedTickDelay(60);
-			ServerLevel serverWorld = getServerLevel(this.entity.level());
+			if (!(this.entity.level() instanceof ServerLevel serverWorld)) {
+				return false;
+			}
 
 			Predicate<AgeableMob> predicate =
 				target -> this.entity.testPredicate(serverWorld, target, this.predicate);
@@ -61,7 +63,7 @@ public class FindPassiveEntitiesGoal<T extends Mob & MinecraftEntityDongle>
 	public boolean canContinueToUse() {
 		LivingEntity livingEntity = this.entity.getTarget();
 		return livingEntity != null
-			? this.entity.testPredicate(getServerLevel(this.entity.level()), livingEntity, TargetingConditions.DEFAULT)
-			: false;
+			&& this.entity.level() instanceof ServerLevel serverWorld
+			&& this.entity.testPredicate(serverWorld, livingEntity, TargetingConditions.DEFAULT);
 	}
 }

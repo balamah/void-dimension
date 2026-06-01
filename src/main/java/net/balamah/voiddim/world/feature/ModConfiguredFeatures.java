@@ -6,7 +6,7 @@ import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -54,7 +54,7 @@ public class ModConfiguredFeatures {
 
     public static ResourceKey<ConfiguredFeature<?, ?>> register(String name) {
         return ResourceKey.create(
-			Registries.CONFIGURED_FEATURE, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
+			Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
     }
 

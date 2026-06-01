@@ -7,7 +7,7 @@ import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
@@ -21,7 +21,7 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 	protected boolean dodgedAndHit;
 	protected Vec3 targetPosition;
 
-	protected final Identifier attackAttributeId = Identifier.withDefaultNamespace("attacking");
+	protected final ResourceLocation attackAttributeId = ResourceLocation.withDefaultNamespace("attacking");
 	protected final AttributeModifier attackAttributeModifier;
 
 	public DodgeAttackGoal(
@@ -114,7 +114,7 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 			return false;
 		}
 
-		while (mutable.getY() > this.world.getMinY() &&
+		while (mutable.getY() > this.world.getMinBuildHeight() &&
 				!this.world.getBlockState(mutable).blocksMotion())
 		{
 			double heightDifference = this.entity.getY() - mutable.getY();

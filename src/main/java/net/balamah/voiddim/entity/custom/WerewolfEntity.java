@@ -38,12 +38,12 @@ public class WerewolfEntity extends CorruptedHostileEntity {
 	}
 
 	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
+	public boolean doHurtTarget(Entity target) {
 		this.attackTicksLeft = 10;
 
 		byte status = ModEntityStatuses.ATTACK;
 
-		if (world.getRandom().nextFloat() < 0.15f &&
+		if (this.level().getRandom().nextFloat() < 0.15f &&
 			target instanceof Player playerEntity
 		) {
 			McCodeHelper.disableShield(playerEntity);
@@ -51,9 +51,9 @@ public class WerewolfEntity extends CorruptedHostileEntity {
 			status = ModEntityStatuses.BREAK_SHIELD;
 		}
 
-		world.broadcastEntityEvent(this, status);
+		this.level().broadcastEntityEvent(this, status);
 
-		return super.doHurtTarget(world, target);
+		return super.doHurtTarget(target);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.world.entity.projectile.hurtingprojectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.SimpleExplosionDamageCalculator;
 import net.minecraft.world.level.ExplosionDamageCalculator;
@@ -13,7 +13,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -24,7 +23,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.effect.ModEffects;
@@ -38,8 +37,7 @@ public class ConsumedSoulEntity extends AbstractHurtingProjectile {
 
 	public static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR =
 		new SimpleExplosionDamageCalculator(
-			false, false, Optional.empty(),
-			BuiltInRegistries.BLOCK.get(BlockTags.AIR).map(Function.identity())
+			false, false, Optional.empty(), Optional.empty()
 		);
 
 	public ConsumedSoulEntity(EntityType<? extends ConsumedSoulEntity> entityType, Level level) {
@@ -66,7 +64,7 @@ public class ConsumedSoulEntity extends AbstractHurtingProjectile {
 			}
 
 			DamageSource damageSource = ModDamageSources.corruption(world);
-			boolean damage = target.hurtServer(world, damageSource, 18.5f);
+			boolean damage = target.hurt(damageSource, 18.5f);
 
 			if (damage && target instanceof LivingEntity targetLivingEntity) {
 				targetLivingEntity.addEffect(
@@ -109,7 +107,6 @@ public class ConsumedSoulEntity extends AbstractHurtingProjectile {
 				Level.ExplosionInteraction.TRIGGER,
 				ParticleTypes.GUST_EMITTER_SMALL,
 				ParticleTypes.GUST_EMITTER_LARGE,
-				WeightedList.of(),
 				ModSounds.CONSUMED_SOUL_HIT
 			);
 	}

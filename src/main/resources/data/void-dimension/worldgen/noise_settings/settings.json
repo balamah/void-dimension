@@ -33,6 +33,22 @@
 		"erosion": 0.0,
 		"depth": 0.0,
 		"ridges": 0.0,
+		"initial_density_without_jaggedness": {
+			"type": "minecraft:add",
+			"argument1": {
+				"type": "minecraft:y_clamped_gradient",
+				"from_y": -142,
+				"to_y": 382,
+				"from_value": 1.5,
+				"to_value": -1.5
+			},
+			"argument2": {
+				"type": "minecraft:noise",
+				"noise": "void-dimension:void_noise",
+				"xz_scale": 1,
+				"y_scale": 1
+			}
+		},
 		"final_density": {
 			"type": "minecraft:add",
 			"argument1": {

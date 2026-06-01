@@ -1,28 +1,9 @@
 {
-	"attributes": {
-		"minecraft:audio/ambient_sounds": {
-			"additions": {
-				"sound": "void-dimension:void.ambient.1",
-				"tick_chance": 0.003
-			}
-		},
-		"minecraft:visual/fog_color": "#000000",
-		"minecraft:visual/sky_color": "#000000",
-		"minecraft:visual/water_fog_color": "#eae9e9",
-		"minecraft:visual/ambient_particles": [
-			{
-				"particle": {
-					"type": "minecraft:white_ash"
-				},
-				"probability": 0.118093334
-			}
-		]
-	},
 	"has_precipitation": false,
 	"temperature": 1,
 	"temperature_modifier": "none",
 	"downfall": 0.4,
-	"carvers": [],
+	"carvers": {},
 	"features": [
 		[
 			"void-dimension:withered_forest_tree"
@@ -163,8 +144,21 @@
 		}
 	},
 	"effects": {
-		"foliage_color": "#272625",
-		"grass_color": "#eae9e9",
-		"water_color": "#eae9e9"
+		"additions_sound": {
+			"sound": "void-dimension:void.ambient.1",
+			"tick_chance": 0.003
+		},
+		"fog_color": 0,
+		"foliage_color": 2565669,
+		"grass_color": 15395305,
+		"particle": {
+			"options": {
+				"type": "minecraft:white_ash"
+			},
+			"probability": 0.118093334
+		},
+		"sky_color": 0,
+		"water_color": 15395305,
+		"water_fog_color": 15395305
 	}
 }

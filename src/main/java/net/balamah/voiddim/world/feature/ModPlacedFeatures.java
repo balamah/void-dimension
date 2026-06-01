@@ -6,7 +6,7 @@ import net.balamah.voiddim.VoidDimension;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -35,7 +35,7 @@ public class ModPlacedFeatures {
 
     protected static ResourceKey<PlacedFeature> register(String name) {
         return ResourceKey.create(
-			Registries.PLACED_FEATURE, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
+			Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, name)
 		);
     }
 

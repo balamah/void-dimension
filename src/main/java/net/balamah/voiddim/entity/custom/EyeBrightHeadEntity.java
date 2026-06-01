@@ -10,7 +10,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.hurtingprojectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
@@ -58,7 +58,7 @@ public class EyeBrightHeadEntity extends AbstractHurtingProjectile {
 		if (this.getOwner() instanceof LivingEntity livingEntity) {
 			DamageSource damageSource = ModDamageSources.eyeBrightHead(serverWorld);
 			// TODO: Increase damage
-			hitResult = entityHit.hurtServer(serverWorld, damageSource, 8.0F);
+			hitResult = entityHit.hurt(damageSource, 8.0F);
 			if (hitResult) {
 				if (entityHit.isAlive()) {
 					EnchantmentHelper.doPostAttackEffects(serverWorld, entityHit, damageSource);
@@ -67,7 +67,7 @@ public class EyeBrightHeadEntity extends AbstractHurtingProjectile {
 				}
 			}
 		} else {
-			hitResult = entityHit.hurtServer(serverWorld, this.damageSources().magic(), 5.0F);
+			hitResult = entityHit.hurt(this.damageSources().magic(), 5.0F);
 		}
 
 		if (hitResult && entityHit instanceof LivingEntity livingEntityx) {

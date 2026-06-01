@@ -1,15 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "1": "void-dimension:void_ingot"
-  },
-  "pattern": [
-    "111",
-    "111",
-    "111"
-  ],
-  "result": {
-    "id": "void-dimension:void_shard_block"
-  }
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"1": {
+			"item": "void-dimension:void_ingot"
+		}
+	},
+	"pattern": [
+		"111",
+		"111",
+		"111"
+	],
+	"result": {
+		"id": "void-dimension:void_shard_block"
+	}
 }

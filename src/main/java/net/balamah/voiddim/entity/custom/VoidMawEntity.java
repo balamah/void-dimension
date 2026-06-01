@@ -42,10 +42,10 @@ public class VoidMawEntity extends Phantom implements MinecraftEntityDongle {
 	}
 
 	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
-		world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
+	public boolean doHurtTarget(Entity target) {
+		this.level().broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
 
-		return super.doHurtTarget(world, target);
+		return super.doHurtTarget(target);
 	}
 
 	@Override
@@ -69,6 +69,6 @@ public class VoidMawEntity extends Phantom implements MinecraftEntityDongle {
 	public boolean testPredicate(
 		ServerLevel world, LivingEntity target, TargetingConditions predicate
 	) {
-		return predicate.test(world, this, target);
+		return predicate.test(this, target);
 	}
 }

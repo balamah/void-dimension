@@ -1,18 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "group": "multi_bench",
-  "key": {
-    "1": "minecraft:string",
-    "2": "#minecraft:wooden_buttons",
-    "3": "#void-dimension:cross_items"
-  },
-  "pattern": [
-    "112",
-    "121",
-    "213"
-  ],
-  "result": {
-    "id": "void-dimension:wooden_prayer_rope"
-  }
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"group": "multi_bench",
+	"key": {
+		"1": {
+			"item": "minecraft:string"
+		},
+		"2": {
+			"tag": "minecraft:wooden_buttons"
+		},
+		"3": {
+			"tag": "void-dimension:cross_items"
+		}
+	},
+	"pattern": [
+		"112",
+		"121",
+		"213"
+	],
+	"result": {
+		"id": "void-dimension:wooden_prayer_rope"
+	}
 }

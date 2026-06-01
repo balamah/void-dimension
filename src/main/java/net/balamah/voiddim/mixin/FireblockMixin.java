@@ -14,7 +14,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -50,7 +49,7 @@ public class FireblockMixin {
 		);
 
 		if (entity303pattern != null) {
-			Entity303 entity303 = ModEntities.ENTITY303.create(world, EntitySpawnReason.TRIGGERED);
+			Entity303 entity303 = ModEntities.ENTITY303.create(world);
 			if (entity303 != null) {
 				this.spawnEntity(world, entity303pattern, entity303, blockPos);
 			}
@@ -82,7 +81,7 @@ public class FireblockMixin {
 			return;
 		}
 
-		entity.snapTo(
+		entity.moveTo(
 			pos.getX() + 0.5, pos.getY() + 0.05, pos.getZ() + 0.5, 0.0F, 0.0F
 		);
 

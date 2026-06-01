@@ -1,18 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "group": "multi_bench",
-  "key": {
-    "1": "minecraft:diamond",
-    "2": "void-dimension:void_ingot",
-    "3": "minecraft:netherite_upgrade_smithing_template"
-  },
-  "pattern": [
-    "131",
-    "121",
-    "111"
-  ],
-  "result": {
-    "id": "void-dimension:void_upgrade_smithing_template"
-  }
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"group": "multi_bench",
+	"key": {
+		"1": {
+			"item": "minecraft:diamond"
+		},
+		"2": {
+			"item": "void-dimension:void_ingot"
+		},
+		"3": {
+			"item": "minecraft:netherite_upgrade_smithing_template"
+		}
+	},
+	"pattern": [
+		"131",
+		"121",
+		"111"
+	],
+	"result": {
+		"id": "void-dimension:void_upgrade_smithing_template"
+	}
 }

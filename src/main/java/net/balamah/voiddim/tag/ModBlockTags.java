@@ -2,7 +2,7 @@ package net.balamah.voiddim.tag;
 
 import net.balamah.voiddim.VoidDimension;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -21,6 +21,6 @@ public class ModBlockTags {
 	}
 
 	protected static TagKey<Block> register(String id) {
-		return TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id));
+		return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(VoidDimension.MOD_ID, id));
 	}
 }

@@ -174,7 +174,7 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	) {
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, y, z);
 
-		while (mutable.getY() > this.level().getMinY() &&
+		while (mutable.getY() > this.level().getMinBuildHeight() &&
 			   !this.level().getBlockState(mutable).blocksMotion()
 		) {
 			double heightDifference = this.getY() - mutable.getY();

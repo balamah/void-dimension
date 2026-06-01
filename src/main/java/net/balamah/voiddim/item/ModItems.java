@@ -3,20 +3,21 @@ package net.balamah.voiddim.item;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import net.minecraft.world.item.component.Consumable;
-import net.minecraft.world.item.component.Consumables;
-import net.minecraft.world.item.equipment.ArmorMaterial;
-import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.JukeboxSong;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -67,11 +68,7 @@ public class ModItems {
 		registerFoodItem("cooked_flesh", ModFoodComponents.COOKED_FLESH);
 
 	public static final Item SPOILED_FLESH =
-		registerFoodItem(
-			"spoiled_flesh",
-			ModFoodComponents.SPOILED_FLESH,
-			Consumables.ROTTEN_FLESH
-		);
+		registerFoodItem("spoiled_flesh", ModFoodComponents.SPOILED_FLESH);
 
 	// This sux
 	public static final Item VOID_UPGRADE_SMITHING_TEMPLATE =
@@ -85,7 +82,8 @@ public class ModItems {
 		register(
 			"void_axe",
 			settings -> new AxeItem(
-				ModMaterials.VOID_TOOL_MATERIAL, 8.0F, -3.0F, settings
+				ModMaterials.VOID_TOOL_MATERIAL,
+				settings.attributes(DiggerItem.createAttributes(ModMaterials.VOID_TOOL_MATERIAL, 8.0F, -3.0F))
 			),
 			ModItems::getVoidItemSettings
 		);
@@ -94,7 +92,8 @@ public class ModItems {
 		register(
 			"void_hoe",
 			settings -> new HoeItem(
-				ModMaterials.VOID_TOOL_MATERIAL, -5F, 0.0F, settings
+				ModMaterials.VOID_TOOL_MATERIAL,
+				settings.attributes(DiggerItem.createAttributes(ModMaterials.VOID_TOOL_MATERIAL, -5F, 0.0F))
 			),
 			ModItems::getVoidItemSettings
 		);
@@ -102,16 +101,17 @@ public class ModItems {
 	public static final Item VOID_PICKAXE =
 		register(
 			"void_pickaxe",
-			Item::new,
+			settings -> new PickaxeItem(ModMaterials.VOID_TOOL_MATERIAL, settings),
 			() -> getVoidItemSettings()
-				.pickaxe(ModMaterials.VOID_TOOL_MATERIAL, 2.0f, -2.8f)
+				.attributes(DiggerItem.createAttributes(ModMaterials.VOID_TOOL_MATERIAL, 2.0f, -2.8f))
 		);
 
 	public static final Item VOID_SHOVEL =
 		register(
 			"void_shovel",
 			settings -> new ShovelItem(
-				ModMaterials.VOID_TOOL_MATERIAL, 1.5F, -3.0F, settings
+				ModMaterials.VOID_TOOL_MATERIAL,
+				settings.attributes(DiggerItem.createAttributes(ModMaterials.VOID_TOOL_MATERIAL, 1.5F, -3.0F))
 			),
 			ModItems::getVoidItemSettings
 		);
@@ -119,36 +119,32 @@ public class ModItems {
 	public static final Item VOID_SWORD =
 		register(
 			"void_sword",
-			Item::new,
+			settings -> new SwordItem(ModMaterials.VOID_TOOL_MATERIAL, settings),
 			() -> getVoidItemSettings()
-				.sword(ModMaterials.VOID_TOOL_MATERIAL, 6.5f, -2.4f)
+				.attributes(SwordItem.createAttributes(ModMaterials.VOID_TOOL_MATERIAL, 6, -2.4f))
 		);
 
 	public static final Item VOID_SPEAR =
 		register(
 			"void_spear",
 			Item::new,
-			() -> getVoidItemSettings().spear(
-					ModMaterials.VOID_TOOL_MATERIAL,
-					1.0F, 1.075F, 0.4F,
-					2.5F, 6.5F, 5.5F, 5.1F, 7.75F, 4.6F
-				)
+			() -> getVoidItemSettings().stacksTo(1)
 		);
 
 	public static final Item VOID_HELMET =
-		registerArmor("void_helmet", VoidArmorMaterial.INSTANCE, ArmorType.HELMET, true);
+		registerArmor("void_helmet", VoidArmorMaterial.INSTANCE, ArmorItem.Type.HELMET, true);
 
 	public static final Item VOID_CHESTPLATE =
 		registerArmor(
-			"void_chestplate", VoidArmorMaterial.INSTANCE, ArmorType.CHESTPLATE, true
+			"void_chestplate", VoidArmorMaterial.INSTANCE, ArmorItem.Type.CHESTPLATE, true
 		);
 
 	public static final Item VOID_LEGGINGS =
-		registerArmor("void_leggings", VoidArmorMaterial.INSTANCE, ArmorType.LEGGINGS, true);
+		registerArmor("void_leggings", VoidArmorMaterial.INSTANCE, ArmorItem.Type.LEGGINGS, true);
 
 	public static final Item VOID_BOOTS =
 		registerArmor(
-			"void_boots", VoidArmorMaterial.INSTANCE, ArmorType.BOOTS, true
+			"void_boots", VoidArmorMaterial.INSTANCE, ArmorItem.Type.BOOTS, true
 		);
 
 	public static final Item LATIN_CROSS =
@@ -171,7 +167,7 @@ public class ModItems {
 			ModBlocks.CORRUPTED_TORCH,
 			(BiFunction<Block, Item.Properties, Item>)(
 				(block, settings) -> new StandingAndWallBlockItem(
-					block, ModBlocks.CORRUPTED_WALL_TORCH, Direction.DOWN, settings
+					block, ModBlocks.CORRUPTED_WALL_TORCH, settings, Direction.DOWN
 				)),
 			Item.Properties::new
 		);
@@ -245,14 +241,14 @@ public class ModItems {
 		register(
 			"void_horse_armor",
 			Item::new,
-			() -> getVoidItemSettings().horseArmor(VoidArmorMaterial.INSTANCE)
+			() -> getVoidItemSettings().stacksTo(1)
 		);
 
 	public static final Item VOID_NAUTILUS_ARMOR =
 		register(
 			"void_nautilus_armor",
 			Item::new,
-			() -> getVoidItemSettings().nautilusArmor(VoidArmorMaterial.INSTANCE)
+			() -> getVoidItemSettings().stacksTo(1)
 		);
 
 	public static final Item MUSIC_DISC_CALM4 =
@@ -275,10 +271,10 @@ public class ModItems {
 		Supplier<Item.Properties> settingsFactory
 	) {
 		ResourceKey<Item> itemKey = ResourceKey.create(
-			Registries.ITEM, Identifier.fromNamespaceAndPath(MOD_ID, name)
+			Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, name)
 		);
 
-		Item.Properties settings = settingsFactory.get().setId(itemKey);
+		Item.Properties settings = settingsFactory.get();
 		Item item = itemFactory.apply(settings);
 		return Registry.register(BuiltInRegistries.ITEM, itemKey, item);
 	}
@@ -304,7 +300,7 @@ public class ModItems {
 		Function<Item.Properties, Item> factory,
 		Supplier<Item.Properties> settingsFactory
 	) {
-		Item.Properties settings = settingsFactory.get().setId(key);
+		Item.Properties settings = settingsFactory.get();
 		Item item = (Item)factory.apply(settings);
 		if (item instanceof BlockItem blockItem) {
 			blockItem.registerBlocks(Item.BY_BLOCK, item);
@@ -314,38 +310,31 @@ public class ModItems {
 	}
 
 	protected static ResourceKey<Item> keyOfBlock(ResourceKey<Block> blockKey) {
-		return ResourceKey.create(Registries.ITEM, blockKey.identifier());
+		return ResourceKey.create(Registries.ITEM, blockKey.location());
 	}
 
 	protected static Item registerArmor(
-		String name, ArmorMaterial material, ArmorType type, boolean isVoid
+		String name, net.minecraft.core.Holder<ArmorMaterial> material, ArmorItem.Type type, boolean isVoid
 	) {
-		int durability = type.getDurability(material.durability());
+		int durability = type.getDurability(VoidArmorMaterial.BASE_DURABILITY);
 		return register(
 			name,
-			Item::new,
+			settings -> new ArmorItem(material, type, settings),
 			() -> (isVoid ? getVoidItemSettings() : new Item.Properties())
 				.durability(durability)
-				.humanoidArmor(material, type)
 		);
 	}
 
 	protected static Item registerSpawnEgg(String name, EntityType<? extends Mob> mob) {
-		return register(name, SpawnEggItem::new, () -> new Item.Properties().spawnEgg(mob));
+		return register(
+			name,
+			settings -> new SpawnEggItem(mob, 0x222222, 0x8a00ff, settings),
+			Item.Properties::new
+		);
 	}
 
 	protected static Item registerFoodItem(String name, FoodProperties foodComponent) {
 		return register(name, Item::new, () -> new Item.Properties().food(foodComponent));
-	}
-
-	protected static Item registerFoodItem(
-		String name, FoodProperties foodComponent, Consumable consumableComponent
-	) {
-		return register(
-			name,
-			Item::new,
-			() -> new Item.Properties().food(foodComponent, consumableComponent)
-		);
 	}
 
 	protected static Item registerMusicDisc(String name, ResourceKey<JukeboxSong> song) {

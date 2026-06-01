@@ -7,7 +7,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.AbstractWindCharge;
+import net.minecraft.world.entity.projectile.windcharge.AbstractWindCharge;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,7 +52,7 @@ public class ThrownBlockEntity extends AbstractWindCharge {
 			DamageSource damageSource = ModDamageSources.thrownBlock(serverWorld);
 			float damage = this.blockState.getBlock().defaultDestroyTime();
 
-			entity.hurtServer(serverWorld, damageSource, damage);
+			entity.hurt(damageSource, damage);
 		}
 	}
 }
