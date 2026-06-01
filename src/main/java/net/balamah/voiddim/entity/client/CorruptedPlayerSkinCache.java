@@ -1,7 +1,5 @@
 package net.balamah.voiddim.entity.client;
 
-import java.io.IOException;
-
 import com.mojang.authlib.GameProfile;
 
 import net.balamah.voiddim.custom.ImageHelper;
@@ -22,6 +20,7 @@ public class CorruptedPlayerSkinCache {
 			return DefaultPlayerSkin.getDefaultSkin();
 		}
 
+
 		return Minecraft.getInstance()
 				.getSkinManager()
 				.createLookup(gameProfile, false)
@@ -35,8 +34,8 @@ public class CorruptedPlayerSkinCache {
 	 * Throw the skin path into corruptor
 	 * Return the corrupted skin
 	 */
-	public static Identifier corruptSkin(String playerName, PlayerSkin skin) {
-		Identifier skinTexturePath = skin.body().texturePath();
-		return ImageHelper.getCorruptedSkin(playerName, skinTexturePath);
-	}
+	// public static Identifier corruptSkin(GameProfile profile, String playerName, PlayerSkin skin) {
+	// 	Identifier skinTexturePath = skin.body().texturePath();
+	// 	return ImageHelper.getCorruptedSkin(profile, playerName, skinTexturePath);
+	// }
 }

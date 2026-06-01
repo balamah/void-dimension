@@ -1,6 +1,5 @@
 package net.balamah.voiddim.entity.client;
 
-import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.custom.ImageHelper;
 import net.balamah.voiddim.entity.custom.CorruptedPlayerEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -24,6 +23,7 @@ public class CorruptedPlayerRenderer
 		return new CorruptedPlayerRenderState();
 	}
 
+	// TODO: Implement skin corruption
 	@Override
 	public Identifier getTextureLocation(CorruptedPlayerRenderState state) {
 		return state.skinIdentifier;
@@ -45,6 +45,9 @@ public class CorruptedPlayerRenderer
 		state.showRightSleeve = true;
 
 		PlayerSkin skin = CorruptedPlayerSkinCache.getSkin(state.playerProfile, state.playerName);
-		state.skinIdentifier = CorruptedPlayerSkinCache.corruptSkin(state.playerName, skin);
+		state.skin = skin;
+		state.skinIdentifier = ImageHelper.getCorruptedSkin(
+			state.skin, state.playerName, skin.body().texturePath()
+		);
 	}
 }
