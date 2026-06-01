@@ -49,8 +49,8 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes()
 			.add(Attributes.FOLLOW_RANGE, 32)
-			.add(Attributes.MOVEMENT_SPEED, 0.25F)
-			.add(Attributes.ATTACK_DAMAGE, 3.0F)
+			.add(Attributes.MOVEMENT_SPEED, 0.31F)
+			.add(Attributes.ATTACK_DAMAGE, 1.4F)
 			.add(Attributes.MAX_HEALTH, 20.0F);
 	}
 
