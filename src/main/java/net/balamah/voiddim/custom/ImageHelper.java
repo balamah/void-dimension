@@ -1,6 +1,7 @@
 package net.balamah.voiddim.custom;
 
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.core.ClientAsset.ResourceTexture;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.resources.Identifier;
@@ -9,7 +10,6 @@ import net.minecraft.client.Minecraft;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.File;
 import java.awt.Graphics;
 import java.util.Locale;
 
@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
 import com.mojang.blaze3d.platform.NativeImage;
 
 public class ImageHelper {
-	public static Identifier getCorruptedSkin(
+	public static PlayerSkin getCorruptedSkin(
 		PlayerSkin skin, String playerName, Identifier skinTexturePath
 	) {
 		try {
@@ -32,7 +32,7 @@ public class ImageHelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			return skinTexturePath;
+			return skin;
 		}
 	}
 
@@ -60,8 +60,6 @@ public class ImageHelper {
 
 		BufferedImage foreground = ImageIO.read(resource.open());
 
-		ImageIO.write(grayImage, "png", new File("/tmp/output"));
-
 		Graphics graphics = grayImage.getGraphics();
 		graphics.drawImage(foreground, 40, 8, null);
 		graphics.dispose();
@@ -83,10 +81,8 @@ public class ImageHelper {
 		return nativeImage;
 	}
 
-	protected static Identifier registerCorruptedSkin(
-		PlayerSkin skin,
-		String playerName,
-		BufferedImage corruptedSkinImage
+	protected static PlayerSkin registerCorruptedSkin(
+		PlayerSkin skin, String playerName, BufferedImage corruptedSkinImage
 	) throws IOException {
 		String corruptedSkinLabel = sanitizeTextureName(playerName);
 		Identifier corruptedSkinIdentifier = Identifier.fromNamespaceAndPath(
@@ -100,14 +96,22 @@ public class ImageHelper {
 			corruptedSkinIdentifier, corruptedSkin
 		);
 
-		return corruptedSkinIdentifier;
+		ResourceTexture corruptedSkinTexture = new ResourceTexture(
+			corruptedSkinIdentifier, corruptedSkinIdentifier
+		);
+
+		return PlayerSkin.insecure(
+			corruptedSkinTexture,
+			skin.cape(),
+			skin.elytra(),
+			skin.model()
+		);
 	}
 
 	protected static String sanitizeTextureName(String playerName) {
-		String lowerCasePlayerName = playerName.toLowerCase(Locale.ROOT)
-			.replaceAll("[^a-z0-9/._-]", "_");
-
-		String name = (playerName == null || playerName.isBlank()) ? "none" : lowerCasePlayerName;
+		String name = (playerName == null || playerName.isBlank())
+			? "none"
+			: playerName.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9/._-]", "_");
 		String hash = Integer.toUnsignedString((name + "|").hashCode(), 16);
 
 		return name + "_" + hash;

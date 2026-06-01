@@ -23,10 +23,9 @@ public class CorruptedPlayerRenderer
 		return new CorruptedPlayerRenderState();
 	}
 
-	// TODO: Implement skin corruption
 	@Override
 	public Identifier getTextureLocation(CorruptedPlayerRenderState state) {
-		return state.skinIdentifier;
+		return state.skin.body().texturePath();
 	}
 
 	@Override
@@ -45,9 +44,8 @@ public class CorruptedPlayerRenderer
 		state.showRightSleeve = true;
 
 		PlayerSkin skin = CorruptedPlayerSkinCache.getSkin(state.playerProfile, state.playerName);
-		state.skin = skin;
-		state.skinIdentifier = ImageHelper.getCorruptedSkin(
-			state.skin, state.playerName, skin.body().texturePath()
+		state.skin = ImageHelper.getCorruptedSkin(
+			skin, state.playerName, skin.body().texturePath()
 		);
 	}
 }
