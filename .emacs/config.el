@@ -62,6 +62,7 @@
 `run-project-remove-dimension' is executed")
 
 (defun run-project-remove-dimension ()
+  "Run the project and remove dimension `project-current-world'"
   (interactive)
   (let* ((world-path-minecraft
 		  (format "run/saves/%s/dimensions/void-dimension/" project-current-world))
@@ -71,6 +72,15 @@
   (run-project))
 
 (global-set-key (kbd "S-C-<f10>") 'run-project-remove-dimension)
+
+(defun run-project-with-other-frame ()
+  "Run the project, and open terminal on the other emacs frame"
+  (interactive)
+  (run-project)
+  (with-selected-frame (next-frame)
+	(switch-to-buffer "*build-run-mod*")))
+
+(global-set-key (kbd "C-c C-<f10>") 'run-project-with-other-frame)
 
 ;; add snippets
 (let ((snippet-directory (project-config-file-directory-get-path "snippets")))
