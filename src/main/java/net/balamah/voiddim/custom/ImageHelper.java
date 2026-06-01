@@ -40,7 +40,7 @@ public class ImageHelper {
 		BufferedImage grayImage = new BufferedImage(
 			colorImage.getWidth(), 
 			colorImage.getHeight(), 
-			BufferedImage.TYPE_BYTE_GRAY
+			BufferedImage.TYPE_INT_ARGB
 		);
 
 		Graphics graphics = grayImage.getGraphics();
@@ -61,7 +61,7 @@ public class ImageHelper {
 		BufferedImage foreground = ImageIO.read(resource.open());
 
 		Graphics graphics = grayImage.getGraphics();
-		graphics.drawImage(foreground, 40, 8, null);
+		graphics.drawImage(foreground, 8, 8, null);
 		graphics.dispose();
 
 		return grayImage;

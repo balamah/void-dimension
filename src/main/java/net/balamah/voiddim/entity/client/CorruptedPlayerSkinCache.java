@@ -2,12 +2,11 @@ package net.balamah.voiddim.entity.client;
 
 import com.mojang.authlib.GameProfile;
 
-import net.balamah.voiddim.custom.ImageHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.world.item.component.ResolvableProfile;
+import net.minecraft.client.Minecraft;
+
+import net.balamah.voiddim.custom.PlayerSkins;
 
 public class CorruptedPlayerSkinCache {
 	public static PlayerSkin getSkin(ResolvableProfile profile, String playerName) {
@@ -17,7 +16,7 @@ public class CorruptedPlayerSkinCache {
 		}
 
 		if (gameProfile.name().isBlank()) {
-			return DefaultPlayerSkin.getDefaultSkin();
+			return PlayerSkins.getSkin(0);
 		}
 
 
