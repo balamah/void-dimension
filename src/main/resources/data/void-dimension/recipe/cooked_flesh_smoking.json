@@ -3,7 +3,9 @@
 	"category": "food",
 	"cookingtime": 100,
 	"experience": 0.35,
-	"ingredient": "void-dimension:raw_flesh",
+	"ingredient": {
+		"item": "void-dimension:raw_flesh"
+	},
 	"result": {
 		"id": "void-dimension:cooked_flesh"
 	}
