@@ -253,7 +253,7 @@ public class ModEntities {
 			"eye_bright",
 			EyeBrightEntity.class,
 			EntityType.Builder.of(EyeBrightEntity::new, MobCategory.CREATURE)
-			.sized(0.6F, 2.9F)
+			.sized(0.6F, 2.4F)
 		);
 
 	public static final EntityType<EyeBrightHeadEntity> EYE_BRIGHT_HEAD = register(

@@ -107,6 +107,10 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 		if (this.magnetTargetTicks > 0) {
 			this.magnetTargetTicks--;
 		}
+
+		if (this.level().isClientSide()) {
+			this.setupAnimationStates();
+		}
 	}
 
 	@Override
