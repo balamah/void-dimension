@@ -45,11 +45,10 @@ public class SmallCorruptedFireballEntity extends Fireball {
 		super.onHitEntity(entityHitResult);
 		if (this.level() instanceof ServerLevel serverWorld) {
 			Entity target = entityHitResult.getEntity();
-			Entity owner = this.getOwner();
 			int fireTicks = target.getRemainingFireTicks();
 			target.igniteForSeconds(5.0F);
 			DamageSource damageSource = this.damageSources().fireball(this, target);
-			if (!target.hurtServer(serverWorld, damageSource, 5.0F)) {
+			if (!target.hurtServer(serverWorld, damageSource, 3.5F)) {
 				target.setRemainingFireTicks(fireTicks);
 			} else {
 				this.damageEntity(serverWorld, damageSource, target);
@@ -63,7 +62,7 @@ public class SmallCorruptedFireballEntity extends Fireball {
 		EnchantmentHelper.doPostAttackEffects(serverWorld, entity, damageSource);
 		if (entity instanceof LivingEntity livingEntity) {
 			livingEntity.addEffect(
-				new MobEffectInstance(ModEffects.CORRUPTION, 60, 1)
+				new MobEffectInstance(ModEffects.CORRUPTION, 10, 1)
 			);
 		}
 	}
@@ -74,7 +73,7 @@ public class SmallCorruptedFireballEntity extends Fireball {
 
 		Level world = this.level();
 
-		if (world instanceof ServerLevel serverWorld) {
+		if (world instanceof ServerLevel) {
 			Entity entity = this.getOwner();
 			if (!(entity instanceof Mob)) {
 				BlockPos blockPos = blockHitResult.getBlockPos().relative(blockHitResult.getDirection());
@@ -93,6 +92,7 @@ public class SmallCorruptedFireballEntity extends Fireball {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private ItemStack getDefaultItem() {
 		return new ItemStack(ModItems.CORRUPTED_FIRE_CHARGE);
 	}
