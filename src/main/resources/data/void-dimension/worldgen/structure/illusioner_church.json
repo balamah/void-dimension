@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:jigsaw",
+	"terrain_adaptation": "bury",
 	"biomes": "void-dimension:void_forest",
 	"step": "surface_structures",
 	"size": 1,
