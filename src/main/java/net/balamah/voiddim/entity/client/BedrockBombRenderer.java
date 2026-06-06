@@ -2,21 +2,21 @@ package net.balamah.voiddim.entity.client;
 
 import net.balamah.voiddim.entity.custom.BedrockBombEntity;
 import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.TntRenderer;
 import net.minecraft.client.renderer.entity.TntMinecartRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.util.Mth;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.balamah.voiddim.block.ModBlocks;
 
-// FIXME: Texture of tnt
 public class BedrockBombRenderer
 	extends EntityRenderer<BedrockBombEntity, BedrockBombRenderState>
 {
+	public static final BlockDisplayContext BLOCK_DISPLAY_CONTEXT = BlockDisplayContext.create();
+
 	private final BlockModelResolver blockModelResolver;
 
 	public BedrockBombRenderer(EntityRendererProvider.Context context) {
@@ -72,15 +72,12 @@ public class BedrockBombRenderer
 
 	@Override
 	public void extractRenderState(
-		BedrockBombEntity bedrockBomb, BedrockBombRenderState bedrockBombRenderState, float f
+		BedrockBombEntity entity, BedrockBombRenderState state, float f
 	) {
-		super.extractRenderState(bedrockBomb, bedrockBombRenderState, f);
+		super.extractRenderState(entity, state, f);
 
-		bedrockBombRenderState.fuseRemainingInTicks = bedrockBomb.getFuse() - f + 1.0F;
-		this.blockModelResolver.update(
-			bedrockBombRenderState.blockState,
-			ModBlocks.BEDROCK_BOMB.defaultBlockState(),
-			TntRenderer.BLOCK_DISPLAY_CONTEXT
-		);
+		state.fuseRemainingInTicks = entity.getFuse() - f + 1.0F;
+
+		this.blockModelResolver.update(state.blockState, entity.getBlockState(), BLOCK_DISPLAY_CONTEXT);
 	}
 }
