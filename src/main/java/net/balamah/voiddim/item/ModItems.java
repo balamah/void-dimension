@@ -291,7 +291,6 @@ public class ModItems {
 		return Registry.register(BuiltInRegistries.ITEM, itemKey, item);
 	}
 
-	@SuppressWarnings("deprecation")
 	protected static Item registerBlockItem(
 		Block block,
 		BiFunction<Block, Item.Properties, Item> factory,

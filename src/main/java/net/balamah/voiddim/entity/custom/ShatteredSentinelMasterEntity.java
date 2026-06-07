@@ -3,6 +3,7 @@ package net.balamah.voiddim.entity.custom;
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.ShatterGroundUser;
 import net.balamah.voiddim.interfaces.ShockWaveUser;
+import net.balamah.voiddim.interfaces.ThrowBlockUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.entity.ModEntities;
@@ -22,7 +23,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 
 public class ShatteredSentinelMasterEntity extends BossEntity
-	implements ShockWaveUser, ShatterGroundUser
+	implements ShockWaveUser, ShatterGroundUser, ThrowBlockUser
 {
 	public AnimationState walkAnimationState = new AnimationState();
 	public AnimationState attackAnimationState = new AnimationState();
@@ -169,18 +170,37 @@ public class ShatteredSentinelMasterEntity extends BossEntity
 
 		super.registerGoals();
 
-		this.goalSelector.addGoal(1, new ShatteredSentinelMasterShootGoal(this));
-		this.goalSelector.addGoal(2, new ShockWaveInvokeGoal<ShatteredSentinelMasterEntity>(this, 12, 25));
-		this.goalSelector.addGoal(6, new ShatterGroundGoal<ShatteredSentinelMasterEntity>(this));
-		this.goalSelector.addGoal(
-			7,
-			new SummonEntitiesGoal<ShatteredSentinelMasterEntity, ShatteredSentinelEntity>(
-				this, ShatteredSentinelEntity.class, ModEntities.SHATTERED_SENTINEL, 11
-			)
-		);
+		this.goalSelector.addGoal(1, new ThrowBlockGoal<>(this, 15, 3));
+		// TODO: restore goals
+		// this.goalSelector.addGoal(2, new ShockWaveInvokeGoal<>(this, 12, 25));
+		// this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
+		// this.goalSelector.addGoal(
+		// 	7,
+		// 	new SummonEntitiesGoal<ShatteredSentinelMasterEntity, ShatteredSentinelEntity>(
+		// 		this, ShatteredSentinelEntity.class, ModEntities.SHATTERED_SENTINEL, 11
+		// 	)
+		// );
 	}
 
 	protected float getAttackDamage() {
 		return (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+	}
+
+	@Override
+	public int getThrowBlockCooldown() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getThrowBlockCooldown'");
+	}
+
+	@Override
+	public int getThrowBlockTicks() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getThrowBlockTicks'");
+	}
+
+	@Override
+	public void setThrowBlockTicks(int ticks) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setThrowBlockTicks'");
 	}
 }

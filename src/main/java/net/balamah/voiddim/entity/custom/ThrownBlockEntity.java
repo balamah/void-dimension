@@ -1,5 +1,6 @@
 package net.balamah.voiddim.entity.custom;
 
+import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.SynchedEntityData.Builder;
@@ -33,7 +34,7 @@ public class ThrownBlockEntity extends Projectile {
 	}
 
 	public BlockState getBlockState() {
-		return blockState;
+		return this.blockState;
 	}
 
 	public Identifier getBlockTextureIdentifier() {
@@ -57,6 +58,7 @@ public class ThrownBlockEntity extends Projectile {
 
 			DamageSource damageSource = ModDamageSources.thrownBlock(serverWorld);
 			float damage = this.blockState.getBlock().defaultDestroyTime();
+			VoidDimension.LOGGER.info(String.format("Damage of the %s is %s", blockState.toString(), damage));
 
 			entity.hurtServer(serverWorld, damageSource, damage);
 		}
