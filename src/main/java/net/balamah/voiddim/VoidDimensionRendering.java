@@ -183,6 +183,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		ModParticleTypes.registerModParticles();
 
 		EntityRenderers.register(ModEntities.BEDROCK_BOMB, BedrockBombRenderer::new);
+		EntityRenderers.register(ModEntities.THROWN_BLOCK, ThrownBlockRenderer::new);
 		EntityRenderers.register(ModEntities.VOID_LIGHTNING_BOLT, VoidLightningEntityRenderer::new);
 		EntityRenderers.register(ModEntities.EYE_BRIGHT_HEAD, EyeBrightHeadRenderer::new);
 		EntityRenderers.register(ModEntities.DARK_GRASP, DarkGraspRenderer::new);

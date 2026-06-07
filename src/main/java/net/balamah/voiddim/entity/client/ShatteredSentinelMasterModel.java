@@ -166,6 +166,10 @@ public class ShatteredSentinelMasterModel
 			state.attackAnimationState, state.ageInTicks, 1f
 		);
 
+		this.throwBlockAnimation.apply(
+			state.throwBlockState, state.ageInTicks, 1f
+		);
+
 		this.shockWaveInvokeAnimation.apply(
 			state.shockWaveInvokeState, state.ageInTicks, 1f
 		);

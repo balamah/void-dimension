@@ -6,12 +6,13 @@ import net.balamah.voiddim.entity.custom.ThrownBlockEntity;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.ThrowBlockUser;
+import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.custom.McCodeHelper;
 
 public class ThrowBlockGoal<T extends CorruptedHostileEntity & ThrowBlockUser>
@@ -33,32 +34,17 @@ public class ThrowBlockGoal<T extends CorruptedHostileEntity & ThrowBlockUser>
 	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
-		return target != null && target.getY() - this.entity.getY() >= this.minHeight;
+		return target != null && target.getY() - this.entity.getY() >= this.minHeight &&
+			this.entity.getThrowBlockTicks() == 0;
 	}
 
 	@Override
 	public void start() {
+		super.start();
+		
 		this.addSpeedModifier();
-
 		this.sendEntityStatus(ModEntityStatuses.THROW_BLOCK);
 		this.entity.setStopAttacks(true);
-	}
-
-	@Override
-	public void tick() {
-		super.tick();
-
-		Level world = this.entity.level();
-		LivingEntity target = this.entity.getTarget();
-		if (!(world instanceof ServerLevel serverWorld)) {
-			return;
-		}
-
-		if (this.tick == this.executionTick) {
-			BlockPos blockPos = McCodeHelper.getRandomBlockRightOf(entity, 4, 0);
-
-			this.throwBlock(serverWorld, blockPos, target);
-		}
 	}
 
 	@Override
@@ -66,8 +52,37 @@ public class ThrowBlockGoal<T extends CorruptedHostileEntity & ThrowBlockUser>
 		super.stop();
 
 		this.removeSpeedModifier();
-
 		this.sendEntityStatus(ModEntityStatuses.THROW_BLOCK_STOP);
+		this.entity.setStopAttacks(false);
+
+		this.entity.setThrowBlockTicks(this.entity.getThrowBlockCooldown());
+	}
+
+	@Override
+	public boolean canContinueToUse() {
+		return this.entity.getTarget() != null && !this.blockThrown;
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		Level world = this.entity.level();
+		if (!(world instanceof ServerLevel serverWorld)) {
+			return;
+		}
+
+		if (this.tick == this.executionTick) {
+			LivingEntity target = this.entity.getTarget();
+			BlockPos blockPos = McCodeHelper.getRandomBlockRightOf(entity, 4, 0);
+
+			this.throwBlock(serverWorld, blockPos, target);
+		}
+	}
+
+	@Override
+	public boolean requiresUpdateEveryTick() {
+		return true;
 	}
 
 	protected void throwBlock(Level world, BlockPos blockPos, LivingEntity target) {
@@ -107,8 +122,8 @@ public class ThrowBlockGoal<T extends CorruptedHostileEntity & ThrowBlockUser>
 
 	protected void breakBlock(Level world, BlockPos blockPos) {
 		world.destroyBlock(blockPos, false);
-		McCodeHelper.playSound(
-			world, SoundEvents.STONE_BREAK, blockPos.getCenter(), null, 1f, 1f
-		);
+		// McCodeHelper.playSound(
+		// 	world, SoundEvents.STONE_BREAK, blockPos.getCenter(), null, 1f, 1f
+		// );
 	}
 }

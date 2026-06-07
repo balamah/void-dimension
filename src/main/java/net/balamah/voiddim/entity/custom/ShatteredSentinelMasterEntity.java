@@ -39,8 +39,10 @@ public class ShatteredSentinelMasterEntity extends BossEntity
 
 	protected final int shockWaveCooldown = 300;
 	protected final int shatterGroundCooldown = 200;
+	protected final int throwBlockCooldown = 80;
 	protected int shockWaveTicks = 0;
 	protected int shatterGroundTicks = 0;
+	protected int throwBlockTicks = 35;
 
 	public ShatteredSentinelMasterEntity(
 		EntityType<? extends Monster> entityType, Level world
@@ -124,6 +126,7 @@ public class ShatteredSentinelMasterEntity extends BossEntity
 
 		if (this.shockWaveTicks > 0) this.shockWaveTicks--;
 		if (this.shatterGroundTicks > 0) this.shatterGroundTicks--;
+		if (this.throwBlockTicks > 0) this.throwBlockTicks--;
 
 		if (world.isClientSide()) {
 			this.stonesFloatAnimationState.startIfStopped(this.tickCount);
@@ -155,6 +158,21 @@ public class ShatteredSentinelMasterEntity extends BossEntity
 	}
 
 	@Override
+	public int getThrowBlockCooldown() {
+		return this.throwBlockCooldown;
+	}
+
+	@Override
+	public int getThrowBlockTicks() {
+		return this.throwBlockTicks;
+	}
+
+	@Override
+	public void setThrowBlockTicks(int ticks) {
+		this.throwBlockTicks = ticks;
+	}
+
+	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.SHATTERED_SENTINEL_MASTER_DEATH;
 	}
@@ -170,7 +188,7 @@ public class ShatteredSentinelMasterEntity extends BossEntity
 
 		super.registerGoals();
 
-		this.goalSelector.addGoal(1, new ThrowBlockGoal<>(this, 15, 3));
+		this.goalSelector.addGoal(1, new ThrowBlockGoal<>(this, 15, 2));
 		// TODO: restore goals
 		// this.goalSelector.addGoal(2, new ShockWaveInvokeGoal<>(this, 12, 25));
 		// this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
@@ -184,23 +202,5 @@ public class ShatteredSentinelMasterEntity extends BossEntity
 
 	protected float getAttackDamage() {
 		return (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
-	}
-
-	@Override
-	public int getThrowBlockCooldown() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getThrowBlockCooldown'");
-	}
-
-	@Override
-	public int getThrowBlockTicks() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getThrowBlockTicks'");
-	}
-
-	@Override
-	public void setThrowBlockTicks(int ticks) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setThrowBlockTicks'");
 	}
 }
