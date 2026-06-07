@@ -114,7 +114,10 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 			return false;
 		}
 
-		BlockPos.MutableBlockPos mutable = this.getMutableCoordinate(x, y, z, ignoreLimitPredicate);
+		BlockPos.MutableBlockPos mutable = McCodeHelper.getMutableCoordinate(
+			this.level(), x, y, z, ignoreLimitPredicate
+		);
+
 		if (mutable == null) {
 			return false;
 		}
@@ -166,27 +169,6 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 
 	protected double getRandomCoordinate(double baseCoordinate, double vector, double diameter) {
 		return baseCoordinate + (this.random.nextDouble() - 0.5) * 2 - vector * diameter;
-	}
-
-	@SuppressWarnings("deprecation")
-	protected @Nullable BlockPos.MutableBlockPos getMutableCoordinate(
-		double x, double y, double z, boolean ignoreLimitPredicate
-	) {
-		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, y, z);
-
-		while (mutable.getY() > this.level().getMinY() &&
-			   !this.level().getBlockState(mutable).blocksMotion()
-		) {
-			double heightDifference = this.getY() - mutable.getY();
-
-			if (heightDifference < 30 || ignoreLimitPredicate) {
-				mutable.move(Direction.DOWN);
-			} else {
-				return null;
-			}
-		}
-
-		return mutable;
 	}
 
 	@Override

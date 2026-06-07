@@ -40,6 +40,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import java.util.UUID;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.ClipContext;
@@ -49,6 +52,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.SignText;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -112,7 +116,9 @@ public class McCodeHelper {
 		return world.getBlockState(blockPos).getBlock();
 	}
 
+	// TODO: Fix air block obtaining
 	public static BlockPos getRandomBlockRightOf(Entity entity, int distance, int range) {
+		Level world = entity.level();
 		Direction facing = entity.getDirection();
 
 		Direction right = switch (facing) {
@@ -129,7 +135,35 @@ public class McCodeHelper {
 		int dx = right.getStepX() * distance + random.nextIntBetweenInclusive(-range, range);
 		int dz = right.getStepZ() * distance + random.nextIntBetweenInclusive(-range, range);
 
-		return base.offset(dx, 0, dz);
+		BlockPos.MutableBlockPos mutable = getMutableCoordinate(world, dx, dx, dz, false);
+		BlockState blockStateMutable = world.getBlockState(mutable);
+		if (!blockStateMutable.blocksMotion()) {
+			return base.offset(dx, 0, dz);
+		}
+
+		return mutable;
+	}
+
+	@SuppressWarnings("deprecation")
+	public static @Nullable BlockPos.MutableBlockPos getMutableCoordinate(
+		Level world, double x, double y, double z, boolean ignoreLimitPredicate
+	) {
+		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, y, z);
+		double startingCoordinate = mutable.getY();
+
+		while (mutable.getY() > world.getMinY() &&
+			   !world.getBlockState(mutable).blocksMotion()
+		) {
+			double heightDifference = startingCoordinate - mutable.getY();
+
+			if (heightDifference < 30 || ignoreLimitPredicate) {
+				mutable.move(Direction.DOWN);
+			} else {
+				return null;
+			}
+		}
+
+		return mutable;
 	}
 
 	public static boolean isTargetVisible(LivingEntity attacker, LivingEntity target) {
