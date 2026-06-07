@@ -60,6 +60,14 @@ public class ModItems {
 		"void_ingot", Item::new, ModItems::getVoidItemSettings
 	);
 
+	public static final Item VOID_EXPLOSION_CORE = register(
+		"void_explosion_core", Item::new, ModItems::getVoidItemSettings
+	);
+
+	public static final Item VOID_EXPLOSION_UPGRADE = register(
+		"void_explosion_upgrade", Item::new, ModItems::getVoidItemSettings
+	);
+
 	public static final Item RAW_FLESH =
 		registerFoodItem("raw_flesh", ModFoodComponents.RAW_FLESH);
 

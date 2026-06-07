@@ -12,6 +12,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.item.ModItems;
@@ -107,14 +108,35 @@ public class VoidDimensionRecipeProvider extends FabricRecipeProvider {
 							   this.has(ModItems.VOIDIUM))
 						.save(output);
 
-				this.shaped(RecipeCategory.MISC, ModBlocks.BEDROCK_BOMB, 1)
+				this.shaped(RecipeCategory.MISC, ModItems.VOID_EXPLOSION_CORE, 1)
 					.pattern("111")
 					.pattern("121")
 					.pattern("111")
 					.define('1', Items.TNT)
 					.define('2', ModItems.VOIDIUM)
 					.unlockedBy(getHasName(ModItems.VOIDIUM),
-							   this.has(ModItems.VOIDIUM))
+							this.has(ModItems.VOIDIUM))
+					.save(output);
+
+				this.shaped(RecipeCategory.MISC, ModItems.VOID_EXPLOSION_UPGRADE, 1)
+					.pattern("111")
+					.pattern("121")
+					.pattern("111")
+					.define('1', Items.NETHERITE_INGOT)
+					.define('2', ModItems.VOID_EXPLOSION_CORE)
+					.unlockedBy(getHasName(ModItems.VOID_EXPLOSION_CORE),
+							this.has(ModItems.VOID_EXPLOSION_CORE))
+					.save(output);
+
+				this.shaped(RecipeCategory.MISC, ModBlocks.BEDROCK_BOMB, 1)
+					.pattern("121")
+					.pattern("232")
+					.pattern("121")
+					.define('1', Items.OBSIDIAN)
+					.define('2', Items.TNT)
+					.define('3', ModItems.VOID_EXPLOSION_UPGRADE)
+					.unlockedBy(getHasName(ModItems.VOID_EXPLOSION_UPGRADE),
+							this.has(ModItems.VOID_EXPLOSION_UPGRADE))
 					.save(output);
 			}
 

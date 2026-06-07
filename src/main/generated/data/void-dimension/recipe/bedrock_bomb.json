@@ -2,13 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "1": "minecraft:tnt",
-    "2": "void-dimension:voidium"
+    "1": "minecraft:obsidian",
+    "2": "minecraft:tnt",
+    "3": "void-dimension:void_explosion_upgrade"
   },
   "pattern": [
-    "111",
     "121",
-    "111"
+    "232",
+    "121"
   ],
   "result": {
     "id": "void-dimension:bedrock_bomb"

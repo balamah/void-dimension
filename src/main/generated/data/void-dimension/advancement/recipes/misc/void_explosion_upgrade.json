@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "void-dimension:bedrock_bomb"
+        "recipe": "void-dimension:void_explosion_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_void_explosion_upgrade": {
+    "has_void_explosion_core": {
       "conditions": {
         "items": [
           {
-            "items": "void-dimension:void_explosion_upgrade"
+            "items": "void-dimension:void_explosion_core"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_void_explosion_upgrade"
+      "has_void_explosion_core"
     ]
   ],
   "rewards": {
     "recipes": [
-      "void-dimension:bedrock_bomb"
+      "void-dimension:void_explosion_upgrade"
     ]
   }
 }
