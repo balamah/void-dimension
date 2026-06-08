@@ -5,8 +5,8 @@
 			{
 				"height": {
 					"type": "minecraft:uniform",
-					"min_inclusive": 6,
-					"max_inclusive": 18
+					"min_inclusive": 7,
+					"max_inclusive": 19
 				},
 				"provider": {
 					"type": "minecraft:simple_state_provider",

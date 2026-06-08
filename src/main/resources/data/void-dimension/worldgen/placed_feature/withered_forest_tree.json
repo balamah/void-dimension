@@ -2,8 +2,8 @@
 	"feature": "void-dimension:withered_forest_tree",
 	"placement": [
 		{
-			"type": "rarity_filter",
-			"chance": 1
+			"type": "count",
+			"count": 3
 		},
 		{
 			"type": "in_square"
