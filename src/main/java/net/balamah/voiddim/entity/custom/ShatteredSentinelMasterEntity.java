@@ -188,16 +188,14 @@ public class ShatteredSentinelMasterEntity extends BossEntity
 
 		super.registerGoals();
 
-		this.goalSelector.addGoal(1, new ThrowBlockGoal<>(this, 15, 2));
-		// TODO: restore goals
-		// this.goalSelector.addGoal(2, new ShockWaveInvokeGoal<>(this, 12, 25));
-		// this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
-		// this.goalSelector.addGoal(
-		// 	7,
-		// 	new SummonEntitiesGoal<ShatteredSentinelMasterEntity, ShatteredSentinelEntity>(
-		// 		this, ShatteredSentinelEntity.class, ModEntities.SHATTERED_SENTINEL, 11
-		// 	)
-		// );
+		this.goalSelector.addGoal(2, new ShockWaveInvokeGoal<>(this, 12, 25));
+		this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
+		this.goalSelector.addGoal(
+			7,
+			new SummonEntitiesGoal<ShatteredSentinelMasterEntity, ShatteredSentinelEntity>(
+				this, ShatteredSentinelEntity.class, ModEntities.SHATTERED_SENTINEL, 11
+			)
+		);
 	}
 
 	protected float getAttackDamage() {
