@@ -9,6 +9,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.EnderMan;
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.effect.ModEffects;
@@ -29,7 +30,6 @@ public class CorruptionEffect extends MobEffect {
 		EntityType.PILLAGER,
 		EntityType.EVOKER,
 		EntityType.ZOMBIE,
-		EntityType.CREEPER,
 		EntityType.SKELETON,
 		EntityType.SKELETON_HORSE,
 		EntityType.ZOMBIE_HORSE,
@@ -51,6 +51,11 @@ public class CorruptionEffect extends MobEffect {
 	public boolean applyEffectTick(
 		ServerLevel world, LivingEntity entity, int amplifier
 	) {
+		// Kill enderman immediately to convert him into corrupted stalker
+		if (entity instanceof EnderMan) {
+			amplifier *= 20;
+		}
+
 		if (!(entity instanceof CorruptedHostileEntity) &&
 			!entity.hasEffect(ModEffects.DIVINE_PROTECTION) &&
 			!Arrays.asList(this.immuneEntities).contains(entity.getType())

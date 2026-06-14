@@ -1,5 +1,6 @@
 package net.balamah.voiddim.custom;
 
+import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.entity.custom.VoidSphereEntity;
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.effect.ModDamageSources;
@@ -29,6 +30,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -58,9 +60,14 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.balamah.voiddim.VoidDimension;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class McCodeHelper {
+	public static final Map<EntityType<?>, EntityType<?>> entityCorruptionMap =
+		new HashMap<EntityType<?>, EntityType<?>>();
+
 	public static final List<Holder<MobEffect>> shockWaveEffects = List.of(
 		MobEffects.SLOWNESS,
 		MobEffects.BLINDNESS,
@@ -75,6 +82,17 @@ public class McCodeHelper {
 		Blocks.BEDROCK, Blocks.OBSIDIAN, Blocks.AIR
 	};
 
+	static {
+		entityCorruptionMap.put(EntityType.VILLAGER, EntityType.PILLAGER);
+		entityCorruptionMap.put(EntityType.SPIDER, ModEntities.CORRUPTED_SPIDER);
+		entityCorruptionMap.put(EntityType.CREEPER, ModEntities.CORRUPTED_CREEPER);
+		entityCorruptionMap.put(EntityType.BLAZE, ModEntities.CORRUPTED_BLAZE);
+		entityCorruptionMap.put(EntityType.CAT, ModEntities.STARING_CAT);
+		entityCorruptionMap.put(EntityType.WOLF, ModEntities.WEREWOLF);
+		entityCorruptionMap.put(EntityType.ENDERMAN, ModEntities.CORRUPTED_STALKER);
+		entityCorruptionMap.put(EntityType.IRON_GOLEM, ModEntities.SHATTERED_SENTINEL_MASTER);
+	}
+
 	public static Direction getHorizontalFacing(Entity entity) {
 		float yaw = entity.getYRot() % 360;
 		if (yaw < 0) yaw += 360;
@@ -87,7 +105,9 @@ public class McCodeHelper {
 	}
 
 	public static ServerBossEvent getBossBar(Component text, BossBarColor color) {
-		return new ServerBossEvent(UUID.randomUUID(), text, color, BossEvent.BossBarOverlay.PROGRESS);
+		return new ServerBossEvent(
+			UUID.randomUUID(), text, color, BossEvent.BossBarOverlay.PROGRESS
+		);
 	}
 
 	public static boolean isBlockReplaceable(Block block) {
