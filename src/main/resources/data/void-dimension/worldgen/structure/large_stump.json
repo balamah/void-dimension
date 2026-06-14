@@ -1,7 +1,9 @@
 {
 	"type": "minecraft:jigsaw",
-	"terrain_adaptation": "beard_thin",
-	"biomes": "void-dimension:biome-name",
+	"biomes": [
+		"void-dimension:void_plains",
+		"void-dimension:void_forest"
+	],
 	"max_distance_from_center": 80,
 	"size": 1,
 	"step": "lakes",
@@ -11,5 +13,5 @@
 	},
 	"spawn_overrides": {},
 	"use_expansion_hack": false,
-	"start_pool": "void-dimension:only-name"
+	"start_pool": "void-dimension:large_stump"
 }
