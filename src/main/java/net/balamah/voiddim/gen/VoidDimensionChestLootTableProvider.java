@@ -329,24 +329,165 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			.withPool(cobwebPool)
 			;
 
-			LootTable.Builder infdevPyramidRemains =
-				LootTable.lootTable()
-				.withPool(cobwebPool)
+		LootTable.Builder infdevPyramidRemains =
+			LootTable.lootTable()
+			.withPool(cobwebPool)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.9f)
+				.add(McGenHelper.getItemEntry(ModItems.MUSIC_DISC_CALM4, 1))
+			)
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.9f)
-					.add(McGenHelper.getItemEntry(ModItems.MUSIC_DISC_CALM4, 1))
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 4))
+					.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 5, 7))
 				)
-					.withPool(
-						McGenHelper.getPool(McGenHelper.constantNumber(1))
-						.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 4))
-						.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 5, 7))
-					)
-					.withPool(
-						McGenHelper.getPool(McGenHelper.constantNumber(1))
-						.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 5, 7))
-						.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
-					)
-			;
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 5, 7))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
+				)
+		;
+
+		LootTable.Builder michael1Table =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.IRON_SWORD, 1))
+					.add(McGenHelper.getItemEntry(Items.IRON_AXE, 1))
+					.add(McGenHelper.getItemEntry(Items.BOW, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.ARROW, 12, 32))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+					.add(McGenHelper.getItemEntry(Items.BREAD, 3, 8))
+					.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 3, 8))
+					.add(McGenHelper.getItemEntry(Items.IRON_INGOT, 2, 6))
+					.add(McGenHelper.getItemEntry(Items.EMERALD, 1, 3))
+			)
+			.withPool(cobwebPool);
+
+		LootTable.Builder michael2Table =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(4))
+					.add(McGenHelper.getItemEntry(Items.ROTTEN_FLESH, 6, 16))
+					.add(McGenHelper.getItemEntry(ModItems.SPOILED_FLESH, 3, 8))
+					.add(McGenHelper.getItemEntry(Items.BONE, 2, 6))
+					.add(McGenHelper.getItemEntry(Items.SPIDER_EYE, 1, 4))
+			)
+			.withPool(cobwebPool);
+
+		LootTable.Builder michaelSecretTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.20f)
+					.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.50f)
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(3))
+					.add(McGenHelper.getItemEntry(Items.DIAMOND, 3, 7))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 5))
+			)
+			.withPool(cobwebPool);
+
+		LootTable.Builder paulTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.20f)
+					.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.50f)
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+					.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 5))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 4))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+					.add(McGenHelper.getItemEntry(Items.IRON_SWORD, 1))
+					.add(McGenHelper.getItemEntry(Items.BOW, 1))
+					.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 8))
+					.add(McGenHelper.getItemEntry(Items.GOLDEN_CARROT, 2, 5))
+			)
+			.withPool(cobwebPool);
+
+		LootTable.Builder nameless1Table =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.20f)
+					.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.50f)
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+					.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 5))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 4))
+			)
+			.withPool(cobwebPool);
+
+		LootTable.Builder timothyKitchenTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(4))
+					.add(McGenHelper.getItemEntry(Items.ROTTEN_FLESH, 4, 12))
+					.add(McGenHelper.getItemEntry(ModItems.SPOILED_FLESH, 3, 8))
+					.add(McGenHelper.getItemEntry(Items.BEETROOT, 2, 6))
+					.add(McGenHelper.getItemEntry(Items.POTATO, 3, 8))
+					.add(McGenHelper.getItemEntry(Items.COAL, 2, 8))
+			)
+			.withPool(cobwebPool);
+
+		LootTable.Builder timothy2Table =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.IRON_SWORD, 1))
+					.add(McGenHelper.getItemEntry(Items.IRON_PICKAXE, 1))
+					.add(McGenHelper.getItemEntry(Items.BOW, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.ARROW, 12, 24))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+					.add(McGenHelper.getItemEntry(Items.BREAD, 3, 8))
+					.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 8))
+					.add(McGenHelper.getItemEntry(Items.IRON_INGOT, 2, 5))
+			)
+			.withPool(cobwebPool);
+
+		LootTable.Builder timothy1Table =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.IRON_AXE, 1))
+					.add(McGenHelper.getItemEntry(Items.BOW, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.ARROW, 8, 20))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+					.add(McGenHelper.getItemEntry(Items.BREAD, 3, 8))
+					.add(McGenHelper.getItemEntry(Items.GOLDEN_CARROT, 2, 4))
+					.add(McGenHelper.getItemEntry(Items.EMERALD, 1, 3))
+			)
+			.withPool(cobwebPool);
 
 		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_WORM_ROOM_LOOT, illusionerWormChestTable);
 		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_KITCHEN_LOOT, illusionerKitchenChestTable);
@@ -376,5 +517,14 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 		);
 
 		consumer.accept(ModLootTables.INFDEV_PYRAMID_REMAINS_LOOT, infdevPyramidRemains);
+
+		consumer.accept(ModLootTables.MICHAEL_1_LOOT, michael1Table);
+		consumer.accept(ModLootTables.MICHAEL_2_LOOT, michael2Table);
+		consumer.accept(ModLootTables.MICHAEL_SECRET_LOOT, michaelSecretTable);
+		consumer.accept(ModLootTables.PAUL_LOOT, paulTable);
+		consumer.accept(ModLootTables.NAMELESS_1_LOOT, nameless1Table);
+		consumer.accept(ModLootTables.TIMOTHY_KITCHEN_LOOT, timothyKitchenTable);
+		consumer.accept(ModLootTables.TIMOTHY_2_LOOT, timothy2Table);
+		consumer.accept(ModLootTables.TIMOTHY_1_LOOT, timothy1Table);
 	}
 }
