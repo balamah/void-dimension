@@ -1,0 +1,30 @@
+{
+	"structures": [
+		{
+			"structure": "void-dimension:michael_expedition_base",
+			"weight": 1
+		},
+		{
+			"structure": "void-dimension:paul_expedition_base",
+			"weight": 1
+		},
+		{
+			"structure": "void-dimension:timothy_expedition_base",
+			"weight": 1
+		},
+		{
+			"structure": "void-dimension:unnamed_expedition_base",
+			"weight": 1
+		},
+		{
+			"structure": "void-dimension:scholar_base",
+			"weight": 1
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"spacing": 80,
+		"separation": 40,
+		"salt": 123456
+	}
+}

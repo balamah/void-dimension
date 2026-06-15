@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:hunter_house"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 10,
+		"spacing": 20,
+		"salt": 698242246,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 10
+			}
+		}
+	}
+}

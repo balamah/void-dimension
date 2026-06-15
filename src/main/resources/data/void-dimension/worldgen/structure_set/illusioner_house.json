@@ -7,9 +7,13 @@
 	],
 	"placement": {
 		"type": "minecraft:random_spread",
-		"separation": 6,
-		"spacing": 18,
+		"separation": 12,
+		"spacing": 25,
 		"salt": 86340404,
+		"exclusion_zone": {
+			"other_set": "void-dimension:expedition_bases",
+			"chunk_count": 10
+		},
 		"height": {
 			"type": "minecraft:uniform",
 			"min_inclusive": {

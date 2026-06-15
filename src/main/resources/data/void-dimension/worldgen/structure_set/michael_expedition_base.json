@@ -2,22 +2,22 @@
 	"structures": [
 		{
 			"weight": 1,
-			"structure": "void-dimension:illusioner_church"
+			"structure": "void-dimension:michael_expedition_base"
 		}
 	],
 	"placement": {
 		"type": "minecraft:random_spread",
-		"separation": 12,
-		"spacing": 25,
-		"salt": 68269347,
+		"separation": 40,
+		"spacing": 80,
+		"salt": 596824365,
 		"exclusion_zone": {
-			"other_set": "void-dimension:expedition_bases",
-			"chunk_count": 10
+			"other_set": "void-dimension:skull_tree",
+			"chunk_count": 2
 		},
 		"height": {
 			"type": "minecraft:uniform",
 			"min_inclusive": {
-				"absolute": 100
+				"absolute": 12
 			}
 		}
 	}

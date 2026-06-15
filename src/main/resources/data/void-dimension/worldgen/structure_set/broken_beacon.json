@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:broken_beacon"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 22,
+		"spacing": 45,
+		"salt": 487945223,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 224
+			}
+		}
+	}
+}
