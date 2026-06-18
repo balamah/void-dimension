@@ -49,7 +49,7 @@ public class ModEvents {
 		});
 
 		ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
-			if (!(entity instanceof ServerPlayer)) {
+			if (!(entity instanceof ServerPlayer) && entity.hasEffect(ModEffects.CORRUPTION)) {
 				ServerLevel world = (ServerLevel) entity.level();
 				
 				BlockPos entityBlockPos = entity.blockPosition();
