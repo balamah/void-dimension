@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:infdev_obsidian_wall"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 6,
+		"spacing": 45,
+		"salt": 676767,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 224
+			}
+		}
+	}
+}
