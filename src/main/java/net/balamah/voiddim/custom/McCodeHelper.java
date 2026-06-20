@@ -318,7 +318,9 @@ public class McCodeHelper {
 		signBlockEntity.setText(signText, true);
 	}
 
-	public static void createShockWave(ServerLevel world, LivingEntity entity, float radius) {
+	public static void createShockWave(
+		ServerLevel world, LivingEntity entity, float radius, int effectsDuration
+	) {
 		world.explode(
 			entity, null, VoidSphereEntity.EXPLOSION_BEHAVIOR,
 			entity.getX(), entity.getY(), entity.getZ(),
@@ -341,7 +343,7 @@ public class McCodeHelper {
 
 			for (Holder<MobEffect> effect : shockWaveEffects) {
 				int amplifier = (effect != MobEffects.WEAKNESS) ? 2 : 0;
-				target.addEffect(new MobEffectInstance(effect, 1200, amplifier));
+				target.addEffect(new MobEffectInstance(effect, effectsDuration, amplifier));
 				target.hurtServer(world, ModDamageSources.shockWave(world), 15f);
 
 				breakShield(target);

@@ -56,7 +56,7 @@ public class HeavyJumpTargetGoal<T extends Entity303> extends TickingGoal<T> {
 		super.tick();
 
 		if (this.entity.getY() == this.ytarget) {
-			McCodeHelper.createShockWave((ServerLevel) this.world, entity, 25f);
+			McCodeHelper.createShockWave((ServerLevel) this.world, entity, 25f, 60);
 
 			this.jumpedPredicate = true;
 		}

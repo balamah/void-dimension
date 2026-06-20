@@ -177,7 +177,7 @@ public class Entity303 extends BossEntity
 		super.registerGoals();
 
 		this.goalSelector.addGoal(1, new DodgeAttackGoal<Entity303>(this, 15, 2.0, 13f));
-		this.goalSelector.addGoal(2, new ShockWaveInvokeGoal<Entity303>(this, 12, 10));
+		this.goalSelector.addGoal(2, new ShockWaveInvokeGoal<Entity303>(this, 12, 10, 100));
 		this.goalSelector.addGoal(3, new ShootLightningGoal<Entity303>(this));
 		this.goalSelector.addGoal(
 			2,

@@ -14,12 +14,16 @@ public class ShockWaveInvokeGoal<T extends BossEntity & ShockWaveUser> extends S
 	protected final int invocationTickCooldown;
 	protected final float entitySpeed;
 	protected final float radius;
+	protected final int shockwaveEffectsDuration;
 
-	public ShockWaveInvokeGoal(T entity, int invocationTickCooldown, float radius) {
+	public ShockWaveInvokeGoal(
+		T entity, int invocationTickCooldown, float radius, int shockwaveEffectsDuration
+	) {
 		super(entity);
 
 		this.invocationTickCooldown = invocationTickCooldown;
 		this.entitySpeed = this.entity.getSpeed();
+		this.shockwaveEffectsDuration = shockwaveEffectsDuration;
 
 		this.radius = radius;
 	}
@@ -57,7 +61,7 @@ public class ShockWaveInvokeGoal<T extends BossEntity & ShockWaveUser> extends S
 		}
 
 		if (this.tick == this.invocationTickCooldown) {
-			McCodeHelper.createShockWave(serverWorld, entity, radius);
+			McCodeHelper.createShockWave(serverWorld, entity, radius, this.shockwaveEffectsDuration);
 		}
 	}
 

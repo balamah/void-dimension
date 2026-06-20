@@ -1,7 +1,6 @@
 package net.balamah.voiddim.entity.custom;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
@@ -15,19 +14,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.TeleportUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
 public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
-	protected final int teleportCooldown = 140;
+	protected final int teleportCooldown = 100;
 	protected int teleportTicks;
 
 	public AnimationState shootAnimationState = new AnimationState();
