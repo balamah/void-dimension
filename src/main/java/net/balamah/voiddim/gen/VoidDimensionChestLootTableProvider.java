@@ -489,6 +489,131 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			)
 			.withPool(cobwebPool);
 
+		LootTable.Builder scholarBedTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.BOOK, 2, 4))
+				.add(McGenHelper.getItemEntry(Items.WRITTEN_BOOK, 1))
+				.add(McGenHelper.getItemEntry(Items.MAP, 1))
+				.add(McGenHelper.getItemEntry(Items.COMPASS, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.add(McGenHelper.getItemEntry(Items.EMERALD, 2, 5))
+				.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 3, 6))
+				.add(McGenHelper.getItemEntry(Items.DIAMOND, 1, 3))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.35f)
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1, 2))
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.10f)
+				.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
+			)
+		;
+
+		LootTable.Builder scholarArcherTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.BOW, 1))
+				.add(McGenHelper.getItemEntry(Items.CROSSBOW, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.ARROW, 12, 24))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.20f)
+				.add(McGenHelper.getItemEntry(Items.SPECTRAL_ARROW, 4, 8))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.add(McGenHelper.getItemEntry(Items.FEATHER, 3, 6))
+				.add(McGenHelper.getItemEntry(Items.FLINT, 2, 5))
+				.add(McGenHelper.getItemEntry(Items.STRING, 3, 6))
+			)
+		;
+
+		LootTable.Builder scholarBeaconTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.add(McGenHelper.getItemEntry(Items.TORCH, 6, 12))
+				.add(McGenHelper.getItemEntry(Items.SOUL_TORCH, 2, 5))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.LAVA_BUCKET, 1, 2))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.COAL, 4, 8))
+				.add(McGenHelper.getItemEntry(Items.STICK, 4, 8))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.25f)
+				.add(McGenHelper.getItemEntry(Items.GLOWSTONE, 2, 4))
+			)
+		;
+
+		LootTable.Builder brokenBeaconBedTable =
+			LootTable.lootTable()
+			.withPool(cobwebPool)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.BOOK, 1, 2))
+				.add(McGenHelper.getItemEntry(Items.PAPER, 2, 5))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 2, 4))
+				.add(McGenHelper.getItemEntry(Items.DIAMOND, 1, 2))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.15f)
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 1, 2))
+			)
+		;
+
+		LootTable.Builder brokenBeaconArcherTable =
+			LootTable.lootTable()
+			.withPool(cobwebPool)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.BOW, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.ARROW, 6, 16))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.FLINT, 1, 3))
+				.add(McGenHelper.getItemEntry(Items.STRING, 1, 3))
+			)
+		;
+
+		LootTable.Builder brokenBeaconBeaconTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.TORCH, 3, 6))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.50f)
+				.add(McGenHelper.getItemEntry(Items.LAVA_BUCKET, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.COAL, 2, 5))
+			)
+			.withPool(cobwebPool)
+		;
+
 		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_WORM_ROOM_LOOT, illusionerWormChestTable);
 		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_KITCHEN_LOOT, illusionerKitchenChestTable);
 		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_SECRET_LOOT, illusionerSecretTable);
@@ -526,5 +651,12 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 		consumer.accept(ModLootTables.TIMOTHY_KITCHEN_LOOT, timothyKitchenTable);
 		consumer.accept(ModLootTables.TIMOTHY_2_LOOT, timothy2Table);
 		consumer.accept(ModLootTables.TIMOTHY_1_LOOT, timothy1Table);
+
+		consumer.accept(ModLootTables.SCHOLAR_BED_LOOT, scholarBedTable);
+		consumer.accept(ModLootTables.SCHOLAR_ARCHER_LOOT, scholarArcherTable);
+		consumer.accept(ModLootTables.SCHOLAR_BEACON_LOOT, scholarBeaconTable);
+		consumer.accept(ModLootTables.BROKEN_BEACON_BED_LOOT, brokenBeaconBedTable);
+		consumer.accept(ModLootTables.BROKEN_BEACON_ARCHER_LOOT, brokenBeaconArcherTable);
+		consumer.accept(ModLootTables.BROKEN_BEACON_BEACON_LOOT, brokenBeaconBeaconTable);
 	}
 }
