@@ -10,6 +10,10 @@
 		"separation": 22,
 		"spacing": 45,
 		"salt": 487945223,
+		"exclusion_zone": {
+			"other_set": "void-dimension:decorational_structures",
+			"chunk_count": 2
+		},
 		"height": {
 			"type": "minecraft:uniform",
 			"min_inclusive": {
