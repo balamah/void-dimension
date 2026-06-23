@@ -8,6 +8,7 @@ import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
@@ -185,5 +186,10 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 		} else {
 			--this.idleAnimationTimeout;
 		}
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.CORRUPTED_ENTITY_DEATH;
 	}
 }

@@ -25,6 +25,12 @@
 			"void-dimension:corrupted_stalker/death"
 		]
 	},
+	"corrupted_entity.death": {
+		"subtitle": "sound.void-dimension.corrupted_entity.death",
+		"sounds": [
+			"void-dimension:corrupted_entity/death"
+		]
+	},
 	"shattered_sentinel.hit": {
 		"subtitle": "sound.void-dimension.shattered_sentinel.hit",
 		"sounds": [

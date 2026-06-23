@@ -154,6 +154,8 @@ public class ModSounds {
 	public static final SoundEvent GREAT_ARMOR_HIT = register("armor.great.hit");
 	public static final SoundEvent SMALL_ARMOR_HIT = register("armor.small.hit");
 
+	public static final SoundEvent CORRUPTED_ENTITY_DEATH = register("corrupted_entity.death");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}
