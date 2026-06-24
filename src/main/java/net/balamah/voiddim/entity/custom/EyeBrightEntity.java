@@ -164,6 +164,11 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	}
 
 	@Override
+	public float getVoicePitch() {
+		return 1f;
+	}
+
+	@Override
 	protected void registerGoals() {
 		super.registerGoals();
 
