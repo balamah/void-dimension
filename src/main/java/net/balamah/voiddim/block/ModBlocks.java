@@ -3,6 +3,7 @@ package net.balamah.voiddim.block;
 import com.google.common.base.Function;
 import net.balamah.voiddim.block.custom.WindManipulationBlock;
 import net.balamah.voiddim.block.custom.CorruptedFireBlock;
+import net.balamah.voiddim.block.custom.CorruptionAscensionBlock;
 import net.balamah.voiddim.block.custom.BedrockBombBlock;
 import net.balamah.voiddim.block.custom.CorruptOreBlock;
 import net.balamah.voiddim.block.custom.CorruptBlock;
@@ -197,6 +198,15 @@ public class ModBlocks {
 			.requiresCorrectToolForDrops().strength(2.6F, 4.7F),
 			true, false
 			);
+
+	public static final Block CORRUPTION_ASCENSION_BLOCK =
+		register(
+			"corruption_ascension_block",
+			CorruptionAscensionBlock::new,
+			BlockBehaviour.Properties.of().sound(SoundType.SCULK)
+			.requiresCorrectToolForDrops().strength(2.6F, 4.7F),
+			true, false
+		);
 
 	public static final Block BEDROCK_BOMB =
 		register(

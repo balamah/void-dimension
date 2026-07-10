@@ -34,6 +34,9 @@ public class ModEffects {
 	public static final Holder<MobEffect> CORRUPTION =
 		register("corruption", new CorruptionEffect());
 
+	public static final Holder<MobEffect> CORRUPTION_ASCENSION =
+		register("corruption_ascension", new CorruptionAscensionEffect());
+
 	public static final Holder<MobEffect> VOID_SALVATION =
 		register("void_salvation", new VoidSalvationEffect());
 

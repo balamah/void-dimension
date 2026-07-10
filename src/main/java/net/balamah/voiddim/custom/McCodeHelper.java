@@ -30,6 +30,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -68,6 +69,9 @@ public class McCodeHelper {
 	public static final Map<EntityType<?>, EntityType<?>> entityCorruptionMap =
 		new HashMap<EntityType<?>, EntityType<?>>();
 
+	public static final Map<EntityType<?>, EntityType<?>> entityCorruptionAscensionMap =
+		new HashMap<EntityType<?>, EntityType<?>>();
+
 	public static final List<Holder<MobEffect>> shockWaveEffects = List.of(
 		MobEffects.SLOWNESS,
 		MobEffects.BLINDNESS,
@@ -91,6 +95,11 @@ public class McCodeHelper {
 		entityCorruptionMap.put(EntityType.WOLF, ModEntities.WEREWOLF);
 		entityCorruptionMap.put(EntityType.ENDERMAN, ModEntities.CORRUPTED_STALKER);
 		entityCorruptionMap.put(EntityType.IRON_GOLEM, ModEntities.SHATTERED_SENTINEL_MASTER);
+
+		entityCorruptionAscensionMap.put(ModEntities.CORRUPTED_STALKER, ModEntities.VOID_HARBINGER);
+		entityCorruptionAscensionMap.put(ModEntities.SHATTERED_SENTINEL, ModEntities.SHATTERED_SENTINEL_MASTER);
+		entityCorruptionAscensionMap.put(ModEntities.CORRUPTED_PLAYER, ModEntities.AGGRESSIVE_NULL);
+		entityCorruptionAscensionMap.put(ModEntities.AGGRESSIVE_NULL, ModEntities.VOID_BOUND_SERVANT);
 	}
 
 	public static Direction getHorizontalFacing(Entity entity) {
@@ -415,5 +424,24 @@ public class McCodeHelper {
 		}
 
 		return itemArray;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void spawnEntityAccordingMap(
+		ServerLevel world, BlockPos entityBlockPos,
+		LivingEntity entity, Map<EntityType<?>, EntityType<?>> map
+	) {
+		EntityType<? extends LivingEntity> newEntityType =
+			(EntityType<? extends LivingEntity>) map.get(entity.getType());
+
+		if (newEntityType == null) {
+			return;
+		}
+
+		LivingEntity corruptedEntity = newEntityType.create(
+			world, null, entityBlockPos, EntitySpawnReason.MOB_SUMMONED, true, false
+		);
+
+		world.addFreshEntity(corruptedEntity);
 	}
 }

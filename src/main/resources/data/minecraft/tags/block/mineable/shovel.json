@@ -2,6 +2,7 @@
 	"replace": false,
 	"values": [
 		"void-dimension:corrupt_block",
+		"void-dimension:corruption_ascension_block",
 		"void-dimension:corrupt_void_shard_ore",
 		"void-dimension:corrupt_voidium_ore"
 	]
