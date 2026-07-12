@@ -146,7 +146,36 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubPro
 				McGenHelper.getPool(McGenHelper.constantNumber(1))
 				.add(McGenHelper.getItemEntry(ModItems.CORRUPTED_FIRE_CHARGE, 1, 2))
 			)
-			;
+		;
+
+		LootTable.Builder eyeBrightTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(ModItems.CORRUPTED_FIRE_CHARGE, 1, 2))
+			)
+		;
+
+		LootTable.Builder voidBoundServantTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.getRandomNumberProvider(1, 3))
+				.add(McGenHelper.getItemEntry(Items.IRON_HELMET, 1))
+				.add(McGenHelper.getItemEntry(Items.IRON_CHESTPLATE, 1))
+				.add(McGenHelper.getItemEntry(Items.IRON_LEGGINGS, 1))
+				.add(McGenHelper.getItemEntry(Items.IRON_BOOTS, 1))
+			)
+		;
+
+		LootTable.Builder corruptedWarriorTable =
+			voidHarbingerTable.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.2f)
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 2, 4))
+			);
 
 		this.add(ModEntities.CORRUPTED_STALKER, corruptedStalkerTable);
 		this.add(ModEntities.VOID_MAW, voidMawTable);
@@ -159,6 +188,9 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubPro
 		this.add(ModEntities.HOLLOWED_ALPHA_STEVE, hollowedAlphaSteveTable);
 		this.add(ModEntities.ZOMBIFIED_ALPHA_STEVE, zombifiedAlphaSteveTable);
 		this.add(ModEntities.ENTITY303, entity303table);
+		this.add(ModEntities.EYE_BRIGHT, eyeBrightTable);
+		this.add(ModEntities.VOID_BOUND_SERVANT, voidBoundServantTable);
+		this.add(ModEntities.CORRUPTED_WARRIOR, corruptedWarriorTable);
 
 		// Didn't add loot table for corrupted versions of vanilla mobs,
 		// i got tired and therefore copied them from minecraft's files
