@@ -1,7 +1,5 @@
 package net.balamah.voiddim.effect.custom;
 
-import java.util.Arrays;
-
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -10,6 +8,9 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.EnderMan;
+
+import java.util.Arrays;
+
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.ModEntities;
@@ -52,7 +53,14 @@ public class CorruptionEffect extends MobEffect {
 	public boolean applyEffectTick(
 		ServerLevel world, LivingEntity entity, int amplifier
 	) {
-		if (!entity.hasEffect(ModEffects.DIVINE_PROTECTION) &&
+		// Kill enderman immediately to convert him into corrupted stalker
+		if (entity instanceof EnderMan) {
+			amplifier *= 20;
+		}
+
+		if (!(entity instanceof CorruptedHostileEntity) &&
+			!entity.hasEffect(ModEffects.DIVINE_PROTECTION) &&
+			!Arrays.asList(this.immuneEntities).contains(entity.getType()) &&
 			!McCodeHelper.entityCorruptionAscensionMap.containsKey(entity.getType())
 		) {
 			DamageSource damageSource = ModDamageSources.corruption(world);
