@@ -50,6 +50,8 @@
 	"item.void-dimension.staring_cat_spawn_egg": "Ovum creationis feles intuentis",
 	"item.void-dimension.entity303_spawn_egg": "Ovum creationis entity 303",
 	"item.void-dimension.eye_bright_spawn_egg": "Ovum creationis oculi clari",
+	"item.void-dimension.void_bound_servant_spawn_egg": "Ovum creationis servi vincti vacui",
+	"item.void-dimension.corrupted_warrior_spawn_egg": "Ovum creationis bellatoris corrupti",
 
 	"item.minecraft.potion.effect.corruption": "Potio corruptionis",
 	"item.minecraft.potion.effect.divine_protection": "Potio protectionis divinae",

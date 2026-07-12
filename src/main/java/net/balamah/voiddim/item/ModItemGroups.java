@@ -40,7 +40,8 @@ public class ModItemGroups {
 		ModItems.CORRUPTED_SPIDER_SPAWN_EGG, ModItems.NULL_SPAWN_EGG,
 		ModItems.AGGRESSIVE_NULL_SPAWN_EGG, ModItems.STARING_DOG_SPAWN_EGG,
 		ModItems.STARING_CAT_SPAWN_EGG, ModItems.ENTITY303_SPAWN_EGG,
-		ModBlocks.OLD_CORPSE, ModBlocks.OLD_CORPSE_PILE
+		ModItems.EYE_BRIGHT_SPAWN_EGG, ModItems.VOID_BOUND_SERVANT_SPAWN_EGG,
+		ModItems.CORRUPTED_WARRIOR_SPAWN_EGG, ModBlocks.OLD_CORPSE, ModBlocks.OLD_CORPSE_PILE
 	};
 	
 	private static final CreativeModeTab VOID_DIMENSION_TAB =
@@ -51,9 +52,11 @@ public class ModItemGroups {
 		);
 
 	public static final CreativeModeTab VOID_DIMENSION_ITEMS_GROUP =
-		Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB,
-						  Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_dimension_items"),
-						  VOID_DIMENSION_TAB);
+		Registry.register(
+			BuiltInRegistries.CREATIVE_MODE_TAB,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_dimension_items"),
+			VOID_DIMENSION_TAB
+		);
 
 	public static void registerModItemGroups() {
 		VoidDimension.LOGGER.info("Registering mod groups for " + VoidDimension.MOD_ID);
