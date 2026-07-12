@@ -68,7 +68,7 @@
 			},
 			{
 				"type": "void-dimension:corrupted_creeper",
-				"weight": 45,
+				"weight": 30,
 				"minCount": 1,
 				"maxCount": 1
 			},
