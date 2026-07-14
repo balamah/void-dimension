@@ -1,15 +1,19 @@
 package net.balamah.voiddim.entity.custom;
 
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.sounds.SoundEvent;
@@ -23,7 +27,6 @@ import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.DarkGraspUser;
 import net.balamah.voiddim.interfaces.TeleportUser;
 import net.balamah.voiddim.sound.ModSounds;
-
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
@@ -210,7 +213,10 @@ public class CorruptedWarriorEntity extends BossEntity
 			return false;
 		}
 
-		BlockPos.MutableBlockPos mutable = this.getMutableCoordinate(x, y, z, ignoreLimitPredicate);
+		BlockPos.MutableBlockPos mutable = this.getMutableCoordinate(
+			x, y, z, ignoreLimitPredicate
+		);
+
 		if (mutable == null) {
 			return false;
 		}
@@ -232,6 +238,22 @@ public class CorruptedWarriorEntity extends BossEntity
 		return didTeleport;
 	}
 
+
+	@Override
+	protected void initBasicGoals() {
+		// TODO Auto-generated method stub
+		this.goalSelector.addGoal(
+			7, new StayOnHomeBlockGoal(this, 1.0, 50, false, Blocks.RED_WOOL)
+		);
+
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, AgeableMob.class, 8.0F));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+
+		this.targetSelector.addGoal(
+			1, new HurtByTargetGoal(this, BossEntity.class).setAlertOthers(Entity.class)
+		);
+	}
 
 	@Override
 	protected void registerGoals() {
