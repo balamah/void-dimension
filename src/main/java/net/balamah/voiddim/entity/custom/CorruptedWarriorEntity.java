@@ -241,9 +241,8 @@ public class CorruptedWarriorEntity extends BossEntity
 
 	@Override
 	protected void initBasicGoals() {
-		// TODO Auto-generated method stub
 		this.goalSelector.addGoal(
-			7, new StayOnHomeBlockGoal(this, 1.0, 50, false, Blocks.RED_WOOL)
+			7, new StayOnHomeBlockGoal(this, 1.0, 50, false, Blocks.RED_WOOL, 50)
 		);
 
 		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));

@@ -2,25 +2,27 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 
 import org.jspecify.annotations.Nullable;
 
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.balamah.voiddim.custom.McCodeHelper;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.Vec3;
 
 public class StayOnHomeBlockGoal extends RandomStrollGoal {
 	protected final Block homeBlock;
+	protected final int homeBlockSearchRange;
 	private final boolean checkNoActionTime;
 
 	public StayOnHomeBlockGoal(
 		PathfinderMob mob, double speedModifier, int interval,
-		boolean checkNoActionTime, Block homeBlock
+		boolean checkNoActionTime, Block homeBlock, int homeBlockSearchRange
 	) {
 		this.checkNoActionTime = checkNoActionTime;
 		this.homeBlock = homeBlock;
+		this.homeBlockSearchRange = homeBlockSearchRange;
 
 		super(mob, speedModifier, interval, checkNoActionTime);
 	}
@@ -43,7 +45,7 @@ public class StayOnHomeBlockGoal extends RandomStrollGoal {
 			}
 		}
 
-		Vec3 pos = this.getHomeBlockPosition();
+		Vec3 pos = this.getHomeBlockPosition(this.homeBlockSearchRange);
 		if (pos == null) {
 			return false;
 		} else {
@@ -56,9 +58,7 @@ public class StayOnHomeBlockGoal extends RandomStrollGoal {
 		}
 	}
 	
-	public @Nullable Vec3 getHomeBlockPosition() {
-		double radius = 2.0;
-
+	public @Nullable Vec3 getHomeBlockPosition(double radius) {
 		for (BlockPos pos : BlockPos.betweenClosed(
 			Mth.floor(this.mob.getX() - radius),
 			Mth.floor(this.mob.getY() - radius),
@@ -73,5 +73,16 @@ public class StayOnHomeBlockGoal extends RandomStrollGoal {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public void stop() {
+		super.stop();
+
+		float newMobHorizontalRotation = this.mob.getYRot() + 180f;
+
+		this.mob.setYRot(newMobHorizontalRotation);
+		this.mob.setYHeadRot(newMobHorizontalRotation);
+		this.mob.setYBodyRot(newMobHorizontalRotation);
 	}
 }
