@@ -3,14 +3,19 @@ package net.balamah.voiddim.entity.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
@@ -166,6 +171,21 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 
 	protected double getRandomCoordinate(double baseCoordinate, double vector, double diameter) {
 		return baseCoordinate + (this.random.nextDouble() - 0.5) * 2 - vector * diameter;
+	}
+
+	@Override
+	protected void initBasicGoals() {
+		this.goalSelector.addGoal(
+			7, new StayOnHomeBlockGoal(this, 1.0, 50, false, Blocks.BEDROCK, 50)
+		);
+
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, AgeableMob.class, 8.0F));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+
+		this.targetSelector.addGoal(
+			1, new HurtByTargetGoal(this, BossEntity.class).setAlertOthers(Entity.class)
+		);
 	}
 
 	@Override
