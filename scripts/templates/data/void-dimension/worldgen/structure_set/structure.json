@@ -9,7 +9,7 @@
 		"type": "minecraft:random_spread",
 		"separation": 6,
 		"spacing": 45,
-		"salt": 676767,
+		"salt": structure-salt,
 		"height": {
 			"type": "minecraft:uniform",
 			"min_inclusive": {

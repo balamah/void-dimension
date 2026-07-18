@@ -152,6 +152,7 @@ create() {
 				echo "Skipped $destination creation"
 		fi
 
+		replace "s@structure-salt@$RANDOM$RANDOM@g" "$destination"
 		replace "s@future-name@$object/$name@g" "$destination"
 		replace "s@only-name@$name@g" "$destination"
 			
