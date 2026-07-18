@@ -77,7 +77,7 @@ public class CorruptedWarriorEntity extends BossEntity
 			.add(Attributes.MAX_HEALTH, 365)
 			.add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
 			.add(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0)
-			.add(Attributes.ATTACK_DAMAGE, 13)
+			.add(Attributes.ATTACK_DAMAGE, 13f)
 			.add(Attributes.STEP_HEIGHT, 1.0);
 	}
 
