@@ -37,7 +37,6 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	public final AnimationState attack3AnimationState = new AnimationState();
 	public final AnimationState attack4AnimationState = new AnimationState();
 
-	protected boolean hasShield;
 	protected int shieldDisabledTicks = 0;
 	protected boolean isDefending;
 	protected int attackInterval;
@@ -65,7 +64,8 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		super.tick();
 
 		LivingEntity target = this.getTarget();
-		boolean shouldDefend = target != null && this.shieldDisabledTicks == 0 && this.hasShield;
+		boolean shouldDefend = target != null && this.shieldDisabledTicks == 0 &&
+			this.getOffhandItem().is(Items.SHIELD);
 
 		if (shouldDefend != this.isDefending) {
 			this.isDefending = shouldDefend;
@@ -194,8 +194,6 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 
 		if (random.nextInt(2) == 1) {
 			this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));
-
-			this.hasShield = true;
 		}
 	}
 
