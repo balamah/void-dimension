@@ -183,11 +183,9 @@ public class CorruptedWarriorEntity extends BossEntity
 			this.getX() - entity.getX(), 
 			this.getY(0.5) - entity.getEyeY(), 
 			this.getZ() - entity.getZ()
-		);
+		).normalize();
 
-		vec3d = vec3d.normalize();
-
-		double teleportDiameter = 10.0;
+		double teleportDiameter = 7.0;
 
 		int randomYoffset = (this.random.nextInt(16) - 8);
 
