@@ -167,6 +167,12 @@ public class ModLootTables {
 	public static ResourceKey<LootTable> FORTRESS_WARES_PROVISIONS_LOOT =
 		register("fortress/wares/provisions_loot");
 
+	public static ResourceKey<LootTable> FORTRESS_CAINE_ROOM_1_LOOT =
+		register("chests/fortress/caine/1");
+
+	public static ResourceKey<LootTable> FORTRESS_CAINE_ROOM_2_LOOT =
+		register("chests/fortress/caine/2");
+
 	public static void registerModLootTables() {
 		VoidDimension.LOGGER.info("Registering mod loot tables for " + VoidDimension.MOD_ID);
 	}
