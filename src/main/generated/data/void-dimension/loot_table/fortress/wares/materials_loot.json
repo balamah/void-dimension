@@ -41,8 +41,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 32.0,
-                "min": 12.0
+                "max": 12.0,
+                "min": 3.0
               },
               "function": "minecraft:set_count"
             }
@@ -56,7 +56,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 24.0,
+                "max": 15.0,
                 "min": 8.0
               },
               "function": "minecraft:set_count"
@@ -71,7 +71,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 24.0,
+                "max": 15.0,
                 "min": 8.0
               },
               "function": "minecraft:set_count"
@@ -86,7 +86,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 24.0,
+                "max": 15.0,
                 "min": 8.0
               },
               "function": "minecraft:set_count"
@@ -101,7 +101,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 24.0,
+                "max": 15.0,
                 "min": 8.0
               },
               "function": "minecraft:set_count"
@@ -110,7 +110,7 @@
           "name": "minecraft:copper_ingot"
         }
       ],
-      "rolls": 5.0
+      "rolls": 3.0
     },
     {
       "bonus_rolls": 0.0,
@@ -146,7 +146,7 @@
           "name": "minecraft:diamond"
         }
       ],
-      "rolls": 2.0
+      "rolls": 1.0
     }
   ]
 }

@@ -110,7 +110,7 @@
           "name": "minecraft:apple"
         }
       ],
-      "rolls": 6.0
+      "rolls": 3.0
     },
     {
       "bonus_rolls": 0.0,
@@ -161,7 +161,7 @@
           "name": "minecraft:emerald"
         }
       ],
-      "rolls": 3.0
+      "rolls": 1.0
     }
   ]
 }

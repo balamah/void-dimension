@@ -11,8 +11,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 48.0,
-                "min": 16.0
+                "max": 11.0,
+                "min": 7.0
               },
               "function": "minecraft:set_count"
             }
@@ -26,8 +26,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 48.0,
-                "min": 16.0
+                "max": 8.0,
+                "min": 3.0
               },
               "function": "minecraft:set_count"
             }
@@ -41,8 +41,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 32.0,
-                "min": 16.0
+                "max": 12.0,
+                "min": 7.0
               },
               "function": "minecraft:set_count"
             }
@@ -95,7 +95,7 @@
           "name": "minecraft:ladder"
         }
       ],
-      "rolls": 4.0
+      "rolls": 3.0
     },
     {
       "bonus_rolls": 0.0,

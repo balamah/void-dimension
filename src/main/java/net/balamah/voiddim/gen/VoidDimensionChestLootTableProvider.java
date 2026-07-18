@@ -613,23 +613,24 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			)
 			.withPool(cobwebPool)
 		;
-LootTable.Builder fortressKitchenCoalFoodTable =
-	LootTable.lootTable()
-		.withPool(
-			McGenHelper.getPool(McGenHelper.constantNumber(5))
-				.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 8))
-				.add(McGenHelper.getItemEntry(Items.COOKED_CHICKEN, 4, 8))
-				.add(McGenHelper.getItemEntry(Items.BREAD, 4, 10))
-				.add(McGenHelper.getItemEntry(Items.BAKED_POTATO, 6, 12))
-				.add(McGenHelper.getItemEntry(Items.CARROT, 5, 12))
-				.add(McGenHelper.getItemEntry(Items.BEETROOT, 6, 14))
-				.add(McGenHelper.getItemEntry(Items.POTATO, 8, 16))
-				.add(McGenHelper.getItemEntry(Items.COAL, 12, 32))
-		)
-		.withPool(
-			McGenHelper.getPool(McGenHelper.constantNumber(1), 0.15f)
-				.add(McGenHelper.getItemEntry(Items.GOLDEN_CARROT, 2, 5))
-		);
+
+		LootTable.Builder fortressKitchenCoalFoodTable =
+			LootTable.lootTable()
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(3))
+						.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 8))
+						.add(McGenHelper.getItemEntry(Items.COOKED_CHICKEN, 4, 8))
+						.add(McGenHelper.getItemEntry(Items.BREAD, 4, 10))
+						.add(McGenHelper.getItemEntry(Items.BAKED_POTATO, 6, 12))
+						.add(McGenHelper.getItemEntry(Items.CARROT, 5, 12))
+						.add(McGenHelper.getItemEntry(Items.BEETROOT, 6, 14))
+						.add(McGenHelper.getItemEntry(Items.POTATO, 8, 16))
+						.add(McGenHelper.getItemEntry(Items.COAL, 12, 32))
+				)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.15f)
+						.add(McGenHelper.getItemEntry(Items.GOLDEN_CARROT, 2, 5))
+				);
 
 		LootTable.Builder fortressMazeSecretTable =
 			LootTable.lootTable()
@@ -778,20 +779,20 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 		LootTable.Builder fortressThirdFloorTowerTable =
 			LootTable.lootTable()
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(2))
-						.add(McGenHelper.getItemEntry(Items.SPYGLASS, 1))
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
 						.add(McGenHelper.getItemEntry(Items.BOW, 1))
 						.add(McGenHelper.getItemEntry(Items.CROSSBOW, 1))
 				)
 				.withPool(
 					McGenHelper.getPool(McGenHelper.constantNumber(2))
-						.add(McGenHelper.getItemEntry(Items.ARROW, 16, 48))
 						.add(McGenHelper.getItemEntry(Items.TORCH, 8, 16))
 						.add(McGenHelper.getItemEntry(Items.SOUL_TORCH, 4, 8))
+						.add(McGenHelper.getItemEntry(Items.SPYGLASS, 1))
 				)
 				.withPool(
 					McGenHelper.getPool(McGenHelper.constantNumber(2))
 						.add(McGenHelper.getItemEntry(Items.BREAD, 3, 8))
+						.add(McGenHelper.getItemEntry(Items.ARROW, 4, 16))
 						.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 3, 8))
 						.add(McGenHelper.getItemEntry(Items.EMERALD, 1, 3))
 				)
@@ -825,10 +826,10 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 		LootTable.Builder fortressThirdFloorCarpenterChestTable =
 			LootTable.lootTable()
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(4))
-						.add(McGenHelper.getItemEntry(Items.OAK_PLANKS, 16, 48))
-						.add(McGenHelper.getItemEntry(Items.SPRUCE_PLANKS, 16, 48))
-						.add(McGenHelper.getItemEntry(Items.STICK, 16, 32))
+					McGenHelper.getPool(McGenHelper.constantNumber(3))
+						.add(McGenHelper.getItemEntry(Items.OAK_PLANKS, 7, 11))
+						.add(McGenHelper.getItemEntry(Items.SPRUCE_PLANKS, 3, 8))
+						.add(McGenHelper.getItemEntry(Items.STICK, 7, 12))
 						.add(McGenHelper.getItemEntry(Items.CHEST, 1, 2))
 						.add(McGenHelper.getItemEntry(Items.CRAFTING_TABLE, 1))
 						.add(McGenHelper.getItemEntry(Items.LADDER, 8, 24))
@@ -847,10 +848,10 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 		LootTable.Builder fortressThirdFloorBuilderChestTable =
 			LootTable.lootTable()
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(5))
-						.add(McGenHelper.getItemEntry(Items.STONE_BRICKS, 16, 48))
-						.add(McGenHelper.getItemEntry(Items.STONE_BRICK_STAIRS, 8, 24))
-						.add(McGenHelper.getItemEntry(Items.STONE_BRICK_SLAB, 8, 24))
+					McGenHelper.getPool(McGenHelper.constantNumber(3))
+						.add(McGenHelper.getItemEntry(Items.STONE_BRICKS, 4, 12))
+						.add(McGenHelper.getItemEntry(Items.STONE_BRICK_STAIRS, 4, 12))
+						.add(McGenHelper.getItemEntry(Items.STONE_BRICK_SLAB, 5, 10))
 						.add(McGenHelper.getItemEntry(Items.COBBLESTONE, 32, 64))
 						.add(McGenHelper.getItemEntry(Items.TORCH, 8, 24))
 				)
@@ -869,13 +870,13 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 		LootTable.Builder fortressThirdFloorProvisionerChestTable =
 			LootTable.lootTable()
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(6))
-						.add(McGenHelper.getItemEntry(Items.BREAD, 4, 12))
+					McGenHelper.getPool(McGenHelper.constantNumber(3))
+						.add(McGenHelper.getItemEntry(Items.BREAD, 4, 10))
 						.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 10))
 						.add(McGenHelper.getItemEntry(Items.COOKED_CHICKEN, 4, 10))
-						.add(McGenHelper.getItemEntry(Items.BAKED_POTATO, 6, 16))
-						.add(McGenHelper.getItemEntry(Items.CARROT, 8, 16))
-						.add(McGenHelper.getItemEntry(Items.BEETROOT, 8, 16))
+						.add(McGenHelper.getItemEntry(Items.BAKED_POTATO, 6, 10))
+						.add(McGenHelper.getItemEntry(Items.CARROT, 8, 9))
+						.add(McGenHelper.getItemEntry(Items.BEETROOT, 8, 10))
 						.add(McGenHelper.getItemEntry(Items.APPLE, 4, 10))
 				)
 				.withPool(
@@ -941,7 +942,7 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 		LootTable.Builder fortressThirdFloorTentChestTable =
 			LootTable.lootTable()
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(5))
+					McGenHelper.getPool(McGenHelper.constantNumber(4))
 						.add(McGenHelper.getItemEntry(Items.BREAD, 4, 10))
 						.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 8))
 						.add(McGenHelper.getItemEntry(Items.GOLDEN_CARROT, 2, 5))
@@ -950,7 +951,7 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 						.add(McGenHelper.getItemEntry(Items.ARROW, 12, 32))
 				)
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(2))
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
 						.add(McGenHelper.getItemEntry(Items.BOW, 1))
 						.add(McGenHelper.getItemEntry(Items.IRON_SWORD, 1))
 						.add(McGenHelper.getItemEntry(Items.EMERALD, 2, 4))
@@ -963,17 +964,17 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 		LootTable.Builder fortressWaresMaterialsTable =
 			LootTable.lootTable()
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(5))
+					McGenHelper.getPool(McGenHelper.constantNumber(3))
 						.add(McGenHelper.getItemEntry(Items.IRON_INGOT, 6, 16))
 						.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 4, 12))
-						.add(McGenHelper.getItemEntry(Items.COAL, 12, 32))
-						.add(McGenHelper.getItemEntry(Items.REDSTONE, 8, 24))
-						.add(McGenHelper.getItemEntry(Items.LAPIS_LAZULI, 8, 24))
-						.add(McGenHelper.getItemEntry(Items.QUARTZ, 8, 24))
-						.add(McGenHelper.getItemEntry(Items.COPPER_INGOT, 8, 24))
+						.add(McGenHelper.getItemEntry(Items.COAL, 3, 12))
+						.add(McGenHelper.getItemEntry(Items.REDSTONE, 8, 15))
+						.add(McGenHelper.getItemEntry(Items.LAPIS_LAZULI, 8, 15))
+						.add(McGenHelper.getItemEntry(Items.QUARTZ, 8, 15))
+						.add(McGenHelper.getItemEntry(Items.COPPER_INGOT, 8, 15))
 				)
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(2))
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
 						.add(McGenHelper.getItemEntry(Items.EMERALD, 2, 6))
 						.add(McGenHelper.getItemEntry(Items.DIAMOND, 1, 3))
 				);
@@ -1002,7 +1003,7 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 		LootTable.Builder fortressWaresTreasuresTable =
 			LootTable.lootTable()
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(4))
+					McGenHelper.getPool(McGenHelper.constantNumber(2))
 						.add(McGenHelper.getItemEntry(Items.DIAMOND, 3, 8))
 						.add(McGenHelper.getItemEntry(Items.EMERALD, 6, 14))
 						.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 8, 18))
@@ -1029,7 +1030,7 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 		LootTable.Builder fortressWaresProvisionsTable =
 			LootTable.lootTable()
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(6))
+					McGenHelper.getPool(McGenHelper.constantNumber(3))
 						.add(McGenHelper.getItemEntry(Items.BREAD, 6, 12))
 						.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 10))
 						.add(McGenHelper.getItemEntry(Items.COOKED_CHICKEN, 4, 10))
@@ -1039,7 +1040,7 @@ LootTable.Builder fortressKitchenCoalFoodTable =
 						.add(McGenHelper.getItemEntry(Items.APPLE, 4, 10))
 				)
 				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(3))
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
 						.add(McGenHelper.getItemEntry(Items.COAL, 8, 24))
 						.add(McGenHelper.getItemEntry(Items.GOLDEN_CARROT, 2, 5))
 						.add(McGenHelper.getItemEntry(Items.EMERALD, 2, 4))
