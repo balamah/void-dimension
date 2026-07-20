@@ -9,6 +9,7 @@ import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.AnimationState;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -165,7 +167,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		if (this.isBlocking() && attacker instanceof LivingEntity living) {
 			ItemStack weapon = living.getMainHandItem();
 
-			if (weapon.getItem() instanceof AxeItem) {
+			if (weapon.getItem() instanceof AxeItem || source.is(DamageTypeTags.IS_MACE_SMASH)) {
 				this.stopUsingItem();
 				this.isDefending = false;
 
@@ -173,12 +175,10 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 				this.playSound(SoundEvents.SHIELD_BREAK.value());
 
 				this.shieldDisabledTicks = 100;
-
-				return super.hurtServer(world, source, amount);
 			}
 		}
 
-		if (this.isBlocking()) {
+		if (this.isBlocking() && !(source.is(DamageTypeTags.IS_FIRE))) {
 			this.playSound(SoundEvents.SHIELD_BLOCK.value());
 
 			return false;
