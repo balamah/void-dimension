@@ -1,5 +1,7 @@
 package net.balamah.voiddim.entity.custom;
 
+import java.util.Arrays;
+
 import org.jetbrains.annotations.Nullable;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
@@ -41,10 +44,19 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	protected boolean isDefending;
 	protected int attackInterval;
 
-	protected AnimationState[] attackAnimations = {
-		this.attack1AnimationState, this.attack2AnimationState, this.attack3AnimationState,
-		this.attack4AnimationState
+	protected final AnimationState[] attackAnimations = {
+		this.attack1AnimationState,
+		this.attack2AnimationState,
+		this.attack3AnimationState
 	};
+
+	protected final AnimationState[] swordAttackAnimations =
+		Arrays.copyOf(attackAnimations, attackAnimations.length + 1);
+	{
+		swordAttackAnimations[attackAnimations.length] = attack4AnimationState;
+	}
+
+	protected AnimationState[] currentAnimationsArray;
 
 	public VoidBoundServantEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
@@ -67,15 +79,17 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		boolean shouldDefend = target != null && this.shieldDisabledTicks == 0 &&
 			this.getOffhandItem().is(Items.SHIELD);
 
+		Level world = this.level();
+
 		if (shouldDefend != this.isDefending) {
 			this.isDefending = shouldDefend;
 
 			if (this.isDefending) {
 				this.startUsingItem(InteractionHand.OFF_HAND);
-				this.level().broadcastEntityEvent(this, ModEntityStatuses.DEFEND);
+				world.broadcastEntityEvent(this, ModEntityStatuses.DEFEND);
 			} else {
 				this.stopUsingItem();
-				this.level().broadcastEntityEvent(this, ModEntityStatuses.STOP_DEFEND);
+				world.broadcastEntityEvent(this, ModEntityStatuses.STOP_DEFEND);
 			}
 		}
 
@@ -94,14 +108,14 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 				this.useShieldAnimationState.stop();
 				break;
 			case ModEntityStatuses.ATTACK:
-				this.stopAnimations(this.attackAnimations);
-				this.playRandomAnimation(this.attackAnimations);
+				this.stopAnimations(this.currentAnimationsArray);
+				this.playRandomAnimation(this.currentAnimationsArray);
 				break;
 			case ModEntityStatuses.SUICIDE:
 				this.suicideAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.STOP_ATTACK:
-				this.stopAnimations(this.attackAnimations);
+				this.stopAnimations(this.currentAnimationsArray);
 				break;
 			default: super.handleEntityEvent(status);
 				break;
@@ -198,6 +212,13 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	}
 
 	@Override
+	public void setItemSlot(EquipmentSlot slot, ItemStack itemStack) {
+		super.setItemSlot(slot, itemStack);
+		
+		this.setAnimationArray(this.getMainHandItem());
+	}
+
+	@Override
 	protected void customServerAiStep(ServerLevel world) {
 		super.customServerAiStep(world);
 
@@ -218,5 +239,13 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.VOID_BOUND_SERVANT_DEATH;
+	}
+
+	protected void setAnimationArray(ItemStack itemStack) {
+		if (itemStack.is(ItemTags.SWORDS)) {
+			this.currentAnimationsArray = this.swordAttackAnimations;
+		} else {
+			this.currentAnimationsArray = this.attackAnimations;
+		}
 	}
 }
