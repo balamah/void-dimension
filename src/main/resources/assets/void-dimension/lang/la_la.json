@@ -95,7 +95,14 @@
 	"effect.void-dimension.soul_burn": "Animae ardor",
 
 	"death.attack.corruption": "%1$s ab corruptione occisus(a) est",
+	"death.attack.eye_bright_head": "%1$s ab capite oculi clari occisus(a) est",
+	"death.attack.soul_burn": "%1$s ab ardoris animae occisus(a) est",
+	"death.attack.shockwave": "%1$s ab undae impulsae occisus(a) est",
+
 	"death.attack.corruption.player": "%1$s ab corruptione occisus(a) est",
+	"death.attack.eye_bright_head": "%1$s ab caputi oculi clari occisus(a) est",
+	"death.attack.soul_burn.player": "%1$s ab ardosis animae occisus(a) est",
+	"death.attack.shockwave.player": "%1$s ab undae impulsae occisus(a) est",
 
 	"itemgroup.void-dimension.items": "Dimensio vacua",
 

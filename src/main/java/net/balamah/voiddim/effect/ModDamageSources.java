@@ -10,7 +10,7 @@ public class ModDamageSources {
 		return new DamageSource(
 			world.registryAccess()
 			.lookupOrThrow(Registries.DAMAGE_TYPE)
-			.get(ModEffects.CORRUPTION_DAMAGE.identifier())
+			.get(identifier)
 			.orElseThrow()
 		);
 	}

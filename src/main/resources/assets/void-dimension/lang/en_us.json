@@ -93,10 +93,18 @@
 	"effect.void-dimension.void_salvation": "Void salvation",
 	"effect.void-dimension.divine_protection": "Divine protection",
 	"effect.void-dimension.corruption": "Corruption",
+	"effect.void-dimension.corruption_ascension": "Corruption ascension",
 	"effect.void-dimension.soul_burn": "Soul burn",
 
 	"death.attack.corruption": "%1$s died from corruption",
+	"death.attack.eye_bright_head": "%1$s died from eye bright's head",
+	"death.attack.soul_burn": "%1$s died from soul burning",
+	"death.attack.shockwave": "%1$s died from shockwave",
+
 	"death.attack.corruption.player": "%1$s died from corruption",
+	"death.attack.eye_bright_head.player": "%1$s died from eye bright's head",
+	"death.attack.soul_burn.player": "%1$s died from soul burning",
+	"death.attack.shockwave.player": "%1$s died from shockwave",
 
 	"itemgroup.void-dimension.items": "Void dimension",
 
