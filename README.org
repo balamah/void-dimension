@@ -7,6 +7,8 @@
 - [[#setting-up-the-project][Setting up the project]]
   - [[#dependencies][Dependencies]]
   - [[#setting-up-in-emacs][Setting up in emacs]]
+- [[#visual-debugging][Visual debugging]]
+  - [[#example][Example]]
 - [[#pallete-of-textures][Pallete of textures]]
 - [[#sources][Sources]]
   - [[#sounds][Sounds]]
@@ -66,6 +68,42 @@ If lsp throws errors, run
 #+end_src
 
 #+RESULTS:
+
+* Visual debugging
+To enable visual debug,
+1) Create =build.local.gradle= in the root of the project
+2) Paste code
+   #+begin_src groovy
+   loom {
+       runs {
+           client {
+               vmArgs(
+                   "-DMC_DEBUG_ENABLED=true"
+               )
+           }
+       }
+   }
+   #+end_src
+3) Choose configuration option from [[https://minecraft.wiki/w/Debug_property][here]]
+
+** Example
+I want to debug visually path finding of the mobs and enable debug hotkeys. To
+do that, i need to add ="-DMC_DEBUG_PATHFINDING=true -DMC_DEBUG_HOTKEYS=true"= with
+="-DMC_DEBUG_ENABLED=true"=
+
+#+begin_src groovy
+loom {
+    runs {
+        client {
+            vmArgs(
+                "-DMC_DEBUG_ENABLED=true",
+                "-DMC_DEBUG_PATHFINDING=true",
+                "-DMC_DEBUG_HOTKEYS=true"
+            )
+        }
+    }
+}
+#+end_src
 
 * Pallete of textures
 The order is going from brightest colors to the darkest

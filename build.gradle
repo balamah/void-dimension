@@ -113,3 +113,8 @@ tasks.matching { it.name == "eclipseClasspath" }.configureEach {
 tasks.named("sourcesJar") {
     dependsOn("compileJava")
 }
+
+def localBuild = file("build.local.gradle")
+if (localBuild.exists()) {
+    apply from: localBuild
+}
