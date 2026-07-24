@@ -12,9 +12,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 
 public class DarkGraspEntity extends EvokerFangs {
-	protected final float damage = 12f;
-
-	private int warmup = 0;
+	protected final float damage = 15f;
 
 	public DarkGraspEntity(
 		EntityType<? extends EvokerFangs> entityType, Level world
@@ -27,7 +25,6 @@ public class DarkGraspEntity extends EvokerFangs {
 	) {
 		super(ModEntities.DARK_GRASP, world);
 
-		this.warmup = warmup;
 		this.setOwner(owner);
 		this.setYRot(yaw * (180.0F / (float)Math.PI));
 		this.setPos(x, y, z);
