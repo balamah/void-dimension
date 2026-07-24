@@ -9,7 +9,6 @@ import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.AnimationState;

@@ -160,17 +160,6 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubPro
 			)
 		;
 
-		LootTable.Builder voidBoundServantTable =
-			LootTable.lootTable()
-			.withPool(
-				McGenHelper.getPool(McGenHelper.getRandomNumberProvider(1, 3))
-				.add(McGenHelper.getItemEntry(Items.IRON_HELMET, 1))
-				.add(McGenHelper.getItemEntry(Items.IRON_CHESTPLATE, 1))
-				.add(McGenHelper.getItemEntry(Items.IRON_LEGGINGS, 1))
-				.add(McGenHelper.getItemEntry(Items.IRON_BOOTS, 1))
-			)
-		;
-
 		LootTable.Builder corruptedWarriorTable =
 			voidHarbingerTable.withPool(
 				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.2f)
@@ -189,7 +178,6 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubPro
 		this.add(ModEntities.ZOMBIFIED_ALPHA_STEVE, zombifiedAlphaSteveTable);
 		this.add(ModEntities.ENTITY303, entity303table);
 		this.add(ModEntities.EYE_BRIGHT, eyeBrightTable);
-		this.add(ModEntities.VOID_BOUND_SERVANT, voidBoundServantTable);
 		this.add(ModEntities.CORRUPTED_WARRIOR, corruptedWarriorTable);
 
 		// Didn't add loot table for corrupted versions of vanilla mobs,
