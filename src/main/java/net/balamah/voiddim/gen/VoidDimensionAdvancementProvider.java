@@ -9,19 +9,8 @@ import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementRequirements;
-import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.ChangeDimensionTrigger;
-import net.minecraft.advancements.criterion.ConsumeItemTrigger;
-import net.minecraft.advancements.criterion.DataComponentMatchers;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.KilledTrigger;
-import net.minecraft.advancements.criterion.RecipeCraftedTrigger;
+import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponentExactPredicate;
@@ -189,6 +178,9 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		Optional<EntityPredicate> shatteredSentinelMasterPredicate =
 			this.getEntityPredicate(entityLookup, ModEntities.SHATTERED_SENTINEL_MASTER);
 
+		Optional<EntityPredicate> corruptedWarriorPredicate =
+			this.getEntityPredicate(entityLookup, ModEntities.CORRUPTED_WARRIOR);
+
 		AdvancementHolder harbingerOfOblivion = this.getAdvancementEntry(
 			ModItems.VOID_HARBINGER_SPAWN_EGG, "harbinger_of_oblivion", aForsakenPlace,
 			null, AdvancementType.CHALLENGE, false, "killed_void_harbinger",
@@ -208,6 +200,13 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			null, AdvancementType.CHALLENGE, false, "killed_entity303",
 			KilledTrigger.TriggerInstance.playerKilledEntity(entity303Predicate),
 			consumer, "kill_entity303"
+		);
+
+		AdvancementHolder unbound = this.getAdvancementEntry(
+			ModItems.CORRUPTED_WARRIOR_SPAWN_EGG, "unbound", aForsakenPlace,
+			null, AdvancementType.CHALLENGE, false, "killed_corrupted_warrior",
+			KilledTrigger.TriggerInstance.playerKilledEntity(corruptedWarriorPredicate),
+			consumer, "kill_corrupted_warrior"
 		);
 
 		AdvancementHolder exodusPreparation = this.getAdvancementBuilder(

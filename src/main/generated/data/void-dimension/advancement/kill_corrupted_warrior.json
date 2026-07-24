@@ -1,0 +1,37 @@
+{
+  "parent": "void-dimension:get_into_void",
+  "criteria": {
+    "killed_corrupted_warrior": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "void-dimension:corrupted_warrior"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.unbound.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "void-dimension:corrupted_warrior_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.unbound.title"
+    }
+  },
+  "requirements": [
+    [
+      "killed_corrupted_warrior"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -207,5 +207,7 @@
 	"advancement.void-dimension.exodus.title": "Exodus",
 	"advancement.void-dimension.exodus.description": "Escape the Void to the Nether using a void salvation potion and lit a bedrock bomb",
 	"advancement.void-dimension.anomaly_beaten.title": "Anomaly beaten",
-	"advancement.void-dimension.anomaly_beaten.description": "Kill entity 303 boss in illusioner's house"
+	"advancement.void-dimension.anomaly_beaten.description": "Kill entity 303 boss in illusioner's house",
+	"advancement.void-dimension.unbound.title": "Unbound",
+	"advancement.void-dimension.unbound.description": "Killed corrupted warrior and freed him"
 }

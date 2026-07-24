@@ -95,6 +95,7 @@ public class McCodeHelper {
 		entityCorruptionMap.put(EntityType.WOLF, ModEntities.WEREWOLF);
 		entityCorruptionMap.put(EntityType.ENDERMAN, ModEntities.CORRUPTED_STALKER);
 		entityCorruptionMap.put(EntityType.IRON_GOLEM, ModEntities.SHATTERED_SENTINEL_MASTER);
+		entityCorruptionMap.put(EntityType.PHANTOM, ModEntities.VOID_MAW);
 
 		entityCorruptionAscensionMap.put(ModEntities.CORRUPTED_STALKER, ModEntities.VOID_HARBINGER);
 		entityCorruptionAscensionMap.put(ModEntities.SHATTERED_SENTINEL, ModEntities.SHATTERED_SENTINEL_MASTER);

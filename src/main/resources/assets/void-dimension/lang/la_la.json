@@ -200,5 +200,7 @@
 	"advancement.void-dimension.exodus.title": "Exodus",
 	"advancement.void-dimension.exodus.description": "Effugere Inanis ad Inferos utens potione vacui salutis et petram bomb",
 	"advancement.void-dimension.anomaly_beaten.title": "Anomalia percussum",
-	"advancement.void-dimension.anomaly_beaten.description": "Interficere Entity 303 in domum illusionistae"
+	"advancement.void-dimension.anomaly_beaten.description": "Interficere Entity 303 in domum illusionistae",
+	"advancement.void-dimension.unbound.title": "Solvere",
+	"advancement.void-dimension.unbound.description": "Interficere bellatorum corruptum et libera eum"
 }
