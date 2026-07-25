@@ -230,7 +230,7 @@ public class ModEntities {
 		register("corrupted_warrior",
 				 CorruptedWarriorEntity.class,
 				 EntityType.Builder.of(CorruptedWarriorEntity::new, MobCategory.CREATURE)
-				 .sized(0.6F, 2.9F));
+				 .sized(1.6F, 2.9F));
 
 	public static final EntityType<VoidBoundServantEntity> VOID_BOUND_SERVANT =
 		register("void_bound_servant",

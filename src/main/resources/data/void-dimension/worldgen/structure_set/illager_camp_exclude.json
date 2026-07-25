@@ -12,6 +12,8 @@
 		{ "structure": "void-dimension:paul_expedition_base", "weight": 1 },
 		{ "structure": "void-dimension:timothy_expedition_base", "weight": 1 },
 		{ "structure": "void-dimension:unnamed_expedition_base", "weight": 1 },
+		{ "structure": "void-dimension:ruined_battlefield", "weight": 1 },
+		{ "structure": "void-dimension:throne_room", "weight": 1 },
 		{ "structure": "void-dimension:scholar_base", "weight": 1 }
 	],
 	"placement": {
