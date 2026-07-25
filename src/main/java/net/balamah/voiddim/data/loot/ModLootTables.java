@@ -173,6 +173,45 @@ public class ModLootTables {
 	public static ResourceKey<LootTable> FORTRESS_CAINE_ROOM_2_LOOT =
 		register("chests/fortress/caine/2");
 
+	public static ResourceKey<LootTable> ILLAGER_CAMP_TOWER_LOOT =
+		register("chests/illager_camp/tower_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_SUPPLIES_LOOT =
+		register("chests/illager_camp/supplies_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_ITEMS_LOOT =
+		register("chests/illager_camp/items_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_KITCHEN_LOOT =
+		register("chests/illager_camp/kitchen_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_SAUNA_LOOT =
+		register("chests/illager_camp/sauna_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_HEADQUARTERS_WEAPONS_LOOT =
+		register("chests/illager_camp/headquarters/weapons_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_HEADQUARTERS_TREASURES_LOOT =
+		register("chests/illager_camp/headquarters/treasures_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_FORGE_LOOT =
+		register("chests/illager_camp/forge_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_PRISON_LOOT =
+		register("chests/illager_camp/prison_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_LABORATORY_ALCHEMY_LOOT =
+		register("chests/illager_camp/laboratory/alchemy_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_LABORATORY_REDSTONE_LOOT =
+		register("chests/illager_camp/laboratory/redstone_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_LABORATORY_SECRET_LOOT =
+		register("chests/illager_camp/laboratory/secret_loot");
+
+	public static ResourceKey<LootTable> ILLAGER_CAMP_HEADQUARTERS_SUPPLIES_LOOT =
+		register("chests/illager_camp/headquarters/supplies_loot");
+
 	public static void registerModLootTables() {
 		VoidDimension.LOGGER.info("Registering mod loot tables for " + VoidDimension.MOD_ID);
 	}
