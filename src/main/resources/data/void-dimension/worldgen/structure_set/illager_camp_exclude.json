@@ -3,6 +3,7 @@
 		{ "structure": "void-dimension:well", "weight": 1 },
 		{ "structure": "void-dimension:decoration_0", "weight": 1 },
 		{ "structure": "void-dimension:skull_tree", "weight": 1 },
+		{ "structure": "void-dimension:failed_railway", "weight": 1 },
 		{ "structure": "void-dimension:lantern_tree", "weight": 1 },
 		{ "structure": "void-dimension:large_stump", "weight": 1 },
 		{ "structure": "void-dimension:well", "weight": 1 },
