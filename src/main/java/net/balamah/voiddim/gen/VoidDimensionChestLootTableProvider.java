@@ -31,6 +31,17 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			McGenHelper.getPool(McGenHelper.constantNumber(2))
 			.add(McGenHelper.getItemEntry(Items.COBWEB, 2, 5));
 
+		this.provideIllusionerHouseChests(consumer, cobwebPool);
+		this.provideHouseChests(consumer, cobwebPool);
+		this.provideExpeditionBasesChests(consumer, cobwebPool);
+		this.provideOtherChests(consumer, cobwebPool);
+		this.provideFortressChests(consumer);
+	}
+
+	protected void provideIllusionerHouseChests(
+		BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer,
+		LootPool.Builder cobwebPool 
+	) {
 		LootTable.Builder illusionerChestTable =
 			LootTable.lootTable()
 			.withPool(
@@ -153,38 +164,25 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			)
 		;
 
-		LootTable.Builder abandonedChestTable = LootTable.lootTable().withPool(cobwebPool);
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_WORM_ROOM_LOOT, illusionerWormChestTable);
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_KITCHEN_LOOT, illusionerKitchenChestTable);
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_SECRET_LOOT, illusionerSecretTable);
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_ALTAR_LOOT, illusionerAltarTable);
+		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_ALCHEMY_LOOT, illusionerAlchemyTable);
+		consumer.accept(
+			ModLootTables.ILLUSIONER_HOUSE_ILLUSIONER_ITEMS_LOOT, illusionerItemsTable
+		);
 
-		LootTable.Builder skullTreeChestTable =
-			LootTable.lootTable()
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(2))
-				.add(McGenHelper.getItemEntry(Items.BONE, 1, 3))
-				.add(McGenHelper.getItemEntry(Items.COAL, 1, 4))
-				.add(McGenHelper.getItemEntry(Items.COBWEB, 2))
-			)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(2), 0.12f)
-				.add(McGenHelper.getItemEntry(Items.DIAMOND, 1, 2))
-				.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1))
-			)
-		;
+		consumer.accept(ModLootTables.ILLUSIONER_CHURCH_CHEST_LOOT, illusionerChestTable);
 
-		LootTable.Builder failedRailwayChestTable =
-			LootTable.lootTable()
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(3))
-				.add(McGenHelper.getItemEntry(Items.RAIL, 3, 6))
-				.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 2, 3))
-				.add(McGenHelper.getItemEntry(Items.POWERED_RAIL, 1, 2))
-				.add(McGenHelper.getItemEntry(Items.TNT, 2, 4))
-			)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.10f)
-				.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
-			)
-		;	
+		consumer.accept(
+			ModLootTables.ILLUSIONER_CHURCH_SECRET_CHEST_LOOT, illusionerSecretChestTable
+		);
+	}
 
+	protected void provideHouseChests(
+		BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer, LootPool.Builder cobwebPool
+	) {
 		LootTable.Builder ruinedHouseTable =
 			LootTable.lootTable()
 			.withPool(cobwebPool)
@@ -234,120 +232,15 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			)
 		;
 
-		LootTable.Builder cemeteryChestTable =
-			LootTable.lootTable()
-				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1))
-						.add(McGenHelper.getItemEntry(Items.IRON_SWORD, 1))
-						.add(McGenHelper.getItemEntry(Items.DIAMOND_SWORD, 1))
-						.add(McGenHelper.getItemEntry(Items.NETHERITE_SWORD, 1))
-				)
-				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(2))
-						.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 3))
-						.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 3, 8))
-						.add(McGenHelper.getItemEntry(Items.EMERALD, 1, 2))
-				)
-				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.35f)
-						.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1))
-				)
-				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.05f)
-						.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
-				)
-				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.5f)
-						.add(McGenHelper.getItemEntry(ModItems.LATIN_CROSS, 1))
-						.add(McGenHelper.getItemEntry(ModItems.ORTHODOX_CROSS, 1))
-						.add(McGenHelper.getItemEntry(ModItems.WOOL_PRAYER_ROPE, 1))
-						.add(McGenHelper.getItemEntry(ModItems.WOOD_PRAYER_ROPE, 1))
-						.add(McGenHelper.getItemEntry(ModItems.SKULL_PRAYER_ROPE, 1))
-				)
-		;
+		consumer.accept(ModLootTables.RUINED_HOUSE_LOOT, ruinedHouseTable);
+		consumer.accept(ModLootTables.ABANDONED_HOUSE_LOOT, abandonedHouseTable);
+		consumer.accept(ModLootTables.NORMAL_HOUSE_LOOT, normalHouseTable);
+	}
 
-		LootTable.Builder infectedRuinedHouseTable =
-			LootTable.lootTable()
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.6f)
-				.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 4, 5))
-				.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 2))
-			)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(3))
-				.add(McGenHelper.getItemEntry(Items.IRON_INGOT, 6, 7))
-				.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 3))
-				.add(McGenHelper.getItemEntry(Items.EMERALD, 1))
-				.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 5, 6))
-			)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.10f)
-				.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
-			)
-			.withPool(cobwebPool)
-		;
-
-		LootTable.Builder infectedTowerHouseWeaponsTable =
-			LootTable.lootTable()
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
-					.add(McGenHelper.getItemEntry(Items.IRON_SWORD, 1))
-					.add(McGenHelper.getItemEntry(Items.DIAMOND_SWORD, 1))
-					.add(McGenHelper.getItemEntry(Items.NETHERITE_SWORD, 1))
-					.add(McGenHelper.getItemEntry(Items.IRON_AXE, 1))
-					.add(McGenHelper.getItemEntry(Items.DIAMOND_AXE, 1))
-					.add(McGenHelper.getItemEntry(Items.NETHERITE_AXE, 1))
-			)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
-					.add(McGenHelper.getItemEntry(Items.IRON_PICKAXE, 1))
-					.add(McGenHelper.getItemEntry(Items.DIAMOND_PICKAXE, 1))
-					.add(McGenHelper.getItemEntry(Items.NETHERITE_PICKAXE, 1))
-			)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
-					.add(McGenHelper.getItemEntry(Items.BOW, 1))
-					.add(McGenHelper.getItemEntry(Items.CROSSBOW, 1))
-			)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
-					.add(McGenHelper.getItemEntry(Items.ARROW, 12, 32))
-			)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
-					.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 5))
-					.add(McGenHelper.getItemEntry(Items.EMERALD, 3, 7))
-					.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 4, 10))
-					.add(McGenHelper.getItemEntry(Items.IRON_INGOT, 6, 12))
-			)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1))
-					.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 10))
-					.add(McGenHelper.getItemEntry(Items.GOLDEN_CARROT, 2, 6))
-						.add(McGenHelper.getItemEntry(Items.BREAD, 3, 8))
-			)
-			.withPool(cobwebPool)
-			;
-
-		LootTable.Builder infdevPyramidRemains =
-			LootTable.lootTable()
-			.withPool(cobwebPool)
-			.withPool(
-				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.9f)
-				.add(McGenHelper.getItemEntry(ModItems.MUSIC_DISC_CALM4, 1))
-			)
-				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1))
-					.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 4))
-					.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 5, 7))
-				)
-				.withPool(
-					McGenHelper.getPool(McGenHelper.constantNumber(1))
-					.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 5, 7))
-					.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
-				)
-		;
-
+	protected void provideExpeditionBasesChests(
+		BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer,
+		LootPool.Builder cobwebPool 
+	) {
 		LootTable.Builder michael1Table =
 			LootTable.lootTable()
 			.withPool(
@@ -560,6 +453,170 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			)
 		;
 
+		consumer.accept(ModLootTables.MICHAEL_1_LOOT, michael1Table);
+		consumer.accept(ModLootTables.MICHAEL_2_LOOT, michael2Table);
+		consumer.accept(ModLootTables.MICHAEL_SECRET_LOOT, michaelSecretTable);
+		consumer.accept(ModLootTables.PAUL_LOOT, paulTable);
+		consumer.accept(ModLootTables.NAMELESS_1_LOOT, nameless1Table);
+		consumer.accept(ModLootTables.TIMOTHY_KITCHEN_LOOT, timothyKitchenTable);
+		consumer.accept(ModLootTables.TIMOTHY_2_LOOT, timothy2Table);
+		consumer.accept(ModLootTables.TIMOTHY_1_LOOT, timothy1Table);
+
+		consumer.accept(ModLootTables.SCHOLAR_BED_LOOT, scholarBedTable);
+		consumer.accept(ModLootTables.SCHOLAR_ARCHER_LOOT, scholarArcherTable);
+		consumer.accept(ModLootTables.SCHOLAR_BEACON_LOOT, scholarBeaconTable);
+	}
+
+	protected void provideOtherChests(
+		BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer,
+		LootPool.Builder cobwebPool
+	) {
+		LootTable.Builder abandonedChestTable = LootTable.lootTable().withPool(cobwebPool);
+
+		LootTable.Builder skullTreeChestTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.add(McGenHelper.getItemEntry(Items.BONE, 1, 3))
+				.add(McGenHelper.getItemEntry(Items.COAL, 1, 4))
+				.add(McGenHelper.getItemEntry(Items.COBWEB, 2))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2), 0.12f)
+				.add(McGenHelper.getItemEntry(Items.DIAMOND, 1, 2))
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1))
+			)
+		;
+
+		LootTable.Builder failedRailwayChestTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(3))
+				.add(McGenHelper.getItemEntry(Items.RAIL, 3, 6))
+				.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 2, 3))
+				.add(McGenHelper.getItemEntry(Items.POWERED_RAIL, 1, 2))
+				.add(McGenHelper.getItemEntry(Items.TNT, 2, 4))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.10f)
+				.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
+			)
+		;	
+
+		LootTable.Builder cemeteryChestTable =
+			LootTable.lootTable()
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
+						.add(McGenHelper.getItemEntry(Items.IRON_SWORD, 1))
+						.add(McGenHelper.getItemEntry(Items.DIAMOND_SWORD, 1))
+						.add(McGenHelper.getItemEntry(Items.NETHERITE_SWORD, 1))
+				)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(2))
+						.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 3))
+						.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 3, 8))
+						.add(McGenHelper.getItemEntry(Items.EMERALD, 1, 2))
+				)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.35f)
+						.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1))
+				)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.05f)
+						.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
+				)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.5f)
+						.add(McGenHelper.getItemEntry(ModItems.LATIN_CROSS, 1))
+						.add(McGenHelper.getItemEntry(ModItems.ORTHODOX_CROSS, 1))
+						.add(McGenHelper.getItemEntry(ModItems.WOOL_PRAYER_ROPE, 1))
+						.add(McGenHelper.getItemEntry(ModItems.WOOD_PRAYER_ROPE, 1))
+						.add(McGenHelper.getItemEntry(ModItems.SKULL_PRAYER_ROPE, 1))
+				)
+		;
+
+		LootTable.Builder infectedRuinedHouseTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.6f)
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 4, 5))
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 2))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(3))
+				.add(McGenHelper.getItemEntry(Items.IRON_INGOT, 6, 7))
+				.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 3))
+				.add(McGenHelper.getItemEntry(Items.EMERALD, 1))
+				.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 5, 6))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.10f)
+				.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
+			)
+			.withPool(cobwebPool)
+		;
+
+		LootTable.Builder infectedTowerHouseWeaponsTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.IRON_SWORD, 1))
+					.add(McGenHelper.getItemEntry(Items.DIAMOND_SWORD, 1))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_SWORD, 1))
+					.add(McGenHelper.getItemEntry(Items.IRON_AXE, 1))
+					.add(McGenHelper.getItemEntry(Items.DIAMOND_AXE, 1))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_AXE, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.IRON_PICKAXE, 1))
+					.add(McGenHelper.getItemEntry(Items.DIAMOND_PICKAXE, 1))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_PICKAXE, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.BOW, 1))
+					.add(McGenHelper.getItemEntry(Items.CROSSBOW, 1))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.ARROW, 12, 32))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 5))
+					.add(McGenHelper.getItemEntry(Items.EMERALD, 3, 7))
+					.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 4, 10))
+					.add(McGenHelper.getItemEntry(Items.IRON_INGOT, 6, 12))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 10))
+					.add(McGenHelper.getItemEntry(Items.GOLDEN_CARROT, 2, 6))
+						.add(McGenHelper.getItemEntry(Items.BREAD, 3, 8))
+			)
+			.withPool(cobwebPool)
+			;
+
+		LootTable.Builder infdevPyramidRemains =
+			LootTable.lootTable()
+			.withPool(cobwebPool)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.9f)
+				.add(McGenHelper.getItemEntry(ModItems.MUSIC_DISC_CALM4, 1))
+			)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.DIAMOND, 2, 4))
+					.add(McGenHelper.getItemEntry(Items.GOLD_INGOT, 5, 7))
+				)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 5, 7))
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
+				)
+		;
+
 		LootTable.Builder brokenBeaconBedTable =
 			LootTable.lootTable()
 			.withPool(cobwebPool)
@@ -614,11 +671,28 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			.withPool(cobwebPool)
 		;
 
+		consumer.accept(ModLootTables.ABANDONED_CHEST_LOOT, abandonedChestTable);
+		consumer.accept(ModLootTables.SKULL_TREE_LOOT, skullTreeChestTable);
+		consumer.accept(ModLootTables.FAILED_RAILWAY_LOOT, failedRailwayChestTable);
+		consumer.accept(ModLootTables.CEMETERY_CHEST_LOOT, cemeteryChestTable);
+		consumer.accept(ModLootTables.INFECTED_RUINED_HOUSE_LOOT, infectedRuinedHouseTable);
+		consumer.accept(
+			ModLootTables.INFECTED_TOWER_HOUSE_WEAPONS_LOOT, infectedTowerHouseWeaponsTable
+		);
+		consumer.accept(ModLootTables.INFDEV_PYRAMID_REMAINS_LOOT, infdevPyramidRemains);
+		consumer.accept(ModLootTables.BROKEN_BEACON_BED_LOOT, brokenBeaconBedTable);
+		consumer.accept(ModLootTables.BROKEN_BEACON_ARCHER_LOOT, brokenBeaconArcherTable);
+		consumer.accept(ModLootTables.BROKEN_BEACON_BEACON_LOOT, brokenBeaconBeaconTable);
+	}
+
+	protected void provideFortressChests(
+		BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer
+	) {
 		LootTable.Builder fortressKitchenCoalFoodTable =
 			LootTable.lootTable()
 				.withPool(
 					McGenHelper.getPool(McGenHelper.constantNumber(3))
-						.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 4, 8))
+						.add(McGenHelper.getItemEntry(Items.COOKED_BEEF, 5, 9))
 						.add(McGenHelper.getItemEntry(Items.COOKED_CHICKEN, 4, 8))
 						.add(McGenHelper.getItemEntry(Items.BREAD, 4, 10))
 						.add(McGenHelper.getItemEntry(Items.BAKED_POTATO, 6, 12))
@@ -1099,51 +1173,6 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 						.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
 				);
 
-		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_WORM_ROOM_LOOT, illusionerWormChestTable);
-		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_KITCHEN_LOOT, illusionerKitchenChestTable);
-		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_SECRET_LOOT, illusionerSecretTable);
-		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_ALTAR_LOOT, illusionerAltarTable);
-		consumer.accept(ModLootTables.ILLUSIONER_HOUSE_ALCHEMY_LOOT, illusionerAlchemyTable);
-		consumer.accept(ModLootTables.ABANDONED_CHEST_LOOT, abandonedChestTable);
-		consumer.accept(ModLootTables.SKULL_TREE_LOOT, skullTreeChestTable);
-		consumer.accept(ModLootTables.FAILED_RAILWAY_LOOT, failedRailwayChestTable);
-		consumer.accept(ModLootTables.RUINED_HOUSE_LOOT, ruinedHouseTable);
-		consumer.accept(ModLootTables.ABANDONED_HOUSE_LOOT, abandonedHouseTable);
-		consumer.accept(ModLootTables.NORMAL_HOUSE_LOOT, normalHouseTable);
-		consumer.accept(
-			ModLootTables.ILLUSIONER_HOUSE_ILLUSIONER_ITEMS_LOOT, illusionerItemsTable
-		);
-
-		consumer.accept(ModLootTables.ILLUSIONER_CHURCH_CHEST_LOOT, illusionerChestTable);
-
-		consumer.accept(
-			ModLootTables.ILLUSIONER_CHURCH_SECRET_CHEST_LOOT, illusionerSecretChestTable
-		);
-
-		consumer.accept(ModLootTables.CEMETERY_CHEST_LOOT, cemeteryChestTable);
-		consumer.accept(ModLootTables.INFECTED_RUINED_HOUSE_LOOT, infectedRuinedHouseTable);
-		consumer.accept(
-			ModLootTables.INFECTED_TOWER_HOUSE_WEAPONS_LOOT, infectedTowerHouseWeaponsTable
-		);
-
-		consumer.accept(ModLootTables.INFDEV_PYRAMID_REMAINS_LOOT, infdevPyramidRemains);
-
-		consumer.accept(ModLootTables.MICHAEL_1_LOOT, michael1Table);
-		consumer.accept(ModLootTables.MICHAEL_2_LOOT, michael2Table);
-		consumer.accept(ModLootTables.MICHAEL_SECRET_LOOT, michaelSecretTable);
-		consumer.accept(ModLootTables.PAUL_LOOT, paulTable);
-		consumer.accept(ModLootTables.NAMELESS_1_LOOT, nameless1Table);
-		consumer.accept(ModLootTables.TIMOTHY_KITCHEN_LOOT, timothyKitchenTable);
-		consumer.accept(ModLootTables.TIMOTHY_2_LOOT, timothy2Table);
-		consumer.accept(ModLootTables.TIMOTHY_1_LOOT, timothy1Table);
-
-		consumer.accept(ModLootTables.SCHOLAR_BED_LOOT, scholarBedTable);
-		consumer.accept(ModLootTables.SCHOLAR_ARCHER_LOOT, scholarArcherTable);
-		consumer.accept(ModLootTables.SCHOLAR_BEACON_LOOT, scholarBeaconTable);
-		consumer.accept(ModLootTables.BROKEN_BEACON_BED_LOOT, brokenBeaconBedTable);
-		consumer.accept(ModLootTables.BROKEN_BEACON_ARCHER_LOOT, brokenBeaconArcherTable);
-		consumer.accept(ModLootTables.BROKEN_BEACON_BEACON_LOOT, brokenBeaconBeaconTable);
-
 		consumer.accept(
 			ModLootTables.FORTRESS_KITCHEN_COAL_FOOD_LOOT, fortressKitchenCoalFoodTable
 		);
@@ -1215,4 +1244,5 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 		consumer.accept(ModLootTables.FORTRESS_CAINE_ROOM_1_LOOT, fortressCaineRoom1Table);
 		consumer.accept(ModLootTables.FORTRESS_CAINE_ROOM_2_LOOT, fortressCaineRoom2Table);
 	}
+
 }
