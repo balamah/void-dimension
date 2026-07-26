@@ -19,8 +19,10 @@
   - [[#models][Models]]
 - [[#credits][Credits]]
   - [[#programmers][Programmers]]
+  - [[#texture-artists][Texture artists]]
   - [[#builders][Builders]]
   - [[#3d-modellers][3D modellers]]
+  - [[#lore-writers][Lore writers]]
 
 * Warnings
 - Sodium mod is recommended if you set render distance more than 20 chunks.
@@ -170,10 +172,19 @@ The order is going from brightest colors to the darkest
 ** Programmers
 - Balamah
 
+** Texture artists
+- Balamah
+- Bluebeerz
+
 ** Builders
 - Balamah
 - H0peL0ck
 - legendary_pasha
+- bruh_mox
 
 ** 3D modellers
 - Balamah
+
+** Lore writers
+- Balamah
+- Oliksa
