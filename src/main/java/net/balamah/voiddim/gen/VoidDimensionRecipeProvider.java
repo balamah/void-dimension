@@ -137,6 +137,17 @@ public class VoidDimensionRecipeProvider extends FabricRecipeProvider {
 					.unlockedBy(getHasName(ModItems.VOID_EXPLOSION_UPGRADE),
 							this.has(ModItems.VOID_EXPLOSION_UPGRADE))
 					.save(output);
+
+				this.shaped(RecipeCategory.MISC, ModBlocks.CORRUPTION_ASCENSION_BLOCK, 1)
+					.pattern("111")
+					.pattern("121")
+					.pattern("111")
+					.define('1', ModBlocks.CORRUPT_BLOCK)
+					.define('2', ModItems.VOID_SHARD)
+					.unlockedBy(
+						getHasName(ModBlocks.CORRUPT_BLOCK), this.has(ModBlocks.CORRUPT_BLOCK)
+					)
+					.save(output);
 			}
 
 			protected ShapedRecipeBuilder getPrayerRopeRecipe(
