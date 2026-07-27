@@ -33,7 +33,7 @@ public class ShatteredSentinelEntity extends CorruptedHostileEntity {
 		return Monster.createMonsterAttributes()
 			.add(Attributes.MAX_HEALTH, 22)
 			.add(Attributes.FOLLOW_RANGE, 64)
-			.add(Attributes.MOVEMENT_SPEED, 0.4F)
+			.add(Attributes.MOVEMENT_SPEED, 0.3F)
 			.add(Attributes.ATTACK_DAMAGE, 6.0F)
 			.add(Attributes.STEP_HEIGHT, 1.0);
 	}
