@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +16,9 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -101,6 +104,28 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	}
 
 	@Override
+	protected void populateDefaultEquipmentSlots(
+		RandomSource random, DifficultyInstance localDifficulty
+	) {
+		EquipmentSlot[] armorSlots = {
+			EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
+		};
+
+		Item[] weaponPool = {
+			Items.IRON_SWORD, Items.IRON_AXE, Items.DIAMOND_AXE,
+			Items.DIAMOND_SWORD, Items.NETHERITE_SWORD
+		};
+
+		int chosenWeaponIndex = random.nextInt(weaponPool.length);
+		Item chosenWeapon = weaponPool[chosenWeaponIndex];
+		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(chosenWeapon));
+
+		for (EquipmentSlot armorSlot : armorSlots) {
+			this.setItemSlot(armorSlot, this.getRandomArmor(armorSlot));	
+		}
+	}
+
+	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder entityData) {
 		super.defineSynchedData(entityData);
 		entityData.define(PLAYER_NAME, "");
@@ -136,5 +161,44 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 				this.setDropChance(slot, 0f);
 			}
 		}
+	}
+
+	protected ItemStack getRandomArmor(EquipmentSlot slot) {
+		Item[] helmets = { Items.IRON_HELMET, Items.DIAMOND_HELMET, Items.NETHERITE_HELMET };
+		Item[] chestplates = {
+			Items.CHAINMAIL_CHESTPLATE, Items.IRON_CHESTPLATE,
+			Items.DIAMOND_CHESTPLATE, Items.NETHERITE_CHESTPLATE
+		};
+
+		Item[] leggings = {
+			Items.IRON_LEGGINGS, Items.DIAMOND_LEGGINGS, Items.NETHERITE_LEGGINGS
+		};
+
+		Item[] boots = {
+			Items.IRON_BOOTS, Items.DIAMOND_BOOTS, Items.NETHERITE_BOOTS
+		};
+
+		Item[] targetArray;
+
+		switch (slot) {
+			case HEAD:
+				targetArray = helmets;
+				break;
+			case CHEST:
+				targetArray = chestplates;
+				break;
+			case LEGS:
+				targetArray = leggings;
+				break;
+			case FEET:
+				targetArray = boots;
+				break;
+			default:
+				throw new IllegalArgumentException("Not an armor slot" + slot);
+		}
+
+		int randomArmorIndex = random.nextInt(targetArray.length);
+
+		return new ItemStack(targetArray[randomArmorIndex]);
 	}
 }
