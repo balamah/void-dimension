@@ -36,7 +36,8 @@ import java.io.IOException;
 
 public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	protected static String[] playerNames = {
-		"Balamah", "legendary_pasha"
+		"Balamah", "legendary_pasha", "ohLucie", "Fruchtkaffee", "AsilOof",
+		"AZGAMER2014", "rlthln"
 	};
 
 	protected static final EntityDataAccessor<String> PLAYER_NAME =
