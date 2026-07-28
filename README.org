@@ -1,15 +1,15 @@
 #+TITLE: README
 #+AUTHOR: Balamah
 
-=WARNING=: Sodium mod is recommended if you set render distance more
-than 20 chunks. The terrain is very cpu heavy, or maybe it is a skill
-issue, idk
-
 * Table of contents :toc:
+- [[#warnings][Warnings]]
 - [[#introduction][Introduction]]
 - [[#setting-up-the-project][Setting up the project]]
   - [[#dependencies][Dependencies]]
   - [[#setting-up-in-emacs][Setting up in emacs]]
+- [[#visual-debugging][Visual debugging]]
+  - [[#example-1][Example 1]]
+  - [[#example-2][Example 2]]
 - [[#pallete-of-textures][Pallete of textures]]
 - [[#sources][Sources]]
   - [[#sounds][Sounds]]
@@ -19,8 +19,24 @@ issue, idk
   - [[#models][Models]]
 - [[#credits][Credits]]
   - [[#programmers][Programmers]]
+  - [[#texture-artists][Texture artists]]
   - [[#builders][Builders]]
   - [[#3d-modellers][3D modellers]]
+  - [[#lore-writers][Lore writers]]
+
+* Warnings
+- Sodium mod is recommended if you set render distance more than 20 chunks.
+  The terrain is very cpu heavy, or maybe it is a skill issue, idk.
+- Do not edit directly blockbench models,
+  copy them in a different directory, and edit them in the copied
+  directory. In each blockbench model set texture path to the texture
+  path in the project
+- Do not edit the original Blockbench models directly.
+  Instead, create a copy in a separate working directory before making
+  changes. This prevents accidental loss or corruption of the source
+  models.
+- In every Blockbench model, make sure the texture path points to the
+  correct texture location inside the project resources directory.
 
 * Introduction
 This mod adds a whole new void-based world and new tool material that
@@ -56,6 +72,67 @@ If lsp throws errors, run
 
 #+RESULTS:
 
+* Visual debugging
+To enable visual debug,
+1) Create =build.local.gradle= in the root of the project
+2) Paste code
+   #+begin_src groovy
+   loom {
+       runs {
+           client {
+               vmArgs(
+                   "-DMC_DEBUG_ENABLED=true"
+               )
+           }
+       }
+   }
+   #+end_src
+3) Choose configuration option from [[https://minecraft.wiki/w/Debug_property][here]]
+
+** Example 1
+I want to debug visually path finding of the mobs and enable debug hotkeys. To
+do that, i need to add ="-DMC_DEBUG_PATHFINDING=true -DMC_DEBUG_HOTKEYS=true"= with
+="-DMC_DEBUG_ENABLED=true"=
+
+#+begin_src groovy
+loom {
+    runs {
+        client {
+            vmArgs(
+                "-DMC_DEBUG_ENABLED=true",
+                "-DMC_DEBUG_PATHFINDING=true",
+                "-DMC_DEBUG_HOTKEYS=true"
+            )
+        }
+    }
+}
+#+end_src
+
+** Example 2
+I want to have debug hotkeys with dev commands and see goals of the
+entities
+
+#+begin_src groovy
+loom {
+    runs {
+        client {
+            vmArgs(
+                "-DMC_DEBUG_ENABLED=true",
+                "-DMC_DEBUG_HOTKEYS=true",
+                "-DMC_DEBUG_DEV_COMMANDS=true",
+                "-DMC_DEBUG_GOAL_SELECTOR=true"
+            )
+        }
+        server {
+            vmArgs(
+                "-DMC_DEBUG_ENABLED=true",
+                "-DMC_DEBUG_GOAL_SELECTOR=true"
+            )
+        }
+    }
+}
+#+end_src
+
 * Pallete of textures
 The order is going from brightest colors to the darkest
 - #EAE9E9
@@ -74,9 +151,7 @@ The order is going from brightest colors to the darkest
 - special_attack.lightning        :: https://pixabay.com/sound-effects/search/lightning/
 - special_attacks.counter_attack  :: https://pixabay.com/sound-effects/search/power%20attack/
 - entity303.death                 :: nazgul screams from The lord of the rings
-- music.1                         :: blade of darkness (ATMOSFERA8)
-- music.2                         :: blade of darkness (ATMOSFERA19)
-- music.3                         :: blade of darkness (SORPRESA7)
+- corrupted_entity.death          :: blade of darkness (muerte-Lch2.wav)
 
 ** Textures
 - Corrupted mobs black skin :: https://modrinth.com/mod/intothevoid
@@ -97,10 +172,19 @@ The order is going from brightest colors to the darkest
 ** Programmers
 - Balamah
 
+** Texture artists
+- Balamah
+- Bluebeerz
+
 ** Builders
 - Balamah
 - H0peL0ck
 - legendary_pasha
+- bruh_mox
 
 ** 3D modellers
 - Balamah
+
+** Lore writers
+- Balamah
+- Oliksa

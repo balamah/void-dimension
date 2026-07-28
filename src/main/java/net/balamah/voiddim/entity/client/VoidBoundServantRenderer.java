@@ -1,23 +1,23 @@
 package net.balamah.voiddim.entity.client;
 
-import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.entity.client.base.WeaponArmedEntityRenderer;
+import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.VoidBoundServantEntity;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
-import net.minecraft.client.render.entity.state.ArmedEntityRenderState;
-import net.minecraft.util.Identifier;
+import net.balamah.voiddim.VoidDimension;
+
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.Identifier;
 
 public class VoidBoundServantRenderer
-	extends MobEntityRenderer<VoidBoundServantEntity,
-							  VoidBoundServantRenderState,
-							  VoidBoundServantModel>
+	extends WeaponArmedEntityRenderer<VoidBoundServantEntity, VoidBoundServantRenderState, VoidBoundServantModel>
 {
-	public VoidBoundServantRenderer(EntityRendererFactory.Context context) {
-		super(context, new VoidBoundServantModel(context.getPart(VoidBoundServantModel.VOID_BOUND_SERVANT)), 0.75f);
+	public VoidBoundServantRenderer(EntityRendererProvider.Context context) {
+		super(context, new VoidBoundServantModel(context.bakeLayer(VoidBoundServantModel.VOID_BOUND_SERVANT)), 0.75f);
 
-		this.addFeature(
-			new HeldItemFeatureRenderer<VoidBoundServantRenderState, VoidBoundServantModel>(this)
+		this.addLayer(new ItemInHandLayer<>(this));
+		this.addLayer(
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/void_bound_servant.png")
 		);
 	}
 
@@ -27,19 +27,23 @@ public class VoidBoundServantRenderer
 	}
 
 	@Override
-	public Identifier getTexture(VoidBoundServantRenderState state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/void_bound_servant.png");
+	public Identifier getTextureLocation(VoidBoundServantRenderState state) {
+		return Identifier.fromNamespaceAndPath(
+			VoidDimension.MOD_ID, "textures/entity/void_bound_servant.png"
+		);
 	}
 
 	@Override
-	public void updateRenderState(
-		VoidBoundServantEntity entity, VoidBoundServantRenderState renderState, float f
+	public void extractRenderState(
+		VoidBoundServantEntity entity, VoidBoundServantRenderState state, float f
 	) {
-		super.updateRenderState(entity, renderState, f);
+		super.extractRenderState(entity, state, f);
 
-		renderState.suicideAnimationState.copyFrom(entity.suicideAnimationState);
-
-		// NOTE: This is armed entity. Line below should be fixed somehow
-		ArmedEntityRenderState.updateRenderState(entity, renderState, this.itemModelResolver, 2f);
+		state.suicideAnimationState.copyFrom(entity.suicideAnimationState);
+		state.useShieldAnimationState.copyFrom(entity.useShieldAnimationState);
+		state.attack1AnimationState.copyFrom(entity.attack1AnimationState);
+		state.attack2AnimationState.copyFrom(entity.attack2AnimationState);
+		state.attack3AnimationState.copyFrom(entity.attack3AnimationState);
+		state.attack4AnimationState.copyFrom(entity.attack4AnimationState);
 	}
 }

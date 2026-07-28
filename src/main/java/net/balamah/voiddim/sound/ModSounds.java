@@ -1,15 +1,14 @@
 package net.balamah.voiddim.sound;
 
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.block.jukebox.JukeboxSong;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.VoidDimension;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.JukeboxSong;
 
 public class ModSounds {
 	public static final SoundEvent WIND_MANIPULATION_JUMP =
@@ -87,10 +86,10 @@ public class ModSounds {
 	public static final SoundEvent WORM_OF_CORRUPTION_ATTACK =
 		register("worm_of_corruption.attack");
 
-	public static final RegistryEntry.Reference<SoundEvent> VOID_SPHERE_BURST =
+	public static final Holder.Reference<SoundEvent> VOID_SPHERE_BURST =
 		registerReference("void_sphere.burst");
 
-	public static final RegistryEntry.Reference<SoundEvent> SHOCKWAVE =
+	public static final Holder.Reference<SoundEvent> SHOCKWAVE =
 		registerReference("shockwave");
 
 	public static final SoundEvent CORRUPTED_BLAZE_DEATH =
@@ -118,10 +117,10 @@ public class ModSounds {
 	public static final SoundEvent STARING_ENTITY_DEATH = register("staring_entity.death");
 
 	public static final SoundEvent MUSIC_CALM4 = register("music_disc.calm4");
-    public static final RegistryKey<JukeboxSong> MUSIC_CALM4_KEY =
-		RegistryKey.of(
-			RegistryKeys.JUKEBOX_SONG,
-			Identifier.of(VoidDimension.MOD_ID, "calm4")
+    public static final ResourceKey<JukeboxSong> MUSIC_CALM4_KEY =
+		ResourceKey.create(
+			Registries.JUKEBOX_SONG,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "calm4")
 		);
 
 	public static final SoundEvent LIGHTNING = register("special_attacks.lightning");
@@ -129,37 +128,65 @@ public class ModSounds {
 
 	public static final SoundEvent ENTITY303_DEATH = register("entity303.death");
 
+	public static final Holder.Reference<SoundEvent> CONSUMED_SOUL_HIT =
+		registerReference("consumed_soul.hit");
+
+	public static final SoundEvent EYE_BRIGHT_SHOOT_PREPARE =
+		register("eye_bright.shoot_prepare");
+
+	public static final SoundEvent MAGNET_PREPARE = register("special_attacks.magnet_prepare");
+	public static final SoundEvent MAGNET_EXECUTE = register("special_attacks.magnet_execute");
+	public static final SoundEvent MAGIC_PREPARE = register("special_attacks.magic_prepare");
+
+	public static final SoundEvent CORRUPTED_WARRIOR_EFFORT_1 =
+		register("corrupted_warrior.effort1");
+
+	public static final SoundEvent CORRUPTED_WARRIOR_EFFORT = register("corrupted_warrior.effort");
+	public static final SoundEvent CORRUPTED_WARRIOR_LONG_EFFORT =
+		register("corrupted_warrior.long_effort");
+
+	public static final SoundEvent CORRUPTED_WARRIOR_DEATH = register("corrupted_warrior.death");
+
+	public static final SoundEvent VOID_BOUND_SERVANT_DEATH = register("void_bound_servant.death");
+	public static final SoundEvent VOID_BOUND_SERVANT_ATTACK =
+		register("void_bound_servant.attack");
+
+	public static final SoundEvent GREAT_ARMOR_HIT = register("armor.great.hit");
+	public static final SoundEvent SMALL_ARMOR_HIT = register("armor.small.hit");
+
+	public static final SoundEvent CORRUPTED_ENTITY_DEATH = register("corrupted_entity.death");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}
 
 	protected static SoundEvent register(String id) {
-		Identifier identifier = Identifier.of(VoidDimension.MOD_ID, id);
+		Identifier identifier = Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id);
 
 		return Registry.register(
-			Registries.SOUND_EVENT,
+			BuiltInRegistries.SOUND_EVENT,
 			identifier,
-			SoundEvent.of(identifier)
+			SoundEvent.createVariableRangeEvent(identifier)
 		);
 	}
 
 	protected static SoundEvent register(String id, float range) {
-		Identifier identifier = Identifier.of(VoidDimension.MOD_ID, id);
+		Identifier identifier = Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id);
 
 		return Registry.register(
-			Registries.SOUND_EVENT,
+			BuiltInRegistries.SOUND_EVENT,
 			identifier,
-			SoundEvent.of(identifier, range)
+			SoundEvent.createFixedRangeEvent(identifier, range)
 		);
 	}
 
-	protected static RegistryEntry.Reference<SoundEvent> registerReference(String id) {
-		Identifier identifier = Identifier.of(VoidDimension.MOD_ID, id);
+	protected static Holder.Reference<SoundEvent> registerReference(String id) {
+		Identifier identifier = Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id);
 
-		return Registry.registerReference(
-			Registries.SOUND_EVENT,
+		return Registry.registerForHolder(
+			BuiltInRegistries.SOUND_EVENT,
 			identifier,
-			SoundEvent.of(identifier)
+			SoundEvent.createVariableRangeEvent(identifier)
 		);
 	}
 }

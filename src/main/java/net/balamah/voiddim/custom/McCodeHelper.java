@@ -1,64 +1,81 @@
 package net.balamah.voiddim.custom;
 
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.entity.ai.goal.ActiveTargetGoal;
-import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.boss.ServerBossBar;
-import net.minecraft.entity.boss.BossBar.Color;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.block.entity.SignText;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.world.RaycastContext;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.collection.Pool;
-import net.minecraft.registry.Registries;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.math.Direction;
-import net.minecraft.entity.boss.BossBar;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.Identifier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.math.Box;
-import net.minecraft.block.Blocks;
-import net.minecraft.world.World;
-import net.minecraft.block.Block;
-import net.minecraft.item.Items;
-import net.minecraft.util.Hand;
-import net.minecraft.item.Item;
-import net.minecraft.text.Text;
-
+import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.entity.custom.VoidSphereEntity;
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.BossEvent;
+import net.minecraft.world.BossEvent.BossBarColor;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import java.util.UUID;
+
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.entity.SignText;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.balamah.voiddim.VoidDimension;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class McCodeHelper {
-	public static final List<RegistryEntry<StatusEffect>> effects = List.of(
-		StatusEffects.SLOWNESS,
-		StatusEffects.BLINDNESS,
-		StatusEffects.WEAKNESS
+	public static final Map<EntityType<?>, EntityType<?>> entityCorruptionMap =
+		new HashMap<EntityType<?>, EntityType<?>>();
+
+	public static final Map<EntityType<?>, EntityType<?>> entityCorruptionAscensionMap =
+		new HashMap<EntityType<?>, EntityType<?>>();
+
+	public static final List<Holder<MobEffect>> shockWaveEffects = List.of(
+		MobEffects.SLOWNESS,
+		MobEffects.BLINDNESS,
+		MobEffects.WEAKNESS
 	);
 
 	public static final List<Block> dangerousBlocks = List.of(
@@ -69,8 +86,25 @@ public class McCodeHelper {
 		Blocks.BEDROCK, Blocks.OBSIDIAN, Blocks.AIR
 	};
 
+	static {
+		entityCorruptionMap.put(EntityType.VILLAGER, EntityType.PILLAGER);
+		entityCorruptionMap.put(EntityType.SPIDER, ModEntities.CORRUPTED_SPIDER);
+		entityCorruptionMap.put(EntityType.CREEPER, ModEntities.CORRUPTED_CREEPER);
+		entityCorruptionMap.put(EntityType.BLAZE, ModEntities.CORRUPTED_BLAZE);
+		entityCorruptionMap.put(EntityType.CAT, ModEntities.STARING_CAT);
+		entityCorruptionMap.put(EntityType.WOLF, ModEntities.WEREWOLF);
+		entityCorruptionMap.put(EntityType.ENDERMAN, ModEntities.CORRUPTED_STALKER);
+		entityCorruptionMap.put(EntityType.IRON_GOLEM, ModEntities.SHATTERED_SENTINEL_MASTER);
+		entityCorruptionMap.put(EntityType.PHANTOM, ModEntities.VOID_MAW);
+
+		entityCorruptionAscensionMap.put(ModEntities.CORRUPTED_STALKER, ModEntities.VOID_HARBINGER);
+		entityCorruptionAscensionMap.put(ModEntities.SHATTERED_SENTINEL, ModEntities.SHATTERED_SENTINEL_MASTER);
+		entityCorruptionAscensionMap.put(ModEntities.CORRUPTED_PLAYER, ModEntities.AGGRESSIVE_NULL);
+		entityCorruptionAscensionMap.put(ModEntities.AGGRESSIVE_NULL, ModEntities.VOID_BOUND_SERVANT);
+	}
+
 	public static Direction getHorizontalFacing(Entity entity) {
-		float yaw = entity.getYaw() % 360;
+		float yaw = entity.getYRot() % 360;
 		if (yaw < 0) yaw += 360;
 
 		if (yaw >= 135 && yaw < 225) return Direction.NORTH;
@@ -80,8 +114,10 @@ public class McCodeHelper {
 		return Direction.SOUTH;
 	}
 
-	public static ServerBossBar getBossBar(Text text, Color color) {
-		return new ServerBossBar(text, color, BossBar.Style.PROGRESS);
+	public static ServerBossEvent getBossBar(Component text, BossBarColor color) {
+		return new ServerBossEvent(
+			UUID.randomUUID(), text, color, BossEvent.BossBarOverlay.PROGRESS
+		);
 	}
 
 	public static boolean isBlockReplaceable(Block block) {
@@ -93,25 +129,27 @@ public class McCodeHelper {
 	}
 
 	public static BlockPos getBlockPosUnderEntity(Entity entity, int iteration) {
-		int j = MathHelper.floor(entity.getX() + (iteration % 2 * 2 - 1) * 0.25F);
-		int k = MathHelper.floor(entity.getY()) - 1;
-		int l = MathHelper.floor(entity.getZ() + (iteration / 2 % 2 * 2 - 1) * 0.25F);
+		int j = Mth.floor(entity.getX() + (iteration % 2 * 2 - 1) * 0.25F);
+		int k = Mth.floor(entity.getY()) - 1;
+		int l = Mth.floor(entity.getZ() + (iteration / 2 % 2 * 2 - 1) * 0.25F);
 
 		return new BlockPos(j, k, l);
 	}
 
-	public static Block getBlock(World world, BlockPos blockPos) {
+	public static Block getBlock(Level world, BlockPos blockPos) {
 		return world.getBlockState(blockPos).getBlock();
 	}
 
-	public static Block getBlock(World world, int x, int y, int z) {
+	public static Block getBlock(Level world, int x, int y, int z) {
 		BlockPos blockPos = new BlockPos(x, y, z);
 
 		return world.getBlockState(blockPos).getBlock();
 	}
 
+	// TODO: Fix air block obtaining
 	public static BlockPos getRandomBlockRightOf(Entity entity, int distance, int range) {
-		Direction facing = entity.getHorizontalFacing();
+		Level world = entity.level();
+		Direction facing = entity.getDirection();
 
 		Direction right = switch (facing) {
 			case NORTH -> Direction.EAST;
@@ -121,41 +159,69 @@ public class McCodeHelper {
 			default -> Direction.EAST;
 		};
 
-		BlockPos base = entity.getBlockPos();
+		BlockPos base = entity.blockPosition();
 
-		Random random = entity.getEntityWorld().getRandom();
-		int dx = right.getOffsetX() * distance + random.nextBetween(-range, range);
-		int dz = right.getOffsetZ() * distance + random.nextBetween(-range, range);
+		RandomSource random = entity.level().getRandom();
+		int dx = right.getStepX() * distance + random.nextIntBetweenInclusive(-range, range);
+		int dz = right.getStepZ() * distance + random.nextIntBetweenInclusive(-range, range);
 
-		return base.add(dx, 0, dz);
+		BlockPos.MutableBlockPos mutable = getMutableCoordinate(world, dx, dx, dz, false);
+		BlockState blockStateMutable = world.getBlockState(mutable);
+		if (!blockStateMutable.blocksMotion()) {
+			return base.offset(dx, 0, dz);
+		}
+
+		return mutable;
+	}
+
+	@SuppressWarnings("deprecation")
+	public static @Nullable BlockPos.MutableBlockPos getMutableCoordinate(
+		Level world, double x, double y, double z, boolean ignoreLimitPredicate
+	) {
+		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, y, z);
+		double startingCoordinate = mutable.getY();
+
+		while (mutable.getY() > world.getMinY() &&
+			   !world.getBlockState(mutable).blocksMotion()
+		) {
+			double heightDifference = startingCoordinate - mutable.getY();
+
+			if (heightDifference < 30 || ignoreLimitPredicate) {
+				mutable.move(Direction.DOWN);
+			} else {
+				return null;
+			}
+		}
+
+		return mutable;
 	}
 
 	public static boolean isTargetVisible(LivingEntity attacker, LivingEntity target) {
-		Vec3d from = attacker.getEyePos();
-		Vec3d to = target.getEyePos();
+		Vec3 from = attacker.getEyePosition();
+		Vec3 to = target.getEyePosition();
 
-		RaycastContext context = new RaycastContext(
-				from, to, RaycastContext.ShapeType.COLLIDER,
-				RaycastContext.FluidHandling.NONE, attacker);
+		ClipContext context = new ClipContext(
+				from, to, ClipContext.Block.COLLIDER,
+				ClipContext.Fluid.NONE, attacker);
 
-		HitResult result = attacker.getEntityWorld().raycast(context);
+		HitResult result = attacker.level().clip(context);
 
 		return result.getType() == HitResult.Type.MISS;
 	}
 
-	public static void disableShield(PlayerEntity target) {
+	public static void disableShield(Player target) {
 		if (!target.isBlocking()) {
 			return;
 		}
 
-		ItemStack activeItemStack = target.getActiveItem();
+		ItemStack activeItemStack = target.getUseItem();
 		Item activeItem = activeItemStack.getItem();
 		if (activeItem == Items.SHIELD) {
-			target.getItemCooldownManager().set(activeItemStack, 100);
+			target.getCooldowns().addCooldown(activeItemStack, 100);
+			target.releaseUsingItem();
 			target.stopUsingItem();
-			target.clearActiveItem();
 
-			playSoundFromEntity(target, SoundEvents.ITEM_SHIELD_BREAK);
+			playSoundFromEntity(target, SoundEvents.SHIELD_BREAK);
 		}
 	}
 
@@ -164,13 +230,13 @@ public class McCodeHelper {
 		double y = entity.getY();
 		double z = entity.getZ();
 
-		World world = entity.getEntityWorld();
+		Level world = entity.level();
 		
-		world.playSound(null, x, y, z, sound, SoundCategory.AMBIENT, 2f, 1.0f);
+		world.playSound(null, x, y, z, sound, SoundSource.AMBIENT, 2f, 1.0f);
 	}
 
 	public static void playSoundFromEntity(
-		Entity entity, RegistryEntry.Reference<SoundEvent> sound
+		Entity entity, Holder.Reference<SoundEvent> sound
 	) {
 		playSoundFromEntity(entity, sound.value());
 	}
@@ -180,20 +246,19 @@ public class McCodeHelper {
 			return false;
 		}
 
-		World world = entity.getEntityWorld();
+		Level world = entity.level();
 
-		int x = (int) entity.getX();
-		int y = (int) entity.getY();
-		int z = (int) entity.getZ();
+		BlockPos blockPos = entity.blockPosition();
+		int y = blockPos.getY();
 
-		BlockPos elevatedPosition = new BlockPos(x, y + 1, z);
-		Block elevatedBlock = world.getBlockState(elevatedPosition).getBlock();
+		BlockPos underEntity = blockPos.below();
+		Block blockUnderEntity = world.getBlockState(underEntity).getBlock();
 
 		/**
 		 * Blocks.AIR is included in {@link #dangerousBlocks} to prevent hit combos.
 		 * Which makes fights with the entity better
 		 */
-		if (dangerousBlocks.contains(elevatedBlock) || target.getY() > y ||
+		if (dangerousBlocks.contains(blockUnderEntity) || target.getY() > y ||
 			target.distanceTo(entity) > 10
 		) {
 			return true;
@@ -202,8 +267,8 @@ public class McCodeHelper {
 		for (int i = 1; i <= 10; i++) {
 			int selectedY = y - i;
 
-			BlockPos blockPos = new BlockPos(x, selectedY, z);
-			Block selectedBlock = McCodeHelper.getBlock(entity.getEntityWorld(), blockPos);
+			BlockPos selectedPos = new BlockPos(blockPos.getX(), selectedY, blockPos.getZ());
+			Block selectedBlock = McCodeHelper.getBlock(entity.level(), selectedPos);
 
 			if (!dangerousBlocks.contains(selectedBlock)) {
 				return false;
@@ -219,7 +284,7 @@ public class McCodeHelper {
 		BlockPos futurePosition = new BlockPos(
 				(int) x, (int) y, (int) z);
 
-		Block futureBlock = entity.getEntityWorld().getBlockState(futurePosition).getBlock();
+		Block futureBlock = entity.level().getBlockState(futurePosition).getBlock();
 
 		if (dangerousBlocks.contains(futureBlock) || y < targetY) {
 			return false;
@@ -228,8 +293,8 @@ public class McCodeHelper {
 		return true;
 	}
 
-	public static Goal getTargetGoal(MobEntity entity, Class<?> entityTarget) {
-		return new ActiveTargetGoal(
+	public static Goal getTargetGoal(Mob entity, Class<?> entityTarget) {
+		return new NearestAttackableTargetGoal(
 			entity, entityTarget, 10, true, false,
 			(target, world) -> Math.abs(target.getY() - target.getY()) <= 25.0
 		);
@@ -240,12 +305,12 @@ public class McCodeHelper {
 	 * @param potionId an id from an attribute in ModPotions
 	 */
 	public static ItemStack getPotionItemStack(Item potionType, String potionId) {
-		RegistryKey<Potion> potionRegistryKey = RegistryKey.of(
-			RegistryKeys.POTION, Identifier.of(VoidDimension.MOD_ID, potionId)
+		ResourceKey<Potion> potionRegistryKey = ResourceKey.create(
+			Registries.POTION, Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, potionId)
 		);
 
-		return PotionContentsComponent.createStack(
-			potionType, Registries.POTION.getOrThrow(potionRegistryKey)
+		return PotionContents.createItemStack(
+			potionType, BuiltInRegistries.POTION.getOrThrow(potionRegistryKey)
 		);
 	}
 
@@ -257,25 +322,27 @@ public class McCodeHelper {
 
 		for (int i = 0; i < signLines.length; i++) {
 			String signLineText = signLines[i];
-			signText = signText.withMessage(i, Text.literal(signLineText));
+			signText = signText.setMessage(i, Component.literal(signLineText));
 		}
 
 		signBlockEntity.setText(signText, true);
 	}
 
-	public static void createShockWave(ServerWorld world, LivingEntity entity, float radius) {
-		world.createExplosion(
+	public static void createShockWave(
+		ServerLevel world, LivingEntity entity, float radius, int effectsDuration
+	) {
+		world.explode(
 			entity, null, VoidSphereEntity.EXPLOSION_BEHAVIOR,
 			entity.getX(), entity.getY(), entity.getZ(),
-			radius, false, World.ExplosionSourceType.TRIGGER,
+			radius, false, Level.ExplosionInteraction.TRIGGER,
 			ParticleTypes.GUST_EMITTER_SMALL, ParticleTypes.GUST_EMITTER_LARGE,
-			Pool.empty(), ModSounds.SHOCKWAVE
+			WeightedList.of(), ModSounds.SHOCKWAVE
 		);
 
-		List<LivingEntity> entities = entity.getEntityWorld()
-			.getEntitiesByClass(
+		List<LivingEntity> entities = entity.level()
+			.getEntitiesOfClass(
 				LivingEntity.class,
-				entity.getBoundingBox().expand(radius),
+				entity.getBoundingBox().inflate(radius),
 				e -> !e.isSpectator()
 			);
 
@@ -284,9 +351,10 @@ public class McCodeHelper {
 				continue;
 			}
 
-			for (RegistryEntry<StatusEffect> effect : effects) {
-				target.addStatusEffect(new StatusEffectInstance(effect, 1200, 2));
-				target.damage(world, ModDamageSources.shockWave(world), 15f);
+			for (Holder<MobEffect> effect : shockWaveEffects) {
+				int amplifier = (effect != MobEffects.WEAKNESS) ? 2 : 0;
+				target.addEffect(new MobEffectInstance(effect, effectsDuration, amplifier));
+				target.hurtServer(world, ModDamageSources.shockWave(world), 15f);
 
 				breakShield(target);
 			}
@@ -294,35 +362,87 @@ public class McCodeHelper {
 	}
 
 	public static void breakShield(LivingEntity target) {
-		if (!(target instanceof PlayerEntity player)) {
+		if (!(target instanceof Player player)) {
 			return;
 		}
 
-		ItemStack stack = player.getActiveItem();
+		ItemStack stack = player.getUseItem();
 
-		if (stack.isOf(Items.SHIELD)) {
-			EquipmentSlot slot = (player.getActiveHand() == Hand.MAIN_HAND)
-				? EquipmentSlot.MAINHAND
-				: EquipmentSlot.OFFHAND;
+		if (stack.is(Items.SHIELD)) {
+			EquipmentSlot slot = (player.getUsedItemHand() == InteractionHand.MAIN_HAND)
+					? EquipmentSlot.MAINHAND
+					: EquipmentSlot.OFFHAND;
 
-			stack.damage(150, player, slot);
+			stack.hurtAndBreak(150, player, slot);
 
-			McCodeHelper.playSoundFromEntity(target, SoundEvents.ITEM_SHIELD_BREAK);
+			McCodeHelper.playSoundFromEntity(target, SoundEvents.SHIELD_BREAK);
 		}
 	}
 
-	public static void sendMessageToNearbyPlayers(
-		ServerWorld world, Vec3d center, double radius, String message
+	public static void playSound(
+		Level world, SoundEvent sound, Vec3 position, SoundSource category,
+		float volume, float pitch
 	) {
-        Box box = new Box(
+		playSound(world, sound, position.x, position.y, position.z, category, volume, pitch);
+	}
+
+	public static void playSound(
+		Level world, SoundEvent sound, double x, double y, double z, SoundSource category,
+		float volume, float pitch
+	) {
+		world.playSound(null, x, y, z, sound, category, volume, pitch);
+	}
+
+	public static void sendMessageToNearbyPlayers(
+		ServerLevel world, Vec3 center, double radius, String message
+	) {
+        AABB box = new AABB(
             center.x - radius, center.y - radius, center.z - radius,
             center.x + radius, center.y + radius, center.z + radius
         );
 
-        for (ServerPlayerEntity player : world.getPlayers()) {
-            if (box.contains(player.getEntityPos())) {
-                player.sendMessage(Text.literal(message), false);
-            }
-        }
-    }
+	        for (ServerPlayer player : world.players()) {
+	            if (box.contains(player.position())) {
+	                player.sendSystemMessage(Component.literal(message));
+	            }
+	        }
+	}
+
+	public static boolean isPlayerInSurvival(LivingEntity entity) {
+		if (!(entity instanceof ServerPlayer playerEntity)) {
+			return true;
+		}
+
+		GameType gamemode = playerEntity.gameMode.getGameModeForPlayer();
+		return gamemode == GameType.SURVIVAL || gamemode == GameType.ADVENTURE;
+	}
+
+	public static List<ItemStack> getInventoryArray(Inventory inventory) {
+		List<ItemStack> itemArray = List.of();
+
+		for (int i = 0; i < inventory.getContainerSize(); i++) {
+			itemArray.add(inventory.getItem(i));
+		}
+
+		return itemArray;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void spawnEntityAccordingMap(
+		ServerLevel world, BlockPos entityBlockPos,
+		LivingEntity entity, Map<EntityType<?>, EntityType<?>> map
+	) {
+		EntityType<? extends LivingEntity> newEntityType =
+			(EntityType<? extends LivingEntity>) map.get(entity.getType());
+
+		if (newEntityType == null) {
+			return;
+		}
+
+		LivingEntity corruptedEntity = newEntityType.create(
+			world, null, entityBlockPos, EntitySpawnReason.MOB_SUMMONED, true, false
+		);
+
+		world.addFreshEntity(corruptedEntity);
+	}
 }

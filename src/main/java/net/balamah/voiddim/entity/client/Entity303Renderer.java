@@ -1,28 +1,27 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory.Context;
-import net.minecraft.client.render.entity.BipedEntityRenderer;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.Entity303;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
 public class Entity303Renderer
 <E extends Entity303, S extends Entity303RenderState, M extends HumanModel<S>>
-	extends BipedEntityRenderer<E, S, M>
+	extends HumanoidMobRenderer<E, S, M>
 {
 	public Entity303Renderer(Context context, M model, float shadowRadius) {
 		super(context, model, shadowRadius);
 
-		this.addFeature(
+		this.addLayer(
 			new GlowFeatureRenderer<>(this, "textures/entity/glow/entity_303.png")
 		);
 	}
 
 	@Override
-	public Identifier getTexture(S state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/entity_303.png");
+	public Identifier getTextureLocation(S state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/entity_303.png");
 	}
 
 	@Override
@@ -32,8 +31,8 @@ public class Entity303Renderer
 	}
 
 	@Override
-	public void updateRenderState(E entity, S renderState, float f) {
-		super.updateRenderState(entity, renderState, f);
+	public void extractRenderState(E entity, S renderState, float f) {
+		super.extractRenderState(entity, renderState, f);
 
 		renderState.lightningInvokeAnimation.copyFrom(entity.lightningInvokeAnimationState);
 		renderState.groundCorruptionAnimation.copyFrom(entity.groundCorruptionAnimationState);

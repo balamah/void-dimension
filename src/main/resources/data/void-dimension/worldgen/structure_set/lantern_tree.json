@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:lantern_tree"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 3,
+		"spacing": 6,
+		"salt": 780069417,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 15
+			}
+		}
+	}
+}

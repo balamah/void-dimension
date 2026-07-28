@@ -1,64 +1,63 @@
 package net.balamah.voiddim.entity.custom.base;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.TntEntity;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
-
 import java.util.List;
 
 import net.balamah.voiddim.entity.custom.BedrockBombEntity;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.effect.ModEffects;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.arrow.Arrow;
+import net.minecraft.world.entity.projectile.hurtingprojectile.LargeFireball;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public abstract class StaringEntity extends SunBurningEntity {
 	protected Class<? extends Entity>[] projectileEntities = new Class[]{
-		ArrowEntity.class,
-		TntEntity.class,
+		Arrow.class,
+		PrimedTnt.class,
 		BedrockBombEntity.class,
-		FireballEntity.class
+		LargeFireball.class
 	};
 
-	public StaringEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+	public StaringEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return MobEntity.createMobAttributes()
-			.add(EntityAttributes.FOLLOW_RANGE, 100)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.0F)
-			.add(EntityAttributes.MAX_HEALTH, 20);
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes()
+			.add(Attributes.FOLLOW_RANGE, 100)
+			.add(Attributes.MOVEMENT_SPEED, 0.0F)
+			.add(Attributes.MAX_HEALTH, 20);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (!this.getEntityWorld().isClient()) {
+		if (!this.level().isClientSide()) {
 			LivingEntity target = this.getTarget();
 			if (this.canSeeClosePlayer(target)) {
 				this.disappear(target);
 			}
 
-			if (this.areProjectilesNearby(this.getEntityWorld())) {
+			if (this.areProjectilesNearby(this.level())) {
 				this.fade();
 			}
 		}
@@ -69,23 +68,23 @@ public abstract class StaringEntity extends SunBurningEntity {
 		 * Return true, if player entity exists and located in within 10 blocks
 		 * and both entities see each other
 		 */
-		return entity != null && entity instanceof PlayerEntity target &&
-			this.distanceTo(target) < 10 && this.canSee(target) && target.canSee(this);
+		return entity != null && entity instanceof Player target &&
+			this.distanceTo(target) < 10 && this.hasLineOfSight(target) && target.hasLineOfSight(this);
 	}
 
-	protected boolean areProjectilesNearby(World world) {
+	protected boolean areProjectilesNearby(Level world) {
 		int radius = 10;
-		Vec3d position = new Vec3d(this.getX(), this.getY(), this.getZ());
+		Vec3 position = new Vec3(this.getX(), this.getY(), this.getZ());
 		
-        Box box = new Box(
+        AABB box = new AABB(
 			position.x - radius, position.y - radius, position.z - radius,
 			position.x + radius, position.y + radius, position.z + radius
         );
 
-		List<Entity> nearProjectileEntities = world.getOtherEntities(
+		List<Entity> nearProjectileEntities = world.getEntities(
 			this,
 			box,
-			entity -> (entity instanceof ProjectileEntity || entity instanceof TntEntity)
+			entity -> (entity instanceof Projectile || entity instanceof PrimedTnt)
 		);
 
 		if (!nearProjectileEntities.isEmpty()) {
@@ -96,24 +95,24 @@ public abstract class StaringEntity extends SunBurningEntity {
 	}
 
 	protected void disappear(LivingEntity target) {
-		if (target.hasStatusEffect(ModEffects.DIVINE_PROTECTION)) {
-			this.kill((ServerWorld) this.getEntityWorld());
+		if (target.hasEffect(ModEffects.DIVINE_PROTECTION)) {
+			this.kill((ServerLevel) this.level());
 		} else {
-			target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 60, 0));
+			target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0));
 			this.fade();
 		}
 	}
 
 	protected void fade() {
-		this.playSound(SoundEvents.ENTITY_WITHER_SPAWN);
+		this.makeSound(SoundEvents.WITHER_SPAWN);
 		this.discard();
 	}
 
 	@Override
-	protected void initGoals() {
-		this.targetSelector.add(0, McCodeHelper.getTargetGoal(this, PlayerEntity.class));
+	protected void registerGoals() {
+		this.targetSelector.addGoal(0, McCodeHelper.getTargetGoal(this, Player.class));
 
-		this.goalSelector.add(0, new LookAtEntityGoal(this, PlayerEntity.class, 100.0F));
+		this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 100.0F));
 	}
 
 	@Override

@@ -1,49 +1,49 @@
 package net.balamah.voiddim.entity.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.balamah.voiddim.VoidDimension;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.state.EntityRenderState;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.projectile.AbstractWindChargeEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.AbstractWindCharge;
 
-public class VoidSphereRenderer <T extends AbstractWindChargeEntity>
+public class VoidSphereRenderer <T extends AbstractWindCharge>
 	extends EntityRenderer<T, EntityRenderState>
 {
 	private static final Identifier TEXTURE =
-		Identifier.of(VoidDimension.MOD_ID, "textures/entity/projectiles/void_sphere.png");
+		Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/projectiles/void_sphere.png");
 
 	private final VoidSphereModel model;
 
-	public VoidSphereRenderer(EntityRendererFactory.Context context) {
+	public VoidSphereRenderer(EntityRendererProvider.Context context) {
 		super(context);
 
 		this.model =
-			new VoidSphereModel(context.getPart(VoidSphereModel.VOID_SPHERE));
+			new VoidSphereModel(context.bakeLayer(VoidSphereModel.VOID_SPHERE));
 	}
 
 	@Override
-	public void render(
-		EntityRenderState renderState, MatrixStack matrices,
-		OrderedRenderCommandQueue queue, CameraRenderState cameraState
+	public void submit(
+		EntityRenderState renderState, PoseStack matrices,
+		SubmitNodeCollector queue, CameraRenderState cameraState
 	) {
 		queue.submitModel(
 			this.model,
 			renderState,
 			matrices,
-			RenderLayers.breezeWind(TEXTURE, this.getXOffset(renderState.age) % 1.0F, 0.0F),
-			renderState.light,
-			OverlayTexture.DEFAULT_UV,
+			RenderTypes.breezeWind(TEXTURE, this.getXOffset(renderState.ageInTicks) % 1.0F, 0.0F),
+			renderState.lightCoords,
+			OverlayTexture.NO_OVERLAY,
 			renderState.outlineColor,
 			null
 		);
 
-		super.render(renderState, matrices, queue, cameraState);
+		super.submit(renderState, matrices, queue, cameraState);
 	}
 
 	protected float getXOffset(float tickDelta) {

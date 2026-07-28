@@ -2,15 +2,13 @@ package net.balamah.voiddim.world.explosion;
 
 import java.util.Optional;
 import java.util.Arrays;
-
-import net.minecraft.world.explosion.AdvancedExplosionBehavior;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Entity;
-
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.SimpleExplosionDamageCalculator;
 
-public class ExplosionIgnoreEntitiesBehavior extends AdvancedExplosionBehavior {
+public class ExplosionIgnoreEntitiesBehavior extends SimpleExplosionDamageCalculator {
 	protected final EntityType<?>[] typesToIgnore;
 
 	public ExplosionIgnoreEntitiesBehavior(EntityType<?>... typesToIgnore) {
@@ -20,7 +18,7 @@ public class ExplosionIgnoreEntitiesBehavior extends AdvancedExplosionBehavior {
 	}
 
 	@Override
-	public boolean shouldDamage(Explosion explosion, Entity entity) {
+	public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
 		if (entity instanceof BossEntity) {
 			return false;
 		}

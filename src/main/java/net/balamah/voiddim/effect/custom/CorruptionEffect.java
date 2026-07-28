@@ -1,20 +1,22 @@
 package net.balamah.voiddim.effect.custom;
 
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.EntityType;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.EnderMan;
 
 import java.util.Arrays;
 
-import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.effect.ModEffects;
 
-public class CorruptionEffect extends StatusEffect {
+public class CorruptionEffect extends MobEffect {
 	protected final EntityType<?>[] immuneEntities = {
 		ModEntities.CORRUPTED_BLAZE,
 		ModEntities.CORRUPTED_CREEPER,
@@ -30,7 +32,6 @@ public class CorruptionEffect extends StatusEffect {
 		EntityType.PILLAGER,
 		EntityType.EVOKER,
 		EntityType.ZOMBIE,
-		EntityType.CREEPER,
 		EntityType.SKELETON,
 		EntityType.SKELETON_HORSE,
 		EntityType.ZOMBIE_HORSE,
@@ -40,26 +41,32 @@ public class CorruptionEffect extends StatusEffect {
 	};
 
 	public CorruptionEffect() {
-		super(StatusEffectCategory.HARMFUL, 0xFF444444);
+		super(MobEffectCategory.HARMFUL, 0xFF444444);
 	}
 
 	@Override
-	public boolean canApplyUpdateEffect(int duration, int amplifier) {
+	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
 		return true;
 	}
 
 	@Override
-	public boolean applyUpdateEffect(
-		ServerWorld world, LivingEntity entity, int amplifier
+	public boolean applyEffectTick(
+		ServerLevel world, LivingEntity entity, int amplifier
 	) {
-		if (!(entity instanceof CorruptedHostileEntity) &&
-			!entity.hasStatusEffect(ModEffects.DIVINE_PROTECTION) &&
-			!Arrays.asList(this.immuneEntities).contains(entity.getType())
-		) {
-			DamageSource damageSource = ModDamageSources.corruption(world);
-			entity.damage(world, damageSource, 8.0f * (amplifier + 1));
+		// Kill enderman immediately to convert him into corrupted stalker
+		if (entity instanceof EnderMan) {
+			amplifier *= 20;
 		}
 
-		return super.applyUpdateEffect(world, entity, amplifier);
+		if (!(entity instanceof CorruptedHostileEntity) &&
+			!entity.hasEffect(ModEffects.DIVINE_PROTECTION) &&
+			!Arrays.asList(this.immuneEntities).contains(entity.getType()) &&
+			!McCodeHelper.entityCorruptionAscensionMap.containsKey(entity.getType())
+		) {
+			DamageSource damageSource = ModDamageSources.corruption(world);
+			entity.hurtServer(world, damageSource, 8.0f * (amplifier + 1));
+		}
+
+		return super.applyEffectTick(world, entity, amplifier);
 	}
 }

@@ -1,49 +1,58 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.mob.EvokerFangsEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.effect.ModEffects;
+import net.balamah.voiddim.entity.ModEntities;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.EvokerFangs;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 
-public class DarkGraspEntity extends EvokerFangsEntity {
+public class DarkGraspEntity extends EvokerFangs {
+	protected final float damage = 15f;
+
 	public DarkGraspEntity(
-		EntityType<? extends EvokerFangsEntity> entityType, World world
+		EntityType<? extends EvokerFangs> entityType, Level world
 	) {
 		super(entityType, world);
 	}
 
 	public DarkGraspEntity(
-		World world, double x, double y, double z, float yaw, int warmup, LivingEntity owner
+		Level world, double x, double y, double z, float yaw, int warmup, LivingEntity owner
 	) {
-		super(world, x, y, z, yaw, warmup, owner);
+		super(ModEntities.DARK_GRASP, world);
+
+		this.setOwner(owner);
+		this.setYRot(yaw * (180.0F / (float)Math.PI));
+		this.setPos(x, y, z);
 	}
 
-	protected void damage(LivingEntity target) {
+	@SuppressWarnings("deprecation")
+	protected void dealDamageTo(LivingEntity target) {
 		LivingEntity livingEntity = this.getOwner();
 		if (target.isAlive() && !target.isInvulnerable() && target != livingEntity) {
 			if (livingEntity == null) {
-				target.serverDamage(this.getDamageSources().magic(), 6.0F);
+				target.hurt(this.damageSources().magic(), this.damage);
 			} else {
-				DamageSource damageSource =
-					this.getDamageSources().indirectMagic(this, livingEntity);
-
-				if (this.getEntityWorld() instanceof ServerWorld serverWorld &&
-					target.damage(serverWorld, damageSource, 6.0F)
-				) {
-					StatusEffectInstance effect =
-						new StatusEffectInstance(ModEffects.CORRUPTION, 60, 1);
-
-					target.addStatusEffect(effect);
-
-					EnchantmentHelper.onTargetDamaged(serverWorld, target, damageSource);
-				}
+				this.damageApplyCorruption(livingEntity, target);
 			}
+		}
+	}
+
+	protected void damageApplyCorruption(LivingEntity livingEntity, LivingEntity target) {
+		DamageSource damageSource = this.damageSources().indirectMagic(this, livingEntity);
+
+		if (this.level() instanceof ServerLevel serverWorld &&
+			target.hurtServer(serverWorld, damageSource, this.damage))
+		{
+			MobEffectInstance effect = new MobEffectInstance(ModEffects.CORRUPTION, 60, 1);
+
+			target.addEffect(effect);
+
+			EnchantmentHelper.doPostAttackEffects(serverWorld, target, damageSource);
 		}
 	}
 }

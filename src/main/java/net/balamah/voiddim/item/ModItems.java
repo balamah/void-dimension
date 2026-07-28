@@ -2,31 +2,30 @@ package net.balamah.voiddim.item;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
-
-import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.component.type.ConsumableComponent;
-import net.minecraft.item.VerticallyAttachableBlockItem;
-import net.minecraft.component.type.FoodComponent;
-import net.minecraft.item.equipment.ArmorMaterial;
-import net.minecraft.item.equipment.EquipmentType;
-import net.minecraft.block.jukebox.JukeboxSong;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.math.Direction;
-import net.minecraft.registry.Registries;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.registry.Registry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.util.Identifier;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.HoeItem;
-import net.minecraft.util.Rarity;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-
+import java.util.function.Supplier;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.JukeboxSong;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.StandingAndWallBlockItem;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.balamah.voiddim.item.custom.CorruptedFireChargeItem;
 import net.balamah.voiddim.item.custom.ModSmithingTemplateItem;
 import net.balamah.voiddim.material.armor.VoidArmorMaterial;
@@ -40,24 +39,33 @@ import net.balamah.voiddim.VoidDimension;
 public class ModItems {
 	public static final String MOD_ID = VoidDimension.MOD_ID;
 
-	protected static final Item.Settings prayerItemSettings =
-		new Item.Settings().maxCount(1);
+	protected static Item.Properties prayerItemSettings() {
+		return new Item.Properties().stacksTo(1);
+	}
 
-	protected static final Function<Item.Settings, Item> crossItemSettings =
+	protected static final Function<Item.Properties, Item> crossItemSettings =
 		settings -> new PrayerItem(settings, 60, 900, 3);
 
-	protected static final Function<Item.Settings, Item> prayerRopeSettings =
+	protected static final Function<Item.Properties, Item> prayerRopeSettings =
 		settings -> new PrayerItem(settings, 240, 7200, 3);
 
 	public static final Item VOIDIUM =
-		register("voidium", Item::new, getVoidItemSettings());
+		register("voidium", Item::new, ModItems::getVoidItemSettings);
 
 	public static final Item VOID_SHARD = register(
-		"void_shard", Item::new, getVoidItemSettings()
+		"void_shard", Item::new, ModItems::getVoidItemSettings
 	);
 
 	public static final Item VOID_INGOT = register(
-		"void_ingot", Item::new, getVoidItemSettings()
+		"void_ingot", Item::new, ModItems::getVoidItemSettings
+	);
+
+	public static final Item VOID_EXPLOSION_CORE = register(
+		"void_explosion_core", Item::new, ModItems::getVoidItemSettings
+	);
+
+	public static final Item VOID_EXPLOSION_UPGRADE = register(
+		"void_explosion_upgrade", Item::new, ModItems::getVoidItemSettings
 	);
 
 	public static final Item RAW_FLESH =
@@ -70,7 +78,7 @@ public class ModItems {
 		registerFoodItem(
 			"spoiled_flesh",
 			ModFoodComponents.SPOILED_FLESH,
-			ConsumableComponents.ROTTEN_FLESH
+			Consumables.ROTTEN_FLESH
 		);
 
 	// This sux
@@ -78,7 +86,7 @@ public class ModItems {
 		register(
 			"void_upgrade_smithing_template",
 			ModSmithingTemplateItem::createVoidUpgrade,
-			getVoidItemSettings()
+			ModItems::getVoidItemSettings
 		);
 
 	public static final Item VOID_AXE =
@@ -87,7 +95,7 @@ public class ModItems {
 			settings -> new AxeItem(
 				ModMaterials.VOID_TOOL_MATERIAL, 8.0F, -3.0F, settings
 			),
-			getVoidItemSettings()
+			ModItems::getVoidItemSettings
 		);
 
 	public static final Item VOID_HOE =
@@ -96,14 +104,15 @@ public class ModItems {
 			settings -> new HoeItem(
 				ModMaterials.VOID_TOOL_MATERIAL, -5F, 0.0F, settings
 			),
-			getVoidItemSettings()
+			ModItems::getVoidItemSettings
 		);
 
 	public static final Item VOID_PICKAXE =
 		register(
 			"void_pickaxe",
 			Item::new,
-			getVoidItemSettings().pickaxe(ModMaterials.VOID_TOOL_MATERIAL, 2.0f, -2.8f)
+			() -> getVoidItemSettings()
+				.pickaxe(ModMaterials.VOID_TOOL_MATERIAL, 2.0f, -2.8f)
 		);
 
 	public static final Item VOID_SHOVEL =
@@ -112,70 +121,71 @@ public class ModItems {
 			settings -> new ShovelItem(
 				ModMaterials.VOID_TOOL_MATERIAL, 1.5F, -3.0F, settings
 			),
-			getVoidItemSettings()
+			ModItems::getVoidItemSettings
 		);
 
 	public static final Item VOID_SWORD =
 		register(
 			"void_sword",
 			Item::new,
-			getVoidItemSettings().sword(ModMaterials.VOID_TOOL_MATERIAL, 6.5f, -2.4f)
+			() -> getVoidItemSettings()
+				.sword(ModMaterials.VOID_TOOL_MATERIAL, 6.5f, -2.4f)
 		);
 
 	public static final Item VOID_SPEAR =
 		register(
 			"void_spear",
 			Item::new,
-			getVoidItemSettings().spear(
-				ModMaterials.VOID_TOOL_MATERIAL,
-				1.0F, 1.075F, 0.4F,
-				2.5F, 6.5F, 5.5F, 5.1F, 7.75F, 4.6F
-			)
+			() -> getVoidItemSettings().spear(
+					ModMaterials.VOID_TOOL_MATERIAL,
+					1.0F, 1.075F, 0.4F,
+					2.5F, 6.5F, 5.5F, 5.1F, 7.75F, 4.6F
+				)
 		);
 
 	public static final Item VOID_HELMET =
-		registerArmor("void_helmet", VoidArmorMaterial.INSTANCE, EquipmentType.HELMET, true);
+		registerArmor("void_helmet", VoidArmorMaterial.INSTANCE, ArmorType.HELMET, true);
 
 	public static final Item VOID_CHESTPLATE =
 		registerArmor(
-			"void_chestplate", VoidArmorMaterial.INSTANCE, EquipmentType.CHESTPLATE, true
+			"void_chestplate", VoidArmorMaterial.INSTANCE, ArmorType.CHESTPLATE, true
 		);
 
 	public static final Item VOID_LEGGINGS =
-		registerArmor("void_leggings", VoidArmorMaterial.INSTANCE, EquipmentType.LEGGINGS, true);
+		registerArmor("void_leggings", VoidArmorMaterial.INSTANCE, ArmorType.LEGGINGS, true);
 
 	public static final Item VOID_BOOTS =
 		registerArmor(
-			"void_boots", VoidArmorMaterial.INSTANCE, EquipmentType.BOOTS, true
+			"void_boots", VoidArmorMaterial.INSTANCE, ArmorType.BOOTS, true
 		);
 
 	public static final Item LATIN_CROSS =
-		register("latin_cross", crossItemSettings, prayerItemSettings);
+		register("latin_cross", crossItemSettings, ModItems::prayerItemSettings);
 
 	public static final Item ORTHODOX_CROSS =
-		register("orthodox_cross", crossItemSettings, prayerItemSettings);
+		register("orthodox_cross", crossItemSettings, ModItems::prayerItemSettings);
 
 	public static final Item WOOL_PRAYER_ROPE =
-		register("wool_prayer_rope", prayerRopeSettings, prayerItemSettings);
+		register("wool_prayer_rope", prayerRopeSettings, ModItems::prayerItemSettings);
 
 	public static final Item WOOD_PRAYER_ROPE =
-		register("wooden_prayer_rope", prayerRopeSettings, prayerItemSettings);
+		register("wooden_prayer_rope", prayerRopeSettings, ModItems::prayerItemSettings);
 
 	public static final Item SKULL_PRAYER_ROPE =
-		register("skull_prayer_rope", prayerRopeSettings, prayerItemSettings);
+		register("skull_prayer_rope", prayerRopeSettings, ModItems::prayerItemSettings);
 
 	public static final Item CORRUPTED_TORCH =
 		registerBlockItem(
 			ModBlocks.CORRUPTED_TORCH,
-			(BiFunction<Block, Item.Settings, Item>)(
-				(block, settings) -> new VerticallyAttachableBlockItem(
+			(BiFunction<Block, Item.Properties, Item>)(
+				(block, settings) -> new StandingAndWallBlockItem(
 					block, ModBlocks.CORRUPTED_WALL_TORCH, Direction.DOWN, settings
 				)),
-			new Item.Settings()
+			Item.Properties::new
 		);
 
 	public static final Item CORRUPTED_FIRE_CHARGE =
-		register("corrupted_fire_charge", CorruptedFireChargeItem::new, new Item.Settings());
+		register("corrupted_fire_charge", CorruptedFireChargeItem::new, Item.Properties::new);
 
 	public static final Item CORRUPTED_CREEPER_SPAWN_EGG =
 		registerSpawnEgg("corrupted_creeper_spawn_egg", ModEntities.CORRUPTED_CREEPER);
@@ -230,32 +240,43 @@ public class ModItems {
 	public static final Item ENTITY303_SPAWN_EGG =
 		registerSpawnEgg("entity303_spawn_egg", ModEntities.ENTITY303);
 
+	public static final Item EYE_BRIGHT_SPAWN_EGG =
+		registerSpawnEgg("eye_bright_spawn_egg", ModEntities.EYE_BRIGHT);
+
 	public static final Item HOLLOWED_ALPHA_STEVE_SPAWN_EGG =
 		registerSpawnEgg("hollowed_alpha_steve_spawn_egg", ModEntities.HOLLOWED_ALPHA_STEVE);
 
 	public static final Item ZOMBIFIED_ALPHA_STEVE_SPAWN_EGG =
 		registerSpawnEgg("zombified_alpha_steve_spawn_egg", ModEntities.ZOMBIFIED_ALPHA_STEVE);
 
+	public static final Item VOID_BOUND_SERVANT_SPAWN_EGG =
+		registerSpawnEgg("void_bound_servant_spawn_egg", ModEntities.VOID_BOUND_SERVANT);
+
+	public static final Item CORRUPTED_WARRIOR_SPAWN_EGG =
+		registerSpawnEgg("corrupted_warrior_spawn_egg", ModEntities.CORRUPTED_WARRIOR);
+
 	public static final Item VOID_HORSE_ARMOR =
 		register(
 			"void_horse_armor",
 			Item::new,
-			getVoidItemSettings().horseArmor(VoidArmorMaterial.INSTANCE)
+			() -> getVoidItemSettings().horseArmor(VoidArmorMaterial.INSTANCE)
 		);
 
 	public static final Item VOID_NAUTILUS_ARMOR =
 		register(
 			"void_nautilus_armor",
 			Item::new,
-			getVoidItemSettings().nautilusArmor(VoidArmorMaterial.INSTANCE)
+			() -> getVoidItemSettings().nautilusArmor(VoidArmorMaterial.INSTANCE)
 		);
 
 	public static final Item MUSIC_DISC_CALM4 =
 		register(
 			"music_disc_calm4",
 			Item::new,
-			new Item.Settings().rarity(Rarity.UNCOMMON)
-			.jukeboxPlayable(ModSounds.MUSIC_CALM4_KEY).maxCount(1)
+			() -> new Item.Properties()
+				.rarity(Rarity.UNCOMMON)
+				.jukeboxPlayable(ModSounds.MUSIC_CALM4_KEY)
+				.stacksTo(1)
 		);
 
 	public static void registerModItems() {
@@ -263,86 +284,95 @@ public class ModItems {
 	}
 
 	protected static Item register(
-		String name, Function<Item.Settings, Item> itemFactory, Item.Settings settings
+		String name,
+		Function<Item.Properties, Item> itemFactory,
+		Supplier<Item.Properties> settingsFactory
 	) {
-		RegistryKey<Item> itemKey = RegistryKey.of(
-			RegistryKeys.ITEM, Identifier.of(MOD_ID, name)
+		ResourceKey<Item> itemKey = ResourceKey.create(
+			Registries.ITEM, Identifier.fromNamespaceAndPath(MOD_ID, name)
 		);
 
-		Item item = itemFactory.apply(settings.registryKey(itemKey));
-
-		Registry.register(Registries.ITEM, itemKey, item);
-
-		return item;
+		Item.Properties settings = settingsFactory.get().setId(itemKey);
+		Item item = itemFactory.apply(settings);
+		return Registry.register(BuiltInRegistries.ITEM, itemKey, item);
 	}
 
 	protected static Item registerBlockItem(
-		Block block, BiFunction<Block, Item.Settings, Item> factory, Item.Settings settings
+		Block block,
+		BiFunction<Block, Item.Properties, Item> factory,
+		Supplier<Item.Properties> settingsFactory
 	) {
+		ResourceKey<Block> blockKey =
+			BuiltInRegistries.BLOCK.getResourceKey(block).orElseThrow();
+
 		return registerByKey(
-			keyOfBlock(block.getRegistryEntry().registryKey()),
+			keyOfBlock(blockKey),
 			itemSettings -> (Item) factory.apply(block, itemSettings),
-			settings.useBlockPrefixedTranslationKey()
+			settingsFactory
 		);
 	}
 
 	protected static Item registerByKey(
-		RegistryKey<Item> key, Function<Item.Settings, Item> factory, Item.Settings settings
+		ResourceKey<Item> key,
+		Function<Item.Properties, Item> factory,
+		Supplier<Item.Properties> settingsFactory
 	) {
-		Item item = (Item)factory.apply(settings.registryKey(key));
+		Item.Properties settings = settingsFactory.get().setId(key);
+		Item item = (Item)factory.apply(settings);
 		if (item instanceof BlockItem blockItem) {
-			blockItem.appendBlocks(Item.BLOCK_ITEMS, item);
+			blockItem.registerBlocks(Item.BY_BLOCK, item);
 		}
 
-		return Registry.register(Registries.ITEM, key, item);
+		return Registry.register(BuiltInRegistries.ITEM, key, item);
 	}
 
-	protected static RegistryKey<Item> keyOfBlock(RegistryKey<Block> blockKey) {
-		return RegistryKey.of(RegistryKeys.ITEM, blockKey.getValue());
+	protected static ResourceKey<Item> keyOfBlock(ResourceKey<Block> blockKey) {
+		return ResourceKey.create(Registries.ITEM, blockKey.identifier());
 	}
 
 	protected static Item registerArmor(
-		String name, ArmorMaterial material, EquipmentType type, boolean isVoid
+		String name, ArmorMaterial material, ArmorType type, boolean isVoid
 	) {
-		Item.Settings baseSettings;
-
-		if (!isVoid) {
-			baseSettings = new Item.Settings();
-		} else {
-			baseSettings = getVoidItemSettings();
-		}
-
-		Item.Settings settings = baseSettings
-			.maxDamage(type.getMaxDamage(material.durability()));
-
-		return register(name, Item::new, settings.armor(material, type));
-	}
-
-	protected static Item registerSpawnEgg(String name, EntityType<? extends MobEntity> mob) {
-		return register(name, SpawnEggItem::new, new Item.Settings().spawnEgg(mob));
-	}
-
-	protected static Item registerFoodItem(String name, FoodComponent foodComponent) {
-		return register(name, Item::new, new Item.Settings().food(foodComponent));
-	}
-
-	protected static Item registerFoodItem(
-		String name, FoodComponent foodComponent, ConsumableComponent consumableComponent
-	) {
-		return register(
-			name, Item::new, new Item.Settings().food(foodComponent, consumableComponent)
-		);
-	}
-
-	protected static Item registerMusicDisc(String name, RegistryKey<JukeboxSong> song) {
+		int durability = type.getDurability(material.durability());
 		return register(
 			name,
 			Item::new,
-			new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON).jukeboxPlayable(song)
+			() -> (isVoid ? getVoidItemSettings() : new Item.Properties())
+				.durability(durability)
+				.humanoidArmor(material, type)
 		);
 	}
 
-	protected static Item.Settings getVoidItemSettings() {
-		return new Item.Settings().rarity(Rarity.UNCOMMON).fireproof();
+	protected static Item registerSpawnEgg(String name, EntityType<? extends Mob> mob) {
+		return register(name, SpawnEggItem::new, () -> new Item.Properties().spawnEgg(mob));
+	}
+
+	protected static Item registerFoodItem(String name, FoodProperties foodComponent) {
+		return register(name, Item::new, () -> new Item.Properties().food(foodComponent));
+	}
+
+	protected static Item registerFoodItem(
+		String name, FoodProperties foodComponent, Consumable consumableComponent
+	) {
+		return register(
+			name,
+			Item::new,
+			() -> new Item.Properties().food(foodComponent, consumableComponent)
+		);
+	}
+
+	protected static Item registerMusicDisc(String name, ResourceKey<JukeboxSong> song) {
+		return register(
+			name,
+			Item::new,
+			() -> new Item.Properties()
+				.stacksTo(1)
+				.rarity(Rarity.UNCOMMON)
+				.jukeboxPlayable(song)
+		);
+	}
+
+	protected static Item.Properties getVoidItemSettings() {
+		return new Item.Properties().rarity(Rarity.UNCOMMON).fireResistant();
 	}
 }

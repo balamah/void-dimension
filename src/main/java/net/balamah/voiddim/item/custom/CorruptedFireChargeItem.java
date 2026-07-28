@@ -1,61 +1,60 @@
 package net.balamah.voiddim.item.custom;
 
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.event.GameEvent;
-import net.minecraft.block.CandleCakeBlock;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.block.CampfireBlock;
-import net.minecraft.item.FireChargeItem;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.CandleBlock;
-import net.minecraft.util.ActionResult;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.block.BlockState;
-import net.minecraft.world.World;
-import net.minecraft.item.Item;
-
 import net.balamah.voiddim.block.custom.CorruptedFireBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.FireChargeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.CandleBlock;
+import net.minecraft.world.level.block.CandleCakeBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.gameevent.GameEvent;
 
 public class CorruptedFireChargeItem extends FireChargeItem {
-	public CorruptedFireChargeItem(Item.Settings settings) {
+	public CorruptedFireChargeItem(Item.Properties settings) {
 		super(settings);
 	}
 	
 	@Override
-	public ActionResult useOnBlock(ItemUsageContext context) {
-		World world = context.getWorld();
-		BlockPos blockPos = context.getBlockPos();
+	public InteractionResult useOn(UseOnContext context) {
+		Level world = context.getLevel();
+		BlockPos blockPos = context.getClickedPos();
 		BlockState blockState = world.getBlockState(blockPos);
 		boolean bl = false;
-		if (!CampfireBlock.canBeLit(blockState) && !CandleBlock.canBeLit(blockState) && !CandleCakeBlock.canBeLit(blockState)) {
-			blockPos = blockPos.offset(context.getSide());
-			if (CorruptedFireBlock.canPlaceAt(world, blockPos, context.getHorizontalPlayerFacing())) {
-				this.playUseSound(world, blockPos);
-				world.setBlockState(blockPos, CorruptedFireBlock.getState(world, blockPos));
-				world.emitGameEvent(context.getPlayer(), GameEvent.BLOCK_PLACE, blockPos);
+		if (!CampfireBlock.canLight(blockState) && !CandleBlock.canLight(blockState) && !CandleCakeBlock.canLight(blockState)) {
+			blockPos = blockPos.relative(context.getClickedFace());
+			if (CorruptedFireBlock.canBePlacedAt(world, blockPos, context.getHorizontalDirection())) {
+				this.playSound(world, blockPos);
+				world.setBlockAndUpdate(blockPos, CorruptedFireBlock.getState(world, blockPos));
+				world.gameEvent(context.getPlayer(), GameEvent.BLOCK_PLACE, blockPos);
 				bl = true;
 			}
 		} else {
-			this.playUseSound(world, blockPos);
-			world.setBlockState(blockPos, blockState.with(Properties.LIT, true));
-			world.emitGameEvent(context.getPlayer(), GameEvent.BLOCK_CHANGE, blockPos);
+			this.playSound(world, blockPos);
+			world.setBlockAndUpdate(blockPos, blockState.setValue(BlockStateProperties.LIT, true));
+			world.gameEvent(context.getPlayer(), GameEvent.BLOCK_CHANGE, blockPos);
 			bl = true;
 		}
 
 		if (bl) {
-			context.getStack().decrement(1);
-			return ActionResult.SUCCESS;
+			context.getItemInHand().shrink(1);
+			return InteractionResult.SUCCESS;
 		} else {
-			return ActionResult.FAIL;
+			return InteractionResult.FAIL;
 		}
 	}
 
-	private void playUseSound(World world, BlockPos pos) {
-		Random random = world.getRandom();
+	private void playSound(Level world, BlockPos pos) {
+		RandomSource random = world.getRandom();
 		world.playSound(
-			null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F,
+			null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0F,
 			(random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F
 		);
 	}

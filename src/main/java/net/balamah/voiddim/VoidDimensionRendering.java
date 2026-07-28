@@ -1,14 +1,11 @@
 package net.balamah.voiddim;
 
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.minecraft.client.render.entity.EntityRendererFactories;
-import net.minecraft.client.render.BlockRenderLayer;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.Block;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Block;
-
 import net.balamah.voiddim.custom.NonLivingEntitySpecs;
 import net.balamah.voiddim.particle.ModParticleTypes;
 import net.balamah.voiddim.custom.BipedEntitySpecs;
@@ -69,7 +66,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 								  HollowedBeastRenderer::new),
 				new EntitySpecs<CorruptedBlazeEntity>(ModEntities.CORRUPTED_BLAZE,
 													  CorruptedBlazeModel.CORRUPTED_BLAZE,
-													  CorruptedBlazeModel.getTexturedModelData(),
+													  CorruptedBlazeModel.createBodyLayer(),
 													  CorruptedBlazeRenderer::new),
 				new EntitySpecs<CorruptedCreeperEntity>(ModEntities.CORRUPTED_CREEPER,
 														CorruptedCreeperModel.CORRUPTED_CREEPER,
@@ -77,7 +74,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 														CorruptedCreeperRenderer::new),
 				new EntitySpecs<CorruptedSpiderEntity>(ModEntities.CORRUPTED_SPIDER,
 													   CorruptedSpiderModel.CORRUPTED_SPIDER,
-													   CorruptedSpiderModel.getTexturedModelData(),
+													   CorruptedSpiderModel.createSpiderBodyLayer(),
 													   CorruptedSpiderRenderer::new),
 				new EntitySpecs<StaringDogEntity>(ModEntities.STARING_DOG,
 												  StaringDogModel.STARING_DOG,
@@ -86,7 +83,23 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new EntitySpecs<StaringCatEntity>(ModEntities.STARING_CAT,
 												  StaringCatModel.STARING_CAT,
 												  StaringCatModel.getTexturedModelData(),
-												  StaringCatRenderer::new)
+												  StaringCatRenderer::new),
+				new EntitySpecs<EyeBrightEntity>(ModEntities.EYE_BRIGHT,
+												  EyeBrightModel.EYE_BRIGHT,
+												  EyeBrightModel.getTexturedModelData(),
+												  EyeBrightRenderer::new),
+				new EntitySpecs<CorruptedWarriorEntity>(ModEntities.CORRUPTED_WARRIOR,
+														CorruptedWarriorModel.CORRUPTED_WARRIOR,
+														CorruptedWarriorModel.getTexturedModelData(),
+														CorruptedWarriorRenderer::new),
+				new EntitySpecs<VoidBoundServantEntity>(ModEntities.VOID_BOUND_SERVANT,
+														VoidBoundServantModel.VOID_BOUND_SERVANT,
+														VoidBoundServantModel.getTexturedModelData(),
+														VoidBoundServantRenderer::new),
+				new EntitySpecs<CorruptedPlayerEntity>(ModEntities.CORRUPTED_PLAYER,
+														CorruptedPlayerModel.CORRUPTED_PLAYER,
+														CorruptedPlayerModel.getTexturedModelData(),
+														CorruptedPlayerRenderer::new)
 				);
 
 
@@ -97,7 +110,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 									   context -> new HollowedAlphaSteveRenderer<>(
 										   context,
 										   new HollowedAlphaSteveModel<>(
-											   context.getPart(HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE)
+											   context.bakeLayer(HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE)
 										   ),
 										   0.5f
 									   )),
@@ -107,7 +120,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 									   context -> new ZombifiedAlphaSteveRenderer<>(
 										   context,
 										   new HollowedAlphaSteveModel<>(
-											   context.getPart(HollowedAlphaSteveModel.ZOMBIFIED_ALPHA_STEVE)
+											   context.bakeLayer(HollowedAlphaSteveModel.ZOMBIFIED_ALPHA_STEVE)
 										   ),
 										   0.5f
 									   )),
@@ -117,7 +130,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 									   context -> new NullEntityRenderer<>(
 										   context,
 										   new HollowedAlphaSteveModel<>(
-											   context.getPart(HollowedAlphaSteveModel.NULL)
+											   context.bakeLayer(HollowedAlphaSteveModel.NULL)
 										   ),
 										   0.5f
 									   )),
@@ -127,7 +140,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 									   context -> new AggressiveNullRenderer<>(
 										   context,
 										   new HumanModel<>(
-											   context.getPart(HumanModel.AGGRESSIVE_NULL)
+											   context.bakeLayer(HumanModel.AGGRESSIVE_NULL)
 										   ),
 										   0.5f
 									   )),
@@ -137,7 +150,7 @@ public class VoidDimensionRendering implements ClientModInitializer {
 									   context -> new Entity303Renderer<>(
 										   context,
 										   new HumanModel<>(
-											   context.getPart(HumanModel.HEROBRINE)
+											   context.bakeLayer(HumanModel.HEROBRINE)
 										   ),
 										   0.5f
 									   ))
@@ -146,45 +159,50 @@ public class VoidDimensionRendering implements ClientModInitializer {
 	protected List<NonLivingEntitySpecs<? extends Entity>> nonLivingEntitySpecs =
 		List.of(new NonLivingEntitySpecs<>(ModEntities.VOID_SPHERE,
 										   VoidSphereModel.VOID_SPHERE,
-										   VoidSphereModel.getTexturedModelData(),
+										   VoidSphereModel.createBodyLayer(),
 										   VoidSphereRenderer::new),
 				new NonLivingEntitySpecs<>(ModEntities.SMALL_CORRUPTED_FIREBALL,
 										   SmallCorruptedFireballModel.SMALL_CORRUPTED_FIREBALL,
 										   SmallCorruptedFireballModel.getTexturedModelData(),
-										   SmallCorruptedFireballRenderer::new)
+										   SmallCorruptedFireballRenderer::new),
+				new NonLivingEntitySpecs<ConsumedSoulEntity>(ModEntities.CONSUMED_SOUL,
+													ConsumedSoulModel.CONSUMED_SOUL,
+													ConsumedSoulModel.getTexturedModelData(),
+													ConsumedSoulRenderer::new)
 				);
 
 	@Override
 	public void onInitializeClient() {
-		VoidDimension.LOGGER.info(
-			"Registering mod rendering for " + VoidDimension.MOD_ID
-		);
+		VoidDimension.LOGGER.info("Registering mod rendering for " + VoidDimension.MOD_ID);
 
 		this.createLivingEntityRenders(this.entitySpecs);
 		this.createBipedEntityRenders(this.bipedEntitySpecs);
 		this.createEntityRenders(this.nonLivingEntitySpecs);
 		this.createBlocksTransparency(this.blocksForTransparency);
 
-		EntityRendererFactories.register(ModEntities.BEDROCK_BOMB, BedrockBombRenderer::new);
-		EntityRendererFactories.register(ModEntities.VOID_LIGHTNING_BOLT, VoidLightningEntityRenderer::new);
-
 		ModParticleTypes.registerModParticles();
+
+		EntityRenderers.register(ModEntities.BEDROCK_BOMB, BedrockBombRenderer::new);
+		EntityRenderers.register(ModEntities.THROWN_BLOCK, ThrownBlockRenderer::new);
+		EntityRenderers.register(ModEntities.VOID_LIGHTNING_BOLT, VoidLightningEntityRenderer::new);
+		EntityRenderers.register(ModEntities.EYE_BRIGHT_HEAD, EyeBrightHeadRenderer::new);
+		EntityRenderers.register(ModEntities.DARK_GRASP, DarkGraspRenderer::new);
 	}
 
 	protected <T extends Entity> void registerSpec(NonLivingEntitySpecs<T> spec) {
-		EntityModelLayerRegistry.registerModelLayer(
+		ModelLayerRegistry.registerModelLayer(
 			spec.modelLayer(), () -> spec.texturedModelData()
 		);
 
-		EntityRendererFactories.register(spec.entity(), spec.entityRendererFactory());
+		EntityRenderers.register(spec.entity(), spec.entityRendererFactory());
 	}
 
 	protected <T extends LivingEntity> void registerLivingSpec(EntitySpecs<T> spec) {
-		EntityModelLayerRegistry.registerModelLayer(
+		ModelLayerRegistry.registerModelLayer(
 			spec.modelLayer(), () -> spec.texturedModelData()
 		);
 
-		EntityRendererFactories.register(spec.entity(), spec.entityRendererFactory());
+		EntityRenderers.register(spec.entity(), spec.entityRendererFactory());
 	}
 
 	protected void createLivingEntityRenders(
@@ -212,18 +230,12 @@ public class VoidDimensionRendering implements ClientModInitializer {
 	}
 
 	protected void createBlocksTransparency(Block[] blocks) {
-		for (Block block : blocks) {
-			BlockRenderLayerMap.putBlock(block, BlockRenderLayer.CUTOUT);
-		}
+		// Minecraft 26.1+ automatically assigns chunk section layers based on sprite properties.
 	}
 
-	protected <T extends LivingEntity> void registerBipedEntitySpec(
-		BipedEntitySpecs<T> specs
-	) {
-		EntityModelLayerRegistry.registerModelLayer(
-			specs.modelLayer(), specs::texturedModelData
-		);
+	protected <T extends LivingEntity> void registerBipedEntitySpec(BipedEntitySpecs<T> specs) {
+		ModelLayerRegistry.registerModelLayer(specs.modelLayer(), specs::texturedModelData);
 
-		EntityRendererFactories.register(specs.entity(), specs.entityRendererFactory());
+		EntityRenderers.register(specs.entity(), specs.entityRendererFactory());
 	}
 }

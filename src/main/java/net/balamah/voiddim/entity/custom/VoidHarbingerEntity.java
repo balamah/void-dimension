@@ -1,35 +1,35 @@
 package net.balamah.voiddim.entity.custom;
 
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.AnimationState;
-import net.minecraft.world.event.GameEvent;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.EntityType;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 
 import net.balamah.voiddim.entity.custom.base.BossEntity;
 import net.balamah.voiddim.interfaces.TeleportUser;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.sound.ModSounds;
 
-// TODO: Nerf VoidHarbingerEntity teleportation
 public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
-	protected final int teleportCooldown = 140;
+	protected final int teleportCooldown = 100;
 	protected int teleportTicks;
 
 	public AnimationState shootAnimationState = new AnimationState();
@@ -37,30 +37,34 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	public AnimationState summonEndAnimationState = new AnimationState();
 
 	public VoidHarbingerEntity(
-		EntityType<? extends HostileEntity> entityType, World world
+		EntityType<? extends Monster> entityType, Level world
 	) {
 		super(entityType, world);
 
-		this.experiencePoints = 450;
+		this.xpReward = 450;
 	}
 
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes()
-			.add(EntityAttributes.FOLLOW_RANGE, 32)
-			.add(EntityAttributes.MOVEMENT_SPEED, 0.2F)
-			.add(EntityAttributes.ATTACK_DAMAGE, 13.0F)
-			.add(EntityAttributes.STEP_HEIGHT, 3.0)
-			.add(EntityAttributes.MAX_HEALTH, 320);
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.FOLLOW_RANGE, 32)
+			.add(Attributes.MOVEMENT_SPEED, 0.2F)
+			.add(Attributes.ATTACK_DAMAGE, 13.0F)
+			.add(Attributes.STEP_HEIGHT, 3.0)
+			.add(Attributes.MAX_HEALTH, 320);
 	}
 
 	public double getChargeY() {
-		return this.getY() + this.getHeight() / 2.0F + 0.3F;
+		return this.getY() + this.getBbHeight() / 2.0F + 0.3F;
 	}
 
 	public boolean teleportRandomly() {
 		int teleportationRadius = 13;
 
-		if (!this.getEntityWorld().isClient() && this.isAlive()) {
+		if (this.teleportTicks > 0) {
+			return false;
+		}
+
+		if (!this.level().isClientSide() && this.isAlive()) {
 			double newY = this.getY() + (this.random.nextInt(teleportationRadius));
 
 			double x = this.getX() + teleportationRadius;
@@ -74,9 +78,13 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	}
 
 	public boolean teleportTo(Entity entity) {
-		Vec3d vec3d = new Vec3d(
+		if (this.teleportTicks > 0) {
+			return false;
+		}
+
+		Vec3 vec3d = new Vec3(
 			this.getX() - entity.getX(), 
-			this.getBodyY(0.5) - entity.getEyeY(), 
+			this.getY(0.5) - entity.getEyeY(), 
 			this.getZ() - entity.getZ()
 		);
 
@@ -104,23 +112,31 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 
 	@SuppressWarnings("deprecation")
 	public boolean teleportTo(double x, double y, double z, boolean ignoreLimitPredicate) {
-		BlockPos.Mutable mutable = this.getMutableCoordinate(x, y, z, ignoreLimitPredicate);
+		if (this.teleportTicks > 0) {
+			return false;
+		}
+
+		BlockPos.MutableBlockPos mutable = McCodeHelper.getMutableCoordinate(
+			this.level(), x, y, z, ignoreLimitPredicate
+		);
+
 		if (mutable == null) {
 			return false;
 		}
 
-		BlockState blockState = this.getEntityWorld().getBlockState(mutable);
-		boolean isSolidBlock = blockState.blocksMovement();
+		BlockState blockState = this.level().getBlockState(mutable);
+		boolean isSolidBlock = blockState.blocksMotion();
 		if (!isSolidBlock) {
 			return false;
 		}
 
-		Vec3d vec3d = new Vec3d(this.getX(), this.getY(), this.getZ());
-		boolean didTeleport = this.teleport(x, y, z, true);
-		if (didTeleport) {
-			this.getEntityWorld().emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(this));
-			this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
-		}
+		Vec3 vec3d = new Vec3(this.getX(), this.getY(), this.getZ());
+			boolean didTeleport = this.randomTeleport(x, y, z, true);
+			if (didTeleport) {
+				this.teleportTicks = this.teleportCooldown;
+				this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));
+				this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
+			}
 
 		return didTeleport;
 	}
@@ -133,7 +149,10 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 			this.teleportTicks--;
 		}
 
-		if (McCodeHelper.shouldTeleportTo(this, this.getTarget())) {
+		if (!this.level().isClientSide() &&
+			this.teleportTicks <= 0 &&
+			McCodeHelper.shouldTeleportTo(this, this.getTarget())
+		) {
 			this.teleportTo(this.getTarget());
 		}
 	}
@@ -154,30 +173,24 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 		return baseCoordinate + (this.random.nextDouble() - 0.5) * 2 - vector * diameter;
 	}
 
-	@SuppressWarnings("deprecation")
-	protected @Nullable BlockPos.Mutable getMutableCoordinate(
-		double x, double y, double z, boolean ignoreLimitPredicate
-	) {
-		BlockPos.Mutable mutable = new BlockPos.Mutable(x, y, z);
+	@Override
+	protected void initBasicGoals() {
+		this.goalSelector.addGoal(
+			7, new StayOnHomeBlockGoal(this, 1.0, 50, false, Blocks.BEDROCK, 50)
+		);
 
-		while (mutable.getY() > this.getEntityWorld().getBottomY() &&
-			   !this.getEntityWorld().getBlockState(mutable).blocksMovement()
-		) {
-			double heightDifference = this.getY() - mutable.getY();
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, AgeableMob.class, 8.0F));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 
-			if (heightDifference < 30 || ignoreLimitPredicate) {
-				mutable.move(Direction.DOWN);
-			} else {
-				return null;
-			}
-		}
-
-		return mutable;
+		this.targetSelector.addGoal(
+			1, new HurtByTargetGoal(this, BossEntity.class).setAlertOthers(Entity.class)
+		);
 	}
 
 	@Override
-	protected void initGoals() {
-		super.initGoals();
+	protected void registerGoals() {
+		super.registerGoals();
 
 		Goal shootingGoal = new ShootProjectileGoal<VoidHarbingerEntity, VoidSphereEntity>(
 			this, world -> new VoidSphereEntity(ModEntities.VOID_SPHERE, world),
@@ -187,9 +200,9 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 		);
 
 		// Make teleportation more often on the second phase
-		this.goalSelector.add(0, new TeleportTowardsPlayerGoal<VoidHarbingerEntity>(this));
-		this.goalSelector.add(1, shootingGoal);
-		this.goalSelector.add(
+		this.goalSelector.addGoal(0, new TeleportTowardsPlayerGoal<VoidHarbingerEntity>(this));
+		this.goalSelector.addGoal(1, shootingGoal);
+		this.goalSelector.addGoal(
 			2,
 			new SummonEntitiesGoal<VoidHarbingerEntity, CorruptedStalkerEntity>(
 				this, CorruptedStalkerEntity.class, ModEntities.CORRUPTED_STALKER, 10
@@ -198,16 +211,16 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	}
 
 	@Override
-	public void handleStatus(byte status) {
+	public void handleEntityEvent(byte status) {
 		switch (status) {
 			case ModEntityStatuses.SUMMON_ENTITIES_START:
-				this.summonAnimationState.start(this.age);
+				this.summonAnimationState.start(this.tickCount);
 				break;
 			case ModEntityStatuses.SUMMON_ENTITIES_FINISH:
 				this.summonAnimationState.stop();
-				this.summonEndAnimationState.start(this.age);
+				this.summonEndAnimationState.start(this.tickCount);
 				break;
-			default: super.handleStatus(status);
+			default: super.handleEntityEvent(status);
 				break;
 		}
 	}

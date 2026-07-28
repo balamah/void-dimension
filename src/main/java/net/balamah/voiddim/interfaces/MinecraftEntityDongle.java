@@ -1,11 +1,11 @@
 package net.balamah.voiddim.interfaces;
 
-import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 
 public interface MinecraftEntityDongle {
 	public boolean testPredicate(
-		ServerWorld world, LivingEntity target, TargetPredicate predicate
+		ServerLevel world, LivingEntity target, TargetingConditions predicate
 	);
 }

@@ -6,8 +6,10 @@
 	"description": "Adds a dimension in the void",
 	"authors": [
 		"Balamah",
+		"blubeerz",
 		"H0peL0ck",
-		"legendary_pasha"
+		"legendary_pasha",
+		"bruh_mox"
 	],
 	"contact": {
 		"homepage": "https://modrinth.com/mod/void-dimension-fabric",
@@ -31,9 +33,9 @@
 		"void-dimension.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.16.14",
-		"minecraft": ">=1.21.11",
-		"java": ">=21",
+		"fabricloader": ">=0.19.2",
+		"minecraft": ">=26.1.2",
+		"java": ">=25",
 		"fabric-api": "*"
 	},
 	"suggests": {

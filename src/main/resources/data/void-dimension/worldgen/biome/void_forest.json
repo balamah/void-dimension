@@ -6,13 +6,9 @@
 				"tick_chance": 0.003
 			}
 		},
-		"minecraft:audio/background_music": {
-			"default": {
-				"max_delay": 16000,
-				"min_delay": 12000,
-				"sound": "void-dimension:music.void"
-			}
-		},
+		"minecraft:visual/fog_color": "#000000",
+		"minecraft:visual/sky_color": "#000000",
+		"minecraft:visual/water_fog_color": "#eae9e9",
 		"minecraft:visual/ambient_particles": [
 			{
 				"particle": {
@@ -108,7 +104,13 @@
 			},
 			{
 				"type": "void-dimension:null",
-			"weight": 30,
+				"weight": 30,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:eye_bright",
+				"weight": 8,
 				"minCount": 1,
 				"maxCount": 1
 			}
@@ -154,14 +156,15 @@
 		"void-dimension:null": {
 			"energy_budget": 5.0,
 			"charge": 2.0
+		},
+		"void-dimension:eye_bright": {
+			"energy_budget": 7.0,
+			"charge": 3.0
 		}
 	},
 	"effects": {
-		"foliage_color": -14211547,
-		"grass_color": 15395305,
-		"sky_color": -16777216,
-		"fog_color": -16777216,
-		"water_color": 15395305,
-		"water_fog_color": 15395305
+		"foliage_color": "#272625",
+		"grass_color": "#eae9e9",
+		"water_color": "#eae9e9"
 	}
 }

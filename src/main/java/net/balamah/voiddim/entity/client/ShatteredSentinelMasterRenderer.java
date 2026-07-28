@@ -1,26 +1,25 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.ShatteredSentinelMasterEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
 public class ShatteredSentinelMasterRenderer
-	extends MobEntityRenderer<ShatteredSentinelMasterEntity,
+	extends MobRenderer<ShatteredSentinelMasterEntity,
 							  ShatteredSentinelMasterRenderState,
 							  ShatteredSentinelMasterModel> 
 {
-	public ShatteredSentinelMasterRenderer(EntityRendererFactory.Context context) {
+	public ShatteredSentinelMasterRenderer(EntityRendererProvider.Context context) {
 		super(context,
 			  new ShatteredSentinelMasterModel(
-					  context.getPart(ShatteredSentinelMasterModel.SHATTERED_SENTINEL_MASTER)),
+					  context.bakeLayer(ShatteredSentinelMasterModel.SHATTERED_SENTINEL_MASTER)),
 			  0.75f
 		);
 
-		this.addFeature(
+		this.addLayer(
 			new GlowFeatureRenderer<>(this, "textures/entity/shattered_sentinel_master_eyes.png")
 		);
 	}
@@ -31,18 +30,18 @@ public class ShatteredSentinelMasterRenderer
 	}
 
 	@Override
-	public Identifier getTexture(ShatteredSentinelMasterRenderState state) {
-		return Identifier.of(
+	public Identifier getTextureLocation(ShatteredSentinelMasterRenderState state) {
+		return Identifier.fromNamespaceAndPath(
 			VoidDimension.MOD_ID, "textures/entity/shattered_sentinel_master.png"
 		);
 	}
 
 	@Override
-	public void updateRenderState(
+	public void extractRenderState(
 		ShatteredSentinelMasterEntity entity,
 		ShatteredSentinelMasterRenderState renderState, float f
 	) {
-		super.updateRenderState(entity, renderState, f);
+		super.extractRenderState(entity, renderState, f);
 
 		renderState.attackAnimationState.copyFrom(entity.attackAnimationState);
 		renderState.walkAnimationState.copyFrom(entity.walkAnimationState);

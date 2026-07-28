@@ -1,0 +1,24 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:timothy_expedition_base"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 40,
+		"spacing": 80,
+		"salt": 135334227,
+		"exclusion_zone": {
+			"other_set": "void-dimension:decorational_structures",
+			"chunk_count": 2
+		},
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 12
+			}
+		}
+	}
+}

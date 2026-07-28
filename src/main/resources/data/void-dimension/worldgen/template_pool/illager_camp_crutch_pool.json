@@ -1,0 +1,51 @@
+{
+	"name": "void-dimension:illager_camp_crutch_pool",
+	"fallback": "minecraft:empty",
+	"elements": [
+		{
+			"weight": 1,
+			"element": {
+				"element_type": "single_pool_element",
+				"location": "void-dimension:illager_camp/crutch/1",
+				"projection": "rigid",
+				"processors": []
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"element_type": "single_pool_element",
+				"location": "void-dimension:illager_camp/crutch/2",
+				"projection": "rigid",
+				"processors": []
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"element_type": "single_pool_element",
+				"location": "void-dimension:illager_camp/crutch/3",
+				"projection": "rigid",
+				"processors": []
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"element_type": "single_pool_element",
+				"location": "void-dimension:illager_camp/crutch/4",
+				"projection": "rigid",
+				"processors": []
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"element_type": "single_pool_element",
+				"location": "void-dimension:illager_camp/crutch/5",
+				"projection": "rigid",
+				"processors": []
+			}
+		}
+	]
+}

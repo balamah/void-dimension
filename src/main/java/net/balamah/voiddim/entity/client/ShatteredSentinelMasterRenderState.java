@@ -1,6 +1,6 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.entity.AnimationState;
+import net.minecraft.world.entity.AnimationState;
 
 public class ShatteredSentinelMasterRenderState extends ShatteredSentinelRenderState {
 	public AnimationState shatterGroundBeginAnimationState = new AnimationState();

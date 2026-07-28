@@ -7,11 +7,11 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_voidium": {
+    "has_void_explosion_upgrade": {
       "conditions": {
         "items": [
           {
-            "items": "void-dimension:voidium"
+            "items": "void-dimension:void_explosion_upgrade"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_voidium"
+      "has_void_explosion_upgrade"
     ]
   ],
   "rewards": {

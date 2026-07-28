@@ -1,84 +1,83 @@
 package net.balamah.voiddim.block.custom;
 
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.world.tick.ScheduledTickView;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.state.property.Properties;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.state.StateManager;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.world.WorldView;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.block.Block;
-
 import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
-public class CorpseBlock extends HorizontalFacingBlock implements Waterloggable {
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+public class CorpseBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public CorpseBlock(AbstractBlock.Settings settings) {
+    public CorpseBlock(BlockBehaviour.Properties settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState()
-            .with(Properties.HORIZONTAL_FACING, Direction.NORTH)
-            .with(WATERLOGGED, false));
+        this.registerDefaultState(this.stateDefinition.any()
+            .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+            .setValue(WATERLOGGED, false));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(Properties.HORIZONTAL_FACING, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(BlockStateProperties.HORIZONTAL_FACING, WATERLOGGED);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        boolean water = ctx.getWorld().getFluidState(ctx.getBlockPos()).isOf(Fluids.WATER);
-        return this.getDefaultState()
-            .with(Properties.HORIZONTAL_FACING, ctx.getHorizontalPlayerFacing().getOpposite())
-            .with(WATERLOGGED, water);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        boolean water = ctx.getLevel().getFluidState(ctx.getClickedPos()).is(Fluids.WATER);
+        return this.defaultBlockState()
+            .setValue(BlockStateProperties.HORIZONTAL_FACING, ctx.getHorizontalDirection().getOpposite())
+            .setValue(WATERLOGGED, water);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return (state.get(WATERLOGGED)) ?
-			Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return (state.getValue(WATERLOGGED)) ?
+			Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-	protected BlockState getStateForNeighborUpdate(
-		BlockState state, WorldView world, ScheduledTickView tickView,
+	protected BlockState updateShape(
+		BlockState state, LevelReader world, ScheduledTickAccess tickView,
 		BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState,
-		Random random
+		RandomSource random
 	) {
-        if (state.get(WATERLOGGED)) {
-            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        if (state.getValue(WATERLOGGED)) {
+            tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
 
-		return super.getStateForNeighborUpdate(
+		return super.updateShape(
 			state, world, tickView, pos, direction, neighborPos, neighborState, random
 		);
 	}
 
     @Override
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return state.with(
-			Properties.HORIZONTAL_FACING, rotation.rotate(state.get(Properties.HORIZONTAL_FACING))
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(
+			BlockStateProperties.HORIZONTAL_FACING, rotation.rotate(state.getValue(BlockStateProperties.HORIZONTAL_FACING))
 		);
     }
 
     @Override
-    public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.rotate(mirror.getRotation(state.get(Properties.HORIZONTAL_FACING)));
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
     }
 
 	@Override
-	protected MapCodec<? extends HorizontalFacingBlock> getCodec() {
-		return createCodec(CorpseBlock::new);
+	protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+		return simpleCodec(CorpseBlock::new);
 	}
 }

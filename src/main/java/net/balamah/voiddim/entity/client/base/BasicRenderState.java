@@ -1,7 +1,7 @@
 package net.balamah.voiddim.entity.client.base;
 
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
-import net.minecraft.entity.AnimationState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.world.entity.AnimationState;
 
 public class BasicRenderState extends LivingEntityRenderState {
     public final AnimationState idleAnimationState = new AnimationState();

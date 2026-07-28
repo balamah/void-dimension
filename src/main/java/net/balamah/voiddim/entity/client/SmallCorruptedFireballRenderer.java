@@ -1,20 +1,20 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory.Context;
-import net.minecraft.util.Identifier;
-import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.entity.custom.SmallCorruptedFireballEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.resources.Identifier;
 
 public class SmallCorruptedFireballRenderer
-	extends FlyingItemEntityRenderer<SmallCorruptedFireballEntity>
+	extends ThrownItemRenderer<SmallCorruptedFireballEntity>
 {
 	public SmallCorruptedFireballRenderer(Context context) {
 		super(context);
 	}
 	
 	public Identifier getTexture(SmallCorruptedFireballEntity entity) {
-		return Identifier.of(
+		return Identifier.fromNamespaceAndPath(
 			VoidDimension.MOD_ID, "textures/entity/small_corrupted_fireball.png"
 		);
 	}

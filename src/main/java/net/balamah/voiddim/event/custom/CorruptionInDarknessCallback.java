@@ -1,9 +1,9 @@
 package net.balamah.voiddim.event.custom;
 
 import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.fabricmc.fabric.api.event.Event;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.ActionResult;
 
 public interface CorruptionInDarknessCallback {
 	Event<CorruptionInDarknessCallback> EVENT = 
@@ -11,16 +11,16 @@ public interface CorruptionInDarknessCallback {
 			CorruptionInDarknessCallback.class,
 			(listeners) -> (entity) -> {
 				for (CorruptionInDarknessCallback listener : listeners) {
-					ActionResult result = listener.interact(entity);
+					InteractionResult result = listener.interact(entity);
 
-					if (result != ActionResult.PASS) {
+					if (result != InteractionResult.PASS) {
 						return result;
 					}
 				}
 
-				return ActionResult.PASS;
+				return InteractionResult.PASS;
 			}
 		);
 
-	public ActionResult interact(LivingEntity entity);
+	public InteractionResult interact(LivingEntity entity);
 }

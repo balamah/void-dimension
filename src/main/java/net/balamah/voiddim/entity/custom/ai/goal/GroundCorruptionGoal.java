@@ -1,10 +1,9 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.LivingEntity;
 import net.balamah.voiddim.entity.custom.Entity303;
 import net.balamah.voiddim.custom.McCodeHelper;
 
@@ -33,7 +32,7 @@ public class GroundCorruptionGoal<T extends Entity303> extends SlowMovementGoal<
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		LivingEntity target = this.entity.getTarget();
 
 		return target != null && this.entity.attackCount >= 4 &&
@@ -42,7 +41,7 @@ public class GroundCorruptionGoal<T extends Entity303> extends SlowMovementGoal<
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return !this.corruptedGroundPredicate;
 	}
 
@@ -51,7 +50,7 @@ public class GroundCorruptionGoal<T extends Entity303> extends SlowMovementGoal<
 		super.start();
 
 		this.addSpeedModifier();
-		this.entity.playSound(SoundEvents.BLOCK_ANVIL_BREAK);
+		this.entity.makeSound(SoundEvents.ANVIL_BREAK);
 
 		this.corruptedGroundPredicate = false;
 

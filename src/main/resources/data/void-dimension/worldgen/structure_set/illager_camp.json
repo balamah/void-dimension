@@ -1,0 +1,24 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:illager_camp"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 50,
+		"spacing": 67,
+		"salt": 54389543,
+		"exclusion_zone": {
+			"other_set": "void-dimension:illager_camp_exclude",
+			"chunk_count": 10
+		},
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 224
+			}
+		}
+	}
+}

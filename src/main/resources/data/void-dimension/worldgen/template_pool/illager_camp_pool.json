@@ -1,0 +1,258 @@
+{
+	"name": "void-dimension:illager_camp_pool",
+	"fallback": "minecraft:empty",
+	"elements": [
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/path/1",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/path/2",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/path/3",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/path/4",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/tower_1",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/tower_2",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/training_grounds_1",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/training_grounds_2",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"location": "void-dimension:illager_camp/headquarters",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"location": "void-dimension:illager_camp/sauna",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"location": "void-dimension:illager_camp/complaints_office",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 2,
+			"element": {
+				"location": "void-dimension:illager_camp/tents_1",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 2,
+			"element": {
+				"location": "void-dimension:illager_camp/tents_2",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/small_tents",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/wall/right",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/wall/left",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/wall/down_right",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/wall/down_right_2",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/wall/down_left",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/wall/up",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/wall/up_right",
+				"processors": [],
+				"projection": "terrain_matching",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 4,
+			"element": {
+				"location": "void-dimension:illager_camp/well",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"location": "void-dimension:illager_camp/forge",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"location": "void-dimension:illager_camp/prison",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"location": "void-dimension:illager_camp/laboratory",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"location": "void-dimension:illager_camp/junk",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"location": "void-dimension:illager_camp/library/1",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		},
+		{
+			"weight": 1,
+			"element": {
+				"location": "void-dimension:illager_camp/library/2",
+				"processors": [],
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		}
+	]
+}

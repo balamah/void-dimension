@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:large_stump"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 5,
+		"spacing": 10,
+		"salt": 671496,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 15
+			}
+		}
+	}
+}

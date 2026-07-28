@@ -1,23 +1,22 @@
 package net.balamah.voiddim.entity.client.renderFeature;
 
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
-import net.minecraft.client.render.entity.state.EntityRenderState;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.VoidDimension;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.EyesLayer;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
 
 public class GlowFeatureRenderer
 	<S extends EntityRenderState, M extends EntityModel<S>>
-	extends EyesFeatureRenderer<S, M>
+	extends EyesLayer<S, M>
 {
 	protected final String texturePath;
 
 	public GlowFeatureRenderer(
-		FeatureRendererContext<S, M> featureRendererContext, String texturePath
+		RenderLayerParent<S, M> featureRendererContext, String texturePath
 	) {
 		super(featureRendererContext);
 
@@ -25,7 +24,7 @@ public class GlowFeatureRenderer
 	}
 
 	@Override
-	public RenderLayer getEyesTexture() {
-		return RenderLayers.eyes(Identifier.of(VoidDimension.MOD_ID, this.texturePath));
+	public RenderType renderType() {
+		return RenderTypes.eyes(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, this.texturePath));
 	}
 }

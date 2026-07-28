@@ -1,41 +1,40 @@
 package net.balamah.voiddim.entity.custom.base;
 
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.entity.boss.ServerBossBar;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.entity.boss.BossBar;
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.custom.McCodeHelper;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.BossEvent;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 
 public class BossEntity extends CorruptedHostileEntity {
-	protected final ServerBossBar bossBar =
-		McCodeHelper.getBossBar(this.getDisplayName(), BossBar.Color.WHITE);
+	protected final ServerBossEvent bossBar =
+		McCodeHelper.getBossBar(this.getDisplayName(), BossEvent.BossBarColor.WHITE);
 
-	public BossEntity(EntityType<? extends HostileEntity> entityType, World world) {
+	public BossEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	public void onStartedTrackingBy(ServerPlayerEntity player) {
-		super.onStartedTrackingBy(player);
+	public void startSeenByPlayer(ServerPlayer player) {
+		super.startSeenByPlayer(player);
 
 		this.bossBar.addPlayer(player);
 	}
 
 	@Override
-	public void onStoppedTrackingBy(ServerPlayerEntity player) {
-		super.onStoppedTrackingBy(player);
+	public void stopSeenByPlayer(ServerPlayer player) {
+		super.stopSeenByPlayer(player);
 
 		this.bossBar.removePlayer(player);
 	}
 
 	@Override
-	protected void mobTick(ServerWorld world) {
-		super.mobTick(world);
+	protected void customServerAiStep(ServerLevel world) {
+		super.customServerAiStep(world);
 
-		this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
+		this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
 	}
 }

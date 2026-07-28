@@ -1,16 +1,16 @@
 package net.balamah.voiddim.potion;
 
-import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-import net.minecraft.potion.Potions;
-import net.minecraft.potion.Potion;
-import net.minecraft.item.Item;
-
-import net.minecraft.registry.entry.RegistryEntry;
+import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.balamah.voiddim.effect.ModEffects;
 import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.item.ModItems;
@@ -27,28 +27,30 @@ public class ModPotions {
 	}
 
 	protected static Potion getPotion(
-		String name, RegistryEntry<StatusEffect> effect, int duration, int amplifier
+		String name, Holder<MobEffect> effect, int duration, int amplifier
 	) {
-		return new Potion(name, new StatusEffectInstance(effect, duration, amplifier));
+		return new Potion(name, new MobEffectInstance(effect, duration, amplifier));
 	}
 
 	protected static Potion register(
-		String name, RegistryEntry<StatusEffect> effect, int duration, int amplifier
+		String name, Holder<MobEffect> effect, int duration, int amplifier
 	) {
 		return Registry.register(
-			Registries.POTION,
-			Identifier.of(VoidDimension.MOD_ID, name),
+			BuiltInRegistries.POTION,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name),
 			getPotion(name, effect, duration, amplifier)
 		);
 	}
 
 	protected static void buildRecipe(
-		RegistryEntry<Potion> input, Item ingredient, Potion output
+		Holder<Potion> input, Item ingredient, Potion output
 	) {
-		FabricBrewingRecipeRegistryBuilder.BUILD.register(
+		FabricPotionBrewingBuilder.BUILD.register(
 			builder -> {
 				builder.registerPotionRecipe(
-					input, ingredient, Registries.POTION.getEntry(output)
+					input,
+					Ingredient.of(ingredient),
+					BuiltInRegistries.POTION.wrapAsHolder(output)
 				);
 			});
 	}

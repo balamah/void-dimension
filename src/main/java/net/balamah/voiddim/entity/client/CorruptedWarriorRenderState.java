@@ -1,7 +1,7 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
-import net.minecraft.entity.AnimationState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.world.entity.AnimationState;
 
 public class CorruptedWarriorRenderState extends LivingEntityRenderState {
 	public final AnimationState idleAnimationState = new AnimationState();

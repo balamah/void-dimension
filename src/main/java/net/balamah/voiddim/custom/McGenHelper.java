@@ -1,54 +1,54 @@
 package net.balamah.voiddim.custom;
 
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.loot.condition.RandomChanceLootCondition;
-import net.minecraft.loot.provider.number.LootNumberProvider;
-import net.minecraft.loot.function.ConditionalLootFunction;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.entry.LootPoolEntry;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.loot.LootPool;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class McGenHelper {
-	public static LootNumberProvider getRandomNumberProvider(
+	public static NumberProvider getRandomNumberProvider(
 		int minimumCount, int maximumCount
 	) {
-		LootNumberProvider min = ConstantLootNumberProvider.create(minimumCount);
-		LootNumberProvider max = ConstantLootNumberProvider.create(maximumCount);
+		NumberProvider min = ConstantValue.exactly(minimumCount);
+		NumberProvider max = ConstantValue.exactly(maximumCount);
 
-		return new UniformLootNumberProvider(min, max);
+		return new UniformGenerator(min, max);
 	}
 
-	public static LootNumberProvider constantNumber(int count) {
-		return ConstantLootNumberProvider.create(count);
+	public static NumberProvider constantNumber(int count) {
+		return ConstantValue.exactly(count);
 	}
 
-	public static ConditionalLootFunction.Builder<?> randomNumber(
+	public static LootItemConditionalFunction.Builder<?> randomNumber(
 		int minimumCount, int maximumCount
 	) {
-		return SetCountLootFunction.builder(
+		return SetItemCountFunction.setCount(
 			getRandomNumberProvider(minimumCount, maximumCount)
 		);
 	}
 
-	public static LootPool.Builder getPool(LootNumberProvider provider) {
-		return LootPool.builder().rolls(provider);
+	public static LootPool.Builder getPool(NumberProvider provider) {
+		return LootPool.lootPool().setRolls(provider);
 	}
 
-	public static LootPool.Builder getPool(LootNumberProvider provider, float chance) {
+	public static LootPool.Builder getPool(NumberProvider provider, float chance) {
 		return getPool(provider)
-			.conditionally(RandomChanceLootCondition.builder(chance));
+			.when(LootItemRandomChanceCondition.randomChance(chance));
 	}
 
-	public static LootPoolEntry.Builder<?> getItemEntry(
-		ItemConvertible item, int minCount, int maxCount
+	public static LootPoolEntryContainer.Builder<?> getItemEntry(
+		ItemLike item, int minCount, int maxCount
 	) {
-		return ItemEntry.builder(item).apply(randomNumber(minCount, maxCount));
+		return LootItem.lootTableItem(item).apply(randomNumber(minCount, maxCount));
 	}
 
-	public static LootPoolEntry.Builder<?> getItemEntry(ItemConvertible item, int count) {
+	public static LootPoolEntryContainer.Builder<?> getItemEntry(ItemLike item, int count) {
 		return getItemEntry(item, count, count);
 	}
 }

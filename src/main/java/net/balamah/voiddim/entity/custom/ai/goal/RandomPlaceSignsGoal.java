@@ -1,14 +1,12 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
 import java.util.Random;
-
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.Blocks;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.balamah.voiddim.entity.custom.ai.goal.base.TickingGoal;
 import net.balamah.voiddim.custom.McCodeHelper;
 
@@ -35,14 +33,14 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 	}
 
 	@Override
-	public boolean canStart() {
+	public boolean canUse() {
 		int randomNumber = this.random.nextInt(this.upperBondChance);
 
 		return randomNumber == this.upperBondChance - 1 && this.entity.getTarget() != null;
 	}
 
 	@Override
-	public boolean shouldContinue() {
+	public boolean canContinueToUse() {
 		return !this.placedSigns && this.entity.getTarget() != null;
 	}
 
@@ -62,11 +60,11 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 
 		for (int i = 0; i < signCount; i++) {
 			BlockPos tableBlockPos = this.getRandomBlockPos(this.world, this.maxPlacingRadius);
-			if (!(McCodeHelper.getBlock(world, tableBlockPos).getDefaultState().isAir())) {
+			if (!(McCodeHelper.getBlock(world, tableBlockPos).defaultBlockState().isAir())) {
 				continue;
 			}
 
-			this.world.setBlockState(tableBlockPos, Blocks.PALE_OAK_SIGN.getDefaultState());
+			this.world.setBlockAndUpdate(tableBlockPos, Blocks.PALE_OAK_SIGN.defaultBlockState());
 			BlockEntity blockEntity = this.world.getBlockEntity(tableBlockPos);
 			SignBlockEntity signBlockEntity = (SignBlockEntity) blockEntity;
 			if (signBlockEntity == null) {
@@ -79,7 +77,7 @@ public class RandomPlaceSignsGoal<T extends CorruptedHostileEntity> extends Tick
 		}
 	}
 
-	protected BlockPos getRandomBlockPos(World world, int diameter) {
+	protected BlockPos getRandomBlockPos(Level world, int diameter) {
 		int x = this.getRandomizedCoordinate(this.entity.getX(), diameter);
 		int y = (int) this.entity.getY();
 		int z = this.getRandomizedCoordinate(this.entity.getZ(), diameter);

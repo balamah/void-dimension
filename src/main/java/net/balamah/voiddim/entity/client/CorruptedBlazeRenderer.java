@@ -1,30 +1,29 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.entity.mob.BlazeEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.custom.CorruptedBlazeEntity;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.monster.Blaze;
 import net.balamah.voiddim.VoidDimension;
 
 public class CorruptedBlazeRenderer
-	extends MobEntityRenderer<CorruptedBlazeEntity, LivingEntityRenderState, CorruptedBlazeModel> 
+	extends MobRenderer<CorruptedBlazeEntity, LivingEntityRenderState, CorruptedBlazeModel> 
 {
-	public CorruptedBlazeRenderer(EntityRendererFactory.Context context) {
-		super(context, new CorruptedBlazeModel(context.getPart(EntityModelLayers.BLAZE)), 0.5F);
+	public CorruptedBlazeRenderer(EntityRendererProvider.Context context) {
+		super(context, new CorruptedBlazeModel(context.bakeLayer(ModelLayers.BLAZE)), 0.5F);
 	}
 
-	protected int getBlockLight(BlazeEntity blazeEntity, BlockPos blockPos) {
+	protected int getBlockLight(Blaze blazeEntity, BlockPos blockPos) {
 		return 15;
 	}
 
 	@Override
-	public Identifier getTexture(LivingEntityRenderState state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/corrupted_blaze.png");
+	public Identifier getTextureLocation(LivingEntityRenderState state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_blaze.png");
 	}
 
 	public LivingEntityRenderState createRenderState() {

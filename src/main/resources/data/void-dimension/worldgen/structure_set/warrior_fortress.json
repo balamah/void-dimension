@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:warrior_fortress"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 32,
+		"spacing": 64,
+		"salt": 31136145,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 100
+			}
+		}
+	}
+}

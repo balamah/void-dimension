@@ -1,0 +1,20 @@
+{
+	"structures": [
+		{
+			"weight": 1,
+			"structure": "void-dimension:nameless_house"
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"separation": 40,
+		"spacing": 80,
+		"salt": 591494134,
+		"height": {
+			"type": "minecraft:uniform",
+			"min_inclusive": {
+				"absolute": 12
+			}
+		}
+	}
+}

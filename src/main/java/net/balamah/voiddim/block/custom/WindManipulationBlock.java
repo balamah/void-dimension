@@ -1,41 +1,40 @@
 package net.balamah.voiddim.block.custom;
 
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.Direction;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.BlockState;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.BlockView;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public class WindManipulationBlock extends Block {
 	protected Direction direction = Direction.UP;
 
-	public WindManipulationBlock(AbstractBlock.Settings settings) {
+	public WindManipulationBlock(BlockBehaviour.Properties settings) {
 		super(settings);
 	}
 
 	@Override
-	public void onEntityLand(BlockView world, Entity entity) {
-		entity.handleFallDamage(entity.fallDistance, 0.0F, entity.getDamageSources().fall());
+	public void updateEntityMovementAfterFallOn(BlockGetter world, Entity entity) {
+		entity.causeFallDamage(entity.fallDistance, 0.0F, entity.damageSources().fall());
 		entity.fallDistance = 0.0F;
 	}
 
 	@Override
-	public void randomDisplayTick(
-		BlockState state, World world, BlockPos pos, Random random
+	public void animateTick(
+		BlockState state, Level world, BlockPos pos, RandomSource random
 	) {
-		if (!(world instanceof ClientWorld clientWorld)) return;
+		if (!(world instanceof ClientLevel clientWorld)) return;
 
 		double x = pos.getX() + 0.55 - random.nextFloat() * 0.1F;
 		double y = pos.getY() + 1.55 - random.nextFloat() * 0.1F;
@@ -43,11 +42,11 @@ public class WindManipulationBlock extends Block {
 		double g = 0.4F - (random.nextFloat() + random.nextFloat()) * 0.4F;
 
 		if (random.nextInt(3) == 0) {
-			world.addParticleClient(
+			world.addParticle(
 				ParticleTypes.GUST,
-				x + direction.getOffsetX() * g,
-				y + direction.getOffsetY() * g,
-				z + direction.getOffsetZ() * g,
+				x + direction.getStepX() * g,
+				y + direction.getStepY() * g,
+				z + direction.getStepZ() * g,
 				random.nextGaussian() * 0.005,
 				random.nextGaussian() * 0.005,
 				random.nextGaussian() * 0.005
@@ -57,22 +56,22 @@ public class WindManipulationBlock extends Block {
 	}
 
 	@Override
-	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-		if (world.isClient() && !(entity instanceof LivingEntity)) return;
+	public void stepOn(Level world, BlockPos pos, BlockState state, Entity entity) {
+		if (world.isClientSide() && !(entity instanceof LivingEntity)) return;
 
-		Vec3d velocity = entity.getVelocity();
-		entity.setVelocity(velocity.x, 1.5, velocity.z);
-		entity.velocityDirty = true;
+		Vec3 velocity = entity.getDeltaMovement();
+		entity.setDeltaMovement(velocity.x, 1.5, velocity.z);
+		entity.needsSync = true;
 
 		playSound(world, entity, ModSounds.WIND_MANIPULATION_JUMP);
 	}
 
-	protected void playSound(World world, Entity entity, SoundEvent sound) {
+	protected void playSound(Level world, Entity entity, SoundEvent sound) {
 		world.playSound(
 			null,
 			entity.getX(), entity.getY(), entity.getZ(),
 			sound,
-			SoundCategory.AMBIENT,
+			SoundSource.AMBIENT,
 			2.0f,
 			1.0f
 		);

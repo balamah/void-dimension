@@ -1,18 +1,17 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.entity.custom.WormOfCorruptionEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
 public class WormOfCorruptionRenderer
-	extends MobEntityRenderer<WormOfCorruptionEntity, WormOfCorruptionRenderState,
+	extends MobRenderer<WormOfCorruptionEntity, WormOfCorruptionRenderState,
 								WormOfCorruptionModel> 
 {
-	public WormOfCorruptionRenderer(EntityRendererFactory.Context context) {
-		super(context, new WormOfCorruptionModel(context.getPart(WormOfCorruptionModel.WORM_OF_CORRUPTION)), 0.75f);
+	public WormOfCorruptionRenderer(EntityRendererProvider.Context context) {
+		super(context, new WormOfCorruptionModel(context.bakeLayer(WormOfCorruptionModel.WORM_OF_CORRUPTION)), 0.75f);
 	}
 
 	@Override
@@ -21,15 +20,15 @@ public class WormOfCorruptionRenderer
 	}
 
 	@Override
-	public Identifier getTexture(WormOfCorruptionRenderState state) {
-		return Identifier.of(VoidDimension.MOD_ID, "textures/entity/worm_of_corruption.png");
+	public Identifier getTextureLocation(WormOfCorruptionRenderState state) {
+		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/worm_of_corruption.png");
 	}
 
 	@Override
-	public void updateRenderState(WormOfCorruptionEntity entity,
+	public void extractRenderState(WormOfCorruptionEntity entity,
 								  WormOfCorruptionRenderState renderState, float f)
 	{
-		super.updateRenderState(entity, renderState, f);
+		super.extractRenderState(entity, renderState, f);
 
 		renderState.attackAnimationState.copyFrom(entity.attackAnimationState);
 		renderState.shootAnimationState.copyFrom(entity.shootAnimationState);

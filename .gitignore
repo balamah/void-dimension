@@ -1,8 +1,10 @@
 # gradle
+.gradle-user-home/
 .gradle/
 build/
 out/
 classes/
+build.local.gradle
 
 # eclipse
 *.launch
@@ -19,6 +21,9 @@ classes/
 bin/
 .classpath
 .project
+
+# emacs
+.emacs/config.local.el
 
 # fabric
 run/
@@ -48,3 +53,5 @@ node_modules/
 venv/
 .DS_store
 desktop.ini
+
+.codex

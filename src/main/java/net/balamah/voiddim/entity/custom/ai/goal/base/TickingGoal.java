@@ -1,19 +1,18 @@
 package net.balamah.voiddim.entity.custom.ai.goal.base;
 
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.Level;
 
 public abstract class TickingGoal<T extends CorruptedHostileEntity> extends Goal {
 	protected final T entity;
-	protected final World world;
+	protected final Level world;
 	protected int tick;
 
 	public TickingGoal(T entity) {
 		this.entity = entity;
 
-		this.world = entity.getEntityWorld();
+		this.world = entity.level();
 	}
 
 	@Override
@@ -22,7 +21,7 @@ public abstract class TickingGoal<T extends CorruptedHostileEntity> extends Goal
 	}
 
 	@Override
-	public abstract boolean canStart();
+	public abstract boolean canUse();
 
 	@Override
 	public void tick() {
@@ -32,6 +31,6 @@ public abstract class TickingGoal<T extends CorruptedHostileEntity> extends Goal
 	}
 
 	protected void sendEntityStatus(byte status) {
-		this.world.sendEntityStatus(this.entity, status);
+		this.world.broadcastEntityEvent(this.entity, status);
 	}
 }

@@ -1,32 +1,31 @@
 package net.balamah.voiddim.entity.client;
 
-import net.minecraft.client.render.entity.state.BipedEntityRenderState;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.client.model.ModelData;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.model.Dilation;
-import net.minecraft.util.Identifier;
-
 import net.balamah.voiddim.VoidDimension;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.resources.Identifier;
 
 public class HumanModel
-	<T extends BipedEntityRenderState> extends BipedEntityModel<T>
+	<T extends HumanoidRenderState> extends HumanoidModel<T>
 {
-    public static final EntityModelLayer AGGRESSIVE_NULL =
-		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "aggressive_null"), "main");
+    public static final ModelLayerLocation AGGRESSIVE_NULL =
+		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "aggressive_null"), "main");
 
-    public static final EntityModelLayer HEROBRINE =
-		new EntityModelLayer(Identifier.of(VoidDimension.MOD_ID, "herobrine"), "main");
+    public static final ModelLayerLocation HEROBRINE =
+		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "herobrine"), "main");
 
 	public HumanModel(ModelPart root) {
 		super(root);
 	}
 
-	public static TexturedModelData getTexturedModelData() {
-		ModelData modelData = BipedEntityModel.getModelData(Dilation.NONE, 0f);
+	public static LayerDefinition getTexturedModelData() {
+		MeshDefinition modelData = HumanoidModel.createMesh(CubeDeformation.NONE, 0f);
 
-		return TexturedModelData.of(modelData, 64, 64);
+		return LayerDefinition.create(modelData, 64, 64);
 	}
 }

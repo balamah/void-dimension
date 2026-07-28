@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 	id 'java'
 	id 'eclipse'
@@ -7,10 +7,6 @@ plugins {
 
 version = project.mod_version
 group = project.maven_group
-
-base {
-	archivesName = project.archives_base_name
-}
 
 repositories {
 	// Add repositories to retrieve artifacts from in here.
@@ -29,16 +25,11 @@ fabricApi {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	// Testing
-	// testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
-	testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.0"
-	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.10.0"
+	// Fabric API modules (the fabric-api meta jar is jar-in-jar and does not expose API classes at compile time).
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }
 
 processResources {
@@ -50,7 +41,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
@@ -59,25 +50,22 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {
-	inputs.property "archivesName", project.base.archivesName
+	inputs.property "projectName", project.name
 
 	from("LICENSE") {
-		rename { "${it}_${inputs.properties.archivesName}"}
+		rename { "${it}_${project.name}"}
 	}
-
-	exclude '.emacs/*'
 }
 
 // configure the maven publication
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
-			artifactId = project.archives_base_name
 			from components.java
 		}
 	}
@@ -95,25 +83,38 @@ eclipse {
   classpath {
     downloadSources = true
     downloadJavadoc = true
+	file {
+	  whenMerged { classpath ->
+		// Fabric Loom creates Minecraft jars in `.gradle/loom-cache`. They often have a sibling
+		// `-sources.jar`, but Gradle's Eclipse model won't automatically attach it since these
+		// aren't normal published Maven source artifacts.
+		classpath.entries.findAll { entry ->
+		  entry instanceof org.gradle.plugins.ide.eclipse.model.Library &&
+			entry.path.contains("minecraft-merged") &&
+			entry.path.endsWith(".jar")
+			}.each { lib ->
+			  def sourcesJarPath = lib.path.replaceAll(/\.jar$/, "-sources.jar")
+			  def sourcesJarFile = file(sourcesJarPath)
+			  if (sourcesJarFile.exists()) {
+				def fileRefFactory = new org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory()
+				lib.sourcePath = fileRefFactory.fromFile(sourcesJarFile)
+			  }
+			}
+		  }
+		}
   }
 }
 
-test {
-	useJUnitPlatform()
+// Ensure the Minecraft `-sources.jar` exists before Eclipse `.classpath` is generated.
+tasks.matching { it.name == "eclipseClasspath" }.configureEach {
+  dependsOn "genSourcesWithFernFlower"
 }
 
-sourceSets {
-	test {
-		java.srcDirs = ['src/test/java']
-	}
+tasks.named("sourcesJar") {
+    dependsOn("compileJava")
 }
 
-loom {
-    runs {
-        client {
-            vmArgs.addAll([
-                "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
-            ])
-        }
-    }
+def localBuild = file("build.local.gradle")
+if (localBuild.exists()) {
+    apply from: localBuild
 }

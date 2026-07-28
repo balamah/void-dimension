@@ -1,92 +1,91 @@
 package net.balamah.voiddim.block.custom;
 
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.world.tick.ScheduledTickView;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.block.AbstractFireBlock;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.Direction;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.BlockState;
-import net.minecraft.world.WorldView;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Blocks;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.effect.ModEffects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.balamah.voiddim.block.ModBlocks;
 
-public class CorruptedFireBlock extends AbstractFireBlock {
-	public static final MapCodec<CorruptedFireBlock> CODEC = createCodec(CorruptedFireBlock::new);
+public class CorruptedFireBlock extends BaseFireBlock {
+	public static final MapCodec<CorruptedFireBlock> CODEC = simpleCodec(CorruptedFireBlock::new);
 
 	@Override
-	public MapCodec<CorruptedFireBlock> getCodec() {
+	public MapCodec<CorruptedFireBlock> codec() {
 		return CODEC;
 	}
 
-	public CorruptedFireBlock(AbstractBlock.Settings settings) {
+	public CorruptedFireBlock(BlockBehaviour.Properties settings) {
 		super(settings, 18f);
 	}
 
 	@Override
-	protected BlockState getStateForNeighborUpdate(
+	protected BlockState updateShape(
 		BlockState state,
-		WorldView world,
-		ScheduledTickView tickView,
+		LevelReader world,
+		ScheduledTickAccess tickView,
 		BlockPos pos,
 		Direction direction,
 		BlockPos neighborPos,
 		BlockState neighborState,
-		Random random
+		RandomSource random
 	)
 	{
-		return (this.canPlaceAt(state, world, pos)) ?
-			this.getDefaultState() : Blocks.AIR.getDefaultState();
+		return (this.canSurvive(state, world, pos)) ?
+			this.defaultBlockState() : Blocks.AIR.defaultBlockState();
 	}
 
 	@Override
-	protected void onEntityCollision(
-		BlockState state, World world, BlockPos pos, Entity entity,
-		EntityCollisionHandler handler, boolean bl
+	protected void entityInside(
+		BlockState state, Level world, BlockPos pos, Entity entity,
+		InsideBlockEffectApplier handler, boolean bl
 	) {
-		super.onEntityCollision(state, world, pos, entity, handler, bl);
+		super.entityInside(state, world, pos, entity, handler, bl);
 
-		if (!world.isClient() && world instanceof ServerWorld serverWorld) {
-			entity.extinguish();
+		if (!world.isClientSide() && world instanceof ServerLevel serverWorld) {
+			entity.clearFire();
 
 			DamageSource damageSource =
-				new DamageSource(world.getRegistryManager()
-					.getOrThrow(RegistryKeys.DAMAGE_TYPE)
-					.getEntry(ModEffects.CORRUPTION_DAMAGE.getValue())
+				new DamageSource(world.registryAccess()
+					.lookupOrThrow(Registries.DAMAGE_TYPE)
+					.get(ModEffects.CORRUPTION_DAMAGE.identifier())
 					.orElseThrow());
 
-			entity.damage(serverWorld, damageSource, 7.5F);
+			entity.hurtServer(serverWorld, damageSource, 7.5F);
 
             if (entity instanceof LivingEntity living) {
-                living.addStatusEffect(new StatusEffectInstance(ModEffects.CORRUPTION, 20, 0));
+                living.addEffect(new MobEffectInstance(ModEffects.CORRUPTION, 20, 0));
             }
 
-			entity.setFireTicks(40);
+			entity.setRemainingFireTicks(40);
 		}
 	}
 
-	public static BlockState getState(WorldView world, BlockPos pos) {
-		return ModBlocks.CORRUPTED_FIRE.getDefaultState();
+	public static BlockState getState(LevelReader world, BlockPos pos) {
+		return ModBlocks.CORRUPTED_FIRE.defaultBlockState();
 	}
 
 	@Override
-	protected boolean canPlaceAt(BlockState state, WorldView worldView, BlockPos pos) {
+	protected boolean canSurvive(BlockState state, LevelReader worldView, BlockPos pos) {
 		return !state.isAir();
 	}
 
 	@Override
-	protected boolean isFlammable(BlockState state) {
+	protected boolean canBurn(BlockState state) {
 		return true;
 	}
 }

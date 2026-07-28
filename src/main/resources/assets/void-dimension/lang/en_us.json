@@ -1,6 +1,8 @@
 {
 	"item.void-dimension.void_shard": "Void shard",
 	"item.void-dimension.voidium": "Voidium",
+	"item.void-dimension.void_explosion_core": "Void explosion core",
+	"item.void-dimension.void_explosion_upgrade": "Void explosion upgrade",
 	"item.void-dimension.void_ingot": "Void ingot",
 	"item.void-dimension.void_sword": "Void sword",
 	"item.void-dimension.void_axe": "Void axe",
@@ -48,18 +50,24 @@
 	"item.void-dimension.staring_dog_spawn_egg": "Staring dog spawn egg",
 	"item.void-dimension.staring_cat_spawn_egg": "Staring cat spawn egg",
 	"item.void-dimension.entity303_spawn_egg": "Entity 303 spawn egg",
+	"item.void-dimension.eye_bright_spawn_egg": "Eye bright spawn egg",
+	"item.void-dimension.void_bound_servant_spawn_egg": "Void bound servant spawn egg",
+	"item.void-dimension.corrupted_warrior_spawn_egg": "Corrupted warrior spawn egg",
 
 	"item.minecraft.potion.effect.corruption": "Corruption potion",
 	"item.minecraft.potion.effect.divine_protection": "Divine protection potion",
 	"item.minecraft.potion.effect.void_salvation": "Void salvation potion",
+	"item.minecraft.potion.effect.soul_burn": "Soul burn potion",
 
 	"item.minecraft.splash_potion.effect.corruption": "Corruption splash potion",
 	"item.minecraft.splash_potion.effect.divine_protection": "Divine protection splash potion",
 	"item.minecraft.splash_potion.effect.void_salvation": "Void salvation splash potion",
+	"item.minecraft.splash_potion.effect.soul_burn": "Soul burn splash potion",
 
 	"item.minecraft.lingering_potion.effect.corruption": "Corruption lingering potion",
 	"item.minecraft.lingering_potion.effect.divine_protection": "Divine protection lingering potion",
 	"item.minecraft.lingering_potion.effect.void_salvation": "Void salvation lingering potion",
+	"item.minecraft.lingering_potion.effect.soul_burn": "Soul burn lingering potion",
 
 	"item.minecraft.tipped_arrow.effect.corruption": "Corruption tipped arrow",
 	"item.minecraft.tipped_arrow.effect.divine_protection": "Divine protection tipped arrow",
@@ -67,14 +75,16 @@
 
 	"item.void-dimension.deepslate_void_shard_ore": "Deepslate void shard ore",
 	"item.void-dimension.corrupt_void_shard_ore": "Corrupt void shard ore",
+	"item.void-dimension.voidium_ore": "Voidium ore",
 	"item.void-dimension.deepslate_voidium_ore": "Deepslate voidium ore",
 	"item.void-dimension.corrupt_voidium_ore": "Corrupt voidium ore",
 	"item.void-dimension.void_shard_block": "Void shard block",
 	"item.void-dimension.void_flower": "Void flower",
 	"item.void-dimension.wind_manipulation_block": "Wind manipulation block",
 	"item.void-dimension.corrupt_block": "Corrupt block",
+	"item.void-dimension.corruption_ascension_block": "Corrupt ascension block",
 	"item.void-dimension.corrupted_fire_charge": "Corrupted fire charge",
-	"block.void-dimension.corrupted_torch": "Corrupted torch",
+	"item.void-dimension.corrupted_torch": "Corrupted torch",
 	"item.void-dimension.corrupted_lantern": "Corrupted lantern",
 	"item.void-dimension.old_corpse": "Old corpse",
 	"item.void-dimension.old_corpse_pile": "Old corpse pile",
@@ -83,9 +93,18 @@
 	"effect.void-dimension.void_salvation": "Void salvation",
 	"effect.void-dimension.divine_protection": "Divine protection",
 	"effect.void-dimension.corruption": "Corruption",
+	"effect.void-dimension.corruption_ascension": "Corruption ascension",
+	"effect.void-dimension.soul_burn": "Soul burn",
 
 	"death.attack.corruption": "%1$s died from corruption",
+	"death.attack.eye_bright_head": "%1$s died from eye bright's head",
+	"death.attack.soul_burn": "%1$s died from soul burning",
+	"death.attack.shockwave": "%1$s died from shockwave",
+
 	"death.attack.corruption.player": "%1$s died from corruption",
+	"death.attack.eye_bright_head.player": "%1$s died from eye bright's head",
+	"death.attack.soul_burn.player": "%1$s died from soul burning",
+	"death.attack.shockwave.player": "%1$s died from shockwave",
 
 	"itemgroup.void-dimension.items": "Void dimension",
 
@@ -98,6 +117,7 @@
 	"entity.void-dimension.shattered_sentinel": "Shattered sentinel",
 	"entity.void-dimension.shattered_sentinel_master": "Shattered sentinel master",
 	"entity.void-dimension.corrupted_warrior": "Corrupted warrior",
+	"entity.void-dimension.void_bound_servant": "Void bound servant",
 	"entity.void-dimension.corrupted_creeper": "Corrupted creeper",
 	"entity.void-dimension.corrupted_blaze": "Corrupted blaze",
 	"entity.void-dimension.corrupted_spider": "Corrupted spider",
@@ -109,6 +129,8 @@
 	"entity.void-dimension.staring_dog": "Staring dog",
 	"entity.void-dimension.staring_cat": "Staring cat",
 	"entity.void-dimension.entity303": "Entity 303",
+	"entity.void-dimension.eye_bright": "Eye bright",
+	"entity.void-dimension.eye_bright_head": "Eye bright head",
 
 	"upgrade.void-dimension.apply_to": "Netherite Equipment",
 	"upgrade.void-dimension.ingredients": "Void Ingot",
@@ -185,5 +207,7 @@
 	"advancement.void-dimension.exodus.title": "Exodus",
 	"advancement.void-dimension.exodus.description": "Escape the Void to the Nether using a void salvation potion and lit a bedrock bomb",
 	"advancement.void-dimension.anomaly_beaten.title": "Anomaly beaten",
-	"advancement.void-dimension.anomaly_beaten.description": "Kill entity 303 boss in illusioner's house"
+	"advancement.void-dimension.anomaly_beaten.description": "Kill entity 303 boss in illusioner's house",
+	"advancement.void-dimension.unbound.title": "Unbound",
+	"advancement.void-dimension.unbound.description": "Killed corrupted warrior and freed him"
 }

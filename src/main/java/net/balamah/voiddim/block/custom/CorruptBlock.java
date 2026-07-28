@@ -1,41 +1,40 @@
 package net.balamah.voiddim.block.custom;
 
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-
 import net.balamah.voiddim.particle.ModParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.balamah.voiddim.effect.ModEffects;
 
 public class CorruptBlock extends Block {
 	protected Direction direction;
 
-	public CorruptBlock(Settings settings) {
+	public CorruptBlock(Properties settings) {
 		super(settings);
 
 		this.direction = Direction.UP;
 	}
 
 	@Override
-	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
+	public void stepOn(Level world, BlockPos pos, BlockState state, Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
-			StatusEffectInstance effect = new StatusEffectInstance(ModEffects.CORRUPTION, 60, 1);
+			MobEffectInstance effect = new MobEffectInstance(ModEffects.CORRUPTION, 60, 1);
 
-			livingEntity.addStatusEffect(effect);
+			livingEntity.addEffect(effect);
 		}
 	}
 
 	@Override
-	public void randomDisplayTick(
-		BlockState state, World world, BlockPos blockPos, Random random
+	public void animateTick(
+		BlockState state, Level world, BlockPos blockPos, RandomSource random
 	) {
-		if (!world.isClient()) {
+		if (!world.isClientSide()) {
 			return;
 		}
 
@@ -48,7 +47,7 @@ public class CorruptBlock extends Block {
 		double vz = (random.nextDouble() - 0.5) * 0.01;
 
 		if (random.nextInt(12) == 0) {
-			world.addParticleClient(ModParticleTypes.CORRUPTION, x, y, z, vx, vy, vz);
+			world.addParticle(ModParticleTypes.CORRUPTION, x, y, z, vx, vy, vz);
 		}
 	}
 }
