@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.custom.GameProfileService;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.scores.PlayerTeam;
 
 import java.lang.InterruptedException;
 
@@ -109,7 +111,7 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	) {
 		entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
 
-		this.setRandomPlayerSkin();
+		this.setRandomPlayerIdentity();
 		this.populateDefaultEquipmentSlots(this.random, difficulty);
 		this.populateDefaultEquipmentEnchantments(world, this.random, difficulty);
 		
@@ -236,9 +238,12 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 		}
 	}
 
-	protected void setRandomPlayerSkin() {
+	protected void setRandomPlayerIdentity() {
 		int randomPlayerNameIndex = random.nextInt(playerNames.length);
 		String name = playerNames[randomPlayerNameIndex];
+		
+		this.setPlayerName(name);
+		this.setCustomName(Component.translatable(name));
 
 		this.setPlayerSkinByNickname(name);
 	}
