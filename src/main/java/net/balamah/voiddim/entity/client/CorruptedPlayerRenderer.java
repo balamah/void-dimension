@@ -1,5 +1,7 @@
 package net.balamah.voiddim.entity.client;
 
+import com.mojang.authlib.GameProfile;
+
 import net.balamah.voiddim.custom.ImageHelper;
 import net.balamah.voiddim.entity.custom.CorruptedPlayerEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -47,5 +49,11 @@ public class CorruptedPlayerRenderer
 		state.skin = ImageHelper.getCorruptedSkin(
 			skin, state.playerName, skin.body().texturePath()
 		);
+
+		GameProfile gp = state.playerProfile.partialProfile();
+
+		System.out.println("Name = " + gp.name());
+		System.out.println("UUID = " + gp.id());
+		System.out.println("Properties = " + gp.properties());
 	}
 }

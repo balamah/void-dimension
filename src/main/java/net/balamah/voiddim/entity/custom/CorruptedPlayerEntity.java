@@ -2,6 +2,8 @@ package net.balamah.voiddim.entity.custom;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.custom.GameProfileService;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -24,6 +26,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+
+import java.lang.InterruptedException;
+import java.util.UUID;
+
+import com.mojang.authlib.GameProfile;
+
+import java.io.IOException;
 
 public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	protected static final EntityDataAccessor<String> PLAYER_NAME =
@@ -97,6 +106,7 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	) {
 		entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
 
+		this.setRandomPlayerSkin();
 		this.populateDefaultEquipmentSlots(this.random, difficulty);
 		this.populateDefaultEquipmentEnchantments(world, this.random, difficulty);
 		
@@ -200,5 +210,21 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 		int randomArmorIndex = random.nextInt(targetArray.length);
 
 		return new ItemStack(targetArray[randomArmorIndex]);
+	}
+
+	// TODO: Make skin random
+	protected void setRandomPlayerSkin() {
+		try {
+			String username = "Balamah";
+			String uuidString = GameProfileService.getPlayerUUID(username);
+			GameProfile profile = GameProfileService.getGameProfileWithProperties(
+				uuidString, username
+			);
+
+			this.setPlayerProfile(ResolvableProfile.createResolved(profile));
+		}
+		catch (IOException | InterruptedException e) {
+			VoidDimension.LOGGER.error("Can't set player skin to CorruptedPlayerEntity");
+		}
 	}
 }
