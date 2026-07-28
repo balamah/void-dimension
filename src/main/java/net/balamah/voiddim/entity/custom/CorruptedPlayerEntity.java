@@ -28,13 +28,16 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 import java.lang.InterruptedException;
-import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 
 import java.io.IOException;
 
 public class CorruptedPlayerEntity extends CorruptedHostileEntity {
+	protected static String[] playerNames = {
+		"Balamah", "legendary_pasha"
+	};
+
 	protected static final EntityDataAccessor<String> PLAYER_NAME =
 		SynchedEntityData.defineId(CorruptedPlayerEntity.class, EntityDataSerializers.STRING);
 
@@ -175,19 +178,9 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 
 	protected ItemStack getRandomArmor(EquipmentSlot slot) {
 		Item[] helmets = { Items.IRON_HELMET, Items.DIAMOND_HELMET, Items.NETHERITE_HELMET };
-		Item[] chestplates = {
-			Items.CHAINMAIL_CHESTPLATE, Items.IRON_CHESTPLATE,
-			Items.DIAMOND_CHESTPLATE, Items.NETHERITE_CHESTPLATE
-		};
-
-		Item[] leggings = {
-			Items.IRON_LEGGINGS, Items.DIAMOND_LEGGINGS, Items.NETHERITE_LEGGINGS
-		};
-
-		Item[] boots = {
-			Items.IRON_BOOTS, Items.DIAMOND_BOOTS, Items.NETHERITE_BOOTS
-		};
-
+		Item[] chestplates = { Items.DIAMOND_CHESTPLATE, Items.NETHERITE_CHESTPLATE };
+		Item[] leggings = { Items.DIAMOND_LEGGINGS, Items.NETHERITE_LEGGINGS };
+		Item[] boots = { Items.DIAMOND_BOOTS, Items.NETHERITE_BOOTS };
 		Item[] targetArray;
 
 		switch (slot) {
@@ -212,19 +205,41 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 		return new ItemStack(targetArray[randomArmorIndex]);
 	}
 
-	// TODO: Make skin random
-	protected void setRandomPlayerSkin() {
-		try {
-			String username = "Balamah";
-			String uuidString = GameProfileService.getPlayerUUID(username);
-			GameProfile profile = GameProfileService.getGameProfileWithProperties(
-				uuidString, username
-			);
+	public void setPlayerSkinByNickname(String playerName) {
+		String normalizedName = playerName == null ? "" : playerName.trim();
+		this.setPlayerName(normalizedName);
 
+		if (normalizedName.isBlank()) {
+			this.setPlayerProfile(ResolvableProfile.Static.EMPTY);
+			return;
+		}
+
+		try {
+			GameProfile profile = GameProfileService.getGameProfileByPlayerName(normalizedName);
+			if (profile == null) {
+				this.setPlayerProfile(ResolvableProfile.createUnresolved(normalizedName));
+				return;
+			}
+
+			this.setPlayerName(profile.name());
 			this.setPlayerProfile(ResolvableProfile.createResolved(profile));
 		}
 		catch (IOException | InterruptedException e) {
-			VoidDimension.LOGGER.error("Can't set player skin to CorruptedPlayerEntity");
+			if (e instanceof InterruptedException) {
+				Thread.currentThread().interrupt();
+			}
+
+			this.setPlayerProfile(ResolvableProfile.createUnresolved(normalizedName));
+			VoidDimension.LOGGER.error(
+				"Can't set CorruptedPlayerEntity skin for player '{}'", normalizedName, e
+			);
 		}
+	}
+
+	protected void setRandomPlayerSkin() {
+		int randomPlayerNameIndex = random.nextInt(playerNames.length);
+		String name = playerNames[randomPlayerNameIndex];
+
+		this.setPlayerSkinByNickname(name);
 	}
 }
