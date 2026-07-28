@@ -113,6 +113,12 @@
 				"weight": 8,
 				"minCount": 1,
 				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:corrupted_player",
+				"weight": 1,
+				"minCount": 1,
+				"maxCount": 1
 			}
 		]
 	},
@@ -160,6 +166,10 @@
 		"void-dimension:eye_bright": {
 			"energy_budget": 7.0,
 			"charge": 3.0
+		},
+		"void-dimension:corrupted_player": {
+			"energy_budget": 10.0,
+			"charge": 5.0
 		}
 	},
 	"effects": {
