@@ -27,7 +27,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.scores.PlayerTeam;
 
 import java.lang.InterruptedException;
 
@@ -127,8 +126,7 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 		};
 
 		Item[] weaponPool = {
-			Items.IRON_SWORD, Items.IRON_AXE, Items.DIAMOND_AXE,
-			Items.DIAMOND_SWORD, Items.NETHERITE_SWORD
+			Items.DIAMOND_AXE, Items.DIAMOND_SWORD, Items.NETHERITE_SWORD, Items.NETHERITE_AXE
 		};
 
 		int chosenWeaponIndex = random.nextInt(weaponPool.length);
@@ -179,7 +177,7 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	}
 
 	protected ItemStack getRandomArmor(EquipmentSlot slot) {
-		Item[] helmets = { Items.IRON_HELMET, Items.DIAMOND_HELMET, Items.NETHERITE_HELMET };
+		Item[] helmets = { Items.DIAMOND_HELMET, Items.NETHERITE_HELMET };
 		Item[] chestplates = { Items.DIAMOND_CHESTPLATE, Items.NETHERITE_CHESTPLATE };
 		Item[] leggings = { Items.DIAMOND_LEGGINGS, Items.NETHERITE_LEGGINGS };
 		Item[] boots = { Items.DIAMOND_BOOTS, Items.NETHERITE_BOOTS };
