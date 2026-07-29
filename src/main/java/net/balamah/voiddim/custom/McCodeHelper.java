@@ -32,6 +32,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -87,15 +88,15 @@ public class McCodeHelper {
 	};
 
 	static {
-		entityCorruptionMap.put(EntityType.VILLAGER, EntityType.PILLAGER);
-		entityCorruptionMap.put(EntityType.SPIDER, ModEntities.CORRUPTED_SPIDER);
-		entityCorruptionMap.put(EntityType.CREEPER, ModEntities.CORRUPTED_CREEPER);
-		entityCorruptionMap.put(EntityType.BLAZE, ModEntities.CORRUPTED_BLAZE);
-		entityCorruptionMap.put(EntityType.CAT, ModEntities.STARING_CAT);
-		entityCorruptionMap.put(EntityType.WOLF, ModEntities.WEREWOLF);
-		entityCorruptionMap.put(EntityType.ENDERMAN, ModEntities.CORRUPTED_STALKER);
-		entityCorruptionMap.put(EntityType.IRON_GOLEM, ModEntities.SHATTERED_SENTINEL_MASTER);
-		entityCorruptionMap.put(EntityType.PHANTOM, ModEntities.VOID_MAW);
+		entityCorruptionMap.put(EntityTypes.VILLAGER, EntityTypes.PILLAGER);
+		entityCorruptionMap.put(EntityTypes.SPIDER, ModEntities.CORRUPTED_SPIDER);
+		entityCorruptionMap.put(EntityTypes.CREEPER, ModEntities.CORRUPTED_CREEPER);
+		entityCorruptionMap.put(EntityTypes.BLAZE, ModEntities.CORRUPTED_BLAZE);
+		entityCorruptionMap.put(EntityTypes.CAT, ModEntities.STARING_CAT);
+		entityCorruptionMap.put(EntityTypes.WOLF, ModEntities.WEREWOLF);
+		entityCorruptionMap.put(EntityTypes.ENDERMAN, ModEntities.CORRUPTED_STALKER);
+		entityCorruptionMap.put(EntityTypes.IRON_GOLEM, ModEntities.SHATTERED_SENTINEL_MASTER);
+		entityCorruptionMap.put(EntityTypes.PHANTOM, ModEntities.VOID_MAW);
 
 		entityCorruptionAscensionMap.put(ModEntities.CORRUPTED_STALKER, ModEntities.VOID_HARBINGER);
 		entityCorruptionAscensionMap.put(ModEntities.SHATTERED_SENTINEL, ModEntities.SHATTERED_SENTINEL_MASTER);

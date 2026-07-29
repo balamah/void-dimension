@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.balamah.voiddim.entity.ModEntities;
 
@@ -21,18 +22,18 @@ public class SoulburnEffect extends MobEffect {
 		ModEntities.NULL,
 		ModEntities.STARING_CAT,
 		ModEntities.STARING_DOG,
-		EntityType.ILLUSIONER,
-		EntityType.VINDICATOR,
-		EntityType.PILLAGER,
-		EntityType.EVOKER,
-		EntityType.ZOMBIE,
-		EntityType.CREEPER,
-		EntityType.SKELETON,
-		EntityType.SKELETON_HORSE,
-		EntityType.ZOMBIE_HORSE,
-		EntityType.WITHER,
-		EntityType.WITHER_SKELETON,
-		EntityType.CREAKING
+		EntityTypes.ILLUSIONER,
+		EntityTypes.VINDICATOR,
+		EntityTypes.PILLAGER,
+		EntityTypes.EVOKER,
+		EntityTypes.ZOMBIE,
+		EntityTypes.CREEPER,
+		EntityTypes.SKELETON,
+		EntityTypes.SKELETON_HORSE,
+		EntityTypes.ZOMBIE_HORSE,
+		EntityTypes.WITHER,
+		EntityTypes.WITHER_SKELETON,
+		EntityTypes.CREAKING
 	};
 
 	public SoulburnEffect() {

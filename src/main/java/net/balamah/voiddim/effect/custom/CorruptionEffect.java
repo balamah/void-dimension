@@ -6,6 +6,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.EnderMan;
 
@@ -27,17 +28,17 @@ public class CorruptionEffect extends MobEffect {
 		ModEntities.NULL,
 		ModEntities.STARING_CAT,
 		ModEntities.STARING_DOG,
-		EntityType.ILLUSIONER,
-		EntityType.VINDICATOR,
-		EntityType.PILLAGER,
-		EntityType.EVOKER,
-		EntityType.ZOMBIE,
-		EntityType.SKELETON,
-		EntityType.SKELETON_HORSE,
-		EntityType.ZOMBIE_HORSE,
-		EntityType.WITHER,
-		EntityType.WITHER_SKELETON,
-		EntityType.CREAKING
+		EntityTypes.ILLUSIONER,
+		EntityTypes.VINDICATOR,
+		EntityTypes.PILLAGER,
+		EntityTypes.EVOKER,
+		EntityTypes.ZOMBIE,
+		EntityTypes.SKELETON,
+		EntityTypes.SKELETON_HORSE,
+		EntityTypes.ZOMBIE_HORSE,
+		EntityTypes.WITHER,
+		EntityTypes.WITHER_SKELETON,
+		EntityTypes.CREAKING
 	};
 
 	public CorruptionEffect() {

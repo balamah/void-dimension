@@ -4,10 +4,13 @@ import java.util.concurrent.CompletableFuture;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.balamah.voiddim.tag.ModItemTags;
 import net.balamah.voiddim.item.ModItems;
+import net.minecraft.world.item.Item;
 
 public class VoidDimensionItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
 	public VoidDimensionItemTagProvider(
@@ -18,103 +21,107 @@ public class VoidDimensionItemTagProvider extends FabricTagsProvider.ItemTagsPro
 
 	@Override
 	protected void addTags(HolderLookup.Provider wrapperLookup) {
-		this.valueLookupBuilder(ModItemTags.PRAYER_ITEMS)
-				.add(ModItems.LATIN_CROSS)
-				.add(ModItems.ORTHODOX_CROSS)
-				.add(ModItems.WOOL_PRAYER_ROPE)
-				.add(ModItems.WOOD_PRAYER_ROPE)
-				.add(ModItems.SKULL_PRAYER_ROPE);
+		this.builder(ModItemTags.PRAYER_ITEMS)
+				.add(this.key(ModItems.LATIN_CROSS))
+				.add(this.key(ModItems.ORTHODOX_CROSS))
+				.add(this.key(ModItems.WOOL_PRAYER_ROPE))
+				.add(this.key(ModItems.WOOD_PRAYER_ROPE))
+				.add(this.key(ModItems.SKULL_PRAYER_ROPE));
 
-		this.valueLookupBuilder(ModItemTags.CROSS_ITEMS)
-			.add(ModItems.LATIN_CROSS)
-			.add(ModItems.ORTHODOX_CROSS);
+		this.builder(ModItemTags.CROSS_ITEMS)
+			.add(this.key(ModItems.LATIN_CROSS))
+			.add(this.key(ModItems.ORTHODOX_CROSS));
 
-		this.valueLookupBuilder(ModItemTags.PRAYER_ROPE_ITEMS)
-			.add(ModItems.WOOL_PRAYER_ROPE)
-			.add(ModItems.WOOD_PRAYER_ROPE)
-			.add(ModItems.SKULL_PRAYER_ROPE);
+		this.builder(ModItemTags.PRAYER_ROPE_ITEMS)
+			.add(this.key(ModItems.WOOL_PRAYER_ROPE))
+			.add(this.key(ModItems.WOOD_PRAYER_ROPE))
+			.add(this.key(ModItems.SKULL_PRAYER_ROPE));
 
-		this.valueLookupBuilder(ItemTags.ARMOR_ENCHANTABLE)
-			.add(ModItems.VOID_HELMET)
-			.add(ModItems.VOID_CHESTPLATE)
-			.add(ModItems.VOID_LEGGINGS)
-			.add(ModItems.VOID_BOOTS);
+		this.builder(ItemTags.ARMOR_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_HELMET))
+			.add(this.key(ModItems.VOID_CHESTPLATE))
+			.add(this.key(ModItems.VOID_LEGGINGS))
+			.add(this.key(ModItems.VOID_BOOTS));
 
-		this.valueLookupBuilder(ItemTags.HEAD_ARMOR_ENCHANTABLE)
-			.add(ModItems.VOID_HELMET);
+		this.builder(ItemTags.HEAD_ARMOR_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_HELMET));
 
-		this.valueLookupBuilder(ItemTags.CHEST_ARMOR_ENCHANTABLE)
-			.add(ModItems.VOID_CHESTPLATE);
+		this.builder(ItemTags.CHEST_ARMOR_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_CHESTPLATE));
 
-		this.valueLookupBuilder(ItemTags.LEG_ARMOR_ENCHANTABLE)
-			.add(ModItems.VOID_LEGGINGS);
+		this.builder(ItemTags.LEG_ARMOR_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_LEGGINGS));
 
-		this.valueLookupBuilder(ItemTags.FOOT_ARMOR_ENCHANTABLE)
-			.add(ModItems.VOID_BOOTS);
+		this.builder(ItemTags.FOOT_ARMOR_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_BOOTS));
 
-		this.valueLookupBuilder(ItemTags.WEAPON_ENCHANTABLE)
-			.add(ModItems.VOID_SWORD)
-			.add(ModItems.VOID_SPEAR)
-			.add(ModItems.VOID_AXE);
+		this.builder(ItemTags.WEAPON_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_SWORD))
+			.add(this.key(ModItems.VOID_SPEAR))
+			.add(this.key(ModItems.VOID_AXE));
 
-		this.valueLookupBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE)
-			.add(ModItems.VOID_SWORD)
-			.add(ModItems.VOID_SPEAR)
-			.add(ModItems.VOID_AXE);
+		this.builder(ItemTags.SHARP_WEAPON_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_SWORD))
+			.add(this.key(ModItems.VOID_SPEAR))
+			.add(this.key(ModItems.VOID_AXE));
 
-		this.valueLookupBuilder(ItemTags.MELEE_WEAPON_ENCHANTABLE)
-			.add(ModItems.VOID_SWORD)
-			.add(ModItems.VOID_SPEAR)
-			.add(ModItems.VOID_AXE);
+		this.builder(ItemTags.MELEE_WEAPON_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_SWORD))
+			.add(this.key(ModItems.VOID_SPEAR))
+			.add(this.key(ModItems.VOID_AXE));
 
-		this.valueLookupBuilder(ItemTags.FIRE_ASPECT_ENCHANTABLE)
-			.add(ModItems.VOID_SWORD)
-			.add(ModItems.VOID_SPEAR);
+		this.builder(ItemTags.FIRE_ASPECT_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_SWORD))
+			.add(this.key(ModItems.VOID_SPEAR));
 
-		this.valueLookupBuilder(ItemTags.SWEEPING_ENCHANTABLE)
-			.add(ModItems.VOID_SWORD);
+		this.builder(ItemTags.SWEEPING_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_SWORD));
 
-		this.valueLookupBuilder(ItemTags.MINING_ENCHANTABLE)
-			.add(ModItems.VOID_PICKAXE)
-			.add(ModItems.VOID_AXE)
-			.add(ModItems.VOID_SHOVEL);
+		this.builder(ItemTags.MINING_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_PICKAXE))
+			.add(this.key(ModItems.VOID_AXE))
+			.add(this.key(ModItems.VOID_SHOVEL));
 
-		this.valueLookupBuilder(ItemTags.MINING_LOOT_ENCHANTABLE)
-			.add(ModItems.VOID_PICKAXE)
-			.add(ModItems.VOID_AXE)
-			.add(ModItems.VOID_SHOVEL);
+		this.builder(ItemTags.MINING_LOOT_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_PICKAXE))
+			.add(this.key(ModItems.VOID_AXE))
+			.add(this.key(ModItems.VOID_SHOVEL));
 
-		this.valueLookupBuilder(ItemTags.DURABILITY_ENCHANTABLE)
-			.add(ModItems.VOID_HELMET)
-			.add(ModItems.VOID_CHESTPLATE)
-			.add(ModItems.VOID_LEGGINGS)
-			.add(ModItems.VOID_BOOTS)
-			.add(ModItems.VOID_AXE)
-			.add(ModItems.VOID_HOE)
-			.add(ModItems.VOID_PICKAXE)
-			.add(ModItems.VOID_SHOVEL)
-			.add(ModItems.VOID_SWORD)
-			.add(ModItems.VOID_SPEAR);
+		this.builder(ItemTags.DURABILITY_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_HELMET))
+			.add(this.key(ModItems.VOID_CHESTPLATE))
+			.add(this.key(ModItems.VOID_LEGGINGS))
+			.add(this.key(ModItems.VOID_BOOTS))
+			.add(this.key(ModItems.VOID_AXE))
+			.add(this.key(ModItems.VOID_HOE))
+			.add(this.key(ModItems.VOID_PICKAXE))
+			.add(this.key(ModItems.VOID_SHOVEL))
+			.add(this.key(ModItems.VOID_SWORD))
+			.add(this.key(ModItems.VOID_SPEAR));
 
-		this.valueLookupBuilder(ItemTags.VANISHING_ENCHANTABLE)
-			.add(ModItems.VOID_HELMET)
-			.add(ModItems.VOID_CHESTPLATE)
-			.add(ModItems.VOID_LEGGINGS)
-			.add(ModItems.VOID_BOOTS)
-			.add(ModItems.VOID_AXE)
-			.add(ModItems.VOID_HOE)
-			.add(ModItems.VOID_PICKAXE)
-			.add(ModItems.VOID_SHOVEL)
-			.add(ModItems.VOID_SWORD)
-			.add(ModItems.VOID_SPEAR);
+		this.builder(ItemTags.VANISHING_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_HELMET))
+			.add(this.key(ModItems.VOID_CHESTPLATE))
+			.add(this.key(ModItems.VOID_LEGGINGS))
+			.add(this.key(ModItems.VOID_BOOTS))
+			.add(this.key(ModItems.VOID_AXE))
+			.add(this.key(ModItems.VOID_HOE))
+			.add(this.key(ModItems.VOID_PICKAXE))
+			.add(this.key(ModItems.VOID_SHOVEL))
+			.add(this.key(ModItems.VOID_SWORD))
+			.add(this.key(ModItems.VOID_SPEAR));
 
-		this.valueLookupBuilder(ItemTags.EQUIPPABLE_ENCHANTABLE)
-			.add(ModItems.VOID_HELMET)
-			.add(ModItems.VOID_CHESTPLATE)
-			.add(ModItems.VOID_LEGGINGS)
-			.add(ModItems.VOID_BOOTS);
+		this.builder(ItemTags.EQUIPPABLE_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_HELMET))
+			.add(this.key(ModItems.VOID_CHESTPLATE))
+			.add(this.key(ModItems.VOID_LEGGINGS))
+			.add(this.key(ModItems.VOID_BOOTS));
 
-		this.valueLookupBuilder(ItemTags.LUNGE_ENCHANTABLE)
-			.add(ModItems.VOID_SPEAR);
+		this.builder(ItemTags.LUNGE_ENCHANTABLE)
+			.add(this.key(ModItems.VOID_SPEAR));
+	}
+
+	private ResourceKey<Item> key(Item item) {
+		return BuiltInRegistries.ITEM.getResourceKey(item).orElseThrow();
 	}
 }

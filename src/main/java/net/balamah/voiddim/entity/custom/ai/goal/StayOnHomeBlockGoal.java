@@ -68,7 +68,7 @@ public class StayOnHomeBlockGoal extends RandomStrollGoal {
 			Mth.floor(this.mob.getZ() + radius)
 		)) {
 			if (this.mob.level().getBlockState(pos).is(this.homeBlock)) {
-				return pos.getCenter();
+				return Vec3.atCenterOf(pos);
 			}
 		}
 		
