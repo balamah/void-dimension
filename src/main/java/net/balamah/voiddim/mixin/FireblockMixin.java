@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import java.util.List;
 import java.util.function.Predicate;
 import net.balamah.voiddim.entity.custom.Entity303;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;

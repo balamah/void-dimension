@@ -19,6 +19,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.AxeItem;
@@ -223,7 +224,7 @@ public class ModItems {
 		registerSpawnEgg("hollowed_beast_spawn_egg", ModEntities.HOLLOWED_BEAST);
 
 	public static final Item ILLUSIONER_SPAWN_EGG =
-		registerSpawnEgg("illusioner_spawn_egg", EntityType.ILLUSIONER);
+		registerSpawnEgg("illusioner_spawn_egg", EntityTypes.ILLUSIONER);
 
 	public static final Item NULL_SPAWN_EGG =
 		registerSpawnEgg("null_spawn_egg", ModEntities.NULL);
@@ -254,6 +255,9 @@ public class ModItems {
 
 	public static final Item CORRUPTED_WARRIOR_SPAWN_EGG =
 		registerSpawnEgg("corrupted_warrior_spawn_egg", ModEntities.CORRUPTED_WARRIOR);
+
+	public static final Item CORRUPTED_PLAYER_SPAWN_EGG =
+		registerSpawnEgg("corrupted_player_spawn_egg", ModEntities.CORRUPTED_PLAYER);
 
 	public static final Item VOID_HORSE_ARMOR =
 		register(

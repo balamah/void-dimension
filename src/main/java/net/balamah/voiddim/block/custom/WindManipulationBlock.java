@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -25,7 +24,7 @@ public class WindManipulationBlock extends Block {
 	}
 
 	@Override
-	public void updateEntityMovementAfterFallOn(BlockGetter world, Entity entity) {
+	public void fallOn(Level world, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
 		entity.causeFallDamage(entity.fallDistance, 0.0F, entity.damageSources().fall());
 		entity.fallDistance = 0.0F;
 	}

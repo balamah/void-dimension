@@ -9,8 +9,17 @@ import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-import net.minecraft.advancements.criterion.*;
 import net.minecraft.advancements.*;
+import net.minecraft.advancements.predicates.DataComponentMatchers;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.predicates.entity.EntityTypePredicate;
+import net.minecraft.advancements.triggers.ChangeDimensionTrigger;
+import net.minecraft.advancements.triggers.ConsumeItemTrigger;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.triggers.InventoryChangeTrigger;
+import net.minecraft.advancements.triggers.KilledTrigger;
+import net.minecraft.advancements.triggers.RecipeCraftedTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponentExactPredicate;
@@ -318,7 +327,10 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		HolderLookup.RegistryLookup<EntityType<?>> entityLookup,
 		EntityType<?> entityType
 	) {
-		return EntityPredicate.Builder.entity().of(entityLookup, entityType);
+		return EntityPredicate.Builder.entity().put(
+			EntityTypePredicate.CODEC,
+			EntityTypePredicate.of(entityLookup, entityType)
+		);
 	}
 
 	protected Optional<EntityPredicate> getEntityPredicate(

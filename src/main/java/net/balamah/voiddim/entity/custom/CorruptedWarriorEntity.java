@@ -240,7 +240,7 @@ public class CorruptedWarriorEntity extends BossEntity
 	@Override
 	protected void initBasicGoals() {
 		this.goalSelector.addGoal(
-			7, new StayOnHomeBlockGoal(this, 1.0, 50, false, Blocks.RED_WOOL, 50)
+			7, new StayOnHomeBlockGoal(this, 1.0, 50, false, Blocks.WOOL.red(), 50)
 		);
 
 		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
