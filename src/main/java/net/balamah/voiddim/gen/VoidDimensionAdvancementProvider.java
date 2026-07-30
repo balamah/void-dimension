@@ -13,6 +13,7 @@ import net.minecraft.advancements.*;
 import net.minecraft.advancements.predicates.DataComponentMatchers;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.predicates.entity.EntityTypePredicate;
 import net.minecraft.advancements.triggers.ChangeDimensionTrigger;
 import net.minecraft.advancements.triggers.ConsumeItemTrigger;
 import net.minecraft.advancements.triggers.Criterion;
@@ -326,7 +327,10 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		HolderLookup.RegistryLookup<EntityType<?>> entityLookup,
 		EntityType<?> entityType
 	) {
-		return EntityPredicate.Builder.entity().of(entityLookup, entityType);
+		return EntityPredicate.Builder.entity().put(
+			EntityTypePredicate.CODEC,
+			EntityTypePredicate.of(entityLookup, entityType)
+		);
 	}
 
 	protected Optional<EntityPredicate> getEntityPredicate(
