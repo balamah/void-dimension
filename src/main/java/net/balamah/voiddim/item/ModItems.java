@@ -256,6 +256,9 @@ public class ModItems {
 	public static final Item CORRUPTED_WARRIOR_SPAWN_EGG =
 		registerSpawnEgg("corrupted_warrior_spawn_egg", ModEntities.CORRUPTED_WARRIOR);
 
+	public static final Item CORRUPTED_PLAYER_SPAWN_EGG =
+		registerSpawnEgg("corrupted_player_spawn_egg", ModEntities.CORRUPTED_PLAYER);
+
 	public static final Item VOID_HORSE_ARMOR =
 		register(
 			"void_horse_armor",

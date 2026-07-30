@@ -53,6 +53,7 @@
 	"item.void-dimension.eye_bright_spawn_egg": "Eye bright spawn egg",
 	"item.void-dimension.void_bound_servant_spawn_egg": "Void bound servant spawn egg",
 	"item.void-dimension.corrupted_warrior_spawn_egg": "Corrupted warrior spawn egg",
+	"item.void-dimension.corrupted_player_spawn_egg": "Corrupted player spawn egg (WARNING: lags the game on spawn)",
 
 	"item.minecraft.potion.effect.corruption": "Corruption potion",
 	"item.minecraft.potion.effect.divine_protection": "Divine protection potion",
