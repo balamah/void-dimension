@@ -10,7 +10,9 @@
 		"LevelRendererMixin",
 		"LivingEntityTickMixin",
 		"EntityMixin",
-		"FireblockMixin"
+		"FireblockMixin",
+		"ItemPropertiesAccessor",
+		"JukeboxBlockMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

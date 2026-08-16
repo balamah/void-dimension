@@ -3,11 +3,13 @@ package net.balamah.voiddim.item;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.JukeboxPlayable;
+import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
-import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.BlockItem;
@@ -34,6 +36,7 @@ import net.balamah.voiddim.item.custom.PrayerItem;
 import net.balamah.voiddim.material.ModMaterials;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.block.ModBlocks;
+import net.balamah.voiddim.mixin.ItemPropertiesAccessor;
 import net.balamah.voiddim.sound.ModSounds;
 import net.balamah.voiddim.VoidDimension;
 
@@ -277,10 +280,12 @@ public class ModItems {
 		register(
 			"music_disc_calm4",
 			Item::new,
-			() -> new Item.Properties()
+			() -> optionalJukeboxPlayable(
+				new Item.Properties()
 				.rarity(Rarity.UNCOMMON)
-				.jukeboxPlayable(ModSounds.MUSIC_CALM4_KEY)
-				.stacksTo(1)
+				.stacksTo(1),
+				ModSounds.MUSIC_CALM4_KEY
+			)
 		);
 
 	public static void registerModItems() {
@@ -365,15 +370,23 @@ public class ModItems {
 		);
 	}
 
-	protected static Item registerMusicDisc(String name, ResourceKey<JukeboxSong> song) {
-		return register(
-			name,
-			Item::new,
-			() -> new Item.Properties()
-				.stacksTo(1)
-				.rarity(Rarity.UNCOMMON)
-				.jukeboxPlayable(song)
+	protected static Item.Properties optionalJukeboxPlayable(
+		Item.Properties settings, ResourceKey<JukeboxSong> song
+	) {
+		ItemPropertiesAccessor accessor = (ItemPropertiesAccessor) (Object) settings;
+		accessor.voidDimension$setComponentInitializer(
+			accessor.voidDimension$getComponentInitializer()
+				.andThen((components, context, key) -> context.lookup(Registries.JUKEBOX_SONG)
+					.flatMap(registry -> registry.get(song))
+					.ifPresent(
+						songHolder -> components.set(
+							DataComponents.JUKEBOX_PLAYABLE,
+							new JukeboxPlayable(songHolder)
+						)
+					)
+				)
 		);
+		return settings;
 	}
 
 	protected static Item.Properties getVoidItemSettings() {
