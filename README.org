@@ -10,7 +10,9 @@
 - [[#visual-debugging][Visual debugging]]
   - [[#example-1][Example 1]]
   - [[#example-2][Example 2]]
-- [[#pallete-of-textures][Pallete of textures]]
+- [[#project-structure][Project structure]]
+  - [[#entry-point][Entry point]]
+  - [[#aspects][Aspects]]
 - [[#sources][Sources]]
   - [[#sounds][Sounds]]
   - [[#textures][Textures]]
@@ -133,13 +135,269 @@ loom {
 }
 #+end_src
 
-* Pallete of textures
-The order is going from brightest colors to the darkest
-- #EAE9E9
-- #D5D5D5
-- #A0A0A0
-- #555555
-- #444444
+* Project structure
+** Entry point
+Class =VoidDimension= initializes the mod by invoking the registration
+methods of each mod aspect from its =onInitialize()= method. Each aspect
+exposes a method named =registerModAspectName()= that serves as the entry
+point for initializing that aspect.
+
+Each aspect has elements, which are registered through static
+fields. This design allows to reference elements directly while
+keeping readability of the code.
+
+The entry point has the following structure:
+#+begin_src java
+public void onInitialize() {
+    LOGGER.info("Registering mod components");
+
+    ModAspectName.registerModAspectName();
+    ...
+}
+#+end_src
+
+** TODO Aspects
+Each mod aspect is located in its separated directory =aspectName=. The
+directory always contains main aspect class for registration — =ModAspectName=
+and usually directory called =custom= for unique functionality.
+
+The aspect elements are registered using =register(String, <Settings>, <Settings>)=
+methods alike. First the method creates instance of the aspect with
+settings, then the aspect is registered in the aspect registry and
+finally the instance of the aspect is returned. The key to the aspect
+in registry is =Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, aspect_name)=,
+whose string output is =void-dimension:aspect_name=.
+
+If you are confused in the aspects, take a short break.
+
+*** Items
+**** Registration
+Main registration methods are
+- Item register(String name, Function<Item.Properties, Item> itemFactory, Supplier<Item.Properties> settingsFactory)
+- Item registerBlockItem(Block block, BiFunction<Block, Item.Properties, Item> factory, Supplier<Item.Properties> settingsFactory)
+- Item registerArmor(String name, ArmorMaterial material, ArmorType type, boolean isVoid)
+- Item registerSpawnEgg(String name, EntityType<? extends Mob> mob)
+- Item registerFoodItem(String name, FoodProperties foodComponent)
+- Item registerFoodItem(String name, FoodProperties foodComponent, Consumable consumableComponent)
+
+Example registration
+#+begin_src java
+public static final Item VOID_SHARD = register(
+    "void_shard", Item::new, ModItems::getVoidItemSettings
+);
+#+end_src
+
+To register custom item, change =Function<Item.Properties, Item> settings= from
+=Item::new= to =settings -> new PrayerItem(settings, 60, 900, 3)=. Example
+registration
+#+begin_src java
+public static final Item ORTHODOX_CROSS =
+    register(
+		"orthodox_cross",
+		settings -> new PrayerItem(settings, 60, 900, 3),
+		ModItems::prayerItemSettings
+	);
+#+end_src
+
+**** Aspect constructor
+#+begin_src java
+public Item(Properties settings)
+#+end_src
+
+**** Aspect methods
+- =InteractionResult use(Level world, Player user, InteractionHand hand)=
+  The method is activated on using the item, which is done by pressing
+  right click.
+- =ItemUseAnimation getUseAnimation(ItemStack stack)=
+  Return animation for using item
+- =void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> textConsumer, TooltipFlag type)=
+  Append description for the item
+- =ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user)=
+  Events that happen *after* using item
+
+*** Blocks
+**** Registration
+The main registration method of ModBlocks is 
+#+begin_src java
+protected static Block register(
+    String name, Function<BlockBehaviour.Properties, Block> blockFactory,
+    BlockBehaviour.Properties settings, boolean shouldRegisterItem,
+    boolean isItemUnstackable
+)
+#+end_src
+
+Example registration is. It is a default block with sound of netherite
+block, which is registered as an item and stackable
+#+begin_src java
+public static final Block VOID_SHARD_BLOCK =
+    register(
+        "void_shard_block",
+        Block::new,
+        BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(50.0F, 1200.0F)
+        .sound(SoundType.NETHERITE_BLOCK),
+        true, false
+    );
+#+end_src
+
+Registering block with custom functionality is similar to registering
+an item with unique functionality. Usually the second method is changed
+#+begin_src java
+public static final Block CORRUPT_BLOCK =
+    register(
+        "corrupt_block",
+        CorruptBlock::new,
+        BlockBehaviour.Properties.of().sound(SoundType.SCULK)
+        .requiresCorrectToolForDrops().strength(2.6F, 4.7F),
+        true, false
+    );
+#+end_src
+
+**** Aspect constructor
+#+begin_src java
+public Block(Properties settings)
+#+end_src
+
+**** Aspect methods
+- =void stepOn(Level world, BlockPos pos, BlockState state, Entity entity)=
+  Event that happends when an *entity* steps on the block in the *world*
+- =void animateTick(BlockState state, Level world, BlockPos blockPos, RandomSource random)=
+  Each tick make something happen, usually display particles
+- =InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)=
+  Make block interactable with an item *stack* with current block *state*
+  in *world* on *pos*
+
+**** Make block mineable
+The block is not mineable at first, therefore you need to to make it
+mineable by specifying tool and its material.
+
+For example, i want to make corrupted void shard ore mineable with a
+*diamond* =shovel=. I need to specify that it *needs diamond tool*, which is
+=shovel=.
+
+src/main/resources/data/minecraft/tags/block/needs_diamond_tool.json
+#+begin_src js-json
+{
+	"replace": false,
+	"values": [
+		"void-dimension:corrupt_void_shard_ore",
+		...
+    ]
+}
+#+end_src
+
+#+begin_src js-json
+{
+	"replace": false,
+	"values": [
+		"void-dimension:corrupt_void_shard_ore",
+		...
+	]
+}
+#+end_src
+
+**** Adding loot table to the block
+Now we made the block mineable, but it does not drop anything yet, for
+Minecraft doesn't know which item to drop from the block. Therefore we
+need to specify it in =VoidDimensionBlockLootTableProvider= by using
+either =add(final Block block, final LootTable.Builder builder)= or
+=dropSelf(final Block block)=. In our case =ModBlocks.CORRUPT_VOID_SHARD_ORE=
+should drop =ModItems.VOID_SHARD=
+
+#+begin_src java
+this.add(
+	ModBlocks.CORRUPTD_VOID_SHARD_ORE,
+	LootTable.lootTable()
+	.withPool(
+        McGenHelper.getPool(McGenHelper.constantNumber(1))
+        .add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1, 3))
+    )
+);
+#+end_src
+
+*** TODO Entities
+This aspect is the hardest to update and code, but completely
+neccessary. To create an entity, you should specify its attributes,
+goals, size, model, renderer and animations
+
+**** Registration
+#+begin_src java
+EntityType<T> register(String name, Class<T> entityClass, EntityType.Builder<T> entityBuilder)
+#+end_src
+
+Example registration of void harbinger, which is 3 blocks tall and 1
+block wide. You have to specify entity class for the entity registration.
+#+begin_src java
+public static final EntityType<VoidHarbingerEntity> VOID_HARBINGER =
+    register(
+        "void_harbinger",
+        VoidHarbingerEntity.class,
+        EntityType.Builder.of(VoidHarbingerEntity::new, MobCategory.CREATURE)
+        .sized(0.6F, 3.0F)
+    );
+#+end_src
+
+Then its attributes have to be registered, otherwise the entity will
+not be spawned
+#+begin_src java
+public static void registerEntityAttributes() {
+    FabricDefaultAttributeRegistry.register(ModEntities.VOID_HARBINGER, VoidHarbingerEntity.createAttributes());
+}
+#+end_src
+
+If entity should spawn in the dimension naturally, add it in the
+=spawnRestrictedEntities= array
+#+begin_src java
+@SuppressWarnings("unchecked")
+protected static final EntityType<? extends Mob>[] spawnRestrictedEntities =
+    new EntityType[] {
+            ...
+            ModEntities.VOID_HARBINGER,
+			...
+    };
+#+end_src
+
+**** Aspect class
+All the work with an entity usually happens in these methods
+- =AttributeSupplier.Builder createAttributes()=
+  Return attribute instance for the entity, from follow range to
+  attack damage
+- =void tick()=
+  Describe events that should happen with entity or around it every =tick=
+- =void registerGoals()=
+  Register [[Aspect goals][goals]] for the entity. The lower priority number, the higher
+  priority will be of the goal, 0 is the highest.
+
+  Also entities can have brain system, but i don't know how to use it
+  yet
+- =void handleEntityEvent(byte status)=
+  In my mod the method is usually used for playing animations, whose
+  ids are stored in =ModEntityStatuses.SUMMON_ENTITIES_START=
+- =SoundEvent getHurtSound(DamageSource source)=
+  Get hurt sound of the mob
+- =SoundEvent getDeathSound()=
+  Get death sound of the mob
+- =SoundEvent getAmbientSound()=
+  Get ambient sound of the mob
+
+**** Aspect goals
+In this example =ShatterGroundGoal= will be shown. Each goal has a
+constructor, most important method is entity, which is usually put in
+the generic
+
+    public ShatterGroundGoal(T entity) {
+        super(entity);
+    }
+
+To add a goal, update =registerGoals()= method by adding
+#+begin_src java
+this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
+#+end_src
+
+**** Aspect rendering
+
+*** TODO Effects
+
+*** TODO Potions
 
 * Sources
 ** Sounds
