@@ -380,20 +380,37 @@ All the work with an entity usually happens in these methods
   Get ambient sound of the mob
 
 **** Aspect goals
-In this example =ShatterGroundGoal= will be shown. Each goal has a
-constructor, most important method is entity, which is usually put in
-the generic
+In this example =ShatterGroundGoal= will be shown. Class definition will
+force entity class to have several methods
+#+begin_src java
+public class ShatterGroundGoal<T extends BossEntity & ShatterGroundUser>
+	extends SlowMovementGoal<T>
+#+end_src
 
-    public ShatterGroundGoal(T entity) {
-        super(entity);
-    }
+Each goal has a constructor, most important method is entity, which is
+usually put in the generic, but you can add attributes as much as you
+would like, just make all of them used somehow
+
+#+begin_src java
+public ShatterGroundGoal(T entity) {
+    super(entity);
+}
+#+end_src
+
+Each goal should =start()= if =canUse()= is true, the main process happends
+every tick in =tick()= and also has events after finishing goal in =stop()=.
+Boolean =canContinueToUse()= specifies if the goal can be continued further.
 
 To add a goal, update =registerGoals()= method by adding
 #+begin_src java
 this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
 #+end_src
 
-**** Aspect rendering
+**** Entity rendering
+1) Create model of an entity in blockbench and put its bbmodel in
+   =blockbench= directory in the project root.
+2) Export the model to =java= model and call it =EntityNameModel=.
+3) Connect animations
 
 *** TODO Effects
 
