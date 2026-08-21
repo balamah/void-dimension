@@ -314,7 +314,7 @@ this.add(
 );
 #+end_src
 
-*** TODO Entities
+*** Entities
 This aspect is the hardest to update and code, but completely
 neccessary. To create an entity, you should specify its attributes,
 goals, size, model, renderer and animations
@@ -407,6 +407,9 @@ this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
 #+end_src
 
 **** Entity rendering
+Export models, renderers and render states to =client= directory in
+=entity=, which is =src/main/java/net/balamah/voiddim/entity/client/=.
+
 1) Create model of an entity in blockbench and put its bbmodel in
    =blockbench= directory in the project root.
 2) Export the model to =java= model and call it =EntityNameModel=.
@@ -414,20 +417,22 @@ this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
    #+begin_src java
    public class VoidHarbingerModel extends EntityModel<VoidHarbingerRenderState> {
        public static final ModelLayerLocation VOID_HARBINGER =
-                   new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_harbinger"),
-                                                            "main");
+            new ModelLayerLocation(
+				Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_harbinger"),
+				"main"
+            );
 
-           private final ModelPart root;
-           ...
+        private final ModelPart root;
+        ...
 
-           public VoidHarbingerModel(ModelPart root) {
-                   super(root);
+        public VoidHarbingerModel(ModelPart root) {
+            super(root);
 
-                   this.root = root.getChild("root");
-       }
+            this.root = root.getChild("root");
+        }
 
-           public static LayerDefinition getTexturedModelData() {
-                   ...
+        public static LayerDefinition getTexturedModelData() {
+                ...
        }
    }
    #+end_src
@@ -505,6 +510,165 @@ this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
 				    ...
                     );
    #+end_src
+
+Don't be afraid if you got confused in my confusing text, here are
+steps how to implement entity rendering
+1) Blockbench model
+2) Java model class
+3) ModelLayerLocation
+4) Model registration/baking
+5) Renderer
+6) Render state
+7) Texture/feature layers
+
+**** Adding animations to the entity
+Download blockbench "Animation to Java Converter" plugin. Yes this
+plugin is deprecated, it is still has to be used.
+
+1) Export animations by clicking =File -> Export -> Export Modded Entity Animations=
+   to =src/main/java/net/balamah/voiddim/entity/client/=
+2) Sanitize code by
+   - Specifying package
+   - Adding all missing imports
+3) Port animations to new version by using =script/port-animations=
+   #+begin_src bash
+   scripts/port-animations <path/to/EntityAnimations.java>
+   #+end_src
+4) Create =EntityNameRenderState=, which is basically a list of entity's
+   animations
+   #+begin_src java
+   public class VoidHarbingerRenderState extends LivingEntityRenderState {
+        public final AnimationState summonAnimationState = new AnimationState();
+        public final AnimationState summonEndAnimationState = new AnimationState();
+   }
+   #+end_src
+5) Connect animations in renderer by *extracting render state* in =extractRenderState(Entity, RenderState, float f)=
+   #+begin_src java
+	@Override
+	public void extractRenderState(
+		VoidHarbingerEntity entity, VoidHarbingerRenderState renderState, float f
+    ) {
+		super.extractRenderState(entity, renderState, f);
+
+		renderState.summonAnimationState.copyFrom(entity.summonAnimationState);
+		renderState.summonEndAnimationState.copyFrom(entity.summonEndAnimationState);
+	}
+   #+end_src
+6) Connect animations to the model
+   #+begin_src diff
+   public class VoidHarbingerModel extends EntityModel<VoidHarbingerRenderState> {
+       public static final ModelLayerLocation VOID_HARBINGER =
+            new ModelLayerLocation(
+				Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_harbinger"),
+				"main"
+            );
+
+        private final ModelPart root;
+        ...
+		
++       private final KeyframeAnimation summonAnimation;
++       private final KeyframeAnimation summonEndAnimation;
+
+        public VoidHarbingerModel(ModelPart root) {
+            super(root);
+
+            this.root = root.getChild("root");
+			...
++           this.summonAnimation = VoidHarbingerAnimations.SUMMON.bake(root);
++           this.summonEndAnimation = VoidHarbingerAnimations.SUMMON_END.bake(root);
+        }
+
+        public static LayerDefinition getTexturedModelData() {
+                ...
+       }
+
+       @Override
+       public void setupAnim(VoidHarbingerRenderState state) {
+            super.setupAnim(state);
+
+            ...
+
++           this.summonAnimation.apply(
++                   state.summonAnimationState, state.ageInTicks
++           );
+
++           this.summonEndAnimation.apply(
++                   state.summonEndAnimationState, state.ageInTicks
++           );
+        }
+}
+   #+end_src
+7) Make entity use the animations
+   #+begin_src diff
+public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
++   public AnimationState summonAnimationState = new AnimationState();
++   public AnimationState summonEndAnimationState = new AnimationState();
+
+    ... 
+
++   @Override
++   public void handleEntityEvent(byte status) {
++       switch (status) {
++           case ModEntityStatuses.SUMMON_ENTITIES_START:
++               this.summonAnimationState.start(this.tickCount);
++               break;
++           case ModEntityStatuses.SUMMON_ENTITIES_FINISH:
++               this.summonAnimationState.stop();
++               this.summonEndAnimationState.start(this.tickCount);
++               break;
++           default: super.handleEntityEvent(status);
++               break;
++       }
++   }
+	...
+}
+   #+end_src
+
+To play entity animations, use Level (World) class static method
+=world.broadcastEntityEvent(final Entity entity, final byte event)=, or
+in *ticking* goals (which extends TickingGoal) --- =sendEntityStatus(byte status)=
+
+#+begin_src java
+world.broadcastEntityEvent(this, ModEntityStatuses.SUICIDE);
+this.sendEntityStatus(ModEntityStatuses.SUICIDE); // goal which extends TickingGoal
+#+end_src
+
+**** Adding head rotation to the goal
+Usually try using this method
+#+begin_src java
+protected void setHeadAngles(float headYaw, float headPitch) {
+    float yawRad   = headYaw   * ((float)Math.PI / 180F);
+    float pitchRad = headPitch * ((float)Math.PI / 180F);
+
+    pitchRad = Mth.clamp(
+            pitchRad,
+            -25F * ((float)Math.PI / 180F),
+            45F  * ((float)Math.PI / 180F)
+    );
+
+    // if your head is rotated sideways in Blockbench, apply pitch to roll instead:
+    this.head.yRot  = yawRad;    // left/right
+    this.head.zRot = pitchRad * -1;  // up/down (compensating for sideways model)
+    this.head.xRot = 0.0F;     // reset old pitch
+}
+#+end_src
+
+And call it in =setupAnim(RenderState)=
+#+begin_src java
+@Override
+public void setupAnim(VoidHarbingerRenderState state) {
+    super.setupAnim(state);
+
+    this.setHeadAngles(state.yRot, state.xRot);
+}
+#+end_src
+
+If it doesn't work, use ai or something by giving prompt
+#+begin_quote
+<Pasted entity model class code>
+
+Make entity head rotating according to the target
+#+end_quote
 
 *** TODO Effects
 
