@@ -156,7 +156,7 @@ public void onInitialize() {
 }
 #+end_src
 
-** TODO Mod aspects
+** Mod aspects
 Each mod aspect is located in its separated directory =aspectName=. The
 directory always contains main aspect class for registration — =ModAspectName=
 and usually directory called =custom= for unique functionality.
@@ -670,9 +670,75 @@ If it doesn't work, use ai or something by giving prompt
 Make entity head rotating according to the target
 #+end_quote
 
-*** TODO Effects
+*** Effects
+**** Registration
+Main registration method is
+#+begin_src java
+protected static Holder<MobEffect> register(String name, MobEffect entry) {
+    return Registry.registerForHolder(
+		BuiltInRegistries.MOB_EFFECT,
+        Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, name),
+        entry
+    );
+}
+#+end_src
 
-*** TODO Potions
+And here is example registration of an effect
+#+begin_src java
+public static final Holder<MobEffect> SOUL_BURN = register("soul_burn", new SoulburnEffect());
+#+end_src
+
+The effects must reference their own classes
+
+**** Aspect constructor
+#+begin_src java
+public SoulburnEffect(final MobEffectCategory category, final int color) {
+	
+}
+#+end_src
+
+**** Aspect methods
+- =boolean shouldApplyEffectTickThisTick(int duration, int amplifier)=
+  Determine if effect should be applied or not
+- =boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier)=
+  The main logic of the effect
+
+**** Custom damage source
+1) Add getter for the damage source
+   #+begin_src java
+   public static DamageSource corruption(ServerLevel world) {
+       return getBasicDamageSource(world, <ModEffects.CORRUPTION_DAMAGE>.identifier());
+   }
+   #+end_src
+2) Add new *damage type* in =src/main/resources/data/void-dimension/damage_type/=
+   #+begin_src js-json
+   {
+       "exhaustion": 0.0,
+       "message_id": "<effect-message-id>",
+       "scaling": "when_caused_by_living_non_player"
+   }
+   #+end_src
+3) Register damage type in =ModEffects=
+   #+begin_src java
+   public static final ResourceKey<DamageType> CORRUPTION_DAMAGE = registerDamageType("corruption");
+   #+end_src
+
+*** Potions
+This aspect has the least steps to accomplish. First register the
+potion in =ModPotions= by binding the effect
+
+#+begin_src java
+public static final Potion VOID_SALVATION_POTION =
+    register("void_salvation", ModEffects.VOID_SALVATION, 1200, 0);
+#+end_src
+
+Then build recipe for it =registerModPotions()= by specifying base,
+material and the potion output
+#+begin_src java
+public static void registerModPotions() {
+    buildRecipe(Potions.<BASE>, Item, POTION);
+}
+#+end_src
 
 * Sources
 ** Sounds
