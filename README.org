@@ -12,7 +12,7 @@
   - [[#example-2][Example 2]]
 - [[#project-structure][Project structure]]
   - [[#entry-point][Entry point]]
-  - [[#aspects][Aspects]]
+  - [[#mod-aspects][Mod aspects]]
 - [[#sources][Sources]]
   - [[#sounds][Sounds]]
   - [[#textures][Textures]]
@@ -156,7 +156,7 @@ public void onInitialize() {
 }
 #+end_src
 
-** TODO Aspects
+** TODO Mod aspects
 Each mod aspect is located in its separated directory =aspectName=. The
 directory always contains main aspect class for registration — =ModAspectName=
 and usually directory called =custom= for unique functionality.
@@ -410,7 +410,101 @@ this.goalSelector.addGoal(6, new ShatterGroundGoal<>(this));
 1) Create model of an entity in blockbench and put its bbmodel in
    =blockbench= directory in the project root.
 2) Export the model to =java= model and call it =EntityNameModel=.
-3) Connect animations
+3) Add model layer location to the model, the structure should be similar to
+   #+begin_src java
+   public class VoidHarbingerModel extends EntityModel<VoidHarbingerRenderState> {
+       public static final ModelLayerLocation VOID_HARBINGER =
+                   new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void_harbinger"),
+                                                            "main");
+
+           private final ModelPart root;
+           ...
+
+           public VoidHarbingerModel(ModelPart root) {
+                   super(root);
+
+                   this.root = root.getChild("root");
+       }
+
+           public static LayerDefinition getTexturedModelData() {
+                   ...
+       }
+   }
+   #+end_src
+4) Create renderer, which has to return render state and the texture
+   location, which depends of render state
+   #+begin_src java
+    public class VoidHarbingerRenderer
+        extends MobRenderer<VoidHarbingerEntity, VoidHarbingerRenderState, VoidHarbingerModel> 
+    {
+            public VoidHarbingerRenderer(EntityRendererProvider.Context context) {
+                super(context, new VoidHarbingerModel(context.bakeLayer(VoidHarbingerModel.VOID_HARBINGER)), 0.75f);
+
+                this.addLayer(
+                    new GlowFeatureRenderer<>(this, "textures/entity/glow/void_harbinger.png")
+                );
+            }
+
+            @Override
+            public VoidHarbingerRenderState createRenderState() {
+                return new VoidHarbingerRenderState();
+            }
+
+            @Override
+            public Identifier getTextureLocation(VoidHarbingerRenderState state) {
+                return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/void_harbinger.png");
+            }
+    }
+   #+end_src
+
+   You can also add glow to the mob by moving parts of the entity
+   texture to glow texture and add to the constructor
+   #+begin_src java
+    this.addLayer(
+        new GlowFeatureRenderer<>(this, "textures/entity/glow/void_harbinger.png")
+    );
+   #+end_src
+5) Update =VoidDimensionRendering= arrays. If entity has non humanoid
+   model (biped), add new entity specs to =entitySpecs=
+   #+begin_src java
+   protected List<EntitySpecs<? extends LivingEntity>> entitySpecs =
+           List.of(...
+                    new EntitySpecs<>(ModEntities.VOID_HARBINGER,             				
+                                      VoidHarbingerModel.VOID_HARBINGER,
+                                      VoidHarbingerModel.getTexturedModelData(),
+                                      VoidHarbingerRenderer::new),
+                   ...
+            );
+   #+end_src
+
+   If entity model extends humanoid entity model (biped model), update
+   =bipedEntitySpecs=
+   #+begin_src java
+   protected List<BipedEntitySpecs<? extends Entity>> bipedEntitySpecs =
+           List.of(new BipedEntitySpecs<>(ModEntities.HOLLOWED_ALPHA_STEVE,
+                                          HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE,
+                                          HollowedAlphaSteveModel.getTexturedModelData(),
+                                          context -> new HollowedAlphaSteveRenderer<>(
+                                                  context,
+                                                  new HollowedAlphaSteveModel<>(
+                                                          context.bakeLayer(HollowedAlphaSteveModel.HOLLOWED_ALPHA_STEVE)
+                                                  ),
+                                                  0.5f
+                                          )),
+				    ...
+				   );
+   #+end_src
+
+   If entity is non living, then =nonLivingEntitySpecs= should be updated
+   #+begin_src java
+   protected List<NonLivingEntitySpecs<? extends Entity>> nonLivingEntitySpecs =
+           List.of(new NonLivingEntitySpecs<>(ModEntities.VOID_SPHERE,
+                                              VoidSphereModel.VOID_SPHERE,
+                                              VoidSphereModel.createBodyLayer(),
+                                              VoidSphereRenderer::new),
+				    ...
+                    );
+   #+end_src
 
 *** TODO Effects
 
