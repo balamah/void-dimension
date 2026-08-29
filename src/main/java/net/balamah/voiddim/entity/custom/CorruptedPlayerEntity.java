@@ -40,10 +40,10 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 		"AZGAMER2014", "rlthln"
 	};
 
-	protected static final EntityDataAccessor<String> PLAYER_NAME =
+	protected static final EntityDataAccessor<String> CORRUPTED_PLAYER_NAME =
 		SynchedEntityData.defineId(CorruptedPlayerEntity.class, EntityDataSerializers.STRING);
 
-	protected static final EntityDataAccessor<ResolvableProfile> PLAYER_PROFILE =
+	protected static final EntityDataAccessor<ResolvableProfile> CORRUPTED_PLAYER_PROFILE =
 		SynchedEntityData.defineId(
 			CorruptedPlayerEntity.class, EntityDataSerializers.RESOLVABLE_PROFILE
 		);
@@ -85,20 +85,20 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 		this.copyEquipment(this.player);
 	}
 
-	public String getPlayerName() {
-		return this.entityData.get(PLAYER_NAME);
+	public String getCorruptedPlayerName() {
+		return this.entityData.get(CORRUPTED_PLAYER_NAME);
 	}
 
 	public void setPlayerName(String playerName) {
-		this.entityData.set(PLAYER_NAME, playerName);
+		this.entityData.set(CORRUPTED_PLAYER_NAME, playerName);
 	}
 
-	public ResolvableProfile getPlayerProfile() {
-		return this.entityData.get(PLAYER_PROFILE);
+	public ResolvableProfile getCorruptedPlayerProfile() {
+		return this.entityData.get(CORRUPTED_PLAYER_PROFILE);
 	}
 
 	public void setPlayerProfile(ResolvableProfile profile) {
-		this.entityData.set(PLAYER_PROFILE, profile);
+		this.entityData.set(CORRUPTED_PLAYER_PROFILE, profile);
 	}
 
 	@Override
@@ -142,15 +142,14 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder entityData) {
 		super.defineSynchedData(entityData);
-		entityData.define(PLAYER_NAME, "");
-		entityData.define(PLAYER_PROFILE, ResolvableProfile.Static.EMPTY);
+		entityData.define(CORRUPTED_PLAYER_NAME, "");
+		entityData.define(CORRUPTED_PLAYER_PROFILE, ResolvableProfile.Static.EMPTY);
 	}
 
 	@Override
 	protected void addAdditionalSaveData(ValueOutput output) {
 		super.addAdditionalSaveData(output);
-		output.putString(PLAYER_NAME_KEY, this.getPlayerName());
-		output.store(PLAYER_PROFILE_KEY, ResolvableProfile.CODEC, this.getPlayerProfile());
+		output.putString(PLAYER_NAME_KEY, this.getCorruptedPlayerName());
 	}
 
 	@Override
@@ -158,12 +157,6 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 		super.readAdditionalSaveData(input);
 		String playerName = input.getStringOr(PLAYER_NAME_KEY, "");
 		this.setPlayerName(playerName);
-		this.setPlayerProfile(
-			input.read(PLAYER_PROFILE_KEY, ResolvableProfile.CODEC)
-				.orElseGet(() -> playerName.isBlank()
-					? ResolvableProfile.Static.EMPTY
-					: ResolvableProfile.createUnresolved(playerName))
-		);
 	}
 
 	protected void copyEquipment(ServerPlayer player) {

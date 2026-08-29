@@ -34,8 +34,8 @@ public class CorruptedPlayerRenderer
 	) {
 		super.extractRenderState(entity, state, partialTicks);
 
-		state.playerName = entity.getPlayerName();
-		state.playerProfile = entity.getPlayerProfile();
+		state.playerName = entity.getCorruptedPlayerName();
+		state.playerProfile = entity.getCorruptedPlayerProfile();
 		state.showHat = true;
 		state.showJacket = true;
 		state.showLeftPants = true;
