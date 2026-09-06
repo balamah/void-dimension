@@ -287,6 +287,14 @@ public class ModEntities {
 			.eyeHeight(0.0F) .clientTrackingRange(4).updateInterval(10)
 		);
 
+	public static final EntityType<MashaEntity> MASHA =
+		register(
+			"masha",
+			MashaEntity.class,
+			EntityType.Builder.<MashaEntity>of(MashaEntity::new, MobCategory.MISC)
+			.noLootTable().sized(0.6f, 2f)
+		);
+
 	// Looks bad, but it should be this way.
 	// Otherwise entities will not spawn on servers
 	public static void registerEntityAttributes() {
@@ -314,6 +322,7 @@ public class ModEntities {
 		FabricDefaultAttributeRegistry.register(ModEntities.EYE_BRIGHT, EyeBrightEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_WARRIOR, CorruptedWarriorEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.VOID_BOUND_SERVANT, VoidBoundServantEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.MASHA, MashaEntity.createAttributes());
 	}
 
 	@SuppressWarnings("unchecked")

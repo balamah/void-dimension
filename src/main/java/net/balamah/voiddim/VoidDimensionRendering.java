@@ -99,7 +99,11 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new EntitySpecs<CorruptedPlayerEntity>(ModEntities.CORRUPTED_PLAYER,
 														CorruptedPlayerModel.CORRUPTED_PLAYER,
 														CorruptedPlayerModel.getTexturedModelData(),
-														CorruptedPlayerRenderer::new)
+													   CorruptedPlayerRenderer::new),
+				new EntitySpecs<>(ModEntities.MASHA,             				
+								  MashaModel.MASHA,
+								  MashaModel.getTexturedModelData(),
+								  MashaRenderer::new)
 				);
 
 
