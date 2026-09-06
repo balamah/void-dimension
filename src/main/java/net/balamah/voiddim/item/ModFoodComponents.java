@@ -13,8 +13,8 @@ import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 public class ModFoodComponents {
 	private static List<MobEffectInstance> MASHA_MILK_BUCKET_EFFECTS =
 		List.of(
-			new MobEffectInstance(MobEffects.LEVITATION, 120, 1),
-			new MobEffectInstance(MobEffects.REGENERATION, 120, 1)
+			new MobEffectInstance(MobEffects.LEVITATION, 220, 1),
+			new MobEffectInstance(MobEffects.REGENERATION, 220, 3)
 		);
 
 	public static final FoodProperties RAW_FLESH =
