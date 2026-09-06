@@ -54,7 +54,9 @@ public class MashaEntity extends Animal {
         this.goalSelector.addGoal(0, new FloatGoal(this));
 
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D));
-		this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, i -> i.is(ItemTags.COW_FOOD), false));
+		this.goalSelector.addGoal(
+			3, new TemptGoal(this, 1.25, i -> i.is(ModItems.VOID_SHARD), false)
+		);
 
         this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.1D));
 
