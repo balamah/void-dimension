@@ -2,6 +2,7 @@ package net.balamah.voiddim.entity.client;
 
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.*;
+import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -11,6 +12,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.entity.client.base.BasicRenderState;
 
@@ -591,6 +593,9 @@ public class MashaModel extends EntityModel<BasicRenderState> {
 	@Override
 	public void setupAnim(BasicRenderState state) {
 		super.setupAnim(state);
+
+		this.head.xRot = state.xRot * (float) (Math.PI / 180.0);
+		this.head.yRot = state.yRot * (float) (Math.PI / 180.0);
 
 		this.walkAnimation.applyWalk(
 			state.walkAnimationPos, state.walkAnimationSpeed, 2f, 2.5f
