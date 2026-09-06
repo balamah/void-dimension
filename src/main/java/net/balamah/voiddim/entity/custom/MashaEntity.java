@@ -6,6 +6,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -24,6 +26,8 @@ import net.minecraft.world.entity.animal.cow.CowSoundVariant;
 import net.minecraft.world.entity.animal.cow.CowSoundVariants;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 public class MashaEntity extends Animal {
@@ -47,6 +51,25 @@ public class MashaEntity extends Animal {
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
 		return ModEntities.MASHA.create(world, EntitySpawnReason.BREEDING);
+	}
+
+	@Override
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
+		ItemStack itemStack = player.getItemInHand(hand);
+		if (itemStack.is(Items.BUCKET) && !this.isBaby()) {
+			player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+
+			// TODO: Change Items.MILK_BUCKET to ModItems.MASHA_MILK_BUCKET
+			ItemStack bucket = ItemUtils.createFilledResult(
+				itemStack, player, Items.MILK_BUCKET.getDefaultInstance()
+			);
+
+			player.setItemInHand(hand, bucket);
+
+			return InteractionResult.SUCCESS;
+		}
+
+		return super.mobInteract(player, hand);
 	}
 
 	@Override
