@@ -59,9 +59,8 @@ public class MashaEntity extends Animal {
 		if (itemStack.is(Items.BUCKET) && !this.isBaby()) {
 			player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
 
-			// TODO: Change Items.MILK_BUCKET to ModItems.MASHA_MILK_BUCKET
 			ItemStack bucket = ItemUtils.createFilledResult(
-				itemStack, player, Items.MILK_BUCKET.getDefaultInstance()
+				itemStack, player, ModItems.MASHA_MILK_BUCKET.getDefaultInstance()
 			);
 
 			player.setItemInHand(hand, bucket);

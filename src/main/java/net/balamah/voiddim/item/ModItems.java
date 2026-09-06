@@ -28,6 +28,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.balamah.voiddim.item.custom.CorruptedFireChargeItem;
 import net.balamah.voiddim.item.custom.ModSmithingTemplateItem;
@@ -286,6 +287,16 @@ public class ModItems {
 				.stacksTo(1),
 				ModSounds.MUSIC_CALM4_KEY
 			)
+		);
+
+	public static final Item MASHA_MILK_BUCKET =
+		register(
+			"masha_milk_bucket",
+			Item::new,
+			() -> new Item.Properties()
+					.craftRemainder(Items.BUCKET)
+					.component(DataComponents.CONSUMABLE, ModFoodComponents.MASHA_MILK_BUCKET)
+					.usingConvertsTo(Items.BUCKET).stacksTo(1)
 		);
 
 	public static void registerModItems() {
