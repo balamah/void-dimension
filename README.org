@@ -783,6 +783,7 @@ public static void registerModPotions() {
 
 ** 3D modellers
 - Balamah
+- Bluebeerz
 
 ** Lore writers
 - Balamah
