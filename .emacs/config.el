@@ -11,9 +11,9 @@
 	  lsp-java-import-gradle-enabled nil
 	  lsp-java-import-gradle-wrapper-enabled t
 	  lsp-java-import-maven-enabled nil
-	  lsp-java-project-import-on-startup t
+	  lsp-java-project-import-on-startup nil
 	  lsp-response-timeout 30
-	  lsp-enable-file-watchers t
+	  lsp-enable-file-watchers nil
 	  lsp-java-configuration-runtimes [(:name "JavaSE-25"
 										:path "/usr/lib/jvm/java-25-openjdk"
 										:default t)
