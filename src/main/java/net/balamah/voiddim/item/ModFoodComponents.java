@@ -33,7 +33,7 @@ public class ModFoodComponents {
 
 	public static final Consumable MALE_GOAT_MILK_BUCKET =
 		defaultDrink().onConsume(
-			new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.LUCK, 1200, 5))
+			new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.LUCK, 2400, 5))
 		).build();
 
 	public static Consumable.Builder defaultDrink() {

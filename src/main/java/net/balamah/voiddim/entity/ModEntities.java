@@ -295,6 +295,14 @@ public class ModEntities {
 			.noLootTable().sized(0.6f, 2f)
 		);
 
+	public static final EntityType<MaleGoatEntity> MALE_GOAT =
+		register(
+			"male_goat",
+			MaleGoatEntity.class,
+			EntityType.Builder.<MaleGoatEntity>of(MaleGoatEntity::new, MobCategory.MISC)
+			.noLootTable().sized(0.9F, 1.3F)
+		);
+
 	// Looks bad, but it should be this way.
 	// Otherwise entities will not spawn on servers
 	public static void registerEntityAttributes() {
@@ -323,6 +331,7 @@ public class ModEntities {
 		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_WARRIOR, CorruptedWarriorEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.VOID_BOUND_SERVANT, VoidBoundServantEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MASHA, MashaEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.MALE_GOAT, MaleGoatEntity.createAttributes());
 	}
 
 	@SuppressWarnings("unchecked")

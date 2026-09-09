@@ -3,6 +3,7 @@ package net.balamah.voiddim.entity.client.base;
 import net.balamah.voiddim.entity.client.WerewolfAnimations;
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.resources.Identifier;
 
 public class AbstractWerewolfModel
 	<T extends AbstractWerewolfRenderState> extends BasicLivingEntityModel<T>
@@ -31,6 +32,7 @@ public class AbstractWerewolfModel
 	protected final ModelPart right_calf;
 	protected final ModelPart left_back_paw;
 	protected final ModelPart left_calf;
+    public static final Identifier BABY_GOAT_LOCATION = Identifier.withDefaultNamespace("textures/entity/goat/goat_baby.png");
 
 	public AbstractWerewolfModel(ModelPart root) {
 		super(root);

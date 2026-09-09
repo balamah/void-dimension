@@ -2,6 +2,7 @@ package net.balamah.voiddim;
 
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.GoatRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
@@ -103,7 +104,11 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new EntitySpecs<>(ModEntities.MASHA,             				
 								  MashaModel.MASHA,
 								  MashaModel.getTexturedModelData(),
-								  MashaRenderer::new)
+								  MashaRenderer::new),
+				new EntitySpecs<>(ModEntities.MALE_GOAT,             				
+								  MaleGoatModel.MALE_GOAT,
+								  MaleGoatModel.createBodyLayer(),
+								  MaleGoatRenderer::new)
 				);
 
 

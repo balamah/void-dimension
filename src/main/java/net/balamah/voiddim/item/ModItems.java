@@ -299,6 +299,16 @@ public class ModItems {
 					.usingConvertsTo(Items.BUCKET).stacksTo(1)
 		);
 
+	public static final Item MALE_GOAT_MILK_BUCKET =
+		register(
+			"male_goat_milk_bucket",
+			Item::new,
+			() -> new Item.Properties()
+					.craftRemainder(Items.BUCKET)
+					.component(DataComponents.CONSUMABLE, ModFoodComponents.MALE_GOAT_MILK_BUCKET)
+					.usingConvertsTo(Items.BUCKET).stacksTo(1)
+		);
+
 	public static void registerModItems() {
 		VoidDimension.LOGGER.info("Registering mod items for " + MOD_ID);
 	}
