@@ -166,6 +166,13 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubPro
 				.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 2, 4))
 			);
 
+		LootTable.Builder mashaTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1))
+				.add(McGenHelper.getItemEntry(ModItems.MUSIC_DISC_HAUNTED_GOON, 1))
+			);
+
 		this.add(ModEntities.CORRUPTED_STALKER, corruptedStalkerTable);
 		this.add(ModEntities.VOID_MAW, voidMawTable);
 		this.add(ModEntities.VOID_HARBINGER, voidHarbingerTable);
@@ -179,6 +186,7 @@ public class VoidDimensionEntityLootTableProvider extends FabricEntityLootSubPro
 		this.add(ModEntities.ENTITY303, entity303table);
 		this.add(ModEntities.EYE_BRIGHT, eyeBrightTable);
 		this.add(ModEntities.CORRUPTED_WARRIOR, corruptedWarriorTable);
+		this.add(ModEntities.MASHA, mashaTable);
 
 		// Didn't add loot table for corrupted versions of vanilla mobs,
 		// i got tired and therefore copied them from minecraft's files

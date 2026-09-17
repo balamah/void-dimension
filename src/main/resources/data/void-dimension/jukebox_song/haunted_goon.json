@@ -1,0 +1,8 @@
+{
+	"comparator_output": 15,
+	"description": {
+		"translate": "item.void-dimension.haunted_goon_music_disc.desc"
+	},
+	"length_in_seconds": 186.0,
+	"sound_event": "void-dimension:music_disc.haunted_goon"
+}

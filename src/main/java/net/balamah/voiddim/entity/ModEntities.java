@@ -292,7 +292,7 @@ public class ModEntities {
 			"masha",
 			MashaEntity.class,
 			EntityType.Builder.<MashaEntity>of(MashaEntity::new, MobCategory.MISC)
-			.noLootTable().sized(0.6f, 2f)
+			.sized(0.6f, 2f)
 		);
 
 	public static final EntityType<MaleGoatEntity> MALE_GOAT =

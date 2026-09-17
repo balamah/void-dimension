@@ -25,6 +25,7 @@
   - [[#builders][Builders]]
   - [[#3d-modellers][3D modellers]]
   - [[#lore-writers][Lore writers]]
+  - [[#musician][Musician]]
 
 * Warnings
 - Sodium mod is recommended if you set render distance more than 20 chunks.
@@ -778,7 +779,7 @@ public static void registerModPotions() {
 ** Builders
 - Balamah
 - H0peL0ck
-- legendary_pasha
+- pashaaaon
 - bruh_mox
 
 ** 3D modellers
@@ -788,3 +789,6 @@ public static void registerModPotions() {
 ** Lore writers
 - Balamah
 - Oliksa
+
+** Musician
+- bluebeerz

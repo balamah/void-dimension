@@ -289,6 +289,18 @@ public class ModItems {
 			)
 		);
 
+	public static final Item MUSIC_DISC_HAUNTED_GOON =
+		register(
+			"music_disc_haunted_goon",
+			Item::new,
+			() -> optionalJukeboxPlayable(
+				new Item.Properties()
+				.rarity(Rarity.UNCOMMON)
+				.stacksTo(1),
+				ModSounds.MUSIC_HAUNTED_GOON_KEY
+			)
+		);
+
 	public static final Item MASHA_MILK_BUCKET =
 		register(
 			"masha_milk_bucket",

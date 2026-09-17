@@ -303,6 +303,14 @@
 			}
 		]
 	},
+	"music_disc.haunted_goon": {
+		"sounds": [
+			{
+				"name": "void-dimension:records/haunted_goon",
+				"stream": true
+			}
+		]
+	},
 	"special_attacks.lightning": {
 		"subtitle": "sound.void-dimension.special_attack.lightning",
 		"sounds": [
