@@ -1,0 +1,64 @@
+{
+	"attributes": {
+		"minecraft:visual/fog_color": "#000000",
+		"minecraft:visual/sky_color": "#000000",
+		"minecraft:visual/water_fog_color": "#eae9e9"
+	},
+	"has_precipitation": false,
+	"temperature": 1,
+	"temperature_modifier": "none",
+	"downfall": 0.4,
+	"carvers": [],
+	"features": [],
+	"spawners": {
+		"monster": [
+			{
+				"type": "void-dimension:mantis",
+				"weight": 3,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:masha",
+				"weight": 3,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:male_goat",
+				"weight": 4,
+				"minCount": 1,
+				"maxCount": 1
+			},
+			{
+				"type": "void-dimension:snowman",
+				"weight": 3,
+				"minCount": 1,
+				"maxCount": 1
+			}
+		]
+	},
+	"spawn_costs": {
+		"void-dimension:mantis": {
+			"energy_budget": 4.0,
+			"charge": 3.0
+		},
+		"void-dimension:masha": {
+			"energy_budget": 4.0,
+			"charge": 3.0
+		},
+		"void-dimension:male_goat": {
+			"energy_budget": 4.0,
+			"charge": 3.0
+		},
+		"void-dimension:snowman": {
+			"energy_budget": 4.0,
+			"charge": 3.0
+		}
+	},
+	"effects": {
+		"foliage_color": "#272625",
+		"grass_color": "#eae9e9",
+		"water_color": "#eae9e9"
+	}
+}

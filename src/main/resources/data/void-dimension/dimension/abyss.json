@@ -1,0 +1,12 @@
+{
+	"type": "void-dimension:abyss",
+	"dimension_type": "void-dimension:abyss",
+	"generator": {
+		"type": "noise",
+		"settings": "void-dimension:abyss_settings",
+		"biome_source": {
+			"type": "minecraft:fixed",
+			"biome": "void-dimension:abyss"
+		}
+	}
+}

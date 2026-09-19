@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; Configuration file for `project-config-file' for emacs.
 ;; The package project-config-mode (https://github.com/balamah/project-config-mode)
 ;; makes possible to load the file.
