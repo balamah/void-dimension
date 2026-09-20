@@ -108,7 +108,11 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new EntitySpecs<>(ModEntities.MALE_GOAT,             				
 								  MaleGoatModel.MALE_GOAT,
 								  MaleGoatModel.createBodyLayer(),
-								  MaleGoatRenderer::new)
+								  MaleGoatRenderer::new),
+				new EntitySpecs<>(ModEntities.HOLLOW_KNIGHT,             				
+								  HollowKnightModel.HOLLOW_KNIGHT,
+								  HollowKnightModel.createBodyLayer(),
+								  HollowKnightRenderer::new)
 				);
 
 

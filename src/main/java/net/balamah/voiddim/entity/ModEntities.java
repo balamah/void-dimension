@@ -303,6 +303,14 @@ public class ModEntities {
 			.noLootTable().sized(0.9F, 1.3F)
 		);
 
+	public static final EntityType<HollowKnightEntity> HOLLOW_KNIGHT =
+		register(
+			"hollow_knight",
+			HollowKnightEntity.class,
+			EntityType.Builder.<HollowKnightEntity>of(HollowKnightEntity::new, MobCategory.MISC)
+			.noLootTable().sized(0.9F, 1.3F)
+		);
+
 	// Looks bad, but it should be this way.
 	// Otherwise entities will not spawn on servers
 	public static void registerEntityAttributes() {
@@ -332,6 +340,7 @@ public class ModEntities {
 		FabricDefaultAttributeRegistry.register(ModEntities.VOID_BOUND_SERVANT, VoidBoundServantEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MASHA, MashaEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MALE_GOAT, MaleGoatEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HOLLOW_KNIGHT, HollowKnightEntity.createAttributes());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -353,7 +362,8 @@ public class ModEntities {
 			ModEntities.AGGRESSIVE_NULL,
 			ModEntities.STARING_CAT,
 			ModEntities.STARING_DOG,
-			ModEntities.EYE_BRIGHT
+			ModEntities.EYE_BRIGHT,
+			ModEntities.HOLLOW_KNIGHT
 		};
 
 	public static void registerModEntities() {
