@@ -3,7 +3,7 @@ package net.balamah.voiddim.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.balamah.voiddim.VoidDimension;
-import net.balamah.voiddim.entity.custom.ConsumedSoulEntity;
+import net.balamah.voiddim.entity.custom.VengefulSpiritEntity;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -11,23 +11,25 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 
-public class ConsumedSoulRenderer
-	extends EntityRenderer<ConsumedSoulEntity, ConsumedSoulRenderState>
+public class VengefulSpiritRenderer
+	extends EntityRenderer<VengefulSpiritEntity, VengefulSpiritRenderState>
 {
 	private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(
-		VoidDimension.MOD_ID, "textures/entity/consumed_soul.png"
+		VoidDimension.MOD_ID, "textures/entity/vengeful_spirit.png"
 	);
 
-	private final ConsumedSoulModel model;
+	private final VengefulSpiritModel model;
 
-	public ConsumedSoulRenderer(EntityRendererProvider.Context context) {
+	public VengefulSpiritRenderer(EntityRendererProvider.Context context) {
 		super(context);
-		this.model = new ConsumedSoulModel(context.bakeLayer(ConsumedSoulModel.CONSUMED_SOUL));
+		this.model = new VengefulSpiritModel(
+			context.bakeLayer(VengefulSpiritModel.VENGEFUL_SPIRIT)
+		);
 	}
 
 	@Override
 	public void submit(
-		ConsumedSoulRenderState state,
+		VengefulSpiritRenderState state,
 		PoseStack matrixStack,
 		SubmitNodeCollector orderedRenderCommandQueue,
 		CameraRenderState cameraRenderState
@@ -59,13 +61,13 @@ public class ConsumedSoulRenderer
 	}
 
 	@Override
-	public ConsumedSoulRenderState createRenderState() {
-		return new ConsumedSoulRenderState();
+	public VengefulSpiritRenderState createRenderState() {
+		return new VengefulSpiritRenderState();
 	}
 
 	@Override
 	public void extractRenderState(
-		ConsumedSoulEntity entity, ConsumedSoulRenderState renderState, float f
+		VengefulSpiritEntity entity, VengefulSpiritRenderState renderState, float f
 	) {
 		super.extractRenderState(entity, renderState, f);
 

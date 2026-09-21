@@ -181,7 +181,11 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new NonLivingEntitySpecs<ConsumedSoulEntity>(ModEntities.CONSUMED_SOUL,
 													ConsumedSoulModel.CONSUMED_SOUL,
 													ConsumedSoulModel.getTexturedModelData(),
-													ConsumedSoulRenderer::new)
+															 ConsumedSoulRenderer::new),
+				new NonLivingEntitySpecs<VengefulSpiritEntity>(ModEntities.VENGEFUL_SPIRIT,
+													VengefulSpiritModel.VENGEFUL_SPIRIT,
+													VengefulSpiritModel.getTexturedModelData(),
+													VengefulSpiritRenderer::new)
 				);
 
 	@Override

@@ -287,6 +287,15 @@ public class ModEntities {
 			.eyeHeight(0.0F) .clientTrackingRange(4).updateInterval(10)
 		);
 
+	public static final EntityType<VengefulSpiritEntity> VENGEFUL_SPIRIT =
+		register(
+			"vengeful_spirit",
+			VengefulSpiritEntity.class,
+			EntityType.Builder.<VengefulSpiritEntity>of(VengefulSpiritEntity::new, MobCategory.MISC)
+			.noLootTable().sized(0.5f, 0.5f)
+			.eyeHeight(0.0F) .clientTrackingRange(4).updateInterval(10)
+		);
+
 	public static final EntityType<MashaEntity> MASHA =
 		register(
 			"masha",
