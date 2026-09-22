@@ -97,3 +97,9 @@
 									 :hostName "localhost"
 									 :port 5005
 									 :name "Fabric Client (Attach)")))
+
+;; improve going to definition.
+;; Emacs lsp opens files, which are named 'ClassName.java(<package.name.ClassName',
+;; and because of that emacs opens it in fundamental-mode instead of java-mode,
+;; it is a bit irritating to type `M-x' `java-mode' again and again
+(add-to-list 'auto-mode-alist '(".*\\.java.*" . java-mode))
