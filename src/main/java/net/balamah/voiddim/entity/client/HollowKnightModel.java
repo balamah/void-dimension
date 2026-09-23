@@ -1,5 +1,7 @@
 package net.balamah.voiddim.entity.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.balamah.voiddim.VoidDimension;
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.*;
@@ -12,8 +14,12 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.HumanoidArm;
    
-public class HollowKnightModel extends EntityModel<HollowKnightRenderState> {
+public class HollowKnightModel
+	extends EntityModel<HollowKnightRenderState>
+	implements ArmedModel<HollowKnightRenderState>
+{
     public static final ModelLayerLocation HOLLOW_KNIGHT =
 		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "hollow_knight"),
 							 "main");
@@ -164,5 +170,38 @@ public class HollowKnightModel extends EntityModel<HollowKnightRenderState> {
 		this.attack3Animation.apply(state.attack3State, state.ageInTicks);
 		this.attack4Animation.apply(state.attack4State, state.ageInTicks);
 		this.vengefulSpiritAnimation.apply(state.vengefulSpiritState, state.ageInTicks);
+	}
+
+	@Override
+	public void translateToHand(
+		HollowKnightRenderState state, HumanoidArm arm, PoseStack poseStack
+	) {
+		this.root.translateAndRotate(poseStack);
+		this.body.translateAndRotate(poseStack);
+		this.arms.translateAndRotate(poseStack);
+
+		if (arm == HumanoidArm.RIGHT) {
+			this.right_arm.translateAndRotate(poseStack);
+			this.right_elbow.translateAndRotate(poseStack);
+
+			poseStack.translate(0.08F, 1F, 0.0F);
+		} else {
+			this.left_arm.translateAndRotate(poseStack);
+			this.left_elbow.translateAndRotate(poseStack);
+
+			poseStack.translate(-0.08F, 1F, 0.0F);
+		}
+	}
+
+	public ModelPart getRightHand() {
+		return this.right_elbow;
+	}
+
+	public ModelPart getLeftHand() {
+		return this.left_elbow;
+	}
+
+	protected ModelPart getAttackingArm(HumanoidArm arm) {
+		return arm == HumanoidArm.LEFT ? this.left_arm : this.right_arm;
 	}
 }

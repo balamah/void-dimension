@@ -3,13 +3,24 @@ package net.balamah.voiddim.entity.custom;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 
 public class HollowKnightEntity extends CorruptedHostileEntity {
 	public final AnimationState walkingState = new AnimationState();
@@ -87,5 +98,28 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 		if (this.attackInterval > 0) {
 			this.attackInterval--;
 		}
+	}
+
+	@Override
+	protected void populateDefaultEquipmentSlots(
+		RandomSource random, DifficultyInstance difficulty
+	) {
+		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
+	}
+
+	@Override
+	@Nullable
+	public SpawnGroupData finalizeSpawn(
+		ServerLevelAccessor world,
+		DifficultyInstance difficulty,
+		EntitySpawnReason spawnReason,
+		@Nullable SpawnGroupData entityData
+	) {
+		entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
+
+		this.populateDefaultEquipmentSlots(this.random, difficulty);
+		this.populateDefaultEquipmentEnchantments(world, this.random, difficulty);
+
+		return entityData;
 	}
 }

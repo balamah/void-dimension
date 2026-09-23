@@ -1,14 +1,14 @@
 package net.balamah.voiddim.entity.client;
 
+import net.balamah.voiddim.entity.client.base.WeaponArmedEntityRenderer;
 import net.balamah.voiddim.entity.custom.HollowKnightEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
 
 public class HollowKnightRenderer
-	extends MobRenderer<HollowKnightEntity,
+	extends WeaponArmedEntityRenderer<HollowKnightEntity,
 							  HollowKnightRenderState,
 							  HollowKnightModel> 
 {
