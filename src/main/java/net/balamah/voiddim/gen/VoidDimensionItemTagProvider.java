@@ -10,6 +10,7 @@ import net.minecraft.tags.ItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.balamah.voiddim.tag.ModItemTags;
 import net.balamah.voiddim.item.ModItems;
+import net.balamah.voiddim.material.armor.VoidArmorMaterial;
 import net.minecraft.world.item.Item;
 
 public class VoidDimensionItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
@@ -118,7 +119,10 @@ public class VoidDimensionItemTagProvider extends FabricTagsProvider.ItemTagsPro
 			.add(this.key(ModItems.VOID_BOOTS));
 
 		this.builder(ItemTags.LUNGE_ENCHANTABLE)
-			.add(this.key(ModItems.VOID_SPEAR));
+				.add(this.key(ModItems.VOID_SPEAR));
+
+		this.builder(VoidArmorMaterial.REPAIRS_VOID_ARMOR)
+				.add(this.key(ModItems.VOID_INGOT));
 	}
 
 	private ResourceKey<Item> key(Item item) {
