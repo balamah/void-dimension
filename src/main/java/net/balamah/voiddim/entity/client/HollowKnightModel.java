@@ -180,16 +180,17 @@ public class HollowKnightModel
 		this.body.translateAndRotate(poseStack);
 		this.arms.translateAndRotate(poseStack);
 
+		float swordHeight = -0.3f;
 		if (arm == HumanoidArm.RIGHT) {
 			this.right_arm.translateAndRotate(poseStack);
 			this.right_elbow.translateAndRotate(poseStack);
 
-			poseStack.translate(0.08F, 1F, 0.0F);
+			poseStack.translate(0.08F, swordHeight, 0.0F);
 		} else {
 			this.left_arm.translateAndRotate(poseStack);
 			this.left_elbow.translateAndRotate(poseStack);
 
-			poseStack.translate(-0.08F, 1F, 0.0F);
+			poseStack.translate(-0.08F, swordHeight, 0.0F);
 		}
 	}
 
