@@ -10,4 +10,5 @@ public class HollowKnightRenderState extends ArmedEntityRenderState {
 	public final AnimationState attack3State = new AnimationState();
 	public final AnimationState attack4State = new AnimationState();
 	public final AnimationState vengefulSpiritState = new AnimationState();
+	public boolean isHurting = false;
 }

@@ -1,6 +1,9 @@
 package net.balamah.voiddim.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+
+import org.joml.Quaternionfc;
 
 import net.balamah.voiddim.VoidDimension;
 import net.minecraft.client.animation.KeyframeAnimation;
@@ -180,17 +183,14 @@ public class HollowKnightModel
 		this.body.translateAndRotate(poseStack);
 		this.arms.translateAndRotate(poseStack);
 
-		float swordHeight = -0.3f;
-		if (arm == HumanoidArm.RIGHT) {
+		if (state.isHurting && arm == HumanoidArm.RIGHT) {
 			this.right_arm.translateAndRotate(poseStack);
 			this.right_elbow.translateAndRotate(poseStack);
-
-			poseStack.translate(0.08F, swordHeight, 0.0F);
+			poseStack.translate(0.08F, -0.3f, 0.0F);
 		} else {
-			this.left_arm.translateAndRotate(poseStack);
-			this.left_elbow.translateAndRotate(poseStack);
-
-			poseStack.translate(-0.08F, swordHeight, 0.0F);
+			poseStack.translate(0.6F, -0.1F, 0.25F);
+			poseStack.mulPose(Axis.XP.rotationDegrees(90f));
+			poseStack.mulPose(Axis.ZP.rotationDegrees(90f));
 		}
 	}
 

@@ -29,6 +29,7 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 	public final AnimationState attack3State = new AnimationState();
 	public final AnimationState attack4State = new AnimationState();
 	public final AnimationState vengefulSpiritState = new AnimationState();
+	public boolean isHurting;
 
 	protected AnimationState[] normalAttackAnimations = {
 		this.attack1State, this.attack2State, this.attack3State, this.attack4State
@@ -57,9 +58,11 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 			case ModEntityStatuses.ATTACK:
 				this.stopAnimations(this.normalAttackAnimations);
 				this.playRandomAnimation(this.normalAttackAnimations);
+				this.isHurting = true;
 				break;
 			case ModEntityStatuses.STOP_ATTACK:
 				this.stopAnimations(this.normalAttackAnimations);
+				this.isHurting = false;
 				break;
 			default: super.handleEntityEvent(id);
 				break;

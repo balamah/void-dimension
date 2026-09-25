@@ -34,6 +34,8 @@ public class HollowKnightRenderer
 	{
 		super.extractRenderState(entity, renderState, f);
 
+		renderState.isHurting = entity.isHurting;
+
 		renderState.walkingState.copyFrom(entity.walkingState);
 		renderState.attack1State.copyFrom(entity.attack1State);
 		renderState.attack2State.copyFrom(entity.attack2State);
