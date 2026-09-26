@@ -175,6 +175,7 @@ public class HollowKnightModel
 		this.vengefulSpiritAnimation.apply(state.vengefulSpiritState, state.ageInTicks);
 	}
 
+	// TODO: Change fucking sword rotation
 	@Override
 	public void translateToHand(
 		HollowKnightRenderState state, HumanoidArm arm, PoseStack poseStack
@@ -188,7 +189,7 @@ public class HollowKnightModel
 			this.right_elbow.translateAndRotate(poseStack);
 			poseStack.translate(0.08F, -0.3f, 0.0F);
 		} else {
-			poseStack.translate(0.6F, -0.1F, 0.25F);
+			poseStack.translate(0.8F, -0.1F, 0.25F);
 			poseStack.mulPose(Axis.XP.rotationDegrees(90f));
 			poseStack.mulPose(Axis.ZP.rotationDegrees(90f));
 		}
