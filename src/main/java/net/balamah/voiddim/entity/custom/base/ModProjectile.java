@@ -4,6 +4,8 @@ import net.minecraft.world.entity.projectile.hurtingprojectile.AbstractHurtingPr
 import net.minecraft.world.level.SimpleExplosionDamageCalculator;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.BlockHitResult;
@@ -19,10 +21,10 @@ import java.util.function.Function;
 
 import org.jspecify.annotations.Nullable;
 
-import net.balamah.voiddim.sound.ModSounds;
-
 public abstract class ModProjectile extends AbstractHurtingProjectile {
 	protected EntityType<?>[] immuneEntities = {};
+
+	protected Holder<SoundEvent> hitSound;
 
 	public static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR =
 		new SimpleExplosionDamageCalculator(
@@ -52,24 +54,7 @@ public abstract class ModProjectile extends AbstractHurtingProjectile {
 		this.discard();
 	}
 
-	protected void explode(Vec3 pos) {
-		this.level()
-			.explode(
-				this,
-				null,
-				EXPLOSION_DAMAGE_CALCULATOR,
-				pos.x(),
-				pos.y(),
-				pos.z(),
-				0.5f,
-				false,
-				Level.ExplosionInteraction.TRIGGER,
-				ParticleTypes.GUST_EMITTER_SMALL,
-				ParticleTypes.GUST_EMITTER_LARGE,
-				WeightedList.of(),
-				ModSounds.CONSUMED_SOUL_HIT
-			);
-	}
+	protected abstract void explode(Vec3 pos);
 
 	@Override
 	protected boolean shouldBurn() {

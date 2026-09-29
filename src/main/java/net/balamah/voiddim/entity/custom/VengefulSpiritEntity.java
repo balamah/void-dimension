@@ -7,15 +7,20 @@ import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.SimpleExplosionDamageCalculator;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.random.WeightedList;
+
 import java.util.Optional;
 import java.util.function.Function;
 
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.entity.custom.base.ModProjectile;
+import net.balamah.voiddim.sound.ModSounds;
 
 public class VengefulSpiritEntity extends ModProjectile {
 	public static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR =
@@ -40,5 +45,26 @@ public class VengefulSpiritEntity extends ModProjectile {
 
 			this.disappear();
 		}
+	}
+	
+	// TODO: Change vengeful spirit hit sound
+	@Override
+	protected void explode(Vec3 pos) {
+		this.level()
+			.explode(
+				this,
+				null,
+				EXPLOSION_DAMAGE_CALCULATOR,
+				pos.x(),
+				pos.y(),
+				pos.z(),
+				0f,
+				false,
+				Level.ExplosionInteraction.TRIGGER,
+				ParticleTypes.GUST_EMITTER_SMALL,
+				ParticleTypes.GUST_EMITTER_LARGE,
+				WeightedList.of(),
+				ModSounds.CONSUMED_SOUL_HIT
+			);
 	}
 }

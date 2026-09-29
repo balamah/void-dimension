@@ -2,6 +2,7 @@ package net.balamah.voiddim.entity.custom;
 
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -9,7 +10,9 @@ import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
 
 import net.balamah.voiddim.entity.ModEntityStatuses;
+import net.balamah.voiddim.entity.custom.ai.goal.ShootVengefulSpiritGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -45,7 +48,7 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 		return Monster.createMonsterAttributes()
 			.add(Attributes.FOLLOW_RANGE, 32)
 			.add(Attributes.MOVEMENT_SPEED, 0.4F)
-			.add(Attributes.ATTACK_DAMAGE, 13.0F)
+			.add(Attributes.ATTACK_DAMAGE, 6.9F)
 			.add(Attributes.STEP_HEIGHT, 1.0)
 			.add(Attributes.MAX_HEALTH, 55);
 	}
@@ -64,9 +67,31 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 				this.stopAnimations(this.normalAttackAnimations);
 				this.isHurting = false;
 				break;
+			case ModEntityStatuses.PROJECTILE_INVOKE:
+				this.vengefulSpiritState.start(this.tickCount);
+				break;
+			case ModEntityStatuses.STOP_SPECIAL_ATTACK:
+				this.vengefulSpiritState.stop();
+				break;
 			default: super.handleEntityEvent(id);
 				break;
 		}
+	}
+
+	@Override
+	@Nullable
+	public SpawnGroupData finalizeSpawn(
+		ServerLevelAccessor world,
+		DifficultyInstance difficulty,
+		EntitySpawnReason spawnReason,
+		@Nullable SpawnGroupData entityData
+	) {
+		entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
+
+		this.populateDefaultEquipmentSlots(this.random, difficulty);
+		this.populateDefaultEquipmentEnchantments(world, this.random, difficulty);
+
+		return entityData;
 	}
 
 	@Override
@@ -111,18 +136,18 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 	}
 
 	@Override
-	@Nullable
-	public SpawnGroupData finalizeSpawn(
-		ServerLevelAccessor world,
-		DifficultyInstance difficulty,
-		EntitySpawnReason spawnReason,
-		@Nullable SpawnGroupData entityData
-	) {
-		entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
+	protected void registerGoals() {
+		super.registerGoals();
 
-		this.populateDefaultEquipmentSlots(this.random, difficulty);
-		this.populateDefaultEquipmentEnchantments(world, this.random, difficulty);
+		// TODO: Change hollow knight shoot preparation
+		Goal vengefulSpiritGoal =
+			new ShootVengefulSpiritGoal<HollowKnightEntity>(
+				this,
+				ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
+				ModSounds.VOID_HARBINGER_SHOOT,
+				5, 9
+			);
 
-		return entityData;
+		this.goalSelector.addGoal(1, vengefulSpiritGoal);
 	}
 }

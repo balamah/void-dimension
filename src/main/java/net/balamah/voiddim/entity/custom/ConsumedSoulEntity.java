@@ -1,6 +1,8 @@
 package net.balamah.voiddim.entity.custom;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -9,7 +11,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.balamah.voiddim.entity.custom.base.ModProjectile;
+import net.balamah.voiddim.sound.ModSounds;
 
 import java.util.Arrays;
 
@@ -58,5 +62,25 @@ public class ConsumedSoulEntity extends ModProjectile {
 			
 			this.disappear();
 		}
+	}
+
+	@Override
+	protected void explode(Vec3 pos) {
+		this.level()
+			.explode(
+				this,
+				null,
+				EXPLOSION_DAMAGE_CALCULATOR,
+				pos.x(),
+				pos.y(),
+				pos.z(),
+				0.5f,
+				false,
+				Level.ExplosionInteraction.TRIGGER,
+				ParticleTypes.GUST_EMITTER_SMALL,
+				ParticleTypes.GUST_EMITTER_LARGE,
+				WeightedList.of(),
+				ModSounds.CONSUMED_SOUL_HIT
+			);
 	}
 }
