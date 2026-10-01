@@ -139,12 +139,11 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 
-		// TODO: Change hollow knight shoot preparation
 		Goal vengefulSpiritGoal =
 			new ShootVengefulSpiritGoal<HollowKnightEntity>(
 				this,
-				ModSounds.VOID_HARBINGER_SHOOT_PREPARE,
-				ModSounds.VOID_HARBINGER_SHOOT,
+				ModSounds.VENGEFUL_SPIRIT_PREPARE.value(),
+				ModSounds.VENGEFUL_SPIRIT_SHOOT,
 				5, 9
 			);
 

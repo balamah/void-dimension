@@ -743,15 +743,17 @@ public static void registerModPotions() {
 
 * Sources
 ** Sounds
-- void_harbinger.shoot_prepare    :: https://pixabay.com/sound-effects/search/dark%20magic/
-- void_harbinger.shoot            :: https://pixabay.com/sound-effects/search/dark%20magic/
-- void_harbinger.teleport         :: blade of darkness (desaparece-vamp1.wav)
-- shattered_sentinel_master.death :: https://depositphotos.com/sound-effect/rumbling-impact-ancient-stony-stride-784492644.html
-- staring_entity.death            :: blade of darkness (muerte-Ldm.wav)
-- special_attack.lightning        :: https://pixabay.com/sound-effects/search/lightning/
-- special_attacks.counter_attack  :: https://pixabay.com/sound-effects/search/power%20attack/
-- entity303.death                 :: nazgul screams from The lord of the rings
-- corrupted_entity.death          :: blade of darkness (muerte-Lch2.wav)
+- void_harbinger.shoot_prepare           :: https://pixabay.com/sound-effects/search/dark%20magic/
+- void_harbinger.shoot                   :: https://pixabay.com/sound-effects/search/dark%20magic/
+- void_harbinger.teleport                :: blade of darkness (desaparece-vamp1.wav)
+- shattered_sentinel_master.death        :: https://depositphotos.com/sound-effect/rumbling-impact-ancient-stony-stride-784492644.html
+- staring_entity.death                   :: blade of darkness (muerte-Ldm.wav)
+- special_attack.lightning               :: https://pixabay.com/sound-effects/search/lightning/
+- special_attacks.counter_attack         :: https://pixabay.com/sound-effects/search/power%20attack/
+- entity303.death                        :: nazgul screams from The lord of the rings
+- corrupted_entity.death                 :: blade of darkness (muerte-Lch2.wav)
+- special_attack.vengeful_spirit.prepare :: hollow knight (mage_knight_magic_prepare.wav)
+- special_attack.vengeful_spirit.shoot   :: hollow knight (mage_knight_projectile_shoot.wav)
 
 ** Textures
 - Corrupted mobs black skin :: https://modrinth.com/mod/intothevoid

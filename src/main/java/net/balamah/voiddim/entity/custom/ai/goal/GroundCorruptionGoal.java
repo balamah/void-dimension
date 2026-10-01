@@ -9,9 +9,6 @@ import net.balamah.voiddim.custom.McCodeHelper;
 
 import java.util.Random;
 
-import net.balamah.voiddim.block.ModBlocks;
-
-// TODO: Finish some time
 public class GroundCorruptionGoal<T extends Entity303> extends SlowMovementGoal<T> {
 	protected boolean corruptedGroundPredicate;
 

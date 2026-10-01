@@ -47,7 +47,6 @@ public class VengefulSpiritEntity extends ModProjectile {
 		}
 	}
 	
-	// TODO: Change vengeful spirit hit sound
 	@Override
 	protected void explode(Vec3 pos) {
 		this.level()
@@ -64,7 +63,7 @@ public class VengefulSpiritEntity extends ModProjectile {
 				ParticleTypes.GUST_EMITTER_SMALL,
 				ParticleTypes.GUST_EMITTER_LARGE,
 				WeightedList.of(),
-				ModSounds.CONSUMED_SOUL_HIT
+				ModSounds.VENGEFUL_SPIRIT_PREPARE
 			);
 	}
 }

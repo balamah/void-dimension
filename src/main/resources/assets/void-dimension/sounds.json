@@ -335,6 +335,24 @@
 			}
 		]
 	},
+	"special_attacks.vengeful_spirit.prepare": {
+		"subtitle": "sound.void-dimension.special_attack.vengeful_spirit_prepare",
+		"sounds": [
+			{
+				"name": "void-dimension:special_attacks/vengeful_spirit_prepare",
+				"volume": 0.4
+			}
+		]
+	},
+	"special_attacks.vengeful_spirit.shoot": {
+		"subtitle": "sound.void-dimension.special_attack.vengeful_spirit_shoot",
+		"sounds": [
+			{
+				"name": "void-dimension:special_attacks/vengeful_spirit_shoot",
+				"volume": 0.4
+			}
+		]
+	},
 	"entity303.death": {
 		"subtitle": "sound.void-dimension.entity303.death",
 		"sounds": [

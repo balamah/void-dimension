@@ -133,6 +133,12 @@ public class ModSounds {
 	public static final SoundEvent LIGHTNING = register("special_attacks.lightning");
 	public static final SoundEvent COUNTER_ATTACK = register("special_attacks.counter_attack");
 
+	public static final Holder.Reference<SoundEvent> VENGEFUL_SPIRIT_PREPARE =
+		registerReference("special_attacks.vengeful_spirit.prepare");
+
+	public static final SoundEvent VENGEFUL_SPIRIT_SHOOT =
+		register("special_attacks.vengeful_spirit.shoot");
+
 	public static final SoundEvent ENTITY303_DEATH = register("entity303.death");
 
 	public static final Holder.Reference<SoundEvent> CONSUMED_SOUL_HIT =
