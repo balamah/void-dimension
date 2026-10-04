@@ -20,7 +20,6 @@ public class AbyssHeartItem extends Item {
 
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
-
 		if (level.isClientSide()) {
 			return InteractionResult.PASS;
 		}
