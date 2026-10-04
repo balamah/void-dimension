@@ -168,6 +168,14 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		.save(consumer, this.namespaced("upgraded_netherite"))
 		;
 
+		AdvancementHolder insanity = this.getAdvancementBuilder(
+			ModItems.VOID_HOE, "insanity", null, AdvancementType.CHALLENGE, true
+		)
+		.parent(firstSteps)
+		.addCriterion("upgrade_netherite_hoe", this.getRecipeCraftedCondition("void_hoe_smithing"))
+		.save(consumer, this.namespaced("upgraded_netherite_hoe"))
+		;
+
 		AdvancementHolder coverMeInVoid = this.getAdvancementEntry(
 			ModItems.VOID_CHESTPLATE, "cover_me_in_void", voidUpgrade,
 			null, AdvancementType.CHALLENGE, false, "got_void_armor",
@@ -240,6 +248,15 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		.requirements(AdvancementRequirements.allOf(List.of("went_from_void", "went_to_nether")))
 		.save(consumer, this.namespaced("go_to_nether"))
 			;
+
+		AdvancementHolder whereAreFourKings = this.getAdvancementBuilder(
+			Blocks.BARRIER, "where_are_four_kings",
+			null, AdvancementType.TASK, false
+		)
+		.parent(exodus)
+		.addCriterion("went_to_nether", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(ModDimensions.ABYSS_WORLD))
+		.save(consumer, this.namespaced("go_to_abyss"))
+		;
 	}
 
 	protected Advancement.Builder getAdvancementBuilder(

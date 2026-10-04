@@ -220,5 +220,9 @@
 	"advancement.void-dimension.anomaly_beaten.title": "Anomaly beaten",
 	"advancement.void-dimension.anomaly_beaten.description": "Kill entity 303 boss in illusioner's house",
 	"advancement.void-dimension.unbound.title": "Unbound",
-	"advancement.void-dimension.unbound.description": "Killed corrupted warrior and freed him"
+	"advancement.void-dimension.unbound.description": "Killed corrupted warrior and freed him",
+	"advancement.void-dimension.where_are_four_kings.title": "Where are four kings?",
+	"advancement.void-dimension.where_are_four_kings.description": "Go to abyss",
+	"advancement.void-dimension.insanity.title": "Insane intentions",
+	"advancement.void-dimension.insanity.description": "Upgrade netherite hoe to void tier"
 }

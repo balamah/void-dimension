@@ -1,0 +1,28 @@
+{
+  "parent": "void-dimension:go_to_nether",
+  "criteria": {
+    "went_to_nether": {
+      "conditions": {
+        "to": "void-dimension:abyss"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.void-dimension.where_are_four_kings.description"
+    },
+    "icon": {
+      "id": "minecraft:barrier"
+    },
+    "title": {
+      "translate": "advancement.void-dimension.where_are_four_kings.title"
+    }
+  },
+  "requirements": [
+    [
+      "went_to_nether"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

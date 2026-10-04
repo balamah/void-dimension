@@ -5,7 +5,7 @@
 		"minecraft:visual/water_fog_color": "#eae9e9"
 	},
 	"has_precipitation": false,
-	"temperature": 1,
+	"temperature": -0.5,
 	"temperature_modifier": "none",
 	"downfall": 0.4,
 	"carvers": [],
