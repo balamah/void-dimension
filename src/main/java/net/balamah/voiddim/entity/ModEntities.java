@@ -317,7 +317,7 @@ public class ModEntities {
 			"hollow_knight",
 			HollowKnightEntity.class,
 			EntityType.Builder.<HollowKnightEntity>of(HollowKnightEntity::new, MobCategory.MISC)
-			.noLootTable().sized(0.9F, 1.3F)
+			.sized(0.9F, 1.3F)
 		);
 
 	// Looks bad, but it should be this way.
