@@ -30,8 +30,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.balamah.voiddim.item.custom.CorruptedFireChargeItem;
-import net.balamah.voiddim.item.custom.ModSmithingTemplateItem;
+import net.balamah.voiddim.item.custom.*;
 import net.balamah.voiddim.material.armor.VoidArmorMaterial;
 import net.balamah.voiddim.item.custom.PrayerItem;
 import net.balamah.voiddim.material.ModMaterials;
@@ -319,6 +318,14 @@ public class ModItems {
 					.craftRemainder(Items.BUCKET)
 					.component(DataComponents.CONSUMABLE, ModFoodComponents.MALE_GOAT_MILK_BUCKET)
 					.usingConvertsTo(Items.BUCKET).stacksTo(1)
+		);
+
+
+	public static final Item ABYSS_HEART =
+		register(
+			"abyss_heart",
+			settings -> new AbyssHeartItem(settings),
+			ModItems::getVoidItemSettings
 		);
 
 	public static void registerModItems() {

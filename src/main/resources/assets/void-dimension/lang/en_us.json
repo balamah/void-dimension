@@ -107,11 +107,13 @@
 	"death.attack.eye_bright_head": "%1$s died from eye bright's head",
 	"death.attack.soul_burn": "%1$s died from soul burning",
 	"death.attack.shockwave": "%1$s died from shockwave",
+	"death.attack.vengeful_spirit": "%1$s died from vengeful spirit",
 
 	"death.attack.corruption.player": "%1$s died from corruption",
 	"death.attack.eye_bright_head.player": "%1$s died from eye bright's head",
 	"death.attack.soul_burn.player": "%1$s died from soul burning",
 	"death.attack.shockwave.player": "%1$s died from shockwave",
+	"death.attack.vengeful_spirit.player": "%1$s died from vengeful spirit",
 
 	"itemgroup.void-dimension.items": "Void dimension",
 
@@ -138,6 +140,8 @@
 	"entity.void-dimension.entity303": "Entity 303",
 	"entity.void-dimension.eye_bright": "Eye bright",
 	"entity.void-dimension.eye_bright_head": "Eye bright head",
+	"entity.void-dimension.vengeful_spirit": "Vengeful spirit",
+	"entity.void-dimension.hollow_knight": "Hollow knight",
 
 	"upgrade.void-dimension.apply_to": "Netherite Equipment",
 	"upgrade.void-dimension.ingredients": "Void Ingot",
