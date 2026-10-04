@@ -36,7 +36,7 @@ public class VengefulSpiritRenderer
 	) {
 		matrixStack.pushPose();
 
-		matrixStack.translate(0.0f, 1.5f, 0.0f);
+		matrixStack.translate(0.0f, 1.4f, 0.3f);
 
 		// Apply entity rotation
 		matrixStack.mulPose(Axis.YP.rotationDegrees(-state.yaw));
