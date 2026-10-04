@@ -353,6 +353,24 @@
 			}
 		]
 	},
+	"hollow_knight.walk": {
+		"subtitle": "sound.void-dimension.hollow_knight.walk",
+		"sounds": [
+			"void-dimension:hollow_knight/step1",
+			"void-dimension:hollow_knight/step2",
+			"void-dimension:hollow_knight/step3",
+			"void-dimension:hollow_knight/step4"
+		]
+	},
+	"hollow_knight.death": {
+		"subtitle": "sound.void-dimension.hollow_knight.death",
+		"sounds": [
+			{
+				"name": "void-dimension:hollow_knight/death",
+				"volume": 0.5
+			}
+		]
+	},
 	"entity303.death": {
 		"subtitle": "sound.void-dimension.entity303.death",
 		"sounds": [

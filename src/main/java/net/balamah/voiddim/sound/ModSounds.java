@@ -139,6 +139,9 @@ public class ModSounds {
 	public static final SoundEvent VENGEFUL_SPIRIT_SHOOT =
 		register("special_attacks.vengeful_spirit.shoot");
 
+	public static final SoundEvent HOLLOW_KNIGHT_WALK = register("hollow_knight.walk");
+	public static final SoundEvent HOLLOW_KNIGHT_DEATH = register("hollow_knight.death");
+
 	public static final SoundEvent ENTITY303_DEATH = register("entity303.death");
 
 	public static final Holder.Reference<SoundEvent> CONSUMED_SOUL_HIT =

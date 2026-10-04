@@ -754,6 +754,8 @@ public static void registerModPotions() {
 - corrupted_entity.death                 :: blade of darkness (muerte-Lch2.wav)
 - special_attack.vengeful_spirit.prepare :: hollow knight (mage_knight_magic_prepare.wav)
 - special_attack.vengeful_spirit.shoot   :: hollow knight (mage_knight_projectile_shoot.wav)
+- hollow_knight.walk                     :: hollow knight (hero_walk_footsteps_stone.wav)
+- hollow_knight.death                    :: hollow knight (hero_death_extra_details.wav) 
 
 ** Textures
 - Corrupted mobs black skin :: https://modrinth.com/mod/intothevoid
