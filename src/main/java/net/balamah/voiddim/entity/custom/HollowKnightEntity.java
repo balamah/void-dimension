@@ -103,6 +103,7 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 
 			// A magic number, don't touch
 			this.attackInterval = 13;
+			this.attackCount++;
 		}
 
 		return result;
