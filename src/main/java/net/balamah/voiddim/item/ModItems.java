@@ -136,6 +136,14 @@ public class ModItems {
 				.sword(ModMaterials.VOID_TOOL_MATERIAL, 6.5f, -2.4f)
 		);
 
+	public static final Item NAIL =
+		register(
+			"nail",
+			Item::new,
+			() -> getVoidItemSettings()
+				.sword(ModMaterials.HOLLOWNEST_MATERIAL, 5.5f, -1.4f)
+		);
+
 	public static final Item VOID_SPEAR =
 		register(
 			"void_spear",

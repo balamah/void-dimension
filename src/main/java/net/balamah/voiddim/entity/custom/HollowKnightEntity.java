@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.ShootVengefulSpiritGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.item.ModItems;
 import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -136,7 +137,7 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 	protected void populateDefaultEquipmentSlots(
 		RandomSource random, DifficultyInstance difficulty
 	) {
-		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
+		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.NAIL));
 	}
 
 	@Override
