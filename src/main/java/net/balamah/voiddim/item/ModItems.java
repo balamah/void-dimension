@@ -139,7 +139,7 @@ public class ModItems {
 	public static final Item NAIL =
 		register(
 			"nail",
-			Item::new,
+			settings -> new PoggingItem(settings, 1.9f),
 			() -> getVoidItemSettings()
 				.sword(ModMaterials.HOLLOWNEST_MATERIAL, 3.0f, -1.4f)
 		);
