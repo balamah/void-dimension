@@ -9,6 +9,7 @@ import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.AnimationState;
@@ -228,6 +229,13 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		if (this.attackInterval > 0) {
 			this.attackInterval--;
 		}
+	}
+
+	@Override
+	protected void initTargets() {
+		super.initTargets();
+
+		this.targetSelector.addGoal(1, McCodeHelper.getTargetGoal(this, HollowKnightEntity.class));
 	}
 
 	@Override

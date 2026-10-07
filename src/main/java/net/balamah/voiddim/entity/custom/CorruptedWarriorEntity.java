@@ -238,6 +238,13 @@ public class CorruptedWarriorEntity extends BossEntity
 
 
 	@Override
+	protected void initTargets() {
+		super.initTargets();
+
+		this.targetSelector.addGoal(1, McCodeHelper.getTargetGoal(this, HollowKnightEntity.class));
+	}
+
+	@Override
 	protected void initBasicGoals() {
 		this.goalSelector.addGoal(
 			7, new StayOnHomeBlockGoal(this, 1.0, 50, false, Blocks.WOOL.red(), 50)

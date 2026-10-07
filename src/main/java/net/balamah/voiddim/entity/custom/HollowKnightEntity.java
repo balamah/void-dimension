@@ -4,11 +4,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.ShootVengefulSpiritGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
@@ -19,6 +21,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -153,6 +156,16 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 			);
 
 		this.goalSelector.addGoal(1, vengefulSpiritGoal);
+	}
+
+	@Override
+	protected void initTargets() {
+		this.targetSelector.addGoal(
+			0, McCodeHelper.getTargetGoal(this, CorruptedWarriorEntity.class)
+		);
+
+		this.targetSelector.addGoal(1, McCodeHelper.getTargetGoal(this, Player.class));
+		this.targetSelector.addGoal(2, McCodeHelper.getTargetGoal(this, AgeableMob.class));
 	}
 
 	@Override
