@@ -141,7 +141,7 @@ public class ModItems {
 			"nail",
 			Item::new,
 			() -> getVoidItemSettings()
-				.sword(ModMaterials.HOLLOWNEST_MATERIAL, 5.5f, -1.4f)
+				.sword(ModMaterials.HOLLOWNEST_MATERIAL, 3.0f, -1.4f)
 		);
 
 	public static final Item VOID_SPEAR =

@@ -10,8 +10,10 @@ import net.minecraft.tags.ItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.balamah.voiddim.tag.ModItemTags;
 import net.balamah.voiddim.item.ModItems;
+import net.balamah.voiddim.material.armor.HollownestArmorMaterial;
 import net.balamah.voiddim.material.armor.VoidArmorMaterial;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 public class VoidDimensionItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
 	public VoidDimensionItemTagProvider(
@@ -123,6 +125,9 @@ public class VoidDimensionItemTagProvider extends FabricTagsProvider.ItemTagsPro
 
 		this.builder(VoidArmorMaterial.REPAIRS_VOID_ARMOR)
 				.add(this.key(ModItems.VOID_INGOT));
+
+		this.builder(HollownestArmorMaterial.REPAIRS_HOLLOWNEST_ARMOR)
+				.add(this.key(Items.POINTED_DRIPSTONE));
 	}
 
 	private ResourceKey<Item> key(Item item) {
