@@ -3,7 +3,6 @@ package net.balamah.voiddim.item.custom;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.phys.Vec3;
 
 public class PoggingItem extends Item {
 	protected float jumpStrength;
@@ -18,8 +17,15 @@ public class PoggingItem extends Item {
 	public void postHurtEnemy(ItemStack itemStack, LivingEntity victim, LivingEntity attacker) {
 		super.postHurtEnemy(itemStack, victim, attacker);
 
-		if (attacker.getY() > victim.getY()) {
-			attacker.addDeltaMovement(new Vec3(0, this.jumpStrength, 0));
+		boolean isFalling = attacker.getDeltaMovement().y < 0;
+		if (attacker.getY() > victim.getY() && isFalling) {
+			attacker.setDeltaMovement(
+				attacker.getDeltaMovement().x,
+				this.jumpStrength,
+				attacker.getDeltaMovement().z
+			);
+
+			attacker.causeFallDamage(attacker.fallDistance, 0.0F, attacker.damageSources().fall());
 		}
 	}
 }
