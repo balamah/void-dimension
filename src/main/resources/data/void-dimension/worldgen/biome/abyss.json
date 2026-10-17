@@ -14,33 +14,33 @@
 		"monster": [
 			{
 				"type": "void-dimension:mantis",
-				"weight": 24,
+				"weight": 6,
 				"minCount": 1,
 				"maxCount": 1
 			},
 			{
 				"type": "void-dimension:masha",
-				"weight": 30,
+				"weight": 13,
 				"minCount": 1,
 				"maxCount": 1
 			},
 			{
 				"type": "void-dimension:male_goat",
-				"weight": 40,
+				"weight": 10,
 				"minCount": 1,
 				"maxCount": 1
 			},
 			{
 				"type": "void-dimension:snowman",
-				"weight": 25,
+				"weight": 10,
 				"minCount": 1,
 				"maxCount": 1
 			},
 			{
 				"type": "void-dimension:hollow_knight",
-				"weight": 50,
+				"weight": 15,
 				"minCount": 1,
-				"maxCount": 2
+				"maxCount": 1
 			}
 		]
 	},

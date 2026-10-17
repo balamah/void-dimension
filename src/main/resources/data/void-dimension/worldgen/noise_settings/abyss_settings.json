@@ -1,10 +1,10 @@
 {
 	"sea_level": 0,
-	"disable_mob_generation": true,
+	"disable_mob_generation": false,
 	"ore_veins_enabled": false,
 	"aquifers_enabled": false,
 	"legacy_random_source": false,
-	"default_block": { "Name": "minecraft:barrier" },
+	"default_block": { "Name": "minecraft:deepslate" },
 	"default_fluid": { "Name": "minecraft:air" },
 	"spawn_target": [],
 	"noise": {
@@ -39,7 +39,7 @@
 	"surface_rule": {
 		"type": "minecraft:block",
 		"result_state": {
-			"Name": "minecraft:barrier"
+			"Name": "minecraft:deepslate"
 		}
 	}
 }
