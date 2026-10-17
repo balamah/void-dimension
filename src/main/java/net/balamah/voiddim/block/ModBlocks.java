@@ -17,6 +17,7 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.BarrierBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DropExperienceBlock;
@@ -223,6 +224,18 @@ public class ModBlocks {
 
 	public static final Block OLD_CORPSE_PILE =
 		register("old_corpse_pile", CorpseBlock::new, corpseBlockSettings, true, false);
+
+	public static final Block ABYSSIUM = register(
+		"abyssium",
+		BarrierBlock::new,
+		BlockBehaviour.Properties.of()
+			.strength(-1.0F, 3600000.8F)
+			.noLootTable()
+			.noOcclusion()
+			.noTerrainParticles()
+			.pushReaction(PushReaction.BLOCK),
+		true, false
+	);
 
 	public static void registerModBlocks() {
 		VoidDimension.LOGGER.info("Registering mod blocks for " + VoidDimension.MOD_ID);
