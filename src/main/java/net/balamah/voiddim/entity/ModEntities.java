@@ -21,7 +21,7 @@ public class ModEntities {
 		register(
 			"mantis",
 			MantisEntity.class,
-			EntityType.Builder.of(MantisEntity::new, MobCategory.CREATURE)
+			EntityType.Builder.of(MantisEntity::new, MobCategory.MONSTER)
 			.sized(1f, 2.5f)
 		);
 
@@ -29,7 +29,7 @@ public class ModEntities {
 		register(
 			"snowman",
 			SnowmanEntity.class,
-			EntityType.Builder.of(SnowmanEntity::new, MobCategory.CREATURE)
+			EntityType.Builder.of(SnowmanEntity::new, MobCategory.MONSTER)
 			.sized(0.6f, 1.95f)
 		);
 
@@ -300,7 +300,7 @@ public class ModEntities {
 		register(
 			"masha",
 			MashaEntity.class,
-			EntityType.Builder.<MashaEntity>of(MashaEntity::new, MobCategory.MISC)
+			EntityType.Builder.<MashaEntity>of(MashaEntity::new, MobCategory.MONSTER)
 			.sized(0.6f, 2f)
 		);
 
@@ -308,7 +308,7 @@ public class ModEntities {
 		register(
 			"male_goat",
 			MaleGoatEntity.class,
-			EntityType.Builder.<MaleGoatEntity>of(MaleGoatEntity::new, MobCategory.MISC)
+			EntityType.Builder.<MaleGoatEntity>of(MaleGoatEntity::new, MobCategory.MONSTER)
 			.noLootTable().sized(0.9F, 1.3F)
 		);
 
@@ -316,7 +316,7 @@ public class ModEntities {
 		register(
 			"hollow_knight",
 			HollowKnightEntity.class,
-			EntityType.Builder.<HollowKnightEntity>of(HollowKnightEntity::new, MobCategory.MISC)
+			EntityType.Builder.<HollowKnightEntity>of(HollowKnightEntity::new, MobCategory.MONSTER)
 			.sized(0.9F, 1.3F)
 		);
 
@@ -355,6 +355,10 @@ public class ModEntities {
 	@SuppressWarnings("unchecked")
 	protected static final EntityType<? extends Mob>[] spawnRestrictedEntities =
 		new EntityType[] {
+			ModEntities.MANTIS,
+			ModEntities.SNOWMAN,
+			ModEntities.MASHA,
+			ModEntities.MALE_GOAT,
 			ModEntities.CORRUPTED_STALKER,
 			ModEntities.SHATTERED_SENTINEL,
 			ModEntities.WEREWOLF,

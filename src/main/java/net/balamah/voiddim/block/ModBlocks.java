@@ -233,6 +233,7 @@ public class ModBlocks {
 			.noLootTable()
 			.noOcclusion()
 			.noTerrainParticles()
+			.isValidSpawn((state, level, pos, entityType) -> true)
 			.pushReaction(PushReaction.BLOCK),
 		true, false
 	);
