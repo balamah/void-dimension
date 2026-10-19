@@ -5,8 +5,12 @@
 		"type": "noise",
 		"settings": "void-dimension:abyss_settings",
 		"biome_source": {
-			"type": "minecraft:fixed",
-			"biome": "void-dimension:abyss"
+			"type": "checkerboard",
+			"scale": 2,
+			"biomes": [
+				"void-dimension:abyss_default",
+				"void-dimension:abyss_hollows"
+			]
 		}
 	}
 }

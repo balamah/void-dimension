@@ -11,7 +11,7 @@
 	"carvers": [],
 	"features": [],
 	"spawners": {
-		"monster": [
+		"creature": [
 			{
 				"type": "void-dimension:mantis",
 				"weight": 6,
@@ -20,7 +20,7 @@
 			},
 			{
 				"type": "void-dimension:masha",
-				"weight": 13,
+				"weight": 25,
 				"minCount": 1,
 				"maxCount": 1
 			},
@@ -33,12 +33,6 @@
 			{
 				"type": "void-dimension:snowman",
 				"weight": 10,
-				"minCount": 1,
-				"maxCount": 1
-			},
-			{
-				"type": "void-dimension:hollow_knight",
-				"weight": 15,
 				"minCount": 1,
 				"maxCount": 1
 			}
@@ -58,10 +52,6 @@
 			"charge": 3.0
 		},
 		"void-dimension:snowman": {
-			"energy_budget": 6.0,
-			"charge": 3.0
-		},
-		"void-dimension:hollow_knight": {
 			"energy_budget": 6.0,
 			"charge": 3.0
 		}

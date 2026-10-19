@@ -21,7 +21,7 @@ public class ModEntities {
 		register(
 			"mantis",
 			MantisEntity.class,
-			EntityType.Builder.of(MantisEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.of(MantisEntity::new, MobCategory.CREATURE)
 			.sized(1f, 2.5f)
 		);
 
@@ -29,7 +29,7 @@ public class ModEntities {
 		register(
 			"snowman",
 			SnowmanEntity.class,
-			EntityType.Builder.of(SnowmanEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.of(SnowmanEntity::new, MobCategory.CREATURE)
 			.sized(0.6f, 1.95f)
 		);
 
@@ -300,7 +300,7 @@ public class ModEntities {
 		register(
 			"masha",
 			MashaEntity.class,
-			EntityType.Builder.<MashaEntity>of(MashaEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.<MashaEntity>of(MashaEntity::new, MobCategory.CREATURE)
 			.sized(0.6f, 2f)
 		);
 
@@ -308,7 +308,7 @@ public class ModEntities {
 		register(
 			"male_goat",
 			MaleGoatEntity.class,
-			EntityType.Builder.<MaleGoatEntity>of(MaleGoatEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.<MaleGoatEntity>of(MaleGoatEntity::new, MobCategory.CREATURE)
 			.noLootTable().sized(0.9F, 1.3F)
 		);
 
