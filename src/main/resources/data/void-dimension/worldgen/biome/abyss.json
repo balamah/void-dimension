@@ -41,7 +41,7 @@
 		"monster": [
 			{
 				"type": "void-dimension:hollow_knight",
-				"weight": 5,
+				"weight": 2,
 				"minCount": 1,
 				"maxCount": 1
 			}
@@ -49,23 +49,23 @@
 	},
 	"spawn_costs": {
 		"void-dimension:hollow_knight": {
-			"energy_budget": 6.0,
+			"energy_budget": 4.0,
 			"charge": 3.0
 		},
 		"void-dimension:mantis": {
-			"energy_budget": 6.0,
+			"energy_budget": 4.0,
 			"charge": 3.0
 		},
 		"void-dimension:masha": {
-			"energy_budget": 6.0,
+			"energy_budget": 4.0,
 			"charge": 3.0
 		},
 		"void-dimension:male_goat": {
-			"energy_budget": 6.0,
+			"energy_budget": 4.0,
 			"charge": 3.0
 		},
 		"void-dimension:snowman": {
-			"energy_budget": 6.0,
+			"energy_budget": 4.0,
 			"charge": 3.0
 		}
 	},
