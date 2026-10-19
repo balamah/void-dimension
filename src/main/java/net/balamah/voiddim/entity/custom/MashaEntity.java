@@ -1,6 +1,7 @@
 package net.balamah.voiddim.entity.custom;
 
 import net.balamah.voiddim.entity.ModEntities;
+import net.balamah.voiddim.entity.custom.base.AnomalyEntity;
 import net.balamah.voiddim.item.ModItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -29,7 +30,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
-public class MashaEntity extends Animal {
+public class MashaEntity extends AnomalyEntity {
 	public MashaEntity(EntityType<? extends Animal> type, Level level) {
 		super(type, level);
 	}

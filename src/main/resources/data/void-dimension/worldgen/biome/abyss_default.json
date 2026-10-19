@@ -5,6 +5,7 @@
 		"minecraft:visual/water_fog_color": "#eae9e9"
 	},
 	"has_precipitation": false,
+	"creature_spawn_probability": 0.4,
 	"temperature": -0.5,
 	"temperature_modifier": "none",
 	"downfall": 0.4,

@@ -1,15 +1,18 @@
 package net.balamah.voiddim.entity.custom;
 
+import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.item.ModItems;
 
 import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.item.Items;
 
 public class MaleGoatEntity extends Goat {
@@ -37,5 +40,12 @@ public class MaleGoatEntity extends Goat {
 		}
 
 		return interactionResult;
+	}
+
+	@Override
+	public float getWalkTargetValue(BlockPos pos, LevelReader level) {
+		return level.getBlockState(pos.below()).is(ModBlocks.ABYSSIUM)
+			? 10.0F
+			: super.getWalkTargetValue(pos, level);
 	}
 }

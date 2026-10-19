@@ -20,8 +20,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.balamah.voiddim.entity.ModEntities;
+import net.balamah.voiddim.entity.custom.base.AnomalyEntity;
 
-public class MantisEntity extends Animal {
+public class MantisEntity extends AnomalyEntity {
 	public final AnimationState idleAnimationState = new AnimationState();
 	protected int idleAnimationTimeout = 0;
 

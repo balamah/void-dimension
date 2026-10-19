@@ -15,6 +15,7 @@ import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.block.ModBlocks;
 
 public class ModEntities {
 	public static final EntityType<MantisEntity> MANTIS =
@@ -355,10 +356,6 @@ public class ModEntities {
 	@SuppressWarnings("unchecked")
 	protected static final EntityType<? extends Mob>[] spawnRestrictedEntities =
 		new EntityType[] {
-			ModEntities.MANTIS,
-			ModEntities.SNOWMAN,
-			ModEntities.MASHA,
-			ModEntities.MALE_GOAT,
 			ModEntities.CORRUPTED_STALKER,
 			ModEntities.SHATTERED_SENTINEL,
 			ModEntities.WEREWOLF,
@@ -376,6 +373,15 @@ public class ModEntities {
 			ModEntities.STARING_CAT,
 			ModEntities.STARING_DOG,
 			ModEntities.EYE_BRIGHT,
+		};
+
+	@SuppressWarnings("unchecked")
+	protected static final EntityType<? extends Mob>[] spawnAbyssRestrictedEntities =
+		new EntityType[] {
+			ModEntities.MANTIS,
+			ModEntities.SNOWMAN,
+			ModEntities.MASHA,
+			ModEntities.MALE_GOAT,
 			ModEntities.HOLLOW_KNIGHT
 		};
 
@@ -394,6 +400,22 @@ public class ModEntities {
 				SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				Mob::checkMobSpawnRules
+			);
+		}
+	}
+
+	public static void registerAbyssSpawnRestrictions() {
+		VoidDimension.LOGGER.info(
+			"Registering mob spawn restrictions in abyss for " + VoidDimension.MOD_ID
+		);
+
+		for (EntityType<? extends Mob> entityType : spawnAbyssRestrictedEntities) {
+			SpawnPlacements.register(
+				entityType,
+				SpawnPlacementTypes.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				(type, level, reason, pos, random) ->
+					level.getBlockState(pos.below()).is(ModBlocks.ABYSSIUM)
 			);
 		}
 	}
