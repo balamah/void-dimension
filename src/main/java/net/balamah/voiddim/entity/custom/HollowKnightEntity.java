@@ -165,7 +165,6 @@ public class HollowKnightEntity extends CorruptedHostileEntity {
 		);
 
 		this.targetSelector.addGoal(1, McCodeHelper.getTargetGoal(this, Player.class));
-		this.targetSelector.addGoal(2, McCodeHelper.getTargetGoal(this, AgeableMob.class));
 	}
 
 	@Override

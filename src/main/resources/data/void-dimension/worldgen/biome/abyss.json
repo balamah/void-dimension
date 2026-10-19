@@ -5,9 +5,9 @@
 		"minecraft:visual/water_fog_color": "#eae9e9"
 	},
 	"has_precipitation": false,
-	"creature_spawn_probability": 0.4,
 	"temperature": -0.5,
 	"temperature_modifier": "none",
+	"creature_spawn_probability": 0.1,
 	"downfall": 0.4,
 	"carvers": [],
 	"features": [],
@@ -21,7 +21,7 @@
 			},
 			{
 				"type": "void-dimension:masha",
-				"weight": 25,
+				"weight": 6,
 				"minCount": 1,
 				"maxCount": 1
 			},
@@ -37,9 +37,21 @@
 				"minCount": 1,
 				"maxCount": 1
 			}
+		],
+		"monster": [
+			{
+				"type": "void-dimension:hollow_knight",
+				"weight": 5,
+				"minCount": 1,
+				"maxCount": 1
+			}
 		]
 	},
 	"spawn_costs": {
+		"void-dimension:hollow_knight": {
+			"energy_budget": 6.0,
+			"charge": 3.0
+		},
 		"void-dimension:mantis": {
 			"energy_budget": 6.0,
 			"charge": 3.0
