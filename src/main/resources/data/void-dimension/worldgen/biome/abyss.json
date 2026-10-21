@@ -7,12 +7,18 @@
 	"has_precipitation": false,
 	"temperature": -0.5,
 	"temperature_modifier": "none",
-	"creature_spawn_probability": 0.1,
+	"creature_spawn_probability": 0.0001,
 	"downfall": 0.4,
 	"carvers": [],
 	"features": [],
 	"spawners": {
-		"creature": [
+		"monster": [
+			{
+				"type": "void-dimension:hollow_knight",
+				"weight": 2,
+				"minCount": 1,
+				"maxCount": 1
+			},
 			{
 				"type": "void-dimension:mantis",
 				"weight": 6,
@@ -34,14 +40,6 @@
 			{
 				"type": "void-dimension:snowman",
 				"weight": 10,
-				"minCount": 1,
-				"maxCount": 1
-			}
-		],
-		"monster": [
-			{
-				"type": "void-dimension:hollow_knight",
-				"weight": 2,
 				"minCount": 1,
 				"maxCount": 1
 			}
