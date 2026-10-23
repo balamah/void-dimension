@@ -7,8 +7,8 @@
 	],
 	"placement": {
 		"type": "minecraft:random_spread",
-		"separation": 50,
-		"spacing": 67,
+		"separation": 38,
+		"spacing": 52,
 		"salt": 54389543,
 		"exclusion_zone": {
 			"other_set": "void-dimension:illager_camp_exclude",
