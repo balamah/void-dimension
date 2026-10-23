@@ -31,7 +31,9 @@
 	"item.void-dimension.wool_prayer_rope": "Wool prayer rope",
 	"item.void-dimension.wooden_prayer_rope": "Wood prayer rope",
 	"item.void-dimension.skull_prayer_rope": "Skull prayer rope",
+	"item.void-dimension.abyss_heart": "Abyss heart",
 	"item.void-dimension.prayer_item.info.time": "Prayer takes %1$s seconds",
+	"item.void-dimension.abyss_heart.info": "Teleport from the void or abyss to the overworld",
 
 	"item.void-dimension.illusioner_spawn_egg": "Illusioner spawn egg",
 	"item.void-dimension.werewolf_spawn_egg": "Werewolf spawn egg",

@@ -31,7 +31,9 @@
 	"item.void-dimension.wool_prayer_rope": "Funis precum laneus",
 	"item.void-dimension.wooden_prayer_rope": "Funis precum ligneus",
 	"item.void-dimension.skull_prayer_rope": "Funis precum cranii",
+	"item.void-dimension.abyss_heart": "Cor abyssi",
 	"item.void-dimension.prayer_item.info.time": "Precatio capit %1$s secunda",
+	"item.void-dimension.abyss_heart.info": "Teleportare ab vacui aut abyssi ad overworld",
 
 	"item.void-dimension.illusioner_spawn_egg": "Ovum creationis illusionistae",
 	"item.void-dimension.werewolf_spawn_egg": "Ovum creationis lycanthropae",
