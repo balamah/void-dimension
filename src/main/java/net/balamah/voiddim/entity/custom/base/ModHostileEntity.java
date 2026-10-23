@@ -22,6 +22,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import java.util.Random;
 
+import net.balamah.voiddim.entity.custom.ai.goal.ModNearestEntityTargetGoal;
 import net.balamah.voiddim.entity.custom.ai.goal.VoidHostileEntityAttackGoal;
 import net.balamah.voiddim.custom.McCodeHelper;
 
@@ -108,7 +109,9 @@ public abstract class ModHostileEntity extends Monster {
 		 * TODO: Create ModNearestPlayerTargetGoal.
 		 * The goal focuses on the nearest player
 		 */
-		this.targetSelector.addGoal(0, McCodeHelper.getTargetGoal(this, Player.class));
+		this.targetSelector.addGoal(
+			0, new ModNearestEntityTargetGoal<Player>(this, 32, Player.class)
+		);
 	}
 
 	protected void initBasicGoals() {

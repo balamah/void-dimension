@@ -7,8 +7,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.Level;
 import net.minecraft.core.BlockPos;
 
-import net.balamah.voiddim.block.ModBlocks;
+import net.balamah.voiddim.entity.custom.ai.goal.ModNearestEntityTargetGoal;
 import net.balamah.voiddim.custom.McCodeHelper;
+import net.balamah.voiddim.block.ModBlocks;
 
 public abstract class CorruptedHostileEntity extends ModHostileEntity {
 	public CorruptedHostileEntity(
@@ -29,6 +30,8 @@ public abstract class CorruptedHostileEntity extends ModHostileEntity {
 	protected void initTargets() {
 		super.initTargets();
 
-		this.targetSelector.addGoal(2, McCodeHelper.getTargetGoal(this, AgeableMob.class));
+		this.targetSelector.addGoal(
+			2, new ModNearestEntityTargetGoal<AgeableMob>(this, 32, AgeableMob.class)
+		);
 	}
 }
