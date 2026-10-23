@@ -20,6 +20,8 @@
 	"item.void-dimension.raw_flesh": "Caro cruda",
 	"item.void-dimension.spoiled_flesh": "Caro corrupta",
 	"item.void-dimension.cooked_flesh": "Caro cocta",
+	"item.void-dimension.masha_milk_bucket": "Hama lactis Mashae",
+	"item.void-dimension.male_goat_milk_bucket": "Hama lactis hirci",
 
 	"item.void-dimension.music_disc_calm4": "Phonodiscus",
 	"item.void-dimension.calm4_music_disc.desc": "Notch - calm4",
@@ -105,7 +107,10 @@
 	"death.attack.eye_bright_head": "%1$s ab capite oculi clari occisus(a) est",
 	"death.attack.soul_burn": "%1$s ab ardoris animae occisus(a) est",
 	"death.attack.shockwave": "%1$s ab undae impulsae occisus(a) est",
+	"death.attack.vengeful_spirit": "%1$s ab spiritus ultor ocissus(a) est",
 
+	"death.attack.eye_bright_head": "%1$s ab capite oculi clari occisus(a) est",
+	"death.attack.vengeful_spirit.player": "%1$s died from vengeful spirit",
 	"death.attack.corruption.player": "%1$s ab corruptione occisus(a) est",
 	"death.attack.eye_bright_head": "%1$s ab caputi oculi clari occisus(a) est",
 	"death.attack.soul_burn.player": "%1$s ab ardosis animae occisus(a) est",
@@ -209,4 +214,6 @@
 	"advancement.void-dimension.anomaly_beaten.description": "Interficere Entity 303",
 	"advancement.void-dimension.unbound.title": "Solvere",
 	"advancement.void-dimension.unbound.description": "Interficere bellatorum corruptum et libera eum"
+	"advancement.void-dimension.insanity.title": "Consilia insana",
+	"advancement.void-dimension.insanity.description": "Meliorare sarculum Netheritae ad gradum vacuum"
 }
