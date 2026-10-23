@@ -1,12 +1,12 @@
 package net.balamah.voiddim.entity.custom.ai.goal.base;
 
-import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.ModHostileEntity;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-public abstract class SlowMovementGoal<T extends CorruptedHostileEntity>
+public abstract class SlowMovementGoal<T extends ModHostileEntity>
 	extends EntityAttributeModifierGoal<T>
 {
 	protected final Identifier attributeId = Identifier.withDefaultNamespace("speed");

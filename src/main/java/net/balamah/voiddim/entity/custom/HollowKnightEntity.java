@@ -14,6 +14,7 @@ import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.ShootVengefulSpiritGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.ModHostileEntity;
 import net.balamah.voiddim.item.ModItems;
 import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -21,7 +22,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -32,7 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class HollowKnightEntity extends CorruptedHostileEntity {
+public class HollowKnightEntity extends ModHostileEntity {
 	public final AnimationState walkingState = new AnimationState();
 	public final AnimationState attack1State = new AnimationState();
 	public final AnimationState attack2State = new AnimationState();

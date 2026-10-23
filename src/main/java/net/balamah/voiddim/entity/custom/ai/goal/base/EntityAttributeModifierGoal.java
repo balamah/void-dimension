@@ -1,11 +1,11 @@
 package net.balamah.voiddim.entity.custom.ai.goal.base;
 
-import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
-import net.minecraft.resources.Identifier;
+import net.balamah.voiddim.entity.custom.base.ModHostileEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.resources.Identifier;
 
-public abstract class EntityAttributeModifierGoal<T extends CorruptedHostileEntity>
+public abstract class EntityAttributeModifierGoal<T extends ModHostileEntity>
 	extends TickingGoal<T>
 {
 	public EntityAttributeModifierGoal(T entity) {

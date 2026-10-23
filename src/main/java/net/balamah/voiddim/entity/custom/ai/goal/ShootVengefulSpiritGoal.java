@@ -1,12 +1,12 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
-import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.ModHostileEntity;
 import net.balamah.voiddim.entity.custom.VengefulSpiritEntity;
 import net.balamah.voiddim.entity.ModEntities;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.sounds.SoundEvent;
 
-public class ShootVengefulSpiritGoal<E extends CorruptedHostileEntity>
+public class ShootVengefulSpiritGoal<E extends ModHostileEntity>
 	extends ShootProjectileGoal<E, VengefulSpiritEntity>
 {
 	public ShootVengefulSpiritGoal(
