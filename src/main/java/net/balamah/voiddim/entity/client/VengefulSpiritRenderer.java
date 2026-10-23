@@ -11,11 +11,6 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 
-/*
- * TODO: Create custom renderer for projectiles.
- * The renderer should have method for layers, and the layers have to be used.
- * Use net.minecraft.client.renderer.entity.LivingEntityRenderer for hel
- */
 public class VengefulSpiritRenderer
 	extends EntityRenderer<VengefulSpiritEntity, VengefulSpiritRenderState>
 {
