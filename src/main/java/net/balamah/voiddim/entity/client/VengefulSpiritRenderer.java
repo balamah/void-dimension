@@ -3,6 +3,7 @@ package net.balamah.voiddim.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.VengefulSpiritEntity;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -11,6 +12,11 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 
+/*
+ * TODO: Create custom renderer for projectiles.
+ * The renderer should have method for layers, and the layers have to be used.
+ * Use net.minecraft.client.renderer.entity.LivingEntityRenderer for help
+ */
 public class VengefulSpiritRenderer
 	extends EntityRenderer<VengefulSpiritEntity, VengefulSpiritRenderState>
 {
@@ -24,6 +30,12 @@ public class VengefulSpiritRenderer
 		super(context);
 		this.model = new VengefulSpiritModel(
 			context.bakeLayer(VengefulSpiritModel.VENGEFUL_SPIRIT)
+		);
+
+		this.addLayer(
+			new GlowFeatureRenderer<VengefulSpiritRenderState, VengefulSpiritModel>(
+				this, "textures/entity/glow/void_harbinger.png"
+			)
 		);
 	}
 

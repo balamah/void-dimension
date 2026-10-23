@@ -27,6 +27,18 @@ import net.balamah.voiddim.entity.custom.ai.goal.VoidHostileEntityAttackGoal;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.custom.McCodeHelper;
 
+/*
+ * TODO: Make CorruptedHostileEntity extend ModHostileEntity.
+ * ModHostileEntity:
+ * - burns on the sun
+ * - attacks can be stopped
+ * - attackCount increases
+ * - has methods for animation
+ * - attacks nearest players
+ *
+ * CorruptedHostileEntity:
+ * - can corrupt blocks
+ */ 
 public abstract class CorruptedHostileEntity extends Monster {
 	public boolean breaksShield = false;
 	public int attackCount;
@@ -116,6 +128,10 @@ public abstract class CorruptedHostileEntity extends Monster {
 	}
 
 	protected void initTargets() {
+		/*
+		 * TODO: Create ModNearestPlayerTargetGoal.
+		 * The goal focuses on the nearest player
+		 */
 		this.targetSelector.addGoal(0, McCodeHelper.getTargetGoal(this, Player.class));
 		this.targetSelector.addGoal(2, McCodeHelper.getTargetGoal(this, AgeableMob.class));
 	}
