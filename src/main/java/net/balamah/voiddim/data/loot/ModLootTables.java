@@ -173,6 +173,9 @@ public class ModLootTables {
 	public static ResourceKey<LootTable> FORTRESS_CAINE_ROOM_2_LOOT =
 		register("chests/fortress/caine/2");
 
+	public static ResourceKey<LootTable> FORTRESS_BONFIRE_LOOT =
+		register("chests/fortress/bonfire");
+
 	public static ResourceKey<LootTable> ILLAGER_CAMP_TOWER_LOOT =
 		register("chests/illager_camp/tower_loot");
 
