@@ -616,6 +616,21 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			.withPool(cobwebPool)
 		;
 
+		LootTable.Builder beaconSecretChestTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.85f)
+				.add(McGenHelper.getItemEntry(ModItems.VOID_INGOT, 2, 4))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.add(McGenHelper.getItemEntry(Items.DIAMOND, 4, 6))
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 4))
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
+			)
+			.withPool(cobwebPool)
+		;
+
 		consumer.accept(ModLootTables.ABANDONED_CHEST_LOOT, abandonedChestTable);
 		consumer.accept(ModLootTables.SKULL_TREE_LOOT, skullTreeChestTable);
 		consumer.accept(ModLootTables.FAILED_RAILWAY_LOOT, failedRailwayChestTable);
@@ -628,6 +643,7 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 		consumer.accept(ModLootTables.BROKEN_BEACON_BED_LOOT, brokenBeaconBedTable);
 		consumer.accept(ModLootTables.BROKEN_BEACON_ARCHER_LOOT, brokenBeaconArcherTable);
 		consumer.accept(ModLootTables.BROKEN_BEACON_BEACON_LOOT, brokenBeaconBeaconTable);
+		consumer.accept(ModLootTables.BEACON_SECRET_CHEST_LOOT, beaconSecretChestTable);
 	}
 
 	protected void provideFortressChests(

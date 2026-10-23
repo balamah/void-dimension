@@ -212,6 +212,9 @@ public class ModLootTables {
 	public static ResourceKey<LootTable> ILLAGER_CAMP_HEADQUARTERS_SUPPLIES_LOOT =
 		register("chests/illager_camp/headquarters/supplies_loot");
 
+	public static ResourceKey<LootTable> BEACON_SECRET_CHEST_LOOT =
+		register("chests/beacon/secret_chest_loot");
+
 	public static void registerModLootTables() {
 		VoidDimension.LOGGER.info("Registering mod loot tables for " + VoidDimension.MOD_ID);
 	}
