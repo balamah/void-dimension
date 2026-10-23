@@ -123,8 +123,24 @@ public class ModSounds {
 			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "calm4")
 		);
 
+	public static final SoundEvent MUSIC_HAUNTED_GOON = register("music_disc.haunted_goon");
+    public static final ResourceKey<JukeboxSong> MUSIC_HAUNTED_GOON_KEY =
+		ResourceKey.create(
+			Registries.JUKEBOX_SONG,
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "haunted_goon")
+		);
+
 	public static final SoundEvent LIGHTNING = register("special_attacks.lightning");
 	public static final SoundEvent COUNTER_ATTACK = register("special_attacks.counter_attack");
+
+	public static final Holder.Reference<SoundEvent> VENGEFUL_SPIRIT_PREPARE =
+		registerReference("special_attacks.vengeful_spirit.prepare");
+
+	public static final SoundEvent VENGEFUL_SPIRIT_SHOOT =
+		register("special_attacks.vengeful_spirit.shoot");
+
+	public static final SoundEvent HOLLOW_KNIGHT_WALK = register("hollow_knight.walk");
+	public static final SoundEvent HOLLOW_KNIGHT_DEATH = register("hollow_knight.death");
 
 	public static final SoundEvent ENTITY303_DEATH = register("entity303.death");
 

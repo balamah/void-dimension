@@ -5,8 +5,10 @@
 		"type": "noise",
 		"biome_source": {
 			"type": "checkerboard",
-			"scale": 5,
+			"scale": 3,
 			"biomes": [
+				"void-dimension:void_plains",
+				"void-dimension:void_forest",
 				"void-dimension:void_plains",
 				"void-dimension:void_forest",
 				"void-dimension:corrupt_valley"

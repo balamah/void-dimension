@@ -10,6 +10,9 @@ public class ModBlockTags {
 	public static final TagKey<Block> INCORRECT_FOR_VOID_TOOL =
 		register("incorrect_for_void_tool");
 
+	public static final TagKey<Block> INCORRECT_FOR_HOLLOWNEST_TOOL =
+		register("incorrect_for_hollownest_tool");
+
 	public static final TagKey<Block> CORRUPTED_FIRE_BASE_BLOCKS =
 		register("corrupted_fire_base_blocks");
 

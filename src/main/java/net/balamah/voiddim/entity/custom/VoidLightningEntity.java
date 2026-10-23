@@ -21,7 +21,6 @@ public class VoidLightningEntity extends LightningBolt {
 		super(entityType, world);
 	}
 
-	// TODO: Spawn corrupt fire
 	// Code copied from minecraft's decompiled code, don't be angry at me
 	@SuppressWarnings("unused")
 	private void spawnFire(int spreadAttempts) {

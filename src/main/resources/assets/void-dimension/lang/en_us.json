@@ -20,15 +20,20 @@
 	"item.void-dimension.raw_flesh": "Raw flesh",
 	"item.void-dimension.spoiled_flesh": "Spoiled flesh",
 	"item.void-dimension.cooked_flesh": "Cooked flesh",
+
 	"item.void-dimension.music_disc_calm4": "Music disc",
 	"item.void-dimension.calm4_music_disc.desc": "Notch - calm4",
+	"item.void-dimension.music_disc_haunted_goon": "Music disc",
+	"item.void-dimension.haunted_goon_music_disc.desc": "bluebeerz - haunted goon",
 
 	"item.void-dimension.latin_cross": "Latin cross",
 	"item.void-dimension.orthodox_cross": "Orthodox cross",
 	"item.void-dimension.wool_prayer_rope": "Wool prayer rope",
 	"item.void-dimension.wooden_prayer_rope": "Wood prayer rope",
 	"item.void-dimension.skull_prayer_rope": "Skull prayer rope",
+	"item.void-dimension.abyss_heart": "Abyss heart",
 	"item.void-dimension.prayer_item.info.time": "Prayer takes %1$s seconds",
+	"item.void-dimension.abyss_heart.info": "Teleport from the void or abyss to the overworld",
 
 	"item.void-dimension.illusioner_spawn_egg": "Illusioner spawn egg",
 	"item.void-dimension.werewolf_spawn_egg": "Werewolf spawn egg",
@@ -91,6 +96,9 @@
 	"item.void-dimension.old_corpse_pile": "Old corpse pile",
 	"item.void-dimension.bedrock_bomb": "Bedrock bomb",
 
+	"item.void-dimension.masha_milk_bucket": "Masha milk bucket",
+	"item.void-dimension.male_goat_milk_bucket": "Male goat milk bucket",
+
 	"effect.void-dimension.void_salvation": "Void salvation",
 	"effect.void-dimension.divine_protection": "Divine protection",
 	"effect.void-dimension.corruption": "Corruption",
@@ -101,11 +109,13 @@
 	"death.attack.eye_bright_head": "%1$s died from eye bright's head",
 	"death.attack.soul_burn": "%1$s died from soul burning",
 	"death.attack.shockwave": "%1$s died from shockwave",
+	"death.attack.vengeful_spirit": "%1$s died from vengeful spirit",
 
 	"death.attack.corruption.player": "%1$s died from corruption",
 	"death.attack.eye_bright_head.player": "%1$s died from eye bright's head",
 	"death.attack.soul_burn.player": "%1$s died from soul burning",
 	"death.attack.shockwave.player": "%1$s died from shockwave",
+	"death.attack.vengeful_spirit.player": "%1$s died from vengeful spirit",
 
 	"itemgroup.void-dimension.items": "Void dimension",
 
@@ -132,6 +142,8 @@
 	"entity.void-dimension.entity303": "Entity 303",
 	"entity.void-dimension.eye_bright": "Eye bright",
 	"entity.void-dimension.eye_bright_head": "Eye bright head",
+	"entity.void-dimension.vengeful_spirit": "Vengeful spirit",
+	"entity.void-dimension.hollow_knight": "Hollow knight",
 
 	"upgrade.void-dimension.apply_to": "Netherite Equipment",
 	"upgrade.void-dimension.ingredients": "Void Ingot",
@@ -207,8 +219,12 @@
 	"advancement.void-dimension.exodus_preparation.description": "Get a bedrock bomb, flint and steel and void salvation potion to escape the void through nether",
 	"advancement.void-dimension.exodus.title": "Exodus",
 	"advancement.void-dimension.exodus.description": "Escape the Void to the Nether using a void salvation potion and lit a bedrock bomb",
-	"advancement.void-dimension.anomaly_beaten.title": "Anomaly beaten",
-	"advancement.void-dimension.anomaly_beaten.description": "Kill entity 303 boss in illusioner's house",
+	"advancement.void-dimension.anomaly_beaten.title": "Wraith beaten",
+	"advancement.void-dimension.anomaly_beaten.description": "Kill Entity 303",
 	"advancement.void-dimension.unbound.title": "Unbound",
-	"advancement.void-dimension.unbound.description": "Killed corrupted warrior and freed him"
+	"advancement.void-dimension.unbound.description": "Killed corrupted warrior and freed him",
+	"advancement.void-dimension.where_are_four_kings.title": "Where are four kings?",
+	"advancement.void-dimension.where_are_four_kings.description": "Go to abyss",
+	"advancement.void-dimension.insanity.title": "Insane intentions",
+	"advancement.void-dimension.insanity.description": "Upgrade netherite hoe to void tier"
 }

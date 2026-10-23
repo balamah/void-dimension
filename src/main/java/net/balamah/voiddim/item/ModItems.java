@@ -28,9 +28,9 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.balamah.voiddim.item.custom.CorruptedFireChargeItem;
-import net.balamah.voiddim.item.custom.ModSmithingTemplateItem;
+import net.balamah.voiddim.item.custom.*;
 import net.balamah.voiddim.material.armor.VoidArmorMaterial;
 import net.balamah.voiddim.item.custom.PrayerItem;
 import net.balamah.voiddim.material.ModMaterials;
@@ -134,6 +134,14 @@ public class ModItems {
 			Item::new,
 			() -> getVoidItemSettings()
 				.sword(ModMaterials.VOID_TOOL_MATERIAL, 6.5f, -2.4f)
+		);
+
+	public static final Item NAIL =
+		register(
+			"nail",
+			settings -> new PoggingItem(settings, 2.0f),
+			() -> getVoidItemSettings()
+				.sword(ModMaterials.HOLLOWNEST_MATERIAL, 3.0f, -1.4f)
 		);
 
 	public static final Item VOID_SPEAR =
@@ -286,6 +294,46 @@ public class ModItems {
 				.stacksTo(1),
 				ModSounds.MUSIC_CALM4_KEY
 			)
+		);
+
+	public static final Item MUSIC_DISC_HAUNTED_GOON =
+		register(
+			"music_disc_haunted_goon",
+			Item::new,
+			() -> optionalJukeboxPlayable(
+				new Item.Properties()
+				.rarity(Rarity.UNCOMMON)
+				.stacksTo(1),
+				ModSounds.MUSIC_HAUNTED_GOON_KEY
+			)
+		);
+
+	public static final Item MASHA_MILK_BUCKET =
+		register(
+			"masha_milk_bucket",
+			Item::new,
+			() -> new Item.Properties()
+					.craftRemainder(Items.BUCKET)
+					.component(DataComponents.CONSUMABLE, ModFoodComponents.MASHA_MILK_BUCKET)
+					.usingConvertsTo(Items.BUCKET).stacksTo(1)
+		);
+
+	public static final Item MALE_GOAT_MILK_BUCKET =
+		register(
+			"male_goat_milk_bucket",
+			Item::new,
+			() -> new Item.Properties()
+					.craftRemainder(Items.BUCKET)
+					.component(DataComponents.CONSUMABLE, ModFoodComponents.MALE_GOAT_MILK_BUCKET)
+					.usingConvertsTo(Items.BUCKET).stacksTo(1)
+		);
+
+
+	public static final Item ABYSS_HEART =
+		register(
+			"abyss_heart",
+			settings -> new AbyssHeartItem(settings),
+			ModItems::getVoidItemSettings
 		);
 
 	public static void registerModItems() {

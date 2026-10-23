@@ -42,7 +42,6 @@ public class VoidDimension implements ModInitializer {
 		ModEffects.registerModEffects();
 		ModPotions.registerModPotions();
 		ModEntities.registerModEntities();
-		ModEntities.registerSpawnRestrictions();
 		ModDimensions.registerModDimensions();
 		ModEvents.registerModEvents();
 		ModLootTables.registerModLootTables();
@@ -51,6 +50,8 @@ public class VoidDimension implements ModInitializer {
 		// Register neccessary elements on the server side
 		ModParticleTypes.registerParticlesServer();
 		ModEntities.registerEntityAttributes();
+		ModEntities.registerSpawnRestrictions();
+		ModEntities.registerAbyssSpawnRestrictions();
 
 		if (!FabricLoader.getInstance().isModLoaded("sodium")) {
 			LOGGER.warn("!!! Sodium mod is recommended for best performance !!!");

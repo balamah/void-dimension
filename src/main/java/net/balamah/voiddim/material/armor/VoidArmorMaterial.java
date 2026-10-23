@@ -14,7 +14,7 @@ import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 
 public class VoidArmorMaterial {
-	public static final int BASE_DURABILITY = 40;
+	public static final int BASE_DURABILITY = 44;
 
 	public static final ResourceKey<EquipmentAsset> VOID_ARMOR_MATERIAL_KEY =
 		ResourceKey.create(

@@ -7,6 +7,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class BedrockBombEntity extends PrimedTnt {
@@ -40,7 +42,8 @@ public class BedrockBombEntity extends PrimedTnt {
 
 	protected void breakBlocks(Level world, BlockPos center, int radius) {
 		for (BlockPos pos : BlockPos.withinManhattan(center, radius, radius, radius)) {
-			if (pos.distSqr(center) <= radius * radius) {
+			Block block = world.getBlockState(pos).getBlock();
+			if (pos.distSqr(center) <= radius * radius && block != Blocks.BARRIER) {
 				world.destroyBlock(pos, false);
 			}
 		}

@@ -41,6 +41,7 @@ public class VoidDimensionBlockLootTableProvider extends FabricBlockLootSubProvi
 		this.dropSelf(ModBlocks.VOID_FLOWER);
 		this.dropSelf(ModBlocks.CORRUPT_BLOCK);
 		this.dropSelf(ModBlocks.CORRUPTED_LANTERN);
+		this.dropSelf(ModBlocks.CORRUPTED_TORCH);
 
 		this.add(ModBlocks.VOIDIUM_ORE, voidiumLootTable);
 		this.add(ModBlocks.DEEPSLATE_VOIDIUM_ORE, voidiumLootTable);

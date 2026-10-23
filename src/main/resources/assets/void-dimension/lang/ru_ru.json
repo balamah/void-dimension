@@ -20,8 +20,11 @@
 	"item.void-dimension.raw_flesh": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.spoiled_flesh": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.cooked_flesh": "لا تلعب باللغة الروسية، من فضلك",
+
 	"item.void-dimension.music_disc_calm4": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.calm4_music_disc.desc": "لا تلعب باللغة الروسية، من فضلك",
+	"item.void-dimension.music_disc_haunted_goon": "لا تلعب باللغة الروسية، من فضلك",
+	"item.void-dimension.haunted_goon_music_disc.desc": "لا تلعب باللغة الروسية، من فضلك",
 
 	"item.void-dimension.latin_cross": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.orthodox_cross": "لا تلعب باللغة الروسية، من فضلك",
@@ -42,6 +45,7 @@
 	"item.void-dimension.corrupted_creeper_spawn_egg": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.corrupted_spider_spawn_egg": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.corrupted_blaze_spawn_egg": "لا تلعب باللغة الروسية، من فضلك",
+	"item.void-dimension.corrupted_stalker_spawn_egg": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.null_spawn_egg": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.hollowed_alpha_steve_spawn_egg": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.zombified_alpha_steve_spawn_egg": "لا تلعب باللغة الروسية، من فضلك",
@@ -90,6 +94,9 @@
 	"item.void-dimension.old_corpse_pile": "لا تلعب باللغة الروسية، من فضلك",
 	"item.void-dimension.bedrock_bomb": "لا تلعب باللغة الروسية، من فضلك",
 
+	"item.void-dimension.masha_milk_bucket": "لا تلعب باللغة الروسية، من فضلك",
+	"item.void-dimension.male_goat_milk_bucket": "لا تلعب باللغة الروسية، من فضلك",
+
 	"effect.void-dimension.void_salvation": "لا تلعب باللغة الروسية، من فضلك",
 	"effect.void-dimension.divine_protection": "لا تلعب باللغة الروسية، من فضلك",
 	"effect.void-dimension.corruption": "لا تلعب باللغة الروسية، من فضلك",
@@ -100,11 +107,13 @@
 	"death.attack.eye_bright_head": "لا تلعب باللغة الروسية، من فضلك",
 	"death.attack.soul_burn": "لا تلعب باللغة الروسية، من فضلك",
 	"death.attack.shockwave": "لا تلعب باللغة الروسية، من فضلك",
+	"death.attack.vengeful_spirit": "لا تلعب باللغة الروسية، من فضلك",
 
 	"death.attack.corruption.player": "لا تلعب باللغة الروسية، من فضلك",
-	"death.attack.eye_bright_head": "لا تلعب باللغة الروسية، من فضلك",
+	"death.attack.eye_bright_head.player": "لا تلعب باللغة الروسية، من فضلك",
 	"death.attack.soul_burn.player": "لا تلعب باللغة الروسية، من فضلك",
 	"death.attack.shockwave.player": "لا تلعب باللغة الروسية، من فضلك",
+	"death.attack.vengeful_spirit.player": "لا تلعب باللغة الروسية، من فضلك",
 
 	"itemgroup.void-dimension.items": "لا تلعب باللغة الروسية، من فضلك",
 
@@ -131,6 +140,8 @@
 	"entity.void-dimension.entity303": "لا تلعب باللغة الروسية، من فضلك",
 	"entity.void-dimension.eye_bright": "لا تلعب باللغة الروسية، من فضلك",
 	"entity.void-dimension.eye_bright_head": "لا تلعب باللغة الروسية، من فضلك",
+	"entity.void-dimension.vengeful_spirit": "لا تلعب باللغة الروسية، من فضلك",
+	"entity.void-dimension.hollow_knight": "لا تلعب باللغة الروسية، من فضلك",
 
 	"upgrade.void-dimension.apply_to": "لا تلعب باللغة الروسية، من فضلك",
 	"upgrade.void-dimension.ingredients": "لا تلعب باللغة الروسية، من فضلك",
@@ -176,12 +187,18 @@
 	"text.void-dimension.prayer_success": "لا تلعب باللغة الروسية، من فضلك",
 	"text.void-dimension.prayer_failure": "لا تلعب باللغة الروسية، من فضلك",
 
+	"advancement.void-dimension.a_cursed_house.title": "لا تلعب باللغة الروسية، من فضلك",
+	"advancement.void-dimension.a_cursed_house.description": "لا تلعب باللغة الروسية، من فضلك",
+	"advancement.void-dimension.a_dangerous_place.title": "لا تلعب باللغة الروسية، من فضلك",
+	"advancement.void-dimension.a_dangerous_place.description": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.a_forsaken_place.title": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.a_forsaken_place.description": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.cannibalism.title": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.cannibalism.description": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.is_this_how_zombies_are_created.title": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.is_this_how_zombies_are_created.description": "لا تلعب باللغة الروسية، من فضلك",
+	"advancement.void-dimension.down_with_heretics.title": "لا تلعب باللغة الروسية، من فضلك",
+	"advancement.void-dimension.down_with_heretics.description": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.void_dimension.title": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.void_dimension.description": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.first_preparations.title": "لا تلعب باللغة الروسية، من فضلك",
@@ -204,4 +221,8 @@
 	"advancement.void-dimension.anomaly_beaten.description": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.unbound.title": "لا تلعب باللغة الروسية، من فضلك",
 	"advancement.void-dimension.unbound.description": "لا تلعب باللغة الروسية، من فضلك",
+	"advancement.void-dimension.where_are_four_kings.title": "لا تلعب باللغة الروسية، من فضلك",
+	"advancement.void-dimension.where_are_four_kings.description": "لا تلعب باللغة الروسية، من فضلك",
+	"advancement.void-dimension.insanity.title": "لا تلعب باللغة الروسية، من فضلك",
+	"advancement.void-dimension.insanity.description": "لا تلعب باللغة الروسية، من فضلك"
 }

@@ -10,7 +10,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
 public class BossEntity extends CorruptedHostileEntity {
-	protected final ServerBossEvent bossBar =
+	protected ServerBossEvent bossBar =
 		McCodeHelper.getBossBar(this.getDisplayName(), BossEvent.BossBarColor.WHITE);
 
 	public BossEntity(EntityType<? extends Monster> entityType, Level world) {

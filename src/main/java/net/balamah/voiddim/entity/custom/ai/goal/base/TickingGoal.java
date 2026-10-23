@@ -1,10 +1,10 @@
 package net.balamah.voiddim.entity.custom.ai.goal.base;
 
-import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.ModHostileEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 
-public abstract class TickingGoal<T extends CorruptedHostileEntity> extends Goal {
+public abstract class TickingGoal<T extends ModHostileEntity> extends Goal {
 	protected final T entity;
 	protected final Level world;
 	protected int tick;

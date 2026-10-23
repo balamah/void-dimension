@@ -19,6 +19,10 @@ public class ModDamageSources {
 		return getBasicDamageSource(world, ModEffects.CORRUPTION_DAMAGE.identifier());
 	}
 
+	public static DamageSource vengefulSpirit(ServerLevel world) {
+		return getBasicDamageSource(world, ModEffects.VENGEFUL_SPIRIT_DAMAGE.identifier());
+	}
+
 	public static DamageSource soulBurn(ServerLevel world) {
 		return getBasicDamageSource(world, ModEffects.SOUL_BURN_DAMAGE.identifier());
 	}

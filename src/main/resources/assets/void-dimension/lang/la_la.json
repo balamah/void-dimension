@@ -20,15 +20,22 @@
 	"item.void-dimension.raw_flesh": "Caro cruda",
 	"item.void-dimension.spoiled_flesh": "Caro corrupta",
 	"item.void-dimension.cooked_flesh": "Caro cocta",
+	"item.void-dimension.masha_milk_bucket": "Hama lactis Mashae",
+	"item.void-dimension.male_goat_milk_bucket": "Hama lactis hirci",
+
 	"item.void-dimension.music_disc_calm4": "Phonodiscus",
 	"item.void-dimension.calm4_music_disc.desc": "Notch - calm4",
+	"item.void-dimension.music_disc_haunted_goon": "Phonodiscus",
+	"item.void-dimension.haunted_goon_music_disc.desc": "bluebeerz - haunted goon",
 
 	"item.void-dimension.latin_cross": "Crux latina",
 	"item.void-dimension.orthodox_cross": "Crux orthodoxa",
 	"item.void-dimension.wool_prayer_rope": "Funis precum laneus",
 	"item.void-dimension.wooden_prayer_rope": "Funis precum ligneus",
 	"item.void-dimension.skull_prayer_rope": "Funis precum cranii",
+	"item.void-dimension.abyss_heart": "Cor abyssi",
 	"item.void-dimension.prayer_item.info.time": "Precatio capit %1$s secunda",
+	"item.void-dimension.abyss_heart.info": "Teleportare ab vacui aut abyssi ad overworld",
 
 	"item.void-dimension.illusioner_spawn_egg": "Ovum creationis illusionistae",
 	"item.void-dimension.werewolf_spawn_egg": "Ovum creationis lycanthropae",
@@ -100,7 +107,10 @@
 	"death.attack.eye_bright_head": "%1$s ab capite oculi clari occisus(a) est",
 	"death.attack.soul_burn": "%1$s ab ardoris animae occisus(a) est",
 	"death.attack.shockwave": "%1$s ab undae impulsae occisus(a) est",
+	"death.attack.vengeful_spirit": "%1$s ab spiritus ultor ocissus(a) est",
 
+	"death.attack.eye_bright_head": "%1$s ab capite oculi clari occisus(a) est",
+	"death.attack.vengeful_spirit.player": "%1$s died from vengeful spirit",
 	"death.attack.corruption.player": "%1$s ab corruptione occisus(a) est",
 	"death.attack.eye_bright_head": "%1$s ab caputi oculi clari occisus(a) est",
 	"death.attack.soul_burn.player": "%1$s ab ardosis animae occisus(a) est",
@@ -200,8 +210,10 @@
 	"advancement.void-dimension.exodus_preparation.description": "Accipere dynamim saxi infimi, ignitabulum et potionem salutis vacuae ut effugere vacuum te Nether",
 	"advancement.void-dimension.exodus.title": "Exodus",
 	"advancement.void-dimension.exodus.description": "Effugere Inanis ad Inferos utens potione vacui salutis et petram bomb",
-	"advancement.void-dimension.anomaly_beaten.title": "Anomalia percussum",
-	"advancement.void-dimension.anomaly_beaten.description": "Interficere Entity 303 in domum illusionistae",
+	"advancement.void-dimension.anomaly_beaten.title": "Spectrum percussum",
+	"advancement.void-dimension.anomaly_beaten.description": "Interficere Entity 303",
 	"advancement.void-dimension.unbound.title": "Solvere",
 	"advancement.void-dimension.unbound.description": "Interficere bellatorum corruptum et libera eum"
+	"advancement.void-dimension.insanity.title": "Consilia insana",
+	"advancement.void-dimension.insanity.description": "Meliorare sarculum Netheritae ad gradum vacuum"
 }

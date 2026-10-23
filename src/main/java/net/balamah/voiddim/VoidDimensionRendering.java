@@ -2,6 +2,7 @@ package net.balamah.voiddim;
 
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.GoatRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
@@ -99,7 +100,19 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new EntitySpecs<CorruptedPlayerEntity>(ModEntities.CORRUPTED_PLAYER,
 														CorruptedPlayerModel.CORRUPTED_PLAYER,
 														CorruptedPlayerModel.getTexturedModelData(),
-														CorruptedPlayerRenderer::new)
+													   CorruptedPlayerRenderer::new),
+				new EntitySpecs<>(ModEntities.MASHA,             				
+								  MashaModel.MASHA,
+								  MashaModel.getTexturedModelData(),
+								  MashaRenderer::new),
+				new EntitySpecs<>(ModEntities.MALE_GOAT,             				
+								  MaleGoatModel.MALE_GOAT,
+								  MaleGoatModel.createBodyLayer(),
+								  MaleGoatRenderer::new),
+				new EntitySpecs<>(ModEntities.HOLLOW_KNIGHT,             				
+								  HollowKnightModel.HOLLOW_KNIGHT,
+								  HollowKnightModel.createBodyLayer(),
+								  HollowKnightRenderer::new)
 				);
 
 
@@ -168,7 +181,11 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new NonLivingEntitySpecs<ConsumedSoulEntity>(ModEntities.CONSUMED_SOUL,
 													ConsumedSoulModel.CONSUMED_SOUL,
 													ConsumedSoulModel.getTexturedModelData(),
-													ConsumedSoulRenderer::new)
+															 ConsumedSoulRenderer::new),
+				new NonLivingEntitySpecs<VengefulSpiritEntity>(ModEntities.VENGEFUL_SPIRIT,
+													VengefulSpiritModel.VENGEFUL_SPIRIT,
+													VengefulSpiritModel.getTexturedModelData(),
+													VengefulSpiritRenderer::new)
 				);
 
 	@Override

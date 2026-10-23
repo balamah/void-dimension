@@ -16,6 +16,9 @@ public class ModEffects {
 	public static final ResourceKey<DamageType> CORRUPTION_DAMAGE =
 		registerDamageType("corruption");
 
+	public static final ResourceKey<DamageType> VENGEFUL_SPIRIT_DAMAGE =
+		registerDamageType("vengeful_spirit");
+
 	public static final ResourceKey<DamageType> SOUL_BURN_DAMAGE =
 		registerDamageType("soul_burn");
 

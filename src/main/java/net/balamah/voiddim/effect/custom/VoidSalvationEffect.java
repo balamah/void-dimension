@@ -1,5 +1,6 @@
 package net.balamah.voiddim.effect.custom;
 
+import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.world.dimension.ModDimensions;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -30,7 +31,9 @@ public class VoidSalvationEffect extends MobEffect {
 		String currentDimensionId = currentDimension.identifier().toString();
 		ResourceKey<Level> dimensionToTeleport = this.getDimensionToTeleport(currentDimensionId);
 
-		if (entity.getY() < -120 && dimensionToTeleport != null) {
+		int minimumTeleportHeight = this.getMinimumTeleportHeight(currentDimensionId);
+
+		if (entity.getY() < minimumTeleportHeight && dimensionToTeleport != null) {
 			this.teleportEntity(entity, dimensionToTeleport);
 		}
 
@@ -45,8 +48,11 @@ public class VoidSalvationEffect extends MobEffect {
 			entity.level().getServer().getLevel(dimensionToTeleport);
 
 		if (dimension != null) {
+			String dimensionToTeleportID = dimension.dimension().identifier().toString();
+			int teleportHeight = this.getTeleportationHeight(dimensionToTeleportID);
+
 			entity.teleportTo(
-				dimension, entity.getX(), 250, entity.getZ(),
+				dimension, entity.getX(), teleportHeight, entity.getZ(),
 				flags, entity.getYRot(), entity.getXRot(), true
 			);
 
@@ -61,8 +67,30 @@ public class VoidSalvationEffect extends MobEffect {
 				return ModDimensions.VOID_WORLD;
 			case "void-dimension:void":
 				return Level.NETHER;
+			case "minecraft:the_nether":
+				return ModDimensions.ABYSS_WORLD;
 			default:
 				return null;
+		}
+	}
+
+	protected int getTeleportationHeight(String dimensionToTeleportID) {
+		switch (dimensionToTeleportID) {
+			case "void-dimension:void": return 250;
+			case "void-dimension:abyss": return 5;
+			default: return 255;
+		}
+	}
+
+	protected int getMinimumTeleportHeight(String dimensionID) {
+		switch (dimensionID) {
+			case "minecraft:overworld":
+			case "void-dimension:void":
+				return -120;
+			case "minecraft:the_nether":
+				return -60;
+			default:
+				return -120;
 		}
 	}
 }

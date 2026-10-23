@@ -616,6 +616,21 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 			.withPool(cobwebPool)
 		;
 
+		LootTable.Builder beaconSecretChestTable =
+			LootTable.lootTable()
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(1), 0.85f)
+				.add(McGenHelper.getItemEntry(ModItems.VOID_INGOT, 2, 4))
+			)
+			.withPool(
+				McGenHelper.getPool(McGenHelper.constantNumber(2))
+				.add(McGenHelper.getItemEntry(Items.DIAMOND, 4, 6))
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 4))
+				.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 1, 3))
+			)
+			.withPool(cobwebPool)
+		;
+
 		consumer.accept(ModLootTables.ABANDONED_CHEST_LOOT, abandonedChestTable);
 		consumer.accept(ModLootTables.SKULL_TREE_LOOT, skullTreeChestTable);
 		consumer.accept(ModLootTables.FAILED_RAILWAY_LOOT, failedRailwayChestTable);
@@ -628,6 +643,7 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 		consumer.accept(ModLootTables.BROKEN_BEACON_BED_LOOT, brokenBeaconBedTable);
 		consumer.accept(ModLootTables.BROKEN_BEACON_ARCHER_LOOT, brokenBeaconArcherTable);
 		consumer.accept(ModLootTables.BROKEN_BEACON_BEACON_LOOT, brokenBeaconBeaconTable);
+		consumer.accept(ModLootTables.BEACON_SECRET_CHEST_LOOT, beaconSecretChestTable);
 	}
 
 	protected void provideFortressChests(
@@ -1118,6 +1134,27 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 						.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1))
 				);
 
+		LootTable.Builder fortressBonfireLootTable =
+			LootTable.lootTable()
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(3))
+						.add(McGenHelper.getItemEntry(Items.DIAMOND, 3, 7))
+						.add(McGenHelper.getItemEntry(Items.EMERALD, 5, 10))
+				)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.75f)
+						.add(McGenHelper.getItemEntry(Items.NETHERITE_SCRAP, 2, 4))
+				)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.65f)
+					.add(McGenHelper.getItemEntry(Items.NETHERITE_INGOT, 2, 3))
+				)
+				.withPool(
+					McGenHelper.getPool(McGenHelper.constantNumber(1), 0.50f)
+					.add(McGenHelper.getItemEntry(ModItems.VOID_SHARD, 1, 3))
+				);
+
+
 		consumer.accept(
 			ModLootTables.FORTRESS_KITCHEN_COAL_FOOD_LOOT, fortressKitchenCoalFoodTable
 		);
@@ -1188,6 +1225,7 @@ public class VoidDimensionChestLootTableProvider extends SimpleFabricLootTableSu
 
 		consumer.accept(ModLootTables.FORTRESS_CAINE_ROOM_1_LOOT, fortressCaineRoom1Table);
 		consumer.accept(ModLootTables.FORTRESS_CAINE_ROOM_2_LOOT, fortressCaineRoom2Table);
+		consumer.accept(ModLootTables.FORTRESS_BONFIRE_LOOT, fortressBonfireLootTable);
 	}
 
 	protected void provideIllagerCampChests(

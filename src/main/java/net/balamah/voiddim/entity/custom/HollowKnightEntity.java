@@ -1,0 +1,179 @@
+package net.balamah.voiddim.entity.custom;
+
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+
+import org.jetbrains.annotations.Nullable;
+
+import net.balamah.voiddim.custom.McCodeHelper;
+import net.balamah.voiddim.entity.ModEntityStatuses;
+import net.balamah.voiddim.entity.custom.ai.goal.ShootVengefulSpiritGoal;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.ModHostileEntity;
+import net.balamah.voiddim.item.ModItems;
+import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class HollowKnightEntity extends ModHostileEntity {
+	public final AnimationState walkingState = new AnimationState();
+	public final AnimationState attack1State = new AnimationState();
+	public final AnimationState attack2State = new AnimationState();
+	public final AnimationState attack3State = new AnimationState();
+	public final AnimationState attack4State = new AnimationState();
+	public final AnimationState vengefulSpiritState = new AnimationState();
+	public boolean isHurting;
+
+	protected AnimationState[] normalAttackAnimations = {
+		this.attack1State, this.attack2State, this.attack3State, this.attack4State
+	};
+
+	protected int attackInterval;
+
+	public HollowKnightEntity(EntityType<? extends Monster> type, Level level) {
+		super(type, level);
+	}
+
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes()
+			.add(Attributes.FOLLOW_RANGE, 32)
+			.add(Attributes.MOVEMENT_SPEED, 0.35F)
+			.add(Attributes.ATTACK_DAMAGE, 4.9F)
+			.add(Attributes.STEP_HEIGHT, 1.0)
+			.add(Attributes.MAX_HEALTH, 67);
+	}
+
+	@Override
+	public void handleEntityEvent(byte id) {
+		super.handleEntityEvent(id);
+
+		switch (id) {
+			case ModEntityStatuses.ATTACK:
+				this.stopAnimations(this.normalAttackAnimations);
+				this.playRandomAnimation(this.normalAttackAnimations);
+				this.isHurting = true;
+				break;
+			case ModEntityStatuses.STOP_ATTACK:
+				this.stopAnimations(this.normalAttackAnimations);
+				this.isHurting = false;
+				break;
+			case ModEntityStatuses.PROJECTILE_INVOKE:
+				this.vengefulSpiritState.start(this.tickCount);
+				break;
+			case ModEntityStatuses.STOP_SPECIAL_ATTACK:
+				this.vengefulSpiritState.stop();
+				break;
+			default: super.handleEntityEvent(id);
+				break;
+		}
+	}
+
+	@Override
+	@Nullable
+	public SpawnGroupData finalizeSpawn(
+		ServerLevelAccessor world,
+		DifficultyInstance difficulty,
+		EntitySpawnReason spawnReason,
+		@Nullable SpawnGroupData entityData
+	) {
+		entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
+
+		this.populateDefaultEquipmentSlots(this.random, difficulty);
+		this.populateDefaultEquipmentEnchantments(world, this.random, difficulty);
+
+		return entityData;
+	}
+
+	@Override
+	public boolean doHurtTarget(ServerLevel world, Entity target) {
+		boolean result = super.doHurtTarget(world, target);
+		
+		if (result) {
+			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
+
+			// A magic number, don't touch
+			this.attackInterval = 13;
+			this.attackCount++;
+		}
+
+		return result;
+	}
+
+	@Override
+	public void aiStep() {
+		this.updateSwingTime();
+		this.updateNoActionTime();
+		super.aiStep();
+	}
+
+	@Override
+	protected void customServerAiStep(ServerLevel world) {
+		super.customServerAiStep(world);
+
+		if (this.getTarget() == null || this.attackInterval == 0) {
+			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
+		}
+
+		if (this.attackInterval > 0) {
+			this.attackInterval--;
+		}
+	}
+
+	@Override
+	protected void populateDefaultEquipmentSlots(
+		RandomSource random, DifficultyInstance difficulty
+	) {
+		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.NAIL));
+	}
+
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+
+		Goal vengefulSpiritGoal =
+			new ShootVengefulSpiritGoal<HollowKnightEntity>(
+				this,
+				ModSounds.VENGEFUL_SPIRIT_PREPARE.value(),
+				ModSounds.VENGEFUL_SPIRIT_SHOOT,
+				5, 9
+			);
+
+		this.goalSelector.addGoal(1, vengefulSpiritGoal);
+	}
+
+	@Override
+	protected void initTargets() {
+		this.targetSelector.addGoal(
+			0, McCodeHelper.getTargetGoal(this, CorruptedWarriorEntity.class)
+		);
+
+		this.targetSelector.addGoal(1, McCodeHelper.getTargetGoal(this, Player.class));
+	}
+
+	@Override
+	protected void playStepSound(BlockPos pos, BlockState blockState) {
+		this.playSound(ModSounds.HOLLOW_KNIGHT_WALK, 1f, 1f);
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.HOLLOW_KNIGHT_DEATH;
+	}
+}

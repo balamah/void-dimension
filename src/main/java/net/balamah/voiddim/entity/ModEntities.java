@@ -15,6 +15,7 @@ import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.block.ModBlocks;
 
 public class ModEntities {
 	public static final EntityType<MantisEntity> MANTIS =
@@ -287,6 +288,39 @@ public class ModEntities {
 			.eyeHeight(0.0F) .clientTrackingRange(4).updateInterval(10)
 		);
 
+	public static final EntityType<VengefulSpiritEntity> VENGEFUL_SPIRIT =
+		register(
+			"vengeful_spirit",
+			VengefulSpiritEntity.class,
+			EntityType.Builder.<VengefulSpiritEntity>of(VengefulSpiritEntity::new, MobCategory.MISC)
+			.noLootTable().sized(0.5f, 0.5f)
+			.eyeHeight(0.0F) .clientTrackingRange(4).updateInterval(10)
+		);
+
+	public static final EntityType<MashaEntity> MASHA =
+		register(
+			"masha",
+			MashaEntity.class,
+			EntityType.Builder.<MashaEntity>of(MashaEntity::new, MobCategory.CREATURE)
+			.sized(0.6f, 2f)
+		);
+
+	public static final EntityType<MaleGoatEntity> MALE_GOAT =
+		register(
+			"male_goat",
+			MaleGoatEntity.class,
+			EntityType.Builder.<MaleGoatEntity>of(MaleGoatEntity::new, MobCategory.CREATURE)
+			.noLootTable().sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<HollowKnightEntity> HOLLOW_KNIGHT =
+		register(
+			"hollow_knight",
+			HollowKnightEntity.class,
+			EntityType.Builder.<HollowKnightEntity>of(HollowKnightEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
 	// Looks bad, but it should be this way.
 	// Otherwise entities will not spawn on servers
 	public static void registerEntityAttributes() {
@@ -314,6 +348,9 @@ public class ModEntities {
 		FabricDefaultAttributeRegistry.register(ModEntities.EYE_BRIGHT, EyeBrightEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CORRUPTED_WARRIOR, CorruptedWarriorEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.VOID_BOUND_SERVANT, VoidBoundServantEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.MASHA, MashaEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.MALE_GOAT, MaleGoatEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HOLLOW_KNIGHT, HollowKnightEntity.createAttributes());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -335,7 +372,17 @@ public class ModEntities {
 			ModEntities.AGGRESSIVE_NULL,
 			ModEntities.STARING_CAT,
 			ModEntities.STARING_DOG,
-			ModEntities.EYE_BRIGHT
+			ModEntities.EYE_BRIGHT,
+		};
+
+	@SuppressWarnings("unchecked")
+	protected static final EntityType<? extends Mob>[] spawnAbyssRestrictedEntities =
+		new EntityType[] {
+			ModEntities.MANTIS,
+			ModEntities.SNOWMAN,
+			ModEntities.MASHA,
+			ModEntities.MALE_GOAT,
+			ModEntities.HOLLOW_KNIGHT
 		};
 
 	public static void registerModEntities() {
@@ -353,6 +400,22 @@ public class ModEntities {
 				SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				Mob::checkMobSpawnRules
+			);
+		}
+	}
+
+	public static void registerAbyssSpawnRestrictions() {
+		VoidDimension.LOGGER.info(
+			"Registering mob spawn restrictions in abyss for " + VoidDimension.MOD_ID
+		);
+
+		for (EntityType<? extends Mob> entityType : spawnAbyssRestrictedEntities) {
+			SpawnPlacements.register(
+				entityType,
+				SpawnPlacementTypes.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				(type, level, reason, pos, random) ->
+					level.getBlockState(pos.below()).is(ModBlocks.ABYSSIUM)
 			);
 		}
 	}

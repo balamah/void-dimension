@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; Configuration file for `project-config-file' for emacs.
 ;; The package project-config-mode (https://github.com/balamah/project-config-mode)
 ;; makes possible to load the file.
@@ -11,9 +12,9 @@
 	  lsp-java-import-gradle-enabled nil
 	  lsp-java-import-gradle-wrapper-enabled t
 	  lsp-java-import-maven-enabled nil
-	  lsp-java-project-import-on-startup t
+	  lsp-java-project-import-on-startup nil
 	  lsp-response-timeout 30
-	  lsp-enable-file-watchers t
+	  lsp-enable-file-watchers nil
 	  lsp-java-configuration-runtimes [(:name "JavaSE-25"
 										:path "/usr/lib/jvm/java-25-openjdk"
 										:default t)
@@ -96,3 +97,9 @@
 									 :hostName "localhost"
 									 :port 5005
 									 :name "Fabric Client (Attach)")))
+
+;; improve going to definition.
+;; Emacs lsp opens files, which are named 'ClassName.java(<package.name.ClassName',
+;; and because of that emacs opens it in fundamental-mode instead of java-mode,
+;; it is a bit irritating to type `M-x' `java-mode' again and again
+(add-to-list 'auto-mode-alist '(".*\\.java.*" . java-mode))

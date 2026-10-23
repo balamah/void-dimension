@@ -9,9 +9,20 @@ import net.minecraft.world.level.dimension.DimensionType;
 
 public class ModDimensions {
 	public static final ResourceKey<DimensionType> VOID = register("void");
-	public static final Identifier VOID_ID = Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void");
+
+	public static final Identifier VOID_ID =
+		Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "void");
+
 	public static final ResourceKey<Level> VOID_WORLD =
 		ResourceKey.create(Registries.DIMENSION, VOID_ID);
+
+	public static final ResourceKey<DimensionType> ABYSS = register("abyss");
+
+	public static final Identifier ABYSS_ID =
+		Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "abyss");
+
+	public static final ResourceKey<Level> ABYSS_WORLD =
+		ResourceKey.create(Registries.DIMENSION, ABYSS_ID);
 
 	protected static ResourceKey<DimensionType> register(String id) {
 		return ResourceKey.create(

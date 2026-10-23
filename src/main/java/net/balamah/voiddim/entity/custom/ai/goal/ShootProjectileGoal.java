@@ -3,7 +3,7 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 import com.google.common.base.Function;
 
 import net.balamah.voiddim.entity.custom.ai.goal.base.SlowMovementGoal;
-import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.ModHostileEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +11,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 
-public class ShootProjectileGoal<E extends CorruptedHostileEntity, T extends Projectile>
+public class ShootProjectileGoal<E extends ModHostileEntity, T extends Projectile>
 	extends SlowMovementGoal<E>
 {
 	protected final Function<ServerLevel, T> projectileFactory;

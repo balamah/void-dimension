@@ -28,6 +28,7 @@ public class CorruptionEffect extends MobEffect {
 		ModEntities.NULL,
 		ModEntities.STARING_CAT,
 		ModEntities.STARING_DOG,
+		ModEntities.HOLLOW_KNIGHT,
 		EntityTypes.ILLUSIONER,
 		EntityTypes.VINDICATOR,
 		EntityTypes.PILLAGER,

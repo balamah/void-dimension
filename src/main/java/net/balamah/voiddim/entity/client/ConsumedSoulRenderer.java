@@ -25,7 +25,6 @@ public class ConsumedSoulRenderer
 		this.model = new ConsumedSoulModel(context.bakeLayer(ConsumedSoulModel.CONSUMED_SOUL));
 	}
 
-	// TODO: Rotate the soul
 	@Override
 	public void submit(
 		ConsumedSoulRenderState state,
