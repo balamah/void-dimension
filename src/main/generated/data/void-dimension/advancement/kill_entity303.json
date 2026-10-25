@@ -3,15 +3,13 @@
   "criteria": {
     "killed_entity303": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "void-dimension:entity303"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "void-dimension:entity303"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }

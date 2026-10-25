@@ -2,7 +2,6 @@ package net.balamah.voiddim.gen;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-import java.util.Optional;
 import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +18,6 @@ import net.minecraft.advancements.triggers.ConsumeItemTrigger;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.advancements.triggers.KilledTrigger;
-import net.minecraft.advancements.triggers.RecipeCraftedTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponentExactPredicate;
@@ -33,7 +31,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -141,17 +138,17 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			null, AdvancementType.GOAL, false
 		)
 		.parent(firstSteps)
-		.addCriterion("upgrade_netherite_horse_armor"	, this.getRecipeCraftedCondition("void_horse_armor_smithing"))
-		.addCriterion("upgrade_netherite_boots"		, this.getRecipeCraftedCondition("void_boots_smithing"))
-		.addCriterion("upgrade_netherite_pickaxe"		, this.getRecipeCraftedCondition("void_pickaxe_smithing"))
-		.addCriterion("upgrade_netherite_shovel"		, this.getRecipeCraftedCondition("void_shovel_smithing"))
-		.addCriterion("upgrade_netherite_leggings"		, this.getRecipeCraftedCondition("void_leggings_smithing"))
-		.addCriterion("upgrade_netherite_axe"			, this.getRecipeCraftedCondition("void_axe_smithing"))
-		.addCriterion("upgrade_netherite_chestplate"	, this.getRecipeCraftedCondition("void_chestplate_smithing"))
-		.addCriterion("upgrade_netherite_sword"		, this.getRecipeCraftedCondition("void_sword_smithing"))
-		.addCriterion("upgrade_netherite_hoe"			, this.getRecipeCraftedCondition("void_hoe_smithing"))
-		.addCriterion("upgrade_netherite_helmet"		, this.getRecipeCraftedCondition("void_helmet_smithing"))
-		.addCriterion("upgrade_netherite_spear"		, this.getRecipeCraftedCondition("void_spear_smithing"))
+		.addCriterion("upgrade_netherite_horse_armor", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_HORSE_ARMOR))
+		.addCriterion("upgrade_netherite_boots", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_BOOTS))
+		.addCriterion("upgrade_netherite_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_PICKAXE))
+		.addCriterion("upgrade_netherite_shovel", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_SHOVEL))
+		.addCriterion("upgrade_netherite_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_LEGGINGS))
+		.addCriterion("upgrade_netherite_axe", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_AXE))
+		.addCriterion("upgrade_netherite_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_CHESTPLATE))
+		.addCriterion("upgrade_netherite_sword", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_SWORD))
+		.addCriterion("upgrade_netherite_hoe", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_HOE))
+		.addCriterion("upgrade_netherite_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_HELMET))
+		.addCriterion("upgrade_netherite_spear", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_SPEAR))
 		.requirements(AdvancementRequirements.anyOf(
 			List.of("upgrade_netherite_horse_armor",
 					"upgrade_netherite_boots",
@@ -172,7 +169,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			ModItems.VOID_HOE, "insanity", null, AdvancementType.CHALLENGE, true
 		)
 		.parent(firstSteps)
-		.addCriterion("upgrade_netherite_hoe", this.getRecipeCraftedCondition("void_hoe_smithing"))
+		.addCriterion("upgrade_netherite_hoe", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.VOID_HOE))
 		.save(consumer, this.namespaced("upgraded_netherite_hoe"))
 		;
 
@@ -186,16 +183,16 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			consumer, "get_void_armor"
 		);
 
-		Optional<EntityPredicate> voidHarbingerPredicate =
+		EntityPredicate.Builder voidHarbingerPredicate =
 			this.getEntityPredicate(entityLookup, ModEntities.VOID_HARBINGER);
 
-		Optional<EntityPredicate> entity303Predicate =
+		EntityPredicate.Builder entity303Predicate =
 			this.getEntityPredicate(entityLookup, ModEntities.ENTITY303);
 
-		Optional<EntityPredicate> shatteredSentinelMasterPredicate =
+		EntityPredicate.Builder shatteredSentinelMasterPredicate =
 			this.getEntityPredicate(entityLookup, ModEntities.SHATTERED_SENTINEL_MASTER);
 
-		Optional<EntityPredicate> corruptedWarriorPredicate =
+		EntityPredicate.Builder corruptedWarriorPredicate =
 			this.getEntityPredicate(entityLookup, ModEntities.CORRUPTED_WARRIOR);
 
 		AdvancementHolder harbingerOfOblivion = this.getAdvancementEntry(
@@ -267,18 +264,19 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		String titleString = this.getLocaleString(advancementLocale, "title");
 		String descriptionString = this.getLocaleString(advancementLocale, "description");
 
-		return Advancement.Builder.advancement()
-			.display(
-				icon, // The display icon
-				Component.translatable(titleString), // The title
-				Component.translatable(descriptionString), // The description
-				background, // Background image for the tab in the advancements page, if this is a root advancement (has no parent)
-				type, // TASK, CHALLENGE, or GOAL
-				true, // Show the toast when completing it
-				true, // Announce it to chat
-				hidden // Hide it in the advancement tab until it's achieved
-			)
-			;
+		Advancement.Builder builder = Advancement.Builder.advancement();
+		if (background != null) {
+			return builder.rootDisplay(
+				icon.asItem(), Component.translatable(titleString),
+				Component.translatable(descriptionString), background, type,
+				true, true, hidden
+			);
+		}
+
+		return builder.display(
+			icon.asItem(), Component.translatable(titleString),
+			Component.translatable(descriptionString), type, true, true, hidden
+		);
 	}
 
 	protected AdvancementHolder getAdvancementEntry(
@@ -309,11 +307,10 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			.save(consumer, this.namespaced(id));
 	}
 
-	protected String namespaced(String id) {
-		if (id.indexOf(':') >= 0) {
-			return id;
-		}
-		return VoidDimension.MOD_ID + ":" + id;
+	protected Identifier namespaced(String id) {
+		return id.indexOf(':') >= 0
+			? Identifier.parse(id)
+			: Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id);
 	}
 
 	/**
@@ -327,19 +324,6 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		return String.format(titleKey, baseAdvancementLocaleKey, advancementLocale);
 	}
 
-	protected ResourceKey<Recipe<?>> getRecipeKey(String id) {
-		return ResourceKey.create(
-			Registries.RECIPE,
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id)
-		);
-	}
-
-	protected Criterion<RecipeCraftedTrigger.TriggerInstance>
-		getRecipeCraftedCondition(String id)
-	{
-		return RecipeCraftedTrigger.TriggerInstance.craftedItem(this.getRecipeKey(id));
-	}
-
 	protected EntityPredicate.Builder getEntityPredicateBuilder(
 		HolderLookup.RegistryLookup<EntityType<?>> entityLookup,
 		EntityType<?> entityType
@@ -350,10 +334,10 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		);
 	}
 
-	protected Optional<EntityPredicate> getEntityPredicate(
+	protected EntityPredicate.Builder getEntityPredicate(
 		HolderLookup.RegistryLookup<EntityType<?>> entityLookup,
 		EntityType<?> entityType
 	) {
-		return Optional.of(this.getEntityPredicateBuilder(entityLookup, entityType).build());
+		return this.getEntityPredicateBuilder(entityLookup, entityType);
 	}
 }

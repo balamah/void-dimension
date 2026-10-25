@@ -3,69 +3,113 @@
   "criteria": {
     "upgrade_netherite_axe": {
       "conditions": {
-        "recipe_id": "void-dimension:void_axe_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_axe"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_boots": {
       "conditions": {
-        "recipe_id": "void-dimension:void_boots_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_boots"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_chestplate": {
       "conditions": {
-        "recipe_id": "void-dimension:void_chestplate_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_chestplate"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_helmet": {
       "conditions": {
-        "recipe_id": "void-dimension:void_helmet_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_helmet"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_hoe": {
       "conditions": {
-        "recipe_id": "void-dimension:void_hoe_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_hoe"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_horse_armor": {
       "conditions": {
-        "recipe_id": "void-dimension:void_horse_armor_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_horse_armor"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_leggings": {
       "conditions": {
-        "recipe_id": "void-dimension:void_leggings_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_leggings"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_pickaxe": {
       "conditions": {
-        "recipe_id": "void-dimension:void_pickaxe_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_pickaxe"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_shovel": {
       "conditions": {
-        "recipe_id": "void-dimension:void_shovel_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_shovel"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_spear": {
       "conditions": {
-        "recipe_id": "void-dimension:void_spear_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_spear"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     },
     "upgrade_netherite_sword": {
       "conditions": {
-        "recipe_id": "void-dimension:void_sword_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_sword"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {

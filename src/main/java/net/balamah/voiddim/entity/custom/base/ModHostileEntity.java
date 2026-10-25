@@ -46,10 +46,9 @@ public abstract class ModHostileEntity extends Monster {
 			ItemStack itemStack = this.getItemBySlot(equipmentSlot);
 			if (!itemStack.isEmpty()) {
 				if (itemStack.isDamageableItem()) {
-					Item item = itemStack.getItem();
 					itemStack.setDamageValue(itemStack.getDamageValue() + this.random.nextInt(2));
 					if (itemStack.getDamageValue() >= itemStack.getMaxDamage()) {
-						this.onEquippedItemBroken(item, equipmentSlot);
+						this.onEquippedItemBroken(itemStack, equipmentSlot);
 						this.setItemSlot(equipmentSlot, ItemStack.EMPTY);
 					}
 				}

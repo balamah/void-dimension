@@ -5,9 +5,7 @@ import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.item.SwingAnimationType;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.client.model.EntityModel;
@@ -39,10 +37,9 @@ public abstract class WeaponArmedEntityRenderer
 	public void extractRenderState(T entity, S state, float f) {
 		super.extractRenderState(entity, state, f);
 
-		state.leftArmPose = this.getArmPose(entity, HumanoidArm.LEFT);
-		state.rightArmPose = this.getArmPose(entity, HumanoidArm.RIGHT);
-
 		this.extractHumanoidRenderState(entity, state, f, this.itemModelResolver);
+		state.leftArmPose = this.getArmPose(entity, state, HumanoidArm.LEFT);
+		state.rightArmPose = this.getArmPose(entity, state, HumanoidArm.RIGHT);
 
 	}
 
@@ -53,23 +50,22 @@ public abstract class WeaponArmedEntityRenderer
 			entity, state, itemModelResolver, partialTicks
 		);
 
-		state.attackArm = getAttackArm(entity);
-		state.mainArm = entity.getMainArm();
 	}
 
-	protected HumanoidModel.ArmPose getArmPose(final T mob, final HumanoidArm arm) {
+	protected HumanoidModel.ArmPose getArmPose(
+		final T mob, final S state, final HumanoidArm arm
+	) {
 		ItemStack itemHeldByArm = mob.getItemHeldByArm(arm);
-		SwingAnimation anim = itemHeldByArm.get(DataComponents.SWING_ANIMATION);
-		if (anim != null && anim.type() == SwingAnimationType.STAB && mob.swinging) {
+		HumanoidArm swingingArm = state.currentSwing != null &&
+			state.currentSwing.hand() == InteractionHand.OFF_HAND
+			? mob.getMainArm().getOpposite() : mob.getMainArm();
+		if (state.currentSwing != null && swingingArm == arm &&
+			state.currentSwing.animation().type() == SwingAnimationType.STAB)
+		{
 			return HumanoidModel.ArmPose.SPEAR;
 		} else {
 			return itemHeldByArm.is(ItemTags.SPEARS) ?
 				HumanoidModel.ArmPose.SPEAR : HumanoidModel.ArmPose.EMPTY;
 		}
-	}
-
-	private static HumanoidArm getAttackArm(final LivingEntity entity) {
-		HumanoidArm mainArm = entity.getMainArm();
-		return entity.swingingArm != InteractionHand.OFF_HAND ? mainArm : mainArm.getOpposite();
 	}
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "void-dimension:corruption_ascension_block"
+        "recipes": "void-dimension:corruption_ascension_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -45,9 +45,9 @@ public class BedrockBombRenderer
 			matrixStack.scale(h, h, h);
 		}
 
-		matrixStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
+		matrixStack.rotateDegrees(Axis.YP, -90.0F);
 		matrixStack.translate(-0.5F, -0.5F, 0.5F);
-		matrixStack.mulPose(Axis.YP.rotationDegrees(90.0F));
+		matrixStack.rotateDegrees(Axis.YP, 90.0F);
 
 		if (!tntEntityRenderState.blockState.isEmpty()) {
 			TntMinecartRenderer.submitWhiteSolidBlock(

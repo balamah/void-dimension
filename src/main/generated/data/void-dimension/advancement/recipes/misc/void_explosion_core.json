@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "void-dimension:void_explosion_core"
+        "recipes": "void-dimension:void_explosion_core"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

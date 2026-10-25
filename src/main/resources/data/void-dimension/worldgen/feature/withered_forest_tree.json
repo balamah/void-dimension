@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:tree",
+  "minimum_size": {
+    "type": "minecraft:two_layers_feature_size"
+  },
+  "dirt_provider": "void-dimension:dirt",
+  "below_trunk_provider": "void-dimension:dirt",
+  "force_dirt": true,
+  "trunk_provider": "void-dimension:pale_oak_log",
+  "trunk_placer": {
+    "type": "minecraft:straight_trunk_placer",
+    "base_height": 4,
+    "height_rand_a": 2,
+    "height_rand_b": 4
+  },
+  "foliage_provider": "void-dimension:air",
+  "foliage_placer": {
+    "type": "minecraft:blob_foliage_placer",
+    "height": 3,
+    "offset": 0,
+    "radius": 2
+  },
+  "decorators": []
+}

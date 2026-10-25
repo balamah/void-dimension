@@ -6,13 +6,15 @@
 		"ExampleMixin",
 		"ServerPlayerEntityMixin",
 		"FlintAndSteelMixin",
-		"AtmosphericFogModifierMixin",
-		"LevelRendererMixin",
 		"LivingEntityTickMixin",
 		"EntityMixin",
 		"FireblockMixin",
 		"ItemPropertiesAccessor",
 		"JukeboxBlockMixin"
+	],
+	"client": [
+		"AtmosphericFogModifierMixin",
+		"CloudRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

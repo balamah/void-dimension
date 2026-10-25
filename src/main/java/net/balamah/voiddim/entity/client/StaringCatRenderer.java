@@ -64,7 +64,7 @@ public class StaringCatRenderer
 		float h = catEntityRenderState.lieDownAmount;
 		if (h > 0.0F) {
 			matrixStack.translate(0.4F * h, 0.15F * h, 0.1F * h);
-			matrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.rotLerp(h, 0.0F, 90.0F)));
+			matrixStack.rotateDegrees(Axis.ZP, Mth.rotLerp(h, 0.0F, 90.0F));
 			if (catEntityRenderState.isLyingOnTopOfSleepingPlayer) {
 				matrixStack.translate(0.15F * h, 0.0F, 0.0F);
 			}
