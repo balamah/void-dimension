@@ -1,9 +1,4 @@
 {
   "type": "minecraft:simple_block",
-  "to_place": {
-    "type": "minecraft:simple_state_provider",
-    "state": {
-      "Name": "minecraft:wither_rose"
-    }
-  }
+  "to_place": "void-dimension:wither_rose"
 }

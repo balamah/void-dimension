@@ -4,9 +4,7 @@
   "discard_chance_on_air_exposure": 0.0,
   "targets": [
     {
-      "state": {
-        "Name": "void-dimension:deepslate_void_shard_ore"
-      },
+      "state": "void-dimension:deepslate_void_shard_ore",
       "target": {
         "predicate_type": "minecraft:tag_match",
         "tag": "minecraft:deepslate_ore_replaceables"

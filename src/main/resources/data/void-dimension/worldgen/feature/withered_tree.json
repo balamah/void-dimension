@@ -3,37 +3,17 @@
   "minimum_size": {
     "type": "minecraft:two_layers_feature_size"
   },
-  "dirt_provider": {
-    "type": "minecraft:simple_state_provider",
-    "state": {
-      "Name": "minecraft:dirt"
-    }
-  },
-  "below_trunk_provider": {
-    "type": "minecraft:simple_state_provider",
-    "state": {
-      "Name": "minecraft:dirt"
-    }
-  },
+  "dirt_provider": "void-dimension:dirt",
+  "below_trunk_provider": "void-dimension:dirt",
   "force_dirt": true,
-  "trunk_provider": {
-    "type": "minecraft:simple_state_provider",
-    "state": {
-      "Name": "minecraft:pale_oak_log"
-    }
-  },
+  "trunk_provider": "void-dimension:pale_oak_log",
   "trunk_placer": {
     "type": "minecraft:straight_trunk_placer",
     "base_height": 4,
     "height_rand_a": 1,
     "height_rand_b": 3
   },
-  "foliage_provider": {
-    "type": "minecraft:simple_state_provider",
-    "state": {
-      "Name": "minecraft:air"
-    }
-  },
+  "foliage_provider": "void-dimension:air",
   "foliage_placer": {
     "type": "minecraft:blob_foliage_placer",
     "height": 3,
