@@ -20,6 +20,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 
 import net.balamah.voiddim.interfaces.MultipleProjectileShootUser;
 import net.balamah.voiddim.interfaces.StrongAttackUser;
@@ -220,13 +221,15 @@ public class CorruptedWarriorEntity extends BossEntity
 		}
 
 		BlockState blockState = this.level().getBlockState(mutable);
-		boolean isSolidBlock = blockState.blocksMotion();
+		boolean isSolidBlock = blockState.is(BlockTags.BLOCKS_MOTION);
 		if (!isSolidBlock) {
 			return false;
 		}
 
 		Vec3 vec3d = new Vec3(this.getX(), this.getY(), this.getZ());
-			boolean didTeleport = this.randomTeleport(x, y, z, true);
+			boolean didTeleport = this.randomTeleport(
+				x, y, z, true, BlockTags.ENTITIES_CAN_TELEPORT_TO
+			);
 			if (didTeleport) {
 				this.teleportTicks = this.teleportCooldown;
 				this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));
@@ -343,7 +346,7 @@ public class CorruptedWarriorEntity extends BossEntity
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, y, z);
 
 		while (mutable.getY() > this.level().getMinY() &&
-			   !this.level().getBlockState(mutable).blocksMotion()
+			   !this.level().getBlockState(mutable).is(BlockTags.BLOCKS_MOTION)
 		) {
 			double heightDifference = this.getY() - mutable.getY();
 

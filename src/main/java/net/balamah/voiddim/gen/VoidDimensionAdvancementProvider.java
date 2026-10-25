@@ -21,6 +21,7 @@ import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.advancements.triggers.KilledTrigger;
 import net.minecraft.advancements.triggers.RecipeCraftedTrigger;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.core.component.DataComponents;
@@ -59,6 +60,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		final HolderLookup.RegistryLookup<Item> itemLookup = wrapperLookup.lookupOrThrow(Registries.ITEM);
 		final HolderLookup.RegistryLookup<EntityType<?>> entityLookup = wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE);
 		final HolderLookup.RegistryLookup<Potion> potionLookup = wrapperLookup.lookupOrThrow(Registries.POTION);
+		final HolderLookup.RegistryLookup<Recipe<?>> recipeLookup = wrapperLookup.lookupOrThrow(Registries.RECIPE);
 
 		var voidSalvationPotion = potionLookup.getOrThrow(
 			ResourceKey.create(
@@ -141,17 +143,17 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			null, AdvancementType.GOAL, false
 		)
 		.parent(firstSteps)
-		.addCriterion("upgrade_netherite_horse_armor"	, this.getRecipeCraftedCondition("void_horse_armor_smithing"))
-		.addCriterion("upgrade_netherite_boots"		, this.getRecipeCraftedCondition("void_boots_smithing"))
-		.addCriterion("upgrade_netherite_pickaxe"		, this.getRecipeCraftedCondition("void_pickaxe_smithing"))
-		.addCriterion("upgrade_netherite_shovel"		, this.getRecipeCraftedCondition("void_shovel_smithing"))
-		.addCriterion("upgrade_netherite_leggings"		, this.getRecipeCraftedCondition("void_leggings_smithing"))
-		.addCriterion("upgrade_netherite_axe"			, this.getRecipeCraftedCondition("void_axe_smithing"))
-		.addCriterion("upgrade_netherite_chestplate"	, this.getRecipeCraftedCondition("void_chestplate_smithing"))
-		.addCriterion("upgrade_netherite_sword"		, this.getRecipeCraftedCondition("void_sword_smithing"))
-		.addCriterion("upgrade_netherite_hoe"			, this.getRecipeCraftedCondition("void_hoe_smithing"))
-		.addCriterion("upgrade_netherite_helmet"		, this.getRecipeCraftedCondition("void_helmet_smithing"))
-		.addCriterion("upgrade_netherite_spear"		, this.getRecipeCraftedCondition("void_spear_smithing"))
+		.addCriterion("upgrade_netherite_horse_armor"	, this.getRecipeCraftedCondition(recipeLookup, "void_horse_armor_smithing"))
+		.addCriterion("upgrade_netherite_boots"		, this.getRecipeCraftedCondition(recipeLookup, "void_boots_smithing"))
+		.addCriterion("upgrade_netherite_pickaxe"		, this.getRecipeCraftedCondition(recipeLookup, "void_pickaxe_smithing"))
+		.addCriterion("upgrade_netherite_shovel"		, this.getRecipeCraftedCondition(recipeLookup, "void_shovel_smithing"))
+		.addCriterion("upgrade_netherite_leggings"		, this.getRecipeCraftedCondition(recipeLookup, "void_leggings_smithing"))
+		.addCriterion("upgrade_netherite_axe"			, this.getRecipeCraftedCondition(recipeLookup, "void_axe_smithing"))
+		.addCriterion("upgrade_netherite_chestplate"	, this.getRecipeCraftedCondition(recipeLookup, "void_chestplate_smithing"))
+		.addCriterion("upgrade_netherite_sword"		, this.getRecipeCraftedCondition(recipeLookup, "void_sword_smithing"))
+		.addCriterion("upgrade_netherite_hoe"			, this.getRecipeCraftedCondition(recipeLookup, "void_hoe_smithing"))
+		.addCriterion("upgrade_netherite_helmet"		, this.getRecipeCraftedCondition(recipeLookup, "void_helmet_smithing"))
+		.addCriterion("upgrade_netherite_spear"		, this.getRecipeCraftedCondition(recipeLookup, "void_spear_smithing"))
 		.requirements(AdvancementRequirements.anyOf(
 			List.of("upgrade_netherite_horse_armor",
 					"upgrade_netherite_boots",
@@ -172,7 +174,7 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			ModItems.VOID_HOE, "insanity", null, AdvancementType.CHALLENGE, true
 		)
 		.parent(firstSteps)
-		.addCriterion("upgrade_netherite_hoe", this.getRecipeCraftedCondition("void_hoe_smithing"))
+		.addCriterion("upgrade_netherite_hoe", this.getRecipeCraftedCondition(recipeLookup, "void_hoe_smithing"))
 		.save(consumer, this.namespaced("upgraded_netherite_hoe"))
 		;
 
@@ -267,18 +269,19 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 		String titleString = this.getLocaleString(advancementLocale, "title");
 		String descriptionString = this.getLocaleString(advancementLocale, "description");
 
-		return Advancement.Builder.advancement()
-			.display(
-				icon, // The display icon
-				Component.translatable(titleString), // The title
-				Component.translatable(descriptionString), // The description
-				background, // Background image for the tab in the advancements page, if this is a root advancement (has no parent)
-				type, // TASK, CHALLENGE, or GOAL
-				true, // Show the toast when completing it
-				true, // Announce it to chat
-				hidden // Hide it in the advancement tab until it's achieved
-			)
-			;
+		Advancement.Builder builder = Advancement.Builder.advancement();
+		if (background != null) {
+			return builder.rootDisplay(
+				icon.asItem(), Component.translatable(titleString),
+				Component.translatable(descriptionString), background, type,
+				true, true, hidden
+			);
+		}
+
+		return builder.display(
+			icon.asItem(), Component.translatable(titleString),
+			Component.translatable(descriptionString), type, true, true, hidden
+		);
 	}
 
 	protected AdvancementHolder getAdvancementEntry(
@@ -309,11 +312,10 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 			.save(consumer, this.namespaced(id));
 	}
 
-	protected String namespaced(String id) {
-		if (id.indexOf(':') >= 0) {
-			return id;
-		}
-		return VoidDimension.MOD_ID + ":" + id;
+	protected Identifier namespaced(String id) {
+		return id.indexOf(':') >= 0
+			? Identifier.parse(id)
+			: Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, id);
 	}
 
 	/**
@@ -335,9 +337,13 @@ public class VoidDimensionAdvancementProvider extends FabricAdvancementProvider 
 	}
 
 	protected Criterion<RecipeCraftedTrigger.TriggerInstance>
-		getRecipeCraftedCondition(String id)
+		getRecipeCraftedCondition(
+			HolderLookup.RegistryLookup<Recipe<?>> recipeLookup, String id
+		)
 	{
-		return RecipeCraftedTrigger.TriggerInstance.craftedItem(this.getRecipeKey(id));
+		return RecipeCraftedTrigger.TriggerInstance.craftedItem(
+			HolderSet.direct(recipeLookup.getOrThrow(this.getRecipeKey(id)))
+		);
 	}
 
 	protected EntityPredicate.Builder getEntityPredicateBuilder(

@@ -27,7 +27,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.RandomSource;
@@ -167,7 +166,7 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		if (this.isBlocking() && attacker instanceof LivingEntity living) {
 			ItemStack weapon = living.getMainHandItem();
 
-			if (weapon.getItem() instanceof AxeItem || source.is(DamageTypeTags.IS_MACE_SMASH)) {
+			if (weapon.is(ItemTags.AXES) || source.is(DamageTypeTags.IS_MACE_SMASH)) {
 				this.stopUsingItem();
 				this.isDefending = false;
 

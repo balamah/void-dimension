@@ -8,7 +8,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Enderman;
 
 import java.util.Arrays;
 
@@ -56,7 +56,7 @@ public class CorruptionEffect extends MobEffect {
 		ServerLevel world, LivingEntity entity, int amplifier
 	) {
 		// Kill enderman immediately to convert him into corrupted stalker
-		if (entity instanceof EnderMan) {
+		if (entity instanceof Enderman) {
 			amplifier *= 20;
 		}
 

@@ -1,6 +1,5 @@
 package net.balamah.voiddim.block.custom;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -76,8 +75,4 @@ public class CorpseBlock extends HorizontalDirectionalBlock implements SimpleWat
         return state.rotate(mirror.getRotation(state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
     }
 
-	@Override
-	protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
-		return simpleCodec(CorpseBlock::new);
-	}
 }

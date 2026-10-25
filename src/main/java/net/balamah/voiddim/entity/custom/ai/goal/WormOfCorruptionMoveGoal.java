@@ -9,6 +9,7 @@ import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -55,7 +56,7 @@ public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & Station
 
 		LivingEntity target = this.entity.getTarget();
 
-		this.entity.setInvulnerable(true);
+		this.entity.setPermanentlyInvulnerable(true);
 		this.entity.setStopAttacks(true);
 		this.setCoordinates(target);
 		this.sendEntityStatus(ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN);
@@ -80,8 +81,11 @@ public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & Station
 		}
 
 		if (this.tick == 15) {
-			this.entity.randomTeleport(this.teleportX, this.teleportY, this.teleportZ, true);
-			this.entity.setInvulnerable(false);
+			this.entity.randomTeleport(
+				this.teleportX, this.teleportY, this.teleportZ, true,
+				BlockTags.ENTITIES_CAN_TELEPORT_TO
+			);
+			this.entity.setPermanentlyInvulnerable(false);
 
 			this.entity.makeSound(ModSounds.WORM_OF_CORRUPTION_DIG_UP);
 			this.sendEntityStatus(ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN_STOP);
@@ -98,7 +102,7 @@ public class WormOfCorruptionMoveGoal<T extends CorruptedHostileEntity & Station
 		this.sendEntityStatus(ModEntityStatuses.WORM_OF_CORRUPTION_DIG_DOWN_STOP);
 		this.sendEntityStatus(ModEntityStatuses.WORM_OF_CORRUPTION_DIG_UP);
 		this.entity.setStopAttacks(false);
-		this.entity.setInvulnerable(false);
+		this.entity.setPermanentlyInvulnerable(false);
 		this.removeModifier(this.attributeInstance, this.attributeModifier);
 
 		this.entity.attackCount = 0;

@@ -61,8 +61,7 @@ public class EyeBrightHeadRenderer
 			this.model.renderType(this.getTexture(eyeBrightHeadRenderState)),
 			eyeBrightHeadRenderState.lightCoords,
 			OverlayTexture.NO_OVERLAY,
-			eyeBrightHeadRenderState.outlineColor,
-			null
+			eyeBrightHeadRenderState.outlineColor
 		);
 		matrixStack.popPose();
 

@@ -190,8 +190,8 @@ public class HollowKnightModel
 			poseStack.translate(0.08F, -0.3f, 0.0F);
 		} else {
 			poseStack.translate(0.8F, -0.1F, 0.25F);
-			poseStack.mulPose(Axis.XP.rotationDegrees(90f));
-			poseStack.mulPose(Axis.ZP.rotationDegrees(90f));
+			poseStack.rotateDegrees(Axis.XP, 90f);
+			poseStack.rotateDegrees(Axis.ZP, 90f);
 		}
 	}
 

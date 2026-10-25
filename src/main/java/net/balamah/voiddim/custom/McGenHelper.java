@@ -1,5 +1,6 @@
 package net.balamah.voiddim.custom;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -7,22 +8,22 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.UniformGenerator;
 
 public class McGenHelper {
-	public static NumberProvider getRandomNumberProvider(
+	public static Holder<ContextIntProvider> getRandomNumberProvider(
 		int minimumCount, int maximumCount
 	) {
-		NumberProvider min = ConstantValue.exactly(minimumCount);
-		NumberProvider max = ConstantValue.exactly(maximumCount);
+		Holder<ContextIntProvider> min = Holder.direct(new ConstantValue(minimumCount));
+		Holder<ContextIntProvider> max = Holder.direct(new ConstantValue(maximumCount));
 
-		return new UniformGenerator(min, max);
+		return Holder.direct(new UniformGenerator(min, max));
 	}
 
-	public static NumberProvider constantNumber(int count) {
-		return ConstantValue.exactly(count);
+	public static Holder<ContextIntProvider> constantNumber(int count) {
+		return Holder.direct(new ConstantValue(count));
 	}
 
 	public static LootItemConditionalFunction.Builder<?> randomNumber(
@@ -33,11 +34,11 @@ public class McGenHelper {
 		);
 	}
 
-	public static LootPool.Builder getPool(NumberProvider provider) {
+	public static LootPool.Builder getPool(Holder<ContextIntProvider> provider) {
 		return LootPool.lootPool().setRolls(provider);
 	}
 
-	public static LootPool.Builder getPool(NumberProvider provider, float chance) {
+	public static LootPool.Builder getPool(Holder<ContextIntProvider> provider, float chance) {
 		return getPool(provider)
 			.when(LootItemRandomChanceCondition.randomChance(chance));
 	}

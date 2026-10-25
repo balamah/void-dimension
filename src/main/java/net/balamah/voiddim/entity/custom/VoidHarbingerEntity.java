@@ -2,6 +2,7 @@ package net.balamah.voiddim.entity.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
@@ -125,13 +126,15 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 		}
 
 		BlockState blockState = this.level().getBlockState(mutable);
-		boolean isSolidBlock = blockState.blocksMotion();
+		boolean isSolidBlock = blockState.is(BlockTags.BLOCKS_MOTION);
 		if (!isSolidBlock) {
 			return false;
 		}
 
 		Vec3 vec3d = new Vec3(this.getX(), this.getY(), this.getZ());
-			boolean didTeleport = this.randomTeleport(x, y, z, true);
+			boolean didTeleport = this.randomTeleport(
+				x, y, z, true, BlockTags.ENTITIES_CAN_TELEPORT_TO
+			);
 			if (didTeleport) {
 				this.teleportTicks = this.teleportCooldown;
 				this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));

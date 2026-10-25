@@ -55,7 +55,7 @@ public abstract class ProjectileCustomModelRenderer
 			int overlayCoords = getOverlayCoords(state, this.getWhiteOverlayProgress(state));
 			int baseColor = forceTransparent ? 654311423 : -1;
 			int tintedColor = ARGB.multiply(baseColor, this.getModelTint(state));
-			submitNodeCollector.submitModel(this.model, state, poseStack, renderType, state.lightCoords, overlayCoords, tintedColor, null, state.outlineColor, null);
+			submitNodeCollector.submitModel(this.model, state, poseStack, renderType, state.lightCoords, overlayCoords, tintedColor, null, state.outlineColor);
 		}
 
 		if (this.shouldRenderLayers(state)) {
@@ -92,7 +92,7 @@ public abstract class ProjectileCustomModelRenderer
 	protected RenderType getRenderType(final S state, final boolean isBodyVisible, final boolean forceTransparent, final boolean appearGlowing) {
 		Identifier texture = this.getTextureLocation(state);
 		if (forceTransparent) {
-			return RenderTypes.entityTranslucentCullItemTarget(texture);
+			return RenderTypes.entityTranslucentCull(texture);
 		} else if (isBodyVisible) {
 			return this.model.renderType(texture);
 		} else {
