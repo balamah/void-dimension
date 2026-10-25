@@ -203,7 +203,6 @@ public class CorruptedWarriorEntity extends BossEntity
 		return false;
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean teleportTo(double x, double y, double z, boolean ignoreLimitPredicate) {
 		if (this.teleportTicks > 0) {
 			return false;
