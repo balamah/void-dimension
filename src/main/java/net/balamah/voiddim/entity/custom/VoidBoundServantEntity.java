@@ -27,8 +27,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Weapon;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -164,9 +166,11 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		Entity attacker = source.getEntity();
 
 		if (this.isBlocking() && attacker instanceof LivingEntity living) {
-			ItemStack weapon = living.getMainHandItem();
+			ItemStack weaponStack = living.getMainHandItem();
+			Weapon weapon = weaponStack.get(DataComponents.WEAPON);
 
-			if (weapon.is(ItemTags.AXES) || source.is(DamageTypeTags.IS_MACE_SMASH)) {
+			if ((weapon != null && weapon.disableBlockingForSeconds() > 0) ||
+				source.is(DamageTypeTags.IS_MACE_SMASH)) {
 				this.stopUsingItem();
 				this.isDefending = false;
 
