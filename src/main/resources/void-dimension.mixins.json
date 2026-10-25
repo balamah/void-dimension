@@ -14,7 +14,7 @@
 	],
 	"client": [
 		"AtmosphericFogModifierMixin",
-		"LevelRendererMixin"
+		"CloudRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
