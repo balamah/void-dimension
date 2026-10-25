@@ -59,6 +59,10 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 	}
 
 	public boolean teleportRandomly() {
+		if (this.teleportTicks > 0) {
+			return false;
+		}
+		
 		int teleportationRadius = 13;
 
 		if (this.teleportTicks > 0) {
@@ -87,12 +91,9 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 			this.getX() - entity.getX(), 
 			this.getY(0.5) - entity.getEyeY(), 
 			this.getZ() - entity.getZ()
-		);
-
-		vec3d = vec3d.normalize();
+		).normalize();
 
 		double teleportDiameter = 7.0;
-
 		int randomYoffset = (this.random.nextInt(16) - 8);
 
 		double x, y, z;
@@ -103,7 +104,7 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 			y = Math.max(entity.getY(), randomY);
 			z = this.getRandomCoordinate(this.getZ(), vec3d.z, teleportDiameter);
 
-			if (McCodeHelper.isTeleportationSafe(entity, entity.getY(), x, y, z)) {
+			if (McCodeHelper.isTeleportationSafe(this, entity.getY(), x, y, z)) {
 				return this.teleportTo(x, y, z, false);
 			}
 		}
@@ -111,12 +112,7 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 		return false;
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean teleportTo(double x, double y, double z, boolean ignoreLimitPredicate) {
-		if (this.teleportTicks > 0) {
-			return false;
-		}
-
 		BlockPos.MutableBlockPos mutable = McCodeHelper.getMutableCoordinate(
 			this.level(), x, y, z, ignoreLimitPredicate
 		);
@@ -132,14 +128,15 @@ public class VoidHarbingerEntity extends BossEntity implements TeleportUser {
 		}
 
 		Vec3 vec3d = new Vec3(this.getX(), this.getY(), this.getZ());
-			boolean didTeleport = this.randomTeleport(
-				x, y, z, true, BlockTags.ENTITIES_CAN_TELEPORT_TO
-			);
-			if (didTeleport) {
-				this.teleportTicks = this.teleportCooldown;
-				this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));
-				this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
-			}
+		boolean didTeleport = this.randomTeleport(
+			x, mutable.getY() + 1, z, true, BlockTags.DANGEROUS_FOR_TELEPORTATION
+		);
+
+		if (didTeleport) {
+			this.teleportTicks = this.teleportCooldown;
+			this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));
+			this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
+		}
 
 		return didTeleport;
 	}

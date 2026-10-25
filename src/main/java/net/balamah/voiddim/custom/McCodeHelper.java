@@ -284,16 +284,16 @@ public class McCodeHelper {
 	public static boolean isTeleportationSafe(
 		Entity entity, double targetY, double x, double y, double z
 	) {
-		BlockPos futurePosition = new BlockPos(
-				(int) x, (int) y, (int) z);
-
-		Block futureBlock = entity.level().getBlockState(futurePosition).getBlock();
-
-		if (dangerousBlocks.contains(futureBlock) || y < targetY) {
+		BlockPos.MutableBlockPos groundPosition = getMutableCoordinate(
+			entity.level(), x, y, z, false
+		);
+		if (groundPosition == null) {
 			return false;
 		}
 
-		return true;
+		Block groundBlock = entity.level().getBlockState(groundPosition).getBlock();
+		return !dangerousBlocks.contains(groundBlock) &&
+			groundPosition.getY() + 1 >= targetY;
 	}
 
 	public static Goal getTargetGoal(Mob entity, Class<?> entityTarget) {

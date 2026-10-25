@@ -18,7 +18,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 
@@ -32,8 +31,6 @@ import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.*;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.entity.ModEntities;
-
-import org.jetbrains.annotations.Nullable;
 
 public class CorruptedWarriorEntity extends BossEntity
 	implements DarkGraspUser, MultipleProjectileShootUser, TeleportUser, StrongAttackUser
@@ -198,7 +195,7 @@ public class CorruptedWarriorEntity extends BossEntity
 			y = Math.max(entity.getY(), randomY);
 			z = this.getRandomCoordinate(this.getZ(), vec3d.z, teleportDiameter);
 
-			if (McCodeHelper.isTeleportationSafe(entity, entity.getY(), x, y, z)) {
+			if (McCodeHelper.isTeleportationSafe(this, entity.getY(), x, y, z)) {
 				return this.teleportTo(x, y, z, false);
 			}
 		}
@@ -212,7 +209,8 @@ public class CorruptedWarriorEntity extends BossEntity
 			return false;
 		}
 
-		BlockPos.MutableBlockPos mutable = this.getMutableCoordinate(
+		BlockPos.MutableBlockPos mutable = McCodeHelper.getMutableCoordinate(
+			this.level(),
 			x, y, z, ignoreLimitPredicate
 		);
 
@@ -227,14 +225,14 @@ public class CorruptedWarriorEntity extends BossEntity
 		}
 
 		Vec3 vec3d = new Vec3(this.getX(), this.getY(), this.getZ());
-			boolean didTeleport = this.randomTeleport(
-				x, y, z, true, BlockTags.ENTITIES_CAN_TELEPORT_TO
-			);
-			if (didTeleport) {
-				this.teleportTicks = this.teleportCooldown;
-				this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));
-				this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
-			}
+		boolean didTeleport = this.randomTeleport(
+			x, mutable.getY() + 1, z, true, BlockTags.DANGEROUS_FOR_TELEPORTATION
+		);
+		if (didTeleport) {
+			this.teleportTicks = this.teleportCooldown;
+			this.level().gameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Context.of(this));
+			this.playSound(ModSounds.VOID_HARBINGER_TELEPORT, 1.0F, 1.0F);
+		}
 
 		return didTeleport;
 	}
@@ -337,26 +335,5 @@ public class CorruptedWarriorEntity extends BossEntity
 
 	protected double getRandomCoordinate(double baseCoordinate, double vector, double diameter) {
 		return baseCoordinate + (this.random.nextDouble() - 0.5) * 2 - vector * diameter;
-	}
-
-	@SuppressWarnings("deprecation")
-	protected @Nullable BlockPos.MutableBlockPos getMutableCoordinate(
-		double x, double y, double z, boolean ignoreLimitPredicate
-	) {
-		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, y, z);
-
-		while (mutable.getY() > this.level().getMinY() &&
-			   !this.level().getBlockState(mutable).is(BlockTags.BLOCKS_MOTION)
-		) {
-			double heightDifference = this.getY() - mutable.getY();
-
-			if (heightDifference < 30 || ignoreLimitPredicate) {
-				mutable.move(Direction.DOWN);
-			} else {
-				return null;
-			}
-		}
-
-		return mutable;
 	}
 }
