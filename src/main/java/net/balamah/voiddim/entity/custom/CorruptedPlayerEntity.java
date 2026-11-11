@@ -150,13 +150,30 @@ public class CorruptedPlayerEntity extends CorruptedHostileEntity {
 	protected void addAdditionalSaveData(ValueOutput output) {
 		super.addAdditionalSaveData(output);
 		output.putString(PLAYER_NAME_KEY, this.getCorruptedPlayerName());
+		output.store(
+			PLAYER_PROFILE_KEY,
+			ResolvableProfile.CODEC,
+			this.getCorruptedPlayerProfile()
+		);
 	}
 
 	@Override
 	protected void readAdditionalSaveData(ValueInput input) {
 		super.readAdditionalSaveData(input);
+
 		String playerName = input.getStringOr(PLAYER_NAME_KEY, "");
 		this.setPlayerName(playerName);
+
+		ResolvableProfile profile = input.read(
+			PLAYER_PROFILE_KEY,
+			ResolvableProfile.CODEC
+		).orElseGet(() -> 
+			playerName.isBlank()
+				? ResolvableProfile.Static.EMPTY
+				: ResolvableProfile.createUnresolved(playerName)
+		);
+
+		this.setPlayerProfile(profile);
 	}
 
 	protected void copyEquipment(ServerPlayer player) {
