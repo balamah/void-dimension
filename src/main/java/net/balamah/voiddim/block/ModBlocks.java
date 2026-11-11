@@ -46,7 +46,7 @@ public class ModBlocks {
 			.instabreak()
 			.sound(SoundType.GRASS)
 			.offsetType(BlockBehaviour.OffsetType.XZ)
-			.pushReaction(PushReaction.DESTROY)
+			.pushReaction(PushReaction.POPPED)
 			.noOcclusion();
 
 	protected static final IntProvider deepslateVoidShardOreIntProvider =
@@ -139,7 +139,7 @@ public class ModBlocks {
 			settings -> new TorchBlock(ModParticleTypes.CORRUPTED_FLAME, settings),
 			BlockBehaviour.Properties.of().noCollision().instabreak()
 			.lightLevel(state -> 14).sound(SoundType.WOOD)
-			.pushReaction(PushReaction.DESTROY),
+			.pushReaction(PushReaction.POPPED),
 			false, false
 		);
 
@@ -151,7 +151,7 @@ public class ModBlocks {
 			),
 			copyLootTable(CORRUPTED_TORCH, true).noCollision().instabreak()
 			.lightLevel(state -> 14).sound(SoundType.WOOD)
-			.pushReaction(PushReaction.DESTROY),
+			.pushReaction(PushReaction.POPPED),
 			false, false
 		);
 
@@ -166,7 +166,7 @@ public class ModBlocks {
 				.sound(SoundType.LANTERN)
 				.lightLevel(state -> 15)
 				.noOcclusion()
-				.pushReaction(PushReaction.DESTROY),
+				.pushReaction(PushReaction.POPPED),
 			true, false
 		);
 
@@ -177,7 +177,7 @@ public class ModBlocks {
 			BlockBehaviour.Properties.of().mapColor(MapColor.FIRE)
 			.replaceable().noCollision().instabreak()
 			.lightLevel(state -> 15).sound(SoundType.WOOL)
-			.pushReaction(PushReaction.DESTROY)
+			.pushReaction(PushReaction.POPPED)
 			.noOcclusion(),
 			false, false
 			);
@@ -234,7 +234,7 @@ public class ModBlocks {
 			.noOcclusion()
 			.noTerrainParticles()
 			.isValidSpawn((state, level, pos, entityType) -> true)
-			.pushReaction(PushReaction.BLOCK),
+			.pushReaction(PushReaction.IMMOVEABLE),
 		true, false
 	);
 

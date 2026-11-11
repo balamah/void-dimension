@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block_column",
+  "layers": [
+    {
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 7,
+        "max_inclusive": 19
+      },
+      "provider": "void-dimension:corrupt_block"
+    }
+  ],
+  "direction": "up",
+  "allowed_placement": {
+    "type": "minecraft:matching_blocks",
+    "blocks": [
+      "minecraft:air"
+    ]
+  },
+  "prioritize_tip": true
+}

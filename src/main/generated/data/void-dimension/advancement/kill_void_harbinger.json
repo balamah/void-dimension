@@ -3,15 +3,13 @@
   "criteria": {
     "killed_void_harbinger": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "void-dimension:void_harbinger"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "void-dimension:void_harbinger"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }

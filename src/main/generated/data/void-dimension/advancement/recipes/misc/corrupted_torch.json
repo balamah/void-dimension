@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "void-dimension:corrupted_torch"
+        "recipes": "void-dimension:corrupted_torch"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

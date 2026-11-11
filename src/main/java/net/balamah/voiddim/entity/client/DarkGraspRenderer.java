@@ -36,7 +36,7 @@ public class DarkGraspRenderer extends EntityRenderer<DarkGraspEntity, EvokerFan
 		float f = evokerFangsEntityRenderState.biteProgress;
 		if (f != 0.0F) {
 			matrixStack.pushPose();
-			matrixStack.mulPose(Axis.YP.rotationDegrees(90.0F - evokerFangsEntityRenderState.yRot));
+			matrixStack.rotateDegrees(Axis.YP, 90.0F - evokerFangsEntityRenderState.yRot);
 			matrixStack.scale(-1.0F, -1.0F, 1.0F);
 			matrixStack.translate(0.0F, -1.501F, 0.0F);
 			orderedRenderCommandQueue.submitModel(
@@ -46,8 +46,7 @@ public class DarkGraspRenderer extends EntityRenderer<DarkGraspEntity, EvokerFan
 				this.model.renderType(TEXTURE),
 				evokerFangsEntityRenderState.lightCoords,
 				OverlayTexture.NO_OVERLAY,
-				evokerFangsEntityRenderState.outlineColor,
-				null
+				evokerFangsEntityRenderState.outlineColor
 			);
 			matrixStack.popPose();
 		}

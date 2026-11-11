@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "void-dimension:wool_prayer_rope"
+        "recipes": "void-dimension:wool_prayer_rope"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

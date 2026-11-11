@@ -11,7 +11,6 @@ import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.core.Direction;
@@ -24,8 +23,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -96,19 +93,17 @@ public class ModItems {
 	public static final Item VOID_AXE =
 		register(
 			"void_axe",
-			settings -> new AxeItem(
-				ModMaterials.VOID_TOOL_MATERIAL, 8.0F, -3.0F, settings
-			),
-			ModItems::getVoidItemSettings
+			Item::new,
+			() -> getVoidItemSettings()
+				.axe(ModMaterials.VOID_TOOL_MATERIAL, 8.0F, -3.0F)
 		);
 
 	public static final Item VOID_HOE =
 		register(
 			"void_hoe",
-			settings -> new HoeItem(
-				ModMaterials.VOID_TOOL_MATERIAL, -5F, 0.0F, settings
-			),
-			ModItems::getVoidItemSettings
+			Item::new,
+			() -> getVoidItemSettings()
+				.hoe(ModMaterials.VOID_TOOL_MATERIAL, -5F, 0.0F)
 		);
 
 	public static final Item VOID_PICKAXE =
@@ -122,10 +117,9 @@ public class ModItems {
 	public static final Item VOID_SHOVEL =
 		register(
 			"void_shovel",
-			settings -> new ShovelItem(
-				ModMaterials.VOID_TOOL_MATERIAL, 1.5F, -3.0F, settings
-			),
-			ModItems::getVoidItemSettings
+			Item::new,
+			() -> getVoidItemSettings()
+				.shovel(ModMaterials.VOID_TOOL_MATERIAL, 1.5F, -3.0F)
 		);
 
 	public static final Item VOID_SWORD =

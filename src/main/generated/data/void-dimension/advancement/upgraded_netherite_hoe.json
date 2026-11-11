@@ -3,9 +3,13 @@
   "criteria": {
     "upgrade_netherite_hoe": {
       "conditions": {
-        "recipe_id": "void-dimension:void_hoe_smithing"
+        "items": [
+          {
+            "items": "void-dimension:void_hoe"
+          }
+        ]
       },
-      "trigger": "minecraft:recipe_crafted"
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {

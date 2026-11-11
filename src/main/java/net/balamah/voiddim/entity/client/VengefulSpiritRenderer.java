@@ -45,11 +45,11 @@ public class VengefulSpiritRenderer
 		matrixStack.translate(0.0f, 1.4f, 0.3f);
 
 		// Apply entity rotation
-		matrixStack.mulPose(Axis.YP.rotationDegrees(-state.yaw));
-		matrixStack.mulPose(Axis.XP.rotationDegrees(state.pitch));
+		matrixStack.rotateDegrees(Axis.YP, -state.yaw);
+		matrixStack.rotateDegrees(Axis.XP, state.pitch);
 
 		// Keep your existing flip if needed
-		matrixStack.mulPose(Axis.ZP.rotationDegrees(180f));
+		matrixStack.rotateDegrees(Axis.ZP, 180f);
 
 		orderedRenderCommandQueue.submitModel(
 			this.model,
@@ -58,8 +58,7 @@ public class VengefulSpiritRenderer
 			this.model.renderType(TEXTURE),
 			state.lightCoords,
 			OverlayTexture.NO_OVERLAY,
-			state.outlineColor,
-			null
+			state.outlineColor
 		);
 
 		matrixStack.popPose();

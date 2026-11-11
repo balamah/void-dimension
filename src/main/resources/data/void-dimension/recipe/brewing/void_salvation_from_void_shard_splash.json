@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:brewing",
+	"input": {
+		"item": "minecraft:splash_potion",
+		"potion_contents": {
+			"potions": "minecraft:awkward"
+		}
+	},
+	"output": {
+		"components": {
+			"minecraft:potion_contents": {
+				"potion": "void-dimension:void_salvation"
+			}
+		},
+		"id": "minecraft:splash_potion"
+	},
+	"reagent": {
+		"item": "void-dimension:void_shard"
+	}
+}

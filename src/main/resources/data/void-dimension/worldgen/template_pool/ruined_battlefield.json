@@ -14,11 +14,7 @@
 					},
 					{
 						"processor_type": "minecraft:block_ignore",
-						"blocks": [
-							{
-								"Name": "minecraft:structure_void"
-							}
-						]
+						"blocks": ["minecraft:structure_void"]
 					}
 				]
 			}

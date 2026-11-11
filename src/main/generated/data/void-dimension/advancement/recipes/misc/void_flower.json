@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "void-dimension:void_flower"
+        "recipes": "void-dimension:void_flower"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

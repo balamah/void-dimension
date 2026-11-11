@@ -3,15 +3,13 @@
   "criteria": {
     "killed_shattered_sentinel_master": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "void-dimension:shattered_sentinel_master"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "void-dimension:shattered_sentinel_master"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }

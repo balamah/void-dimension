@@ -40,7 +40,7 @@ public class HeavyJumpTargetGoal<T extends Entity303> extends TickingGoal<T> {
 
 		this.entity.jumpFromGround();
 		this.entity.setDeltaMovement(xtarget, ytarget + 20, ztarget);
-		this.entity.setInvulnerable(true);
+		this.entity.setPermanentlyInvulnerable(true);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class HeavyJumpTargetGoal<T extends Entity303> extends TickingGoal<T> {
 		super.stop();
 
 		this.jumpedPredicate = false;
-		this.entity.setInvulnerable(false);
+		this.entity.setPermanentlyInvulnerable(false);
 	}
 
 	@Override

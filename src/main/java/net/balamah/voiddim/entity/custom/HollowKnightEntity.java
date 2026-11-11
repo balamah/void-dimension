@@ -118,7 +118,6 @@ public class HollowKnightEntity extends ModHostileEntity {
 
 	@Override
 	public void aiStep() {
-		this.updateSwingTime();
 		this.updateNoActionTime();
 		super.aiStep();
 	}

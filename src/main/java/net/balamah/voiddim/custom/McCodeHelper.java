@@ -56,7 +56,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.SignText;
+import net.minecraft.world.level.block.entity.SignTextSlot;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -168,7 +170,7 @@ public class McCodeHelper {
 
 		BlockPos.MutableBlockPos mutable = getMutableCoordinate(world, dx, dx, dz, false);
 		BlockState blockStateMutable = world.getBlockState(mutable);
-		if (!blockStateMutable.blocksMotion()) {
+		if (!blockStateMutable.is(BlockTags.BLOCKS_MOTION)) {
 			return base.offset(dx, 0, dz);
 		}
 
@@ -183,7 +185,7 @@ public class McCodeHelper {
 		double startingCoordinate = mutable.getY();
 
 		while (mutable.getY() > world.getMinY() &&
-			   !world.getBlockState(mutable).blocksMotion()
+			   !world.getBlockState(mutable).is(BlockTags.BLOCKS_MOTION)
 		) {
 			double heightDifference = startingCoordinate - mutable.getY();
 
@@ -282,16 +284,16 @@ public class McCodeHelper {
 	public static boolean isTeleportationSafe(
 		Entity entity, double targetY, double x, double y, double z
 	) {
-		BlockPos futurePosition = new BlockPos(
-				(int) x, (int) y, (int) z);
-
-		Block futureBlock = entity.level().getBlockState(futurePosition).getBlock();
-
-		if (dangerousBlocks.contains(futureBlock) || y < targetY) {
+		BlockPos.MutableBlockPos groundPosition = getMutableCoordinate(
+			entity.level(), x, y, z, false
+		);
+		if (groundPosition == null) {
 			return false;
 		}
 
-		return true;
+		Block groundBlock = entity.level().getBlockState(groundPosition).getBlock();
+		return !dangerousBlocks.contains(groundBlock) &&
+			groundPosition.getY() + 1 >= targetY;
 	}
 
 	public static Goal getTargetGoal(Mob entity, Class<?> entityTarget) {
@@ -319,14 +321,14 @@ public class McCodeHelper {
 	 * @param signLines is an String[] array of 4 elements max. Which looks like {"First", "second", "third", "fourth"}
 	 */
 	public static void setSignText(SignBlockEntity signBlockEntity, String[] signLines) {
-		SignText signText = signBlockEntity.getFrontText();
+		SignText.Mutable signText = signBlockEntity.getText(SignTextSlot.FRONT).asMutable();
 
 		for (int i = 0; i < signLines.length; i++) {
 			String signLineText = signLines[i];
-			signText = signText.setMessage(i, Component.literal(signLineText));
+			signText.setLine(i, Component.literal(signLineText));
 		}
 
-		signBlockEntity.setText(signText, true);
+		signBlockEntity.setText(signText.asImmutable(), SignTextSlot.FRONT);
 	}
 
 	public static void createShockWave(

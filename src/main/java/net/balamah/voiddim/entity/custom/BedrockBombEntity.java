@@ -41,7 +41,7 @@ public class BedrockBombEntity extends PrimedTnt {
 	}
 
 	protected void breakBlocks(Level world, BlockPos center, int radius) {
-		for (BlockPos pos : BlockPos.withinManhattan(center, radius, radius, radius)) {
+		for (BlockPos pos : BlockPos.withinManhattan(center, radius)) {
 			Block block = world.getBlockState(pos).getBlock();
 			if (pos.distSqr(center) <= radius * radius && block != Blocks.BARRIER) {
 				world.destroyBlock(pos, false);

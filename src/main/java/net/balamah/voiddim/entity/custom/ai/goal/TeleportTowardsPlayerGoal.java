@@ -1,5 +1,6 @@
 package net.balamah.voiddim.entity.custom.ai.goal;
 
+import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.TeleportUser;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,11 +38,8 @@ public class TeleportTowardsPlayerGoal<T extends CorruptedHostileEntity & Telepo
 			return;
 		}
 
-		double targetDistance = this.entity.distanceTo(target);
 		int attackCount = this.entity.attackCount;
-		if (targetDistance < 5 || targetDistance > 10 ||
-			(attackCount > 0 && attackCount % 4 == 0))
-		{
+		if (attackCount % 4 == 0) {
 			this.entity.teleportTo(target);
 		}
 	}

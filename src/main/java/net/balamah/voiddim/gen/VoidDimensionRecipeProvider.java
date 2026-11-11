@@ -3,15 +3,17 @@ package net.balamah.voiddim.gen;
 import java.util.concurrent.CompletableFuture;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.item.ModItems;
@@ -32,9 +34,11 @@ public class VoidDimensionRecipeProvider extends FabricRecipeProvider {
 
 	@Override
 	protected RecipeProvider createRecipeProvider(
-		HolderLookup.Provider registryLookup, RecipeOutput exporter
+		HolderLookup.Provider registryLookup,
+		BootstrapContext<Recipe<?>> recipeOutput,
+		BootstrapContext<Advancement> advancementOutput
 	) {
-		return new RecipeProvider(registryLookup, exporter) {
+		return new RecipeProvider(recipeOutput, advancementOutput) {
 			@Override
 			public void buildRecipes() {
 				this.shaped(RecipeCategory.MISC, ModItems.ORTHODOX_CROSS, 1)

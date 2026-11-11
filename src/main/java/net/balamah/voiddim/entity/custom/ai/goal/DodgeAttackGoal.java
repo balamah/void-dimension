@@ -8,6 +8,7 @@ import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
@@ -115,7 +116,7 @@ public class DodgeAttackGoal<T extends CorruptedHostileEntity & DodgeAttackUser>
 		}
 
 		while (mutable.getY() > this.world.getMinY() &&
-				!this.world.getBlockState(mutable).blocksMotion())
+				!this.world.getBlockState(mutable).is(BlockTags.BLOCKS_MOTION))
 		{
 			double heightDifference = this.entity.getY() - mutable.getY();
 			Block block = this.world.getBlockState(mutable).getBlock();

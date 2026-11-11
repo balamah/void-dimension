@@ -39,8 +39,7 @@ public class VoidSphereRenderer <T extends AbstractWindCharge>
 			RenderTypes.breezeWind(TEXTURE, this.getXOffset(renderState.ageInTicks) % 1.0F, 0.0F),
 			renderState.lightCoords,
 			OverlayTexture.NO_OVERLAY,
-			renderState.outlineColor,
-			null
+			renderState.outlineColor
 		);
 
 		super.submit(renderState, matrices, queue, cameraState);

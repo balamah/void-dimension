@@ -1,11 +1,9 @@
 {
 	"sea_level": 0,
 	"disable_mob_generation": false,
-	"ore_veins_enabled": false,
-	"aquifers_enabled": false,
 	"legacy_random_source": false,
-	"default_block": { "Name": "void-dimension:abyssium" },
-	"default_fluid": { "Name": "minecraft:air" },
+	"default_block": "void-dimension:abyssium",
+	"default_fluid": "minecraft:air",
 	"spawn_target": [],
 	"noise": {
 		"min_y": 0,
@@ -14,14 +12,7 @@
 		"size_vertical": 1
 	},
 	"noise_router": {
-		"preliminary_surface_level": 0.0,
-		"barrier": 0.0,
-		"fluid_level_floodedness": 0.0,
-		"fluid_level_spread": 0.0,
-		"lava": 0.0,
-		"vein_toggle": 0.0,
-		"vein_ridged": 0.0,
-		"vein_gap": 0.0,
+		"chunk_surface_level": 0.0,
 		"temperature": 0.0,
 		"vegetation": 0.0,
 		"continents": 0.0,
@@ -29,17 +20,16 @@
 		"depth": 0.0,
 		"ridges": 0.0,
 		"final_density": {
-			"type": "minecraft:y_clamped_gradient",
-			"from_y": 0,
-			"to_y": 1,
+			"type": "minecraft:gradient",
+			"axis": "y",
+			"from_coordinate": 0,
+			"to_coordinate": 1,
 			"from_value": 1.0,
 			"to_value": -1.0
 		}
 	},
-	"surface_rule": {
+	"material_rule": {
 		"type": "minecraft:block",
-		"result_state": {
-			"Name": "void-dimension:abyssium" 
-		}
+		"result_state": "void-dimension:abyssium"
 	}
 }

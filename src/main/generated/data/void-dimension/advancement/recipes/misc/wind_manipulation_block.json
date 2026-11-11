@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "void-dimension:wind_manipulation_block"
+        "recipes": "void-dimension:wind_manipulation_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

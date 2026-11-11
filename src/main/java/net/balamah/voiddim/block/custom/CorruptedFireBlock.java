@@ -1,6 +1,5 @@
 package net.balamah.voiddim.block.custom;
 
-import com.mojang.serialization.MapCodec;
 import net.balamah.voiddim.effect.ModEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,13 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.balamah.voiddim.block.ModBlocks;
 
 public class CorruptedFireBlock extends BaseFireBlock {
-	public static final MapCodec<CorruptedFireBlock> CODEC = simpleCodec(CorruptedFireBlock::new);
-
-	@Override
-	public MapCodec<CorruptedFireBlock> codec() {
-		return CODEC;
-	}
-
 	public CorruptedFireBlock(BlockBehaviour.Properties settings) {
 		super(settings, 18f);
 	}

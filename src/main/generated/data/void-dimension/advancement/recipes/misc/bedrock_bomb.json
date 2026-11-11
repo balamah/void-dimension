@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "void-dimension:bedrock_bomb"
+        "recipes": "void-dimension:bedrock_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

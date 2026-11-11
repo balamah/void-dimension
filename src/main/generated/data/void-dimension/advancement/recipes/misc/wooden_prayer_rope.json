@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "void-dimension:wooden_prayer_rope"
+        "recipes": "void-dimension:wooden_prayer_rope"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
