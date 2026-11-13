@@ -1,7 +1,23 @@
-// Made with Blockbench 5.0.4
-// Exported for Minecraft version 1.17+ for Yarn
-// Paste this class into your mod and generate all required imports
-public class ObsidianGluttonModel extends EntityModel<ObsidianGluttonEntity> {
+package net.balamah.voiddim.entity.client;
+
+import net.minecraft.client.animation.KeyframeAnimation;
+import net.minecraft.client.model.*;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.resources.Identifier;
+import net.balamah.voiddim.VoidDimension;
+
+public class ObsidianGluttonModel extends EntityModel<ObsidianGluttonRenderState> {
+	public static final ModelLayerLocation OBSIDIAN_GLUTTON =
+		new ModelLayerLocation(Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "obsidian_glutton"),
+							 "main");
+
 	private final ModelPart root;
 	private final ModelPart block;
 	private final ModelPart upper;
@@ -16,15 +32,22 @@ public class ObsidianGluttonModel extends EntityModel<ObsidianGluttonEntity> {
 	private final ModelPart lower_body;
 	private final ModelPart tentacles;
 	private final ModelPart tentacles_group_1;
-	private final ModelPart 1_1;
-	private final ModelPart 1_2;
-	private final ModelPart 1_3;
+	private final ModelPart tentacle_1_1;
+	private final ModelPart tentacle_1_2;
+	private final ModelPart tentacle_1_3;
 	private final ModelPart tentacles_group_2;
-	private final ModelPart 2_1;
-	private final ModelPart 2_2;
-	private final ModelPart 2_3;
+	private final ModelPart tentacle_2_1;
+	private final ModelPart tentacle_2_2;
+	private final ModelPart tentacle_2_3;
 	private final ModelPart miasma;
+
+	private final KeyframeAnimation idleAnimation;
+	private final KeyframeAnimation attack1Animation;
+	private final KeyframeAnimation attack2Animation;
+
 	public ObsidianGluttonModel(ModelPart root) {
+		super(root);
+
 		this.root = root.getChild("root");
 		this.block = this.root.getChild("block");
 		this.upper = this.block.getChild("upper");
@@ -39,108 +62,115 @@ public class ObsidianGluttonModel extends EntityModel<ObsidianGluttonEntity> {
 		this.lower_body = this.root.getChild("lower_body");
 		this.tentacles = this.lower_body.getChild("tentacles");
 		this.tentacles_group_1 = this.tentacles.getChild("tentacles_group_1");
-		this.1_1 = this.tentacles_group_1.getChild("1_1");
-		this.1_2 = this.tentacles_group_1.getChild("1_2");
-		this.1_3 = this.tentacles_group_1.getChild("1_3");
+		this.tentacle_1_1 = this.tentacles_group_1.getChild("1_1");
+		this.tentacle_1_2 = this.tentacles_group_1.getChild("1_2");
+		this.tentacle_1_3 = this.tentacles_group_1.getChild("1_3");
 		this.tentacles_group_2 = this.tentacles.getChild("tentacles_group_2");
-		this.2_1 = this.tentacles_group_2.getChild("2_1");
-		this.2_2 = this.tentacles_group_2.getChild("2_2");
-		this.2_3 = this.tentacles_group_2.getChild("2_3");
+		this.tentacle_2_1 = this.tentacles_group_2.getChild("2_1");
+		this.tentacle_2_2 = this.tentacles_group_2.getChild("2_2");
+		this.tentacle_2_3 = this.tentacles_group_2.getChild("2_3");
 		this.miasma = this.lower_body.getChild("miasma");
+
+		this.idleAnimation = ObsidianGluttonModelAnimation.IDLE.bake(root);
+		this.attack1Animation = ObsidianGluttonModelAnimation.ATTACK_1.bake(root);
+		this.attack2Animation = ObsidianGluttonModelAnimation.ATTACK_2.bake(root);
 	}
-	public static TexturedModelData getTexturedModelData() {
-		ModelData modelData = new ModelData();
-		ModelPartData modelPartData = modelData.getRoot();
-		ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
 
-		ModelPartData block = root.addChild("block", ModelPartBuilder.create().uv(0, 30).cuboid(-8.0F, -24.0F, 4.0F, 16.0F, 16.0F, 4.0F, new Dilation(0.0F))
-		.uv(48, 0).cuboid(-8.0F, -24.0F, -4.0F, 2.0F, 16.0F, 8.0F, new Dilation(0.0F))
-		.uv(40, 30).cuboid(6.0F, -24.0F, -8.0F, 2.0F, 16.0F, 12.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+	public static LayerDefinition getTexturedModelData() {
+		MeshDefinition modelData = new MeshDefinition();
+		PartDefinition modelPartData = modelData.getRoot();
+		PartDefinition root = modelPartData.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		ModelPartData upper = block.addChild("upper", ModelPartBuilder.create().uv(0, 15).cuboid(-6.0F, 0.0F, -4.0F, 12.0F, 3.0F, 12.0F, new Dilation(0.001F))
-		.uv(68, 7).cuboid(-8.0F, 0.0F, -4.0F, 2.0F, 3.0F, 4.0F, new Dilation(0.001F)), ModelTransform.pivot(0.0F, -24.0F, -4.0F));
+		PartDefinition block = root.addOrReplaceChild("block", CubeListBuilder.create().texOffs(0, 30).addBox(-8.0F, -24.0F, 4.0F, 16.0F, 16.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(48, 0).addBox(-8.0F, -24.0F, -4.0F, 2.0F, 16.0F, 8.0F, new CubeDeformation(0.0F))
+		.texOffs(40, 30).addBox(6.0F, -24.0F, -8.0F, 2.0F, 16.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		ModelPartData upper_teeth = upper.addChild("upper_teeth", ModelPartBuilder.create().uv(58, 24).cuboid(-5.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.001F))
-		.uv(70, 22).cuboid(-7.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.001F))
-		.uv(62, 24).cuboid(-3.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.001F))
-		.uv(66, 24).cuboid(-1.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.001F))
-		.uv(48, 66).cuboid(1.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.001F))
-		.uv(68, 14).cuboid(3.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.001F))
-		.uv(68, 18).cuboid(5.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.001F)), ModelTransform.pivot(0.0F, 24.0F, 4.0F));
+		PartDefinition upper = block.addOrReplaceChild("upper", CubeListBuilder.create().texOffs(0, 15).addBox(-6.0F, 0.0F, -4.0F, 12.0F, 3.0F, 12.0F, new CubeDeformation(0.001F))
+		.texOffs(68, 7).addBox(-8.0F, 0.0F, -4.0F, 2.0F, 3.0F, 4.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, -24.0F, -4.0F));
 
-		ModelPartData lower = block.addChild("lower", ModelPartBuilder.create().uv(0, 0).cuboid(-6.0F, -2.0F, -8.0F, 12.0F, 3.0F, 12.0F, new Dilation(0.001F))
-		.uv(68, 0).cuboid(-8.0F, -2.0F, -8.0F, 2.0F, 3.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -9.0F, 0.0F));
+		PartDefinition upper_teeth = upper.addOrReplaceChild("upper_teeth", CubeListBuilder.create().texOffs(58, 24).addBox(-5.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.001F))
+		.texOffs(70, 22).addBox(-7.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.001F))
+		.texOffs(62, 24).addBox(-3.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.001F))
+		.texOffs(66, 24).addBox(-1.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.001F))
+		.texOffs(48, 66).addBox(1.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.001F))
+		.texOffs(68, 14).addBox(3.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.001F))
+		.texOffs(68, 18).addBox(5.0F, -21.0F, -8.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, 24.0F, 4.0F));
 
-		ModelPartData tongue = lower.addChild("tongue", ModelPartBuilder.create().uv(54, 58).cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 2.0F, 5.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -2.0F, -1.0F));
+		PartDefinition lower = block.addOrReplaceChild("lower", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -2.0F, -8.0F, 12.0F, 3.0F, 12.0F, new CubeDeformation(0.001F))
+		.texOffs(68, 0).addBox(-8.0F, -2.0F, -8.0F, 2.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -9.0F, 0.0F));
 
-		ModelPartData tongue_1 = tongue.addChild("tongue_1", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		PartDefinition tongue = lower.addOrReplaceChild("tongue", CubeListBuilder.create().texOffs(54, 58).addBox(-2.0F, -2.0F, -2.0F, 3.0F, 2.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -2.0F, -1.0F));
 
-		ModelPartData cube_r1 = tongue_1.addChild("cube_r1", ModelPartBuilder.create().uv(54, 65).cuboid(-1.0F, -2.0F, -5.0F, 3.0F, 2.0F, 5.0F, new Dilation(0.001F)), ModelTransform.of(-1.0F, 0.0F, -2.0F, -0.6545F, 0.0F, 0.0F));
+		PartDefinition tongue_1 = tongue.addOrReplaceChild("tongue_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		ModelPartData tongue_2 = tongue_1.addChild("tongue_2", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -3.0F, -4.0F));
+		PartDefinition cube_r1 = tongue_1.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(54, 65).addBox(-1.0F, -2.0F, -5.0F, 3.0F, 2.0F, 5.0F, new CubeDeformation(0.001F)), PartPose.offsetAndRotation(-1.0F, 0.0F, -2.0F, -0.6545F, 0.0F, 0.0F));
 
-		ModelPartData cube_r2 = tongue_2.addChild("cube_r2", ModelPartBuilder.create().uv(0, 58).cuboid(-1.0F, -0.5979F, -6.1846F, 4.0F, 2.0F, 6.0F, new Dilation(0.0001F)), ModelTransform.of(-1.5F, -1.25F, -0.5F, 0.0873F, 0.0F, 0.0F));
+		PartDefinition tongue_2 = tongue_1.addOrReplaceChild("tongue_2", CubeListBuilder.create(), PartPose.offset(0.0F, -3.0F, -4.0F));
 
-		ModelPartData tongue_3 = tongue_2.addChild("tongue_3", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, -6.0F));
+		PartDefinition cube_r2 = tongue_2.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(0, 58).addBox(-1.0F, -0.5979F, -6.1846F, 4.0F, 2.0F, 6.0F, new CubeDeformation(0.0001F)), PartPose.offsetAndRotation(-1.5F, -1.25F, -0.5F, 0.0873F, 0.0F, 0.0F));
 
-		ModelPartData cube_r3 = tongue_3.addChild("cube_r3", ModelPartBuilder.create().uv(20, 58).cuboid(-1.0F, -0.5979F, -6.1846F, 3.0F, 2.0F, 6.0F, new Dilation(0.0001F)), ModelTransform.of(-1.0F, -1.0F, -0.25F, 0.6981F, 0.0F, 0.0F));
+		PartDefinition tongue_3 = tongue_2.addOrReplaceChild("tongue_3", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, -6.0F));
 
-		ModelPartData tongue_4 = tongue_3.addChild("tongue_4", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 3.0F, -5.0F));
+		PartDefinition cube_r3 = tongue_3.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(20, 58).addBox(-1.0F, -0.5979F, -6.1846F, 3.0F, 2.0F, 6.0F, new CubeDeformation(0.0001F)), PartPose.offsetAndRotation(-1.0F, -1.0F, -0.25F, 0.6981F, 0.0F, 0.0F));
 
-		ModelPartData cube_r4 = tongue_4.addChild("cube_r4", ModelPartBuilder.create().uv(48, 24).cuboid(0.0F, -0.5979F, -4.1846F, 1.0F, 1.0F, 4.0F, new Dilation(0.0001F)), ModelTransform.of(-1.0F, 0.0F, 0.25F, 1.2217F, 0.0F, 0.0F));
+		PartDefinition tongue_4 = tongue_3.addOrReplaceChild("tongue_4", CubeListBuilder.create(), PartPose.offset(0.0F, 3.0F, -5.0F));
 
-		ModelPartData lower_teeth = lower.addChild("lower_teeth", ModelPartBuilder.create().uv(68, 28).cuboid(-6.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-		.uv(68, 52).cuboid(-8.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-		.uv(68, 32).cuboid(-4.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-		.uv(68, 36).cuboid(-2.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-		.uv(68, 40).cuboid(0.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-		.uv(68, 44).cuboid(2.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-		.uv(68, 48).cuboid(4.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -3.0F, -8.0F));
+		PartDefinition cube_r4 = tongue_4.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(48, 24).addBox(0.0F, -0.5979F, -4.1846F, 1.0F, 1.0F, 4.0F, new CubeDeformation(0.0001F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.25F, 1.2217F, 0.0F, 0.0F));
 
-		ModelPartData lower_body = root.addChild("lower_body", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		PartDefinition lower_teeth = lower.addOrReplaceChild("lower_teeth", CubeListBuilder.create().texOffs(68, 28).addBox(-6.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 52).addBox(-8.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 32).addBox(-4.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 36).addBox(-2.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 40).addBox(0.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 44).addBox(2.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 48).addBox(4.0F, -2.0F, 0.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -3.0F, -8.0F));
 
-		ModelPartData tentacles = lower_body.addChild("tentacles", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		PartDefinition lower_body = root.addOrReplaceChild("lower_body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		ModelPartData tentacles_group_1 = tentacles.addChild("tentacles_group_1", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -8.0F, -5.0F));
+		PartDefinition tentacles = lower_body.addOrReplaceChild("tentacles", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		ModelPartData 1_1 = tentacles_group_1.addChild("1_1", ModelPartBuilder.create(), ModelTransform.pivot(3.0F, 0.0F, 1.0F));
+		PartDefinition tentacles_group_1 = tentacles.addOrReplaceChild("tentacles_group_1", CubeListBuilder.create(), PartPose.offset(0.0F, -8.0F, -5.0F));
 
-		ModelPartData cube_r5 = 1_1.addChild("cube_r5", ModelPartBuilder.create().uv(16, 66).cuboid(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 0.0F, 1.5F, 0.2182F, 0.0F, 0.0F));
+		PartDefinition tentacle_1_1 = tentacles_group_1.addOrReplaceChild("1_1", CubeListBuilder.create(), PartPose.offset(3.0F, 0.0F, 1.0F));
 
-		ModelPartData 1_2 = tentacles_group_1.addChild("1_2", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		PartDefinition cube_r5 = tentacle_1_1.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(16, 66).addBox(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 1.5F, 0.2182F, 0.0F, 0.0F));
 
-		ModelPartData cube_r6 = 1_2.addChild("cube_r6", ModelPartBuilder.create().uv(0, 66).cuboid(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 0.0F, 1.0F, 0.2182F, 0.0F, 0.0F));
+		PartDefinition tentacle_1_2 = tentacles_group_1.addOrReplaceChild("1_2", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		ModelPartData 1_3 = tentacles_group_1.addChild("1_3", ModelPartBuilder.create(), ModelTransform.pivot(-4.0F, 0.0F, 1.0F));
+		PartDefinition cube_r6 = tentacle_1_2.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(0, 66).addBox(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 1.0F, 0.2182F, 0.0F, 0.0F));
 
-		ModelPartData cube_r7 = 1_3.addChild("cube_r7", ModelPartBuilder.create().uv(8, 66).cuboid(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 0.0F, 0.5F, 0.2182F, 0.0F, 0.0F));
+		PartDefinition tentacle_1_3 = tentacles_group_1.addOrReplaceChild("1_3", CubeListBuilder.create(), PartPose.offset(-4.0F, 0.0F, 1.0F));
 
-		ModelPartData tentacles_group_2 = tentacles.addChild("tentacles_group_2", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -8.0F, 4.0F));
+		PartDefinition cube_r7 = tentacle_1_3.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(8, 66).addBox(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.5F, 0.2182F, 0.0F, 0.0F));
 
-		ModelPartData 2_1 = tentacles_group_2.addChild("2_1", ModelPartBuilder.create(), ModelTransform.pivot(4.0F, 0.0F, -1.0F));
+		PartDefinition tentacles_group_2 = tentacles.addOrReplaceChild("tentacles_group_2", CubeListBuilder.create(), PartPose.offset(0.0F, -8.0F, 4.0F));
 
-		ModelPartData cube_r8 = 2_1.addChild("cube_r8", ModelPartBuilder.create().uv(32, 66).cuboid(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-1.25F, 0.0F, 1.0F, 0.2182F, 0.0F, 0.0F));
+		PartDefinition tentacle_2_1 = tentacles_group_2.addOrReplaceChild("2_1", CubeListBuilder.create(), PartPose.offset(4.0F, 0.0F, -1.0F));
 
-		ModelPartData 2_2 = tentacles_group_2.addChild("2_2", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, -1.0F));
+		PartDefinition cube_r8 = tentacle_2_1.addOrReplaceChild("cube_r8", CubeListBuilder.create().texOffs(32, 66).addBox(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.25F, 0.0F, 1.0F, 0.2182F, 0.0F, 0.0F));
 
-		ModelPartData cube_r9 = 2_2.addChild("cube_r9", ModelPartBuilder.create().uv(40, 66).cuboid(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-1.75F, 0.0F, -0.5F, 0.2182F, 0.0F, 0.0F));
+		PartDefinition tentacle_2_2 = tentacles_group_2.addOrReplaceChild("2_2", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, -1.0F));
 
-		ModelPartData 2_3 = tentacles_group_2.addChild("2_3", ModelPartBuilder.create(), ModelTransform.pivot(-4.0F, 0.0F, -1.0F));
+		PartDefinition cube_r9 = tentacle_2_2.addOrReplaceChild("cube_r9", CubeListBuilder.create().texOffs(40, 66).addBox(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.75F, 0.0F, -0.5F, 0.2182F, 0.0F, 0.0F));
 
-		ModelPartData cube_r10 = 2_3.addChild("cube_r10", ModelPartBuilder.create().uv(24, 66).cuboid(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-1.75F, 0.0F, 1.0F, 0.2182F, 0.0F, 0.0F));
+		PartDefinition tentacle_2_3 = tentacles_group_2.addOrReplaceChild("2_3", CubeListBuilder.create(), PartPose.offset(-4.0F, 0.0F, -1.0F));
 
-		ModelPartData miasma = lower_body.addChild("miasma", ModelPartBuilder.create().uv(38, 58).cuboid(-4.0F, -8.0F, 0.0F, 8.0F, 8.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		PartDefinition cube_r10 = tentacle_2_3.addOrReplaceChild("cube_r10", CubeListBuilder.create().texOffs(24, 66).addBox(0.0F, -1.0F, -1.5F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.75F, 0.0F, 1.0F, 0.2182F, 0.0F, 0.0F));
 
-		ModelPartData cube_r11 = miasma.addChild("cube_r11", ModelPartBuilder.create().uv(20, 50).cuboid(-5.0F, -8.0F, 0.0F, 10.0F, 8.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.829F, 0.0F));
+		PartDefinition miasma = lower_body.addOrReplaceChild("miasma", CubeListBuilder.create().texOffs(38, 58).addBox(-4.0F, -8.0F, 0.0F, 8.0F, 8.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		ModelPartData cube_r12 = miasma.addChild("cube_r12", ModelPartBuilder.create().uv(0, 50).cuboid(-5.0F, -8.0F, 0.0F, 10.0F, 8.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -0.829F, 0.0F));
-		return TexturedModelData.of(modelData, 128, 128);
+		PartDefinition cube_r11 = miasma.addOrReplaceChild("cube_r11", CubeListBuilder.create().texOffs(20, 50).addBox(-5.0F, -8.0F, 0.0F, 10.0F, 8.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.829F, 0.0F));
+
+		PartDefinition cube_r12 = miasma.addOrReplaceChild("cube_r12", CubeListBuilder.create().texOffs(0, 50).addBox(-5.0F, -8.0F, 0.0F, 10.0F, 8.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.829F, 0.0F));
+		return LayerDefinition.create(modelData, 128, 128);
 	}
+
 	@Override
-	public void setAngles(ObsidianGluttonEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-	}
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		root.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void setupAnim(ObsidianGluttonRenderState state) {
+		super.setupAnim(state);
+
+		this.idleAnimation.apply(state.idleAnimationState, state.ageInTicks);
+		this.attack1Animation.apply(state.attack1AnimationState, state.ageInTicks);
+		this.attack2Animation.apply(state.attack2AnimationState, state.ageInTicks);
 	}
 }
