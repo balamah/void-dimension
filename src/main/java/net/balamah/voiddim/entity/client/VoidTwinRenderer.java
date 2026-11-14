@@ -1,9 +1,13 @@
 package net.balamah.voiddim.entity.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.entity.custom.VoidTwinEntity;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
 
 public class VoidTwinRenderer
@@ -23,6 +27,19 @@ public class VoidTwinRenderer
 	@Override
 	public Identifier getTextureLocation(VoidTwinRenderState state) {
 		return Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/void_twin.png");
+	}
+
+	@Override
+	public void submit(
+		VoidTwinRenderState state,
+		PoseStack matrixStack,
+		SubmitNodeCollector orderedRenderCommandQueue,
+		CameraRenderState cameraRenderState
+	) {
+		float scale = 0.9f;
+		matrixStack.scale(scale, scale, scale);
+
+		super.submit(state, matrixStack, orderedRenderCommandQueue, cameraRenderState);
 	}
 
 	@Override

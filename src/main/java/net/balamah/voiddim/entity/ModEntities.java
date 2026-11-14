@@ -326,7 +326,7 @@ public class ModEntities {
 			"doppler",
 			DopplerEntity.class,
 			EntityType.Builder.<DopplerEntity>of(DopplerEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(0.9F, 0.3F)
 		);
 
 	public static final EntityType<FacelessEntity> FACELESS =
@@ -334,7 +334,7 @@ public class ModEntities {
 			"faceless",
 			FacelessEntity.class,
 			EntityType.Builder.<FacelessEntity>of(FacelessEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(0.9F, 2.1F)
 		);
 
 	public static final EntityType<GhostEntity> GHOST =
@@ -342,7 +342,7 @@ public class ModEntities {
 			"ghost",
 			GhostEntity.class,
 			EntityType.Builder.<GhostEntity>of(GhostEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(0.9F, 2.0F)
 		);
 
 	public static final EntityType<GloomShepherdEntity> GLOOM_SHEPHERD =
@@ -350,7 +350,7 @@ public class ModEntities {
 			"gloom_shepherd",
 			GloomShepherdEntity.class,
 			EntityType.Builder.<GloomShepherdEntity>of(GloomShepherdEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(0.7F, 2.0F)
 		);
 
 	public static final EntityType<HoveringInfernoEntity> HOVERING_INFERNO =
@@ -358,7 +358,7 @@ public class ModEntities {
 			"hovering_inferno",
 			HoveringInfernoEntity.class,
 			EntityType.Builder.<HoveringInfernoEntity>of(HoveringInfernoEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(1.2F, 2.0F)
 		);
 
 	public static final EntityType<MemorySeekerEntity> MEMORY_SEEKER =
@@ -366,7 +366,7 @@ public class ModEntities {
 			"memory_seeker",
 			MemorySeekerEntity.class,
 			EntityType.Builder.<MemorySeekerEntity>of(MemorySeekerEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(1.2F, 2.5F)
 		);
 
 	public static final EntityType<ObsidianGluttonEntity> OBSIDIAN_GLUTTON =
@@ -374,7 +374,7 @@ public class ModEntities {
 			"obsidian_glutton",
 			ObsidianGluttonEntity.class,
 			EntityType.Builder.<ObsidianGluttonEntity>of(ObsidianGluttonEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(0.9F, 1.6F)
 		);
 
 	public static final EntityType<UnknownOneEntity> UNKNOWN_ONE =
@@ -382,7 +382,7 @@ public class ModEntities {
 			"unknown_one",
 			UnknownOneEntity.class,
 			EntityType.Builder.<UnknownOneEntity>of(UnknownOneEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(0.9F, 2.5F)
 		);
 
 	public static final EntityType<UnravelerEntity> UNRAVELER =
@@ -390,7 +390,7 @@ public class ModEntities {
 			"unraveler",
 			UnravelerEntity.class,
 			EntityType.Builder.<UnravelerEntity>of(UnravelerEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(1.2F, 3.3F)
 		);
 
 	public static final EntityType<VoidHangmanEntity> VOID_HANGMAN =
@@ -398,7 +398,7 @@ public class ModEntities {
 			"void_hangman",
 			VoidHangmanEntity.class,
 			EntityType.Builder.<VoidHangmanEntity>of(VoidHangmanEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(0.6F, 1.8F)
 		);
 
 	public static final EntityType<VoidTwinEntity> VOID_TWIN =
@@ -406,7 +406,7 @@ public class ModEntities {
 			"void_twin",
 			VoidTwinEntity.class,
 			EntityType.Builder.<VoidTwinEntity>of(VoidTwinEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(1.2F, 2.0F)
 		);
 
 	public static final EntityType<WatcherEntity> WATCHER =
@@ -414,7 +414,7 @@ public class ModEntities {
 			"watcher",
 			WatcherEntity.class,
 			EntityType.Builder.<WatcherEntity>of(WatcherEntity::new, MobCategory.MONSTER)
-			.sized(0.9F, 1.3F)
+			.sized(0.6F, 3.0F)
 		);
 
 	// Looks bad, but it should be this way.
