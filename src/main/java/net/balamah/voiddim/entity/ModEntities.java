@@ -447,6 +447,18 @@ public class ModEntities {
 		FabricDefaultAttributeRegistry.register(ModEntities.MASHA, MashaEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MALE_GOAT, MaleGoatEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.HOLLOW_KNIGHT, HollowKnightEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.DOPPLER, DopplerEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.FACELESS, FacelessEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.GHOST, GhostEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.GLOOM_SHEPHERD, GloomShepherdEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HOVERING_INFERNO, HoveringInfernoEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.MEMORY_SEEKER, MemorySeekerEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.OBSIDIAN_GLUTTON, ObsidianGluttonEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.UNKNOWN_ONE, UnknownOneEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.UNRAVELER, UnravelerEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.VOID_HANGMAN, VoidHangmanEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.VOID_TWIN, VoidTwinEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.WATCHER, WatcherEntity.createAttributes());
 	}
 
 	@SuppressWarnings("unchecked")

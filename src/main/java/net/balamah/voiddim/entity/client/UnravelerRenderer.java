@@ -26,9 +26,9 @@ public class UnravelerRenderer
 	}
 
 	@Override
-	public void extractRenderState(UnravelerEntity entity,
-								  UnravelerRenderState renderState, float f)
-	{
+	public void extractRenderState(
+		UnravelerEntity entity, UnravelerRenderState renderState, float f
+	) {
 		super.extractRenderState(entity, renderState, f);
 
 		renderState.terrainShift1AnimationState.copyFrom(entity.terrainShift1AnimationState);

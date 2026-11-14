@@ -71,9 +71,9 @@ public class ObsidianGluttonModel extends EntityModel<ObsidianGluttonRenderState
 		this.tentacle_2_3 = this.tentacles_group_2.getChild("2_3");
 		this.miasma = this.lower_body.getChild("miasma");
 
-		this.idleAnimation = ObsidianGluttonModelAnimation.IDLE.bake(root);
-		this.attack1Animation = ObsidianGluttonModelAnimation.ATTACK_1.bake(root);
-		this.attack2Animation = ObsidianGluttonModelAnimation.ATTACK_2.bake(root);
+		this.idleAnimation = ObsidianGluttonAnimations.IDLE.bake(root);
+		this.attack1Animation = ObsidianGluttonAnimations.ATTACK_1.bake(root);
+		this.attack2Animation = ObsidianGluttonAnimations.ATTACK_2.bake(root);
 	}
 
 	public static LayerDefinition getTexturedModelData() {

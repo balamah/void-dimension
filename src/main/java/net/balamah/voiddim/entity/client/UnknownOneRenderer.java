@@ -26,8 +26,9 @@ public class UnknownOneRenderer
 	}
 
 	@Override
-	public void extractRenderState(UnknownOneEntity entity, UnknownOneRenderState renderState, float f)
-	{
+	public void extractRenderState(
+		UnknownOneEntity entity, UnknownOneRenderState renderState, float f
+	) {
 		super.extractRenderState(entity, renderState, f);
 
 		renderState.rageBaitAnimationState.copyFrom(entity.rageBaitAnimationState);

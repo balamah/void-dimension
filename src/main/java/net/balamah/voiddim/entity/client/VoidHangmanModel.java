@@ -64,8 +64,8 @@ public class VoidHangmanModel extends EntityModel<VoidHangmanRenderState> {
 		this.miasma = this.lower_body.getChild("miasma");
 		this.right_elbow2 = root.getChild("right_elbow2");
 
-		this.walkAnimation = VoidHangmanModelAnimation.WALK.bake(root);
-		this.attackAnimation = VoidHangmanModelAnimation.ATTACK.bake(root);
+		this.walkAnimation = VoidHangmanAnimations.WALK.bake(root);
+		this.attackAnimation = VoidHangmanAnimations.ATTACK.bake(root);
 	}
 
 	public static LayerDefinition getTexturedModelData() {

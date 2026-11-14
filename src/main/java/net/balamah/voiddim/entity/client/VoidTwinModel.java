@@ -57,10 +57,10 @@ public class VoidTwinModel extends EntityModel<VoidTwinRenderState> {
 		this.decoration = this.root.getChild("decoration");
 
 		// WALK_OLD and WALK_FAIL exist in the animation class but are not used here.
-		this.walkAnimation = VoidTwinModelAnimation.WALK.bake(root);
-		this.attack1Animation = VoidTwinModelAnimation.ATTACK_1.bake(root);
-		this.attack2Animation = VoidTwinModelAnimation.ATTACK_2.bake(root);
-		this.attack3Animation = VoidTwinModelAnimation.ATTACK_3.bake(root);
+		this.walkAnimation = VoidTwinAnimations.WALK.bake(root);
+		this.attack1Animation = VoidTwinAnimations.ATTACK_1.bake(root);
+		this.attack2Animation = VoidTwinAnimations.ATTACK_2.bake(root);
+		this.attack3Animation = VoidTwinAnimations.ATTACK_3.bake(root);
 	}
 
 	public static LayerDefinition getTexturedModelData() {
