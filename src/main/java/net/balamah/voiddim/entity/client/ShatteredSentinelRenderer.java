@@ -17,7 +17,7 @@ public class ShatteredSentinelRenderer
 		super(context, new ShatteredSentinelModel(context.bakeLayer(ShatteredSentinelModel.SHATTERED_SENTINEL)), 0.75f);
 
 		this.addLayer(
-			new GlowFeatureRenderer<>(this, "textures/entity/shattered_sentinel_eye.png")
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/shattered_sentinel.png")
 		);
 	}
 

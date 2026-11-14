@@ -10,6 +10,6 @@ public class WerewolfRenderer extends AbstractWerewolfRenderer<WerewolfEntity>
 	public WerewolfRenderer(EntityRendererProvider.Context context) {
 		super(context, WerewolfModel.WEREWOLF, "werewolf");
 
-		this.addLayer(new GlowFeatureRenderer<>(this, "textures/entity/werewolf_eyes.png"));
+		this.addLayer(new GlowFeatureRenderer<>(this, "textures/entity/glow/werewolf.png"));
 	}
 }

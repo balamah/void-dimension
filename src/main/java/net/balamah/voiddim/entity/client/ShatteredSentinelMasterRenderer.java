@@ -20,7 +20,7 @@ public class ShatteredSentinelMasterRenderer
 		);
 
 		this.addLayer(
-			new GlowFeatureRenderer<>(this, "textures/entity/shattered_sentinel_master_eyes.png")
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/shattered_sentinel_master.png")
 		);
 	}
 

@@ -16,7 +16,7 @@ public class CorruptedStalkerRenderer
 		super(context, new CorruptedStalkerModel(context.bakeLayer(CorruptedStalkerModel.CORRUPTED_STALKER)), 0.75f);
 
 		this.addLayer(
-			new GlowFeatureRenderer<>(this, "textures/entity/corrupted_stalker_eye.png")
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/corrupted_stalker.png")
 		);
 	}
 

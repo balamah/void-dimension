@@ -21,7 +21,7 @@ public class CorruptedSpiderEyesFeatureRenderer<T extends SpiderModel>
 	@Override
 	public RenderType renderType() {
 		return RenderTypes.eyes(
-			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/corrupted_spider_eyes.png")
+			Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "textures/entity/glow/corrupted_spider.png")
 		);
 	}
 }
