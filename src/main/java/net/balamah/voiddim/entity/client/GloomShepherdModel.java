@@ -14,7 +14,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.Identifier;
 
 public class GloomShepherdModel extends EntityModel<GloomShepherdRenderState> {
-    public static final ModelLayerLocation LAYER_LOCATION =
+    public static final ModelLayerLocation GLOOM_SHEPHERD =
         new ModelLayerLocation(
             Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "gloom_shepherd"),
             "main"
@@ -36,7 +36,7 @@ public class GloomShepherdModel extends EntityModel<GloomShepherdRenderState> {
         this.attackAnimation = GloomShepherdAnimations.ATTACK.bake(this.root);
     }
 
-    public static LayerDefinition createBodyLayer() {
+    public static LayerDefinition getTexturedModelData() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition modelPartData = mesh.getRoot();
 

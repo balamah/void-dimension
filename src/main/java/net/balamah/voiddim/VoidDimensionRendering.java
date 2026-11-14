@@ -2,7 +2,6 @@ package net.balamah.voiddim;
 
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.GoatRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
@@ -112,7 +111,55 @@ public class VoidDimensionRendering implements ClientModInitializer {
 				new EntitySpecs<>(ModEntities.HOLLOW_KNIGHT,             				
 								  HollowKnightModel.HOLLOW_KNIGHT,
 								  HollowKnightModel.createBodyLayer(),
-								  HollowKnightRenderer::new)
+								  HollowKnightRenderer::new),
+				new EntitySpecs<>(ModEntities.WATCHER,             				
+								  WatcherModel.WATCHER,
+								  WatcherModel.getTexturedModelData(),
+								  WatcherRenderer::new),
+				new EntitySpecs<>(ModEntities.VOID_TWIN,    				
+								  VoidTwinModel.VOID_TWIN,
+								  VoidTwinModel.getTexturedModelData(),
+								  VoidTwinRenderer::new),
+				new EntitySpecs<>(ModEntities.VOID_HANGMAN,    				
+								  VoidHangmanModel.VOID_HANGMAN,
+								  VoidHangmanModel.getTexturedModelData(),
+								  VoidHangmanRenderer::new),
+				new EntitySpecs<>(ModEntities.UNRAVELER,    				
+								  UnravelerModel.UNRAVELER,
+								  UnravelerModel.getTexturedModelData(),
+								  UnravelerRenderer::new),
+				new EntitySpecs<>(ModEntities.UNKNOWN_ONE,    				
+								  UnknownOneModel.UNKNOWN_ONE,
+								  UnknownOneModel.getTexturedModelData(),
+								  UnknownOneRenderer::new),
+				new EntitySpecs<>(ModEntities.OBSIDIAN_GLUTTON,    				
+								  ObsidianGluttonModel.OBSIDIAN_GLUTTON,
+								  ObsidianGluttonModel.getTexturedModelData(),
+								  ObsidianGluttonRenderer::new),
+				new EntitySpecs<>(ModEntities.MEMORY_SEEKER,    				
+								  MemorySeekerModel.MEMORY_SEEKER,
+								  MemorySeekerModel.getTexturedModelData(),
+								  MemorySeekerRenderer::new),
+				new EntitySpecs<>(ModEntities.HOVERING_INFERNO,    				
+								  HoveringInfernoModel.HOVERING_INFERNO,
+								  HoveringInfernoModel.getTexturedModelData(),
+								  HoveringInfernoRenderer::new),
+				new EntitySpecs<GloomShepherdEntity>(ModEntities.GLOOM_SHEPHERD,    				
+								  GloomShepherdModel.GLOOM_SHEPHERD,
+								  GloomShepherdModel.getTexturedModelData(),
+								  GloomShepherdRenderer::new),
+				new EntitySpecs<GhostEntity>(ModEntities.GHOST,    				
+								  GhostModel.GHOST,
+								  GhostModel.getTexturedModelData(),
+								  GhostRenderer::new),
+				new EntitySpecs<FacelessEntity>(ModEntities.FACELESS,    				
+								  FacelessModel.FACELESS,
+								  FacelessModel.getTexturedModelData(),
+								  FacelessRenderer::new),
+				new EntitySpecs<DopplerEntity>(ModEntities.DOPPLER,    				
+								  DopplerModel.DOPPLER,
+								  DopplerModel.getTexturedModelData(),
+								  DopplerRenderer::new)
 				);
 
 
@@ -195,7 +242,6 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		this.createLivingEntityRenders(this.entitySpecs);
 		this.createBipedEntityRenders(this.bipedEntitySpecs);
 		this.createEntityRenders(this.nonLivingEntitySpecs);
-		this.createBlocksTransparency(this.blocksForTransparency);
 
 		ModParticleTypes.registerModParticles();
 
@@ -244,10 +290,6 @@ public class VoidDimensionRendering implements ClientModInitializer {
 		for (BipedEntitySpecs<? extends Entity> spec : entitySpecs) {
 			this.registerBipedEntitySpec(spec);
 		}
-	}
-
-	protected void createBlocksTransparency(Block[] blocks) {
-		// Minecraft 26.1+ automatically assigns chunk section layers based on sprite properties.
 	}
 
 	protected <T extends LivingEntity> void registerBipedEntitySpec(BipedEntitySpecs<T> specs) {

@@ -15,7 +15,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class GhostModel extends EntityModel<GhostRenderState> {
-    public static final ModelLayerLocation LAYER_LOCATION =
+    public static final ModelLayerLocation GHOST =
         new ModelLayerLocation(
             Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "ghost"),
             "main"
@@ -53,7 +53,7 @@ public class GhostModel extends EntityModel<GhostRenderState> {
         this.walkAnimation = GhostAnimations.WALK.bake(this.root);
     }
 
-    public static LayerDefinition createBodyLayer() {
+    public static LayerDefinition getTexturedModelData() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition model = mesh.getRoot();
 

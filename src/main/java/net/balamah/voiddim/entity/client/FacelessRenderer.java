@@ -1,7 +1,8 @@
 package net.balamah.voiddim.entity.client;
 
+import net.balamah.voiddim.entity.custom.FacelessEntity;
 import net.balamah.voiddim.VoidDimension;
-import net.balamah.voiddim.entity.FacelessEntity;
+
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
@@ -10,7 +11,7 @@ public class FacelessRenderer extends MobRenderer<FacelessEntity, FacelessRender
     public FacelessRenderer(EntityRendererProvider.Context context) {
         super(
             context,
-            new FacelessModel(context.bakeLayer(FacelessModel.LAYER_LOCATION)),
+            new FacelessModel(context.bakeLayer(FacelessModel.FACELESS)),
             0.5F
         );
     }

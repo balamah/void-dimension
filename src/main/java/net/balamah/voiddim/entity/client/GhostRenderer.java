@@ -1,7 +1,7 @@
 package net.balamah.voiddim.entity.client;
 
 import net.balamah.voiddim.VoidDimension;
-import net.balamah.voiddim.entity.GhostEntity;
+import net.balamah.voiddim.entity.custom.GhostEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
@@ -10,7 +10,7 @@ public class GhostRenderer extends MobRenderer<GhostEntity, GhostRenderState, Gh
     public GhostRenderer(EntityRendererProvider.Context context) {
         super(
             context,
-            new GhostModel(context.bakeLayer(GhostModel.LAYER_LOCATION)),
+            new GhostModel(context.bakeLayer(GhostModel.GHOST)),
             0.5F
         );
     }
@@ -27,6 +27,7 @@ public class GhostRenderer extends MobRenderer<GhostEntity, GhostRenderState, Gh
         float partialTick
     ) {
         super.extractRenderState(entity, state, partialTick);
+
         state.walkAnimationState.copyFrom(entity.walkAnimationState);
     }
 

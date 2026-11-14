@@ -10,12 +10,11 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.resources.Identifier;
 
 import net.balamah.voiddim.VoidDimension;
 
-public class DopplerModel extends EntityModel<EntityRenderState> {
+public class DopplerModel extends EntityModel<DopplerRenderState> {
     public static final ModelLayerLocation DOPPLER =
         new ModelLayerLocation(
             Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "doppler"),
@@ -132,7 +131,7 @@ public class DopplerModel extends EntityModel<EntityRenderState> {
     }
 
     @Override
-    public void setupAnim(EntityRenderState state) {
+    public void setupAnim(DopplerRenderState state) {
         super.setupAnim(state);
     }
 }

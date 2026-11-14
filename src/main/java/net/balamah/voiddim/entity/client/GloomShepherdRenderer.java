@@ -1,7 +1,7 @@
 package net.balamah.voiddim.entity.client;
 
 import net.balamah.voiddim.VoidDimension;
-import net.balamah.voiddim.entity.GloomShepherdEntity;
+import net.balamah.voiddim.entity.custom.GloomShepherdEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
@@ -14,7 +14,7 @@ public class GloomShepherdRenderer extends MobRenderer<
     public GloomShepherdRenderer(EntityRendererProvider.Context context) {
         super(
             context,
-            new GloomShepherdModel(context.bakeLayer(GloomShepherdModel.LAYER_LOCATION)),
+            new GloomShepherdModel(context.bakeLayer(GloomShepherdModel.GLOOM_SHEPHERD)),
             0.5F
         );
     }

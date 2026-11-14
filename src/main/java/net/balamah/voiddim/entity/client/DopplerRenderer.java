@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
 
-import net.balamah.voiddim.entity.DopplerEntity;
+import net.balamah.voiddim.entity.custom.DopplerEntity;
 import net.balamah.voiddim.VoidDimension;
 
 public class DopplerRenderer extends MobRenderer<DopplerEntity, DopplerRenderState, DopplerModel> {

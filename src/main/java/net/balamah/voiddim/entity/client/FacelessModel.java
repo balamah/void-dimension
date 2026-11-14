@@ -15,7 +15,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 public class FacelessModel extends EntityModel<FacelessRenderState> {
-    public static final ModelLayerLocation LAYER_LOCATION =
+    public static final ModelLayerLocation FACELESS =
         new ModelLayerLocation(
             Identifier.fromNamespaceAndPath(VoidDimension.MOD_ID, "faceless"),
             "main"
@@ -71,7 +71,7 @@ public class FacelessModel extends EntityModel<FacelessRenderState> {
         this.sufferingAnimation = FacelessAnimations.SUFFERING.bake(this.root);
     }
 
-    public static LayerDefinition createBodyLayer() {
+    public static LayerDefinition getTexturedModelData() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition model = mesh.getRoot();
 
