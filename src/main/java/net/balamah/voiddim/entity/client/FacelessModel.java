@@ -353,16 +353,8 @@ public class FacelessModel extends EntityModel<FacelessRenderState> {
     public void setupAnim(FacelessRenderState state) {
         super.setupAnim(state);
 
-        if (state.walkAnimationState.isStarted()) {
-            this.walkAnimation.apply(state.walkAnimationState, state.ageInTicks);
-        }
-
-        if (state.attackAnimationState.isStarted()) {
-            this.attackAnimation.apply(state.attackAnimationState, state.ageInTicks);
-        }
-
-        if (state.sufferingAnimationState.isStarted()) {
-            this.sufferingAnimation.apply(state.sufferingAnimationState, state.ageInTicks);
-        }
+		this.walkAnimation.apply(state.walkAnimationState, state.ageInTicks);
+		this.attackAnimation.apply(state.attackAnimationState, state.ageInTicks);
+		this.sufferingAnimation.apply(state.sufferingAnimationState, state.ageInTicks);
     }
 }

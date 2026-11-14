@@ -218,8 +218,6 @@ public class GhostModel extends EntityModel<GhostRenderState> {
 
         this.head.xRot = Mth.DEG_TO_RAD * 17.5F;
 
-        if (state.walkAnimationState.isStarted()) {
-            this.walkAnimation.apply(state.walkAnimationState, state.ageInTicks);
-        }
+		this.walkAnimation.apply(state.walkAnimationState, state.ageInTicks);
     }
 }

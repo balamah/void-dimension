@@ -321,6 +321,102 @@ public class ModEntities {
 			.sized(0.9F, 1.3F)
 		);
 
+	public static final EntityType<DopplerEntity> DOPPLER =
+		register(
+			"doppler",
+			DopplerEntity.class,
+			EntityType.Builder.<DopplerEntity>of(DopplerEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<FacelessEntity> FACELESS =
+		register(
+			"faceless",
+			FacelessEntity.class,
+			EntityType.Builder.<FacelessEntity>of(FacelessEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<GhostEntity> GHOST =
+		register(
+			"ghost",
+			GhostEntity.class,
+			EntityType.Builder.<GhostEntity>of(GhostEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<GloomShepherdEntity> GLOOM_SHEPHERD =
+		register(
+			"gloom_shepherd",
+			GloomShepherdEntity.class,
+			EntityType.Builder.<GloomShepherdEntity>of(GloomShepherdEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<HoveringInfernoEntity> HOVERING_INFERNO =
+		register(
+			"hovering_inferno",
+			HoveringInfernoEntity.class,
+			EntityType.Builder.<HoveringInfernoEntity>of(HoveringInfernoEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<MemorySeekerEntity> MEMORY_SEEKER =
+		register(
+			"memory_seeker",
+			MemorySeekerEntity.class,
+			EntityType.Builder.<MemorySeekerEntity>of(MemorySeekerEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<ObsidianGluttonEntity> OBSIDIAN_GLUTTON =
+		register(
+			"obsidian_glutton",
+			ObsidianGluttonEntity.class,
+			EntityType.Builder.<ObsidianGluttonEntity>of(ObsidianGluttonEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<UnknownOneEntity> UNKNOWN_ONE =
+		register(
+			"unknown_one",
+			UnknownOneEntity.class,
+			EntityType.Builder.<UnknownOneEntity>of(UnknownOneEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<UnravelerEntity> UNRAVELER =
+		register(
+			"unraveler",
+			UnravelerEntity.class,
+			EntityType.Builder.<UnravelerEntity>of(UnravelerEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<VoidHangmanEntity> VOID_HANGMAN =
+		register(
+			"void_hangman",
+			VoidHangmanEntity.class,
+			EntityType.Builder.<VoidHangmanEntity>of(VoidHangmanEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<VoidTwinEntity> VOID_TWIN =
+		register(
+			"void_twin",
+			VoidTwinEntity.class,
+			EntityType.Builder.<VoidTwinEntity>of(VoidTwinEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
+	public static final EntityType<WatcherEntity> WATCHER =
+		register(
+			"watcher",
+			WatcherEntity.class,
+			EntityType.Builder.<WatcherEntity>of(WatcherEntity::new, MobCategory.MONSTER)
+			.sized(0.9F, 1.3F)
+		);
+
 	// Looks bad, but it should be this way.
 	// Otherwise entities will not spawn on servers
 	public static void registerEntityAttributes() {
