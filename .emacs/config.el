@@ -59,6 +59,11 @@
 
 (global-set-key (kbd "M-<f10>") 'run-project-sources-regenerate)
 
+(defrunc project-server
+  (run-gradle-commands "clean build runServer" "*build-run-server*"))
+
+(global-set-key (kbd "M-S-<f10>") 'run-project-server)
+
 (defvar project-current-world "26_1-migration-test"
   "The variable specifies a world, whose void dimension data will be removed when
 `run-project-remove-dimension' is executed")
