@@ -58,19 +58,27 @@ public class GhostEntity extends CorruptedNeuteralEntity {
 
 	@Override
 	protected @Nullable SoundEvent getAmbientSound() {
-		// TODO Auto-generated method stub
+		/*
+		 * TODO Add ambient sound for GhostEntity:
+		 * - if doesn't have target, return sad weeping sound
+		 * - if has target, return scary weeping sound
+		 */
 		return super.getAmbientSound();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		// TODO Auto-generated method stub
+		// TODO Add hurt sound for GhostEntity
 		return super.getHurtSound(source);
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		// TODO Auto-generated method stub
+		/*
+		 * TODO Add death sound for GhostEntity
+		 * To the sound add mask breaking sound
+		 */
+
 		return super.getDeathSound();
 	}
 }
