@@ -33,7 +33,7 @@ public class GhostRenderer extends MobRenderer<GhostEntity, GhostRenderState, Gh
         super.extractRenderState(entity, state, partialTick);
 
         state.walkAnimationState.copyFrom(entity.walkAnimationState);
-		state.hasTarget = entity.getTarget() != null;
+		state.hasTarget = entity.hasTargetSynced();
     }
 
 	@Override

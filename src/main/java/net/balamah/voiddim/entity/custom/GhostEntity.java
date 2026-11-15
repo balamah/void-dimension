@@ -47,10 +47,12 @@ public class GhostEntity extends CorruptedNeuteralEntity {
 	public void tick() {
 		super.tick();
 
-		if (this.getTarget() == null) {
-			this.entityAttributeInstance.removeModifier(ATTACKING_SPEED_MODIFIER_ID);
-		} else if (!this.entityAttributeInstance.hasModifier(ATTACKING_SPEED_MODIFIER_ID)) {
-			this.entityAttributeInstance.addTransientModifier(ATTACKING_SPEED_BOOST);
+		if (!this.level().isClientSide()) {
+			if (this.getTarget() == null) {
+				this.entityAttributeInstance.removeModifier(ATTACKING_SPEED_MODIFIER_ID);
+			} else if (!this.entityAttributeInstance.hasModifier(ATTACKING_SPEED_MODIFIER_ID)) {
+				this.entityAttributeInstance.addTransientModifier(ATTACKING_SPEED_BOOST);
+			}
 		}
 	}
 

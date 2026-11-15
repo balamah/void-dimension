@@ -4,7 +4,13 @@ import org.jspecify.annotations.Nullable;
 
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.balamah.voiddim.VoidDimension;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.TimeUtil;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,6 +24,11 @@ public abstract class CorruptedNeuteralEntity
 {
 	protected long persistentAngerEndTime;
 	protected @Nullable EntityReference<LivingEntity> persistentAngerTarget;
+
+	protected boolean isAggressive;
+
+	private static final EntityDataAccessor<Boolean> HAS_TARGET =
+		SynchedEntityData.defineId(CorruptedNeuteralEntity.class, EntityDataSerializers.BOOLEAN);
 
 	public CorruptedNeuteralEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
@@ -51,10 +62,53 @@ public abstract class CorruptedNeuteralEntity
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+
+		if (!this.level().isClientSide()) {
+			boolean hasTarget = this.getTarget() != null;
+			this.entityData.set(HAS_TARGET, hasTarget);
+		}
+	}
+
+	@Override
+	public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+		boolean hurt = super.hurtServer(level, source, amount);
+
+		if (hurt && source.getEntity() instanceof LivingEntity attacker) {
+			this.setPersistentAngerTarget(EntityReference.of(attacker));
+			this.startPersistentAngerTimer();
+			this.setTarget(attacker);
+		}
+
+		return hurt;
+	}
+
+	public boolean isAggressive() {
+		return this.isAggressive;
+	}
+
+	public void setAggressive(boolean isAggressive) {
+		this.isAggressive = isAggressive;
+	}
+
+	public boolean hasTargetSynced() {
+		return this.entityData.get(HAS_TARGET);
+	}
+
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(HAS_TARGET, false);
+	}
+
+	@Override
 	protected void initTargets() {
 		this.targetSelector.addGoal(
 			2,
-			new NearestAttackableTargetGoal<>(this, Player.class, 5, false, false, this::isAngryAt)
+			new NearestAttackableTargetGoal<>(
+				this, Player.class, 5, false, false, this::isAngryAt
+			)
 		);
 		
 		this.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(this, true));
