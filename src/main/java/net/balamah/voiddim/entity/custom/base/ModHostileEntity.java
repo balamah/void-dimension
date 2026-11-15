@@ -13,7 +13,6 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.core.BlockPos;
@@ -22,7 +21,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import java.util.Random;
 
-import net.balamah.voiddim.entity.custom.ai.goal.ModNearestEntityTargetGoal;
 import net.balamah.voiddim.entity.custom.ai.goal.NearestPlayerTargetGoal;
 import net.balamah.voiddim.entity.custom.ai.goal.VoidHostileEntityAttackGoal;
 import net.balamah.voiddim.custom.McCodeHelper;
