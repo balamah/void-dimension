@@ -216,7 +216,9 @@ public class GhostModel extends EntityModel<GhostRenderState> {
     public void setupAnim(GhostRenderState state) {
         super.setupAnim(state);
 
-        this.head.xRot = Mth.DEG_TO_RAD * 17.5F;
+		if (state.hasTarget) {
+			this.head.xRot = Mth.DEG_TO_RAD * 17.5F;
+		}
 
 		this.walkAnimation.apply(state.walkAnimationState, state.ageInTicks);
     }

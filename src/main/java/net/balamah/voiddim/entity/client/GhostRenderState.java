@@ -5,4 +5,5 @@ import net.minecraft.world.entity.AnimationState;
 
 public class GhostRenderState extends LivingEntityRenderState {
     public final AnimationState walkAnimationState = new AnimationState();
+	public boolean hasTarget = false;
 }
