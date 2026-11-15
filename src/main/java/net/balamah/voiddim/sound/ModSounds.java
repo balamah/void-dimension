@@ -172,6 +172,10 @@ public class ModSounds {
 
 	public static final SoundEvent CORRUPTED_ENTITY_DEATH = register("corrupted_entity.death");
 
+	public static final SoundEvent GHOST_AMBIENT = register("ghost.ambient");
+	public static final SoundEvent GHOST_ATTACKED = register("ghost.attacked");
+	public static final SoundEvent GHOST_DEATH = register("ghost.death");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}

@@ -511,5 +511,31 @@
 			"void-dimension:consumed_soul/hit3",
 			"void-dimension:consumed_soul/hit4"
 		]
+	},
+	"ghost.ambient": {
+		"subtitle": "sound.void-dimension.ghost.ambient",
+		"sounds": [
+			{
+				"name": "void-dimension:ghost/ambient_1",
+				"volume": 0.4
+			},
+			{
+				"name": "void-dimension:ghost/ambient_2",
+				"volume": 0.4
+			}
+		]
+	},
+	"ghost.attacked": {
+		"subtitle": "sound.void-dimension.ghost.attacked",
+		"sounds": [
+			"void-dimension:ghost/attacked_1",
+			"void-dimension:ghost/attacked_2"
+		]
+	},
+	"ghost.death": {
+		"subtitle": "sound.void-dimension.ghost.death",
+		"sounds": [
+			"void-dimension:ghost/death"
+		]
 	}
 }

@@ -7,9 +7,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.TimeUtil;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -68,19 +66,6 @@ public abstract class CorruptedNeuteralEntity
 			boolean hasTarget = this.getTarget() != null;
 			this.entityData.set(HAS_TARGET, hasTarget);
 		}
-	}
-
-	@Override
-	public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
-		boolean hurt = super.hurtServer(level, source, amount);
-
-		if (hurt && source.getEntity() instanceof LivingEntity attacker) {
-			this.setPersistentAngerTarget(EntityReference.of(attacker));
-			this.startPersistentAngerTimer();
-			this.setTarget(attacker);
-		}
-
-		return hurt;
 	}
 
 	public boolean isAggressive() {

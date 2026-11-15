@@ -3,6 +3,7 @@ package net.balamah.voiddim.entity.custom;
 import org.jspecify.annotations.Nullable;
 
 import net.balamah.voiddim.entity.custom.base.CorruptedNeuteralEntity;
+import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -15,7 +16,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.Level;
 
-// TODO: Implement entity GhostEntity
 public class GhostEntity extends CorruptedNeuteralEntity {
     public final AnimationState walkAnimationState = new AnimationState();
 
@@ -58,27 +58,20 @@ public class GhostEntity extends CorruptedNeuteralEntity {
 
 	@Override
 	protected @Nullable SoundEvent getAmbientSound() {
-		/*
-		 * TODO Add ambient sound for GhostEntity:
-		 * - if doesn't have target, return sad weeping sound
-		 * - if has target, return scary weeping sound
-		 */
-		return super.getAmbientSound();
+		if (this.getTarget() != null) {
+			return ModSounds.GHOST_ATTACKED;
+		}
+
+		return ModSounds.GHOST_AMBIENT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		// TODO Add hurt sound for GhostEntity
-		return super.getHurtSound(source);
+		return ModSounds.GHOST_ATTACKED;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		/*
-		 * TODO Add death sound for GhostEntity
-		 * To the sound add mask breaking sound
-		 */
-
-		return super.getDeathSound();
+		return ModSounds.GHOST_DEATH;
 	}
 }
