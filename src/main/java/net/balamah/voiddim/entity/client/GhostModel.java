@@ -217,6 +217,9 @@ public class GhostModel extends EntityModel<GhostRenderState> {
         super.setupAnim(state);
 
 		if (state.hasTarget) {
+			this.head.yRot = state.yRot * Mth.DEG_TO_RAD;
+			this.head.xRot = state.xRot * Mth.DEG_TO_RAD;
+		} else {
 			this.head.xRot = Mth.DEG_TO_RAD * 17.5F;
 		}
 
