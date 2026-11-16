@@ -57,8 +57,7 @@ public class EyeBrightHeadEntity extends AbstractHurtingProjectile {
 		boolean hitResult;
 		if (this.getOwner() instanceof LivingEntity livingEntity) {
 			DamageSource damageSource = ModDamageSources.eyeBrightHead(serverWorld);
-			// TODO: Increase damage
-			hitResult = entityHit.hurtServer(serverWorld, damageSource, 8.0F);
+			hitResult = entityHit.hurtServer(serverWorld, damageSource, 10.0F);
 			if (hitResult) {
 				if (entityHit.isAlive()) {
 					EnchantmentHelper.doPostAttackEffects(serverWorld, entityHit, damageSource);
