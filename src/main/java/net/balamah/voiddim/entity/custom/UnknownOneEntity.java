@@ -1,6 +1,8 @@
 package net.balamah.voiddim.entity.custom;
 
+import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.interfaces.ScreamBeforeAttackUser;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Monster;
@@ -9,11 +11,43 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 // TODO: Implement entity UnknownOneEntity
-public class UnknownOneEntity extends CorruptedHostileEntity {
+public class UnknownOneEntity extends CorruptedHostileEntity implements ScreamBeforeAttackUser {
 	public final AnimationState rageBaitAnimationState = new AnimationState();
+
+	protected int screamBeforeAttackCooldown = 10;
+	protected int screamBeforeAttackTicks = 5;
 
 	public UnknownOneEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
+	}
+
+	@Override
+	public int getScreamBeforeAttackCooldown() {
+		return this.screamBeforeAttackCooldown;
+	}
+
+	@Override
+	public int getScreamBeforeAttackTicks() {
+		return this.screamBeforeAttackTicks;
+	}
+
+	@Override
+	public void setScreamBeforeAttackTicks(int ticks) {
+		this.screamBeforeAttackTicks = ticks;
+	}
+
+	@Override
+	public void handleEntityEvent(byte id) {
+		super.handleEntityEvent(id);
+
+		switch (id) {
+			case ModEntityStatuses.ROAR:
+				this.rageBaitAnimationState.start(this.tickCount);
+				break;
+			case ModEntityStatuses.ROAR_STOP:
+				this.rageBaitAnimationState.stop();
+				break;
+		}
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -22,6 +56,13 @@ public class UnknownOneEntity extends CorruptedHostileEntity {
 			.add(Attributes.MOVEMENT_SPEED, 0.2F)
 			.add(Attributes.ATTACK_DAMAGE, 1.0F)
 			.add(Attributes.STEP_HEIGHT, 1.0)
-			.add(Attributes.MAX_HEALTH, 5);
+			.add(Attributes.MAX_HEALTH, 55);
 	}
+
+	// TODO: Add goal ScreamBeforeAttackGoal(T entity, int screamTicks)
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+	}
+
 }

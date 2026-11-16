@@ -31,4 +31,6 @@ public class ModEntityStatuses {
 	public static final byte DEFEND            					= 101;
 	public static final byte STOP_DEFEND       					= 102;
 	public static final byte SUICIDE            				= 103;
+	public static final byte ROAR                				= 104;
+	public static final byte ROAR_STOP           				= 105;
 }
