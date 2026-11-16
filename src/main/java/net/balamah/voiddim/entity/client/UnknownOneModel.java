@@ -12,7 +12,6 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.Identifier;
 import net.balamah.voiddim.VoidDimension;
-import net.balamah.voiddim.entity.client.base.BasicAnimations;
 
 public class UnknownOneModel extends EntityModel<UnknownOneRenderState> {
 	public static final ModelLayerLocation UNKNOWN_ONE =
@@ -45,7 +44,7 @@ public class UnknownOneModel extends EntityModel<UnknownOneRenderState> {
 		this.right_leg = this.legs.getChild("right_leg");
 		this.left_leg = this.legs.getChild("left_leg");
 
-		this.walkAnimation = BasicAnimations.WALK.bake(root);
+		this.walkAnimation = UnknownOneAnimations.WALK.bake(root);
 		this.rageBaitAnimation = UnknownOneAnimations.RAGEBAIT.bake(root);
 	}
 
