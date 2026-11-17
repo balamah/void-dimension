@@ -104,6 +104,7 @@ public class McCodeHelper {
 		entityCorruptionAscensionMap.put(ModEntities.SHATTERED_SENTINEL, ModEntities.SHATTERED_SENTINEL_MASTER);
 		entityCorruptionAscensionMap.put(ModEntities.CORRUPTED_PLAYER, ModEntities.AGGRESSIVE_NULL);
 		entityCorruptionAscensionMap.put(ModEntities.AGGRESSIVE_NULL, ModEntities.VOID_BOUND_SERVANT);
+		entityCorruptionAscensionMap.put(EntityTypes.CREAKING, ModEntities.UNKNOWN_ONE);
 	}
 
 	public static Direction getHorizontalFacing(Entity entity) {
