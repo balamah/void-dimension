@@ -12,7 +12,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-// TODO: Implement entity UnknownOneEntity
 public class UnknownOneEntity extends CorruptedHostileEntity implements ScreamBeforeAttackUser {
 	public final AnimationState rageBaitAnimationState = new AnimationState();
 
