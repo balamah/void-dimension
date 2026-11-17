@@ -47,6 +47,7 @@ public class ScreamBeforeAttackGoal<T extends ModHostileEntity & ScreamBeforeAtt
 
 		this.sendEntityStatus(ModEntityStatuses.ROAR);
 		this.entity.playSound(roarSound);
+		this.entity.setScreaming(true);
 		this.addModifier(
 			this.entityAttributeInstance, this.roarAttributeId, this.roarAttributeModifier
 		);
@@ -59,6 +60,7 @@ public class ScreamBeforeAttackGoal<T extends ModHostileEntity & ScreamBeforeAtt
 		this.sendEntityStatus(ModEntityStatuses.ROAR_STOP);
 		this.removeModifier(this.entityAttributeInstance, this.roarAttributeModifier);
 
+		this.entity.setScreaming(false);
 		this.entity.setScreamBeforeAttackTicks(this.entity.getScreamBeforeAttackCooldown());
 
 		/*

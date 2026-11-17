@@ -32,5 +32,6 @@ public class UnknownOneRenderer
 		super.extractRenderState(entity, renderState, f);
 
 		renderState.rageBaitAnimationState.copyFrom(entity.rageBaitAnimationState);
+		renderState.isScreaming = entity.isScreaming();
 	}
 }

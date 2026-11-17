@@ -5,4 +5,5 @@ import net.minecraft.world.entity.AnimationState;
 
 public class UnknownOneRenderState extends BasicRenderState {
 	public final AnimationState rageBaitAnimationState = new AnimationState();
+	public boolean isScreaming = false;
 }

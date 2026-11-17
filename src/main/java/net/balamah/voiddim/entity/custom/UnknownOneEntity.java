@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 public class UnknownOneEntity extends CorruptedHostileEntity implements ScreamBeforeAttackUser {
 	public final AnimationState rageBaitAnimationState = new AnimationState();
 
+	protected boolean isScreaming = false;
 	protected int screamBeforeAttackCooldown = 2000;
 	protected int screamBeforeAttackTicks = 5;
 
@@ -36,6 +37,16 @@ public class UnknownOneEntity extends CorruptedHostileEntity implements ScreamBe
 	@Override
 	public void setScreamBeforeAttackTicks(int ticks) {
 		this.screamBeforeAttackTicks = ticks;
+	}
+
+	@Override
+	public boolean isScreaming() {
+		return this.isScreaming;
+	}
+
+	@Override
+	public void setScreaming(boolean screaming) {
+		this.isScreaming = screaming;
 	}
 
 	@Override
