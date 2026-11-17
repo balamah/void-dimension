@@ -2,12 +2,14 @@ package net.balamah.voiddim.entity.custom;
 
 import java.util.List;
 
-import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.ScreamBeforeAttackGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.interfaces.ScreamBeforeAttackUser;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
@@ -20,6 +22,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class UnknownOneEntity extends CorruptedHostileEntity implements ScreamBeforeAttackUser {
 	public final AnimationState rageBaitAnimationState = new AnimationState();
+
+	private static final EntityDataAccessor<Boolean> IS_SCREAMING =
+		SynchedEntityData.defineId(UnknownOneEntity.class, EntityDataSerializers.BOOLEAN);
 
 	protected boolean isScreaming = false;
 	protected int screamBeforeAttackCooldown = 2000;
@@ -81,15 +86,27 @@ public class UnknownOneEntity extends CorruptedHostileEntity implements ScreamBe
 				this.getRoarEndAttributeModifier()
 			);
 		}
+		
+		if (!this.level().isClientSide()) {
+			this.entityData.set(IS_SCREAMING, this.isScreaming());
+		}
+	}
+
+	public boolean hasScreamingSynced() {
+		return this.entityData.get(IS_SCREAMING);
+	}
+
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(IS_SCREAMING, false);
 	}
 
 	@Override
 	public void aiStep() {
 		super.aiStep();
 
-		boolean shouldStop = this.shouldStop();
-		VoidDimension.LOGGER.info("Should stop? {}", shouldStop);
-		if (shouldStop) {
+		if (this.shouldStop()) {
 			this.getNavigation().stop();
 		}
 	}
