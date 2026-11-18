@@ -1,5 +1,6 @@
 package net.balamah.voiddim.entity.client;
 
+import net.balamah.voiddim.VoidDimension;
 import net.balamah.voiddim.entity.custom.UnknownOneEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
