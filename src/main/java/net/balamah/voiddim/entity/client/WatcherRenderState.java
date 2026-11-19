@@ -5,4 +5,6 @@ import net.minecraft.world.entity.AnimationState;
 
 public class WatcherRenderState extends LivingEntityRenderState {
 	public final AnimationState rageBaitAnimationState = new AnimationState();
+	public final AnimationState attack1AnimationState = new AnimationState();
+	public final AnimationState attack2AnimationState = new AnimationState();
 }

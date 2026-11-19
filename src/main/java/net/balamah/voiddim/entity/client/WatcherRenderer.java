@@ -37,5 +37,7 @@ public class WatcherRenderer
 		super.extractRenderState(entity, renderState, f);
 
 		renderState.rageBaitAnimationState.copyFrom(entity.rageBaitAnimationState);
+		renderState.attack1AnimationState.copyFrom(entity.attack1AnimationState);
+		renderState.attack2AnimationState.copyFrom(entity.attack2AnimationState);
 	}
 }

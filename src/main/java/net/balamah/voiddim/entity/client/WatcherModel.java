@@ -33,6 +33,8 @@ public class WatcherModel extends EntityModel<WatcherRenderState> {
 
 	private final KeyframeAnimation walkAnimation;
 	private final KeyframeAnimation rageBaitAnimation;
+	private final KeyframeAnimation attack1Animation;
+	private final KeyframeAnimation attack2Animation;
 
 	public WatcherModel(ModelPart root) {
 		super(root);
@@ -54,6 +56,8 @@ public class WatcherModel extends EntityModel<WatcherRenderState> {
 
 		this.walkAnimation = WatcherAnimations.WALK.bake(root);
 		this.rageBaitAnimation = WatcherAnimations.RAGEBAIT.bake(root);
+		this.attack1Animation = WatcherAnimations.ATTACK_1.bake(root);
+		this.attack2Animation = WatcherAnimations.ATTACK_2.bake(root);
 	}
 
 	public static LayerDefinition getTexturedModelData() {
@@ -104,5 +108,7 @@ public class WatcherModel extends EntityModel<WatcherRenderState> {
 
 		this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
 		this.rageBaitAnimation.apply(state.rageBaitAnimationState, state.ageInTicks);
+		this.attack1Animation.apply(state.attack1AnimationState, state.ageInTicks);
+		this.attack2Animation.apply(state.attack2AnimationState, state.ageInTicks);
 	}
 }
