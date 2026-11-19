@@ -2,7 +2,7 @@ package net.balamah.voiddim.entity.custom;
 
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.ModNearestEntityTargetGoal;
-import net.balamah.voiddim.entity.custom.ai.goal.NearestMurdererPlayerTargetGoal;
+import net.balamah.voiddim.entity.custom.ai.goal.RoarNearestMurdererPlayerTargetGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.server.level.ServerLevel;
@@ -50,6 +50,12 @@ public class WatcherEntity extends CorruptedHostileEntity {
 			case ModEntityStatuses.STOP_ATTACK:
 				this.stopAnimations(this.normalAttackAnimations);
 				break;
+			case ModEntityStatuses.ROAR:
+				this.rageBaitAnimationState.start(this.tickCount);
+				break;
+			case ModEntityStatuses.ROAR_STOP:
+				this.rageBaitAnimationState.stop();
+				break;
 			default: super.handleEntityEvent(status);
 				break;
 		}
@@ -84,11 +90,9 @@ public class WatcherEntity extends CorruptedHostileEntity {
 
 	@Override
 	protected void initTargets() {
-		super.initTargets();
-
 		// TODO: Change sound ModSounds.ENTITY303_DEATH
 		this.targetSelector.addGoal(
-			0, new NearestMurdererPlayerTargetGoal(this, 32, ModSounds.ENTITY303_DEATH)
+			0, new RoarNearestMurdererPlayerTargetGoal(this, 32, ModSounds.ENTITY303_DEATH, 34)
 		);
 
 		this.targetSelector.addGoal(
