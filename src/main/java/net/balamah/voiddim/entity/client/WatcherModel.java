@@ -102,6 +102,14 @@ public class WatcherModel extends EntityModel<WatcherRenderState> {
 		return LayerDefinition.create(modelData, 64, 64);
 	}
 
+	/*
+	 * TODO: Add head rotation if not roaring.
+	 * To implement that, update:
+	 * - WacherEntity
+	 * - WacherModel
+	 * - WacherRenderer
+	 * - WacherRenderState
+	 */
 	@Override
 	public void setupAnim(WatcherRenderState state) {
 		super.setupAnim(state);
