@@ -3,6 +3,7 @@ package net.balamah.voiddim.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.UnravelerEntity;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -17,6 +18,10 @@ public class UnravelerRenderer
 {
 	public UnravelerRenderer(EntityRendererProvider.Context context) {
 		super(context, new UnravelerModel(context.bakeLayer(UnravelerModel.UNRAVELER)), 1.0f);
+
+		this.addLayer(
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/unraveler.png")
+		);
 	}
 
 	@Override

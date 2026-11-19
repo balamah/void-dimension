@@ -1,18 +1,21 @@
 package net.balamah.voiddim.entity.client;
 
 import net.balamah.voiddim.VoidDimension;
+import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.balamah.voiddim.entity.custom.UnknownOneEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
 
 public class UnknownOneRenderer
-	extends MobRenderer<UnknownOneEntity,
-							  UnknownOneRenderState,
-							  UnknownOneModel>
+	extends MobRenderer<UnknownOneEntity, UnknownOneRenderState, UnknownOneModel>
 {
 	public UnknownOneRenderer(EntityRendererProvider.Context context) {
 		super(context, new UnknownOneModel(context.bakeLayer(UnknownOneModel.UNKNOWN_ONE)), 0.5f);
+
+		this.addLayer(
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/unknown_one.png")
+		);
 	}
 
 	@Override
