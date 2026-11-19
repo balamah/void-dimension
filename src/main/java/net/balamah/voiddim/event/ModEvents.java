@@ -10,8 +10,11 @@ import net.minecraft.util.Mth;
 
 import net.balamah.voiddim.world.dimension.ModDimensions;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.balamah.voiddim.custom.CorruptedEntityKilledTracker;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.balamah.voiddim.effect.ModEffects;
+import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.entity.custom.base.CorruptedNeuteralEntity;
 import net.balamah.voiddim.event.custom.*;
 
 import net.balamah.voiddim.VoidDimension;
@@ -65,5 +68,17 @@ public class ModEvents {
 				);
 			}
 		});
+
+		ServerLivingEntityEvents.AFTER_DEATH.register((entity, victim) -> {
+				if (!(entity instanceof CorruptedHostileEntity ||
+					  entity instanceof CorruptedNeuteralEntity))
+				{
+					return;
+				}
+
+				if (victim.getEntity() instanceof ServerPlayer player) {
+					CorruptedEntityKilledTracker.markKill(player);
+				}
+			});
 	}
 }

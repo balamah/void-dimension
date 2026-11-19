@@ -1,8 +1,12 @@
 package net.balamah.voiddim.entity.custom;
 
 import net.balamah.voiddim.entity.ModEntityStatuses;
+import net.balamah.voiddim.entity.custom.ai.goal.ModNearestEntityTargetGoal;
+import net.balamah.voiddim.entity.custom.ai.goal.NearestMurdererPlayerTargetGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -76,5 +80,19 @@ public class WatcherEntity extends CorruptedHostileEntity {
 		if (this.attackInterval > 0) {
 			this.attackInterval--;
 		}
+	}
+
+	@Override
+	protected void initTargets() {
+		super.initTargets();
+
+		// TODO: Change sound ModSounds.ENTITY303_DEATH
+		this.targetSelector.addGoal(
+			0, new NearestMurdererPlayerTargetGoal(this, 32, ModSounds.ENTITY303_DEATH)
+		);
+
+		this.targetSelector.addGoal(
+			2, new ModNearestEntityTargetGoal<AgeableMob>(this, 32, AgeableMob.class)
+		);
 	}
 }
