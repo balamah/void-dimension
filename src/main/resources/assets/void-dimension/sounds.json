@@ -537,5 +537,11 @@
 		"sounds": [
 			"void-dimension:ghost/death"
 		]
+	},
+	"watcher.scream": {
+		"subtitle": "sound.void-dimension.watcher.scream",
+		"sounds": [
+			"void-dimension:watcher/scream"
+		]
 	}
 }

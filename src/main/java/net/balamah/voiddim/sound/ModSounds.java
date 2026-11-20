@@ -176,6 +176,8 @@ public class ModSounds {
 	public static final SoundEvent GHOST_ATTACKED = register("ghost.attacked");
 	public static final SoundEvent GHOST_DEATH = register("ghost.death");
 
+	public static final SoundEvent WATCHER_SCREAM = register("watcher.scream");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}

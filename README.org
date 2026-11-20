@@ -758,6 +758,7 @@ public static void registerModPotions() {
 - hollow_knight.death                    :: hollow knight (hero_death_extra_details.wav)
 - ghost.ambient                          :: https://pixabay.com/sound-effects/search/weep/ (Soumages Cry sound effect)
 - ghost.ambient.attacked                 :: https://pixabay.com/sound-effects/search/ghost%20cry/?pagi=2 (u_6dbry9y6qd 10 ghost screaming)
+- watcher.scream                         :: Tortured distorted scream by jhumbucker -- https://freesound.org/s/250543/
 
 ** Textures
 - Corrupted mobs black skin :: https://modrinth.com/mod/intothevoid

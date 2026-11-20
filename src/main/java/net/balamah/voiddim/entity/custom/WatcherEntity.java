@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-// TODO: Implement entity WatcherEntity
 public class WatcherEntity extends CorruptedHostileEntity implements RoarUser {
 	public final AnimationState rageBaitAnimationState = new AnimationState();
 	public final AnimationState attack1AnimationState = new AnimationState();
@@ -69,6 +69,11 @@ public class WatcherEntity extends CorruptedHostileEntity implements RoarUser {
 			default: super.handleEntityEvent(status);
 				break;
 		}
+	}
+
+	@Override
+	public float getVoicePitch() {
+		return 1.0F;
 	}
 
 	@Override
@@ -133,13 +138,17 @@ public class WatcherEntity extends CorruptedHostileEntity implements RoarUser {
 
 	@Override
 	protected void initTargets() {
-		// TODO: Change sound ModSounds.ENTITY303_DEATH
 		this.targetSelector.addGoal(
-			0, new RoarNearestMurdererPlayerTargetGoal<>(this, 32, ModSounds.ENTITY303_DEATH, 34)
+			0, new RoarNearestMurdererPlayerTargetGoal<>(this, 32, ModSounds.WATCHER_SCREAM, 34)
 		);
 
 		this.targetSelector.addGoal(
 			2, new ModNearestEntityTargetGoal<AgeableMob>(this, 32, AgeableMob.class)
 		);
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.CORRUPTED_ENTITY_DEATH;
 	}
 }
