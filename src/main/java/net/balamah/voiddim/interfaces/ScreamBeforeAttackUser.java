@@ -6,12 +6,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.resources.Identifier;
 
-public interface ScreamBeforeAttackUser {
+public interface ScreamBeforeAttackUser extends RoarUser {
 	public int getScreamBeforeAttackCooldown();
 	public int getScreamBeforeAttackTicks();
 	public void setScreamBeforeAttackTicks(int ticks);
-	public boolean isScreaming();
-	public void setScreaming(boolean screaming);
 
 	default public AttributeModifier getRoarEndAttributeModifier() {
 		return new AttributeModifier(

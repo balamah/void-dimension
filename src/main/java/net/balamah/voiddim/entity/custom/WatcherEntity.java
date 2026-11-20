@@ -4,7 +4,11 @@ import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.ModNearestEntityTargetGoal;
 import net.balamah.voiddim.entity.custom.ai.goal.RoarNearestMurdererPlayerTargetGoal;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.interfaces.RoarUser;
 import net.balamah.voiddim.sound.ModSounds;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
@@ -16,10 +20,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 // TODO: Implement entity WatcherEntity
-public class WatcherEntity extends CorruptedHostileEntity {
+public class WatcherEntity extends CorruptedHostileEntity implements RoarUser {
 	public final AnimationState rageBaitAnimationState = new AnimationState();
 	public final AnimationState attack1AnimationState = new AnimationState();
 	public final AnimationState attack2AnimationState = new AnimationState();
+
+	protected boolean isScreaming;
 
 	protected int attackInterval;
 
@@ -27,6 +33,9 @@ public class WatcherEntity extends CorruptedHostileEntity {
 		this.attack1AnimationState,
 		this.attack2AnimationState,
 	};
+
+	private static final EntityDataAccessor<Boolean> IS_SCREAMING =
+		SynchedEntityData.defineId(WatcherEntity.class, EntityDataSerializers.BOOLEAN);
 
 	public WatcherEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
@@ -41,6 +50,7 @@ public class WatcherEntity extends CorruptedHostileEntity {
 			.add(Attributes.MAX_HEALTH, 65);
 	}
 
+	@Override
 	public void handleEntityEvent(byte status) {
 		switch (status) {
 			case ModEntityStatuses.ATTACK:
@@ -59,6 +69,26 @@ public class WatcherEntity extends CorruptedHostileEntity {
 			default: super.handleEntityEvent(status);
 				break;
 		}
+	}
+
+	@Override
+	public boolean isScreaming() {
+		return this.isScreaming;
+	}
+
+	@Override
+	public void setScreaming(boolean screaming) {
+		this.isScreaming = screaming;
+	}
+
+	public boolean hasScreamingSynced() {
+		return this.entityData.get(IS_SCREAMING);
+	}
+
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(IS_SCREAMING, false);
 	}
 
 	@Override
@@ -82,6 +112,10 @@ public class WatcherEntity extends CorruptedHostileEntity {
 		if (this.getTarget() == null) {
 			this.getNavigation().stop();
 		}
+
+		if (!this.level().isClientSide()) {
+			this.entityData.set(IS_SCREAMING, this.isScreaming());
+		}
 	}
 
 	@Override
@@ -101,7 +135,7 @@ public class WatcherEntity extends CorruptedHostileEntity {
 	protected void initTargets() {
 		// TODO: Change sound ModSounds.ENTITY303_DEATH
 		this.targetSelector.addGoal(
-			0, new RoarNearestMurdererPlayerTargetGoal(this, 32, ModSounds.ENTITY303_DEATH, 34)
+			0, new RoarNearestMurdererPlayerTargetGoal<>(this, 32, ModSounds.ENTITY303_DEATH, 34)
 		);
 
 		this.targetSelector.addGoal(

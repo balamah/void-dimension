@@ -2,13 +2,16 @@ package net.balamah.voiddim.entity.custom.ai.goal;
 
 import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.base.ModHostileEntity;
+import net.balamah.voiddim.interfaces.RoarUser;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 
-public class RoarNearestMurdererPlayerTargetGoal extends NearestMurdererPlayerTargetGoal {
+public class RoarNearestMurdererPlayerTargetGoal<T extends ModHostileEntity & RoarUser>
+	extends NearestMurdererPlayerTargetGoal 
+{
 	protected int tick;
 
 	protected final int roarDurationTicks;
@@ -22,7 +25,7 @@ public class RoarNearestMurdererPlayerTargetGoal extends NearestMurdererPlayerTa
 	protected final AttributeInstance entityAttributeInstance;
 	
 	public RoarNearestMurdererPlayerTargetGoal(
-		ModHostileEntity entity, double range, SoundEvent attackSound, int roarDurationTicks
+		T entity, double range, SoundEvent attackSound, int roarDurationTicks
 	) {
 		super(entity, range, attackSound);
 
@@ -31,10 +34,12 @@ public class RoarNearestMurdererPlayerTargetGoal extends NearestMurdererPlayerTa
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void start() {
 		super.start();
 		
 		this.entity.level().broadcastEntityEvent(this.entity, ModEntityStatuses.ROAR);
+		((T) this.entity).setScreaming(true);
 		if (!this.entityAttributeInstance.hasModifier(this.attributeId)) {
 			this.entityAttributeInstance.addTransientModifier(this.attributeModifier);
 		}
@@ -58,8 +63,10 @@ public class RoarNearestMurdererPlayerTargetGoal extends NearestMurdererPlayerTa
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void stopRoar() {
 		this.entity.level().broadcastEntityEvent(this.entity, ModEntityStatuses.ROAR_STOP);
 		this.entityAttributeInstance.removeModifier(this.attributeId);
+		((T) this.entity).setScreaming(false);
 	}
 }

@@ -11,6 +11,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.balamah.voiddim.VoidDimension;
 
 public class WatcherModel extends EntityModel<WatcherRenderState> {
@@ -102,14 +103,6 @@ public class WatcherModel extends EntityModel<WatcherRenderState> {
 		return LayerDefinition.create(modelData, 64, 64);
 	}
 
-	/*
-	 * TODO: Add head rotation if not roaring.
-	 * To implement that, update:
-	 * - WacherEntity
-	 * - WacherModel
-	 * - WacherRenderer
-	 * - WacherRenderState
-	 */
 	@Override
 	public void setupAnim(WatcherRenderState state) {
 		super.setupAnim(state);
@@ -118,5 +111,24 @@ public class WatcherModel extends EntityModel<WatcherRenderState> {
 		this.rageBaitAnimation.apply(state.rageBaitAnimationState, state.ageInTicks);
 		this.attack1Animation.apply(state.attack1AnimationState, state.ageInTicks);
 		this.attack2Animation.apply(state.attack2AnimationState, state.ageInTicks);
+
+		if (!state.isScreaming) {
+			this.setHeadAngles(state.yRot, state.xRot);
+		}
+	}
+
+	protected void setHeadAngles(float headYaw, float headPitch) {
+		float yawRad   = headYaw   * ((float)Math.PI / 180F);
+		float pitchRad = headPitch * ((float)Math.PI / 180F);
+
+		pitchRad = Mth.clamp(
+			pitchRad,
+			-25F * ((float)Math.PI / 180F),
+			45F  * ((float)Math.PI / 180F)
+		);
+
+		this.head.yRot  = yawRad;
+		this.head.zRot = pitchRad;
+		this.head.xRot = 0.0F;
 	}
 }
