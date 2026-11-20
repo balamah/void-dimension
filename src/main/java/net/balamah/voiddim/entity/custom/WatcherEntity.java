@@ -76,6 +76,15 @@ public class WatcherEntity extends CorruptedHostileEntity {
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+
+		if (this.getTarget() == null) {
+			this.getNavigation().stop();
+		}
+	}
+
+	@Override
 	protected void customServerAiStep(ServerLevel world) {
 		super.customServerAiStep(world);
 
