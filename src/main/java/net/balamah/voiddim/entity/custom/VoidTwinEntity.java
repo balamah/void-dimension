@@ -50,9 +50,9 @@ public class VoidTwinEntity extends CorruptedHostileEntity {
 		return Monster.createMonsterAttributes()
 			.add(Attributes.FOLLOW_RANGE, 32)
 			.add(Attributes.MOVEMENT_SPEED, 0.2F)
-			.add(Attributes.ATTACK_DAMAGE, 1.0F)
+			.add(Attributes.ATTACK_DAMAGE, 9.0F)
 			.add(Attributes.STEP_HEIGHT, 1.0)
-			.add(Attributes.MAX_HEALTH, 5);
+			.add(Attributes.MAX_HEALTH, 35);
 	}
 
 	protected Iterable<BlockPos> getTorches(int x, int y, int z) {
