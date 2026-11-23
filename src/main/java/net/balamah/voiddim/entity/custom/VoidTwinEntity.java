@@ -1,13 +1,18 @@
 package net.balamah.voiddim.entity.custom;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.balamah.voiddim.block.ModBlocks;
+import net.balamah.voiddim.block.custom.WallDimmedTorchBlock;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -32,9 +37,11 @@ public class VoidTwinEntity extends CorruptedHostileEntity {
 
 		for (BlockPos pos : this.getTorches(5, 5, 5)) {
 			BlockState state = this.level().getBlockState(pos);
-			
-			if (state == Blocks.TORCH.defaultBlockState()) {
-				this.level().setBlockAndUpdate(pos, ModBlocks.DIMMED_TORCH.defaultBlockState());
+			BlockState futureBlockState = this.getDimmedTorchState(state);
+
+			if (futureBlockState != null) {
+				this.level().setBlockAndUpdate(pos, futureBlockState);
+				this.playSound(SoundEvents.FIRE_EXTINGUISH);
 			}
 		}
 	}
@@ -52,5 +59,18 @@ public class VoidTwinEntity extends CorruptedHostileEntity {
 		BlockPos entityPos = this.blockPosition();
 
 		return BlockPos.betweenClosed(entityPos.offset(-x, -y, -z), entityPos.offset(x, y, z));
+	}
+
+	@Nullable
+	protected BlockState getDimmedTorchState(BlockState currentState) {
+		if (currentState == Blocks.TORCH.defaultBlockState()) {
+			return ModBlocks.DIMMED_TORCH.defaultBlockState();
+		} else if (currentState.getBlock() == Blocks.WALL_TORCH) {
+			return ModBlocks.DIMMED_WALL_TORCH.defaultBlockState().setValue(
+				WallDimmedTorchBlock.FACING, currentState.getValue(WallTorchBlock.FACING)
+			);
+		}
+
+		return null;
 	}
 }
