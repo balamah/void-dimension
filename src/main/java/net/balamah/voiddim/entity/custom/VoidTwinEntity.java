@@ -17,11 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-/*
- * TODO: Implement entity VoidTwinEntity by adding
- * - FleeLightGoal
- * - Replacing torches with dimmed torches and playing sound
- */
 public class VoidTwinEntity extends CorruptedHostileEntity {
 	public final AnimationState attack1AnimationState = new AnimationState();
 	public final AnimationState attack2AnimationState = new AnimationState();
