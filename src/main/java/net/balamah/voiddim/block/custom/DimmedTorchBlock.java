@@ -5,6 +5,8 @@ import java.util.Arrays;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.custom.McCodeHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseTorchBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
@@ -29,14 +32,26 @@ public class DimmedTorchBlock extends BaseTorchBlock {
 	) {
 		Item item = itemStack.getItem();
 		boolean tryingToLit = Arrays.asList(McCodeHelper.littingItems).contains(item);
-		Block futureBlock = (state.getBlock() == ModBlocks.DIMMED_TORCH) ?
-			Blocks.TORCH : Blocks.WALL_TORCH;
 
 		if (tryingToLit) {
-			level.setBlockAndUpdate(pos, futureBlock.defaultBlockState());
+			level.setBlockAndUpdate(pos, this.getFutureBlockState(state));
+			level.playLocalSound(
+				pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1f, 1f, false
+			);
+
 			return InteractionResult.SUCCESS;
 		}
 
 		return InteractionResult.TRY_WITH_EMPTY_HAND;
+	}
+
+	protected BlockState getFutureBlockState(BlockState currentBlockState) {
+		if (currentBlockState.getBlock() == ModBlocks.DIMMED_WALL_TORCH) {
+			return Blocks.WALL_TORCH.defaultBlockState().setValue(
+				WallTorchBlock.FACING, currentBlockState.getValue(WallTorchBlock.FACING)
+			);
+		}
+
+		return Blocks.TORCH.defaultBlockState();
 	}
 }

@@ -193,10 +193,9 @@ public class ModItems {
 	public static final Item DIMMED_TORCH =
 		registerBlockItem(
 			ModBlocks.DIMMED_TORCH,
-			(BiFunction<Block, Item.Properties, Item>)(
-				(block, settings) -> new StandingAndWallBlockItem(
-					block, ModBlocks.DIMMED_WALL_TORCH, Direction.DOWN, settings
-				)),
+			(block, settings) -> new StandingAndWallBlockItem(
+				block, ModBlocks.DIMMED_WALL_TORCH, Direction.DOWN, settings
+			),
 			Item.Properties::new
 		);
 
