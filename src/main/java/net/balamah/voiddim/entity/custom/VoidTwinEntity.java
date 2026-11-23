@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
+// TODO: Add sounds
 public class VoidTwinEntity extends CorruptedHostileEntity {
 	public final AnimationState attack1AnimationState = new AnimationState();
 	public final AnimationState attack2AnimationState = new AnimationState();

@@ -759,6 +759,8 @@ public static void registerModPotions() {
 - ghost.ambient                          :: https://pixabay.com/sound-effects/search/weep/ (Soumages Cry sound effect)
 - ghost.ambient.attacked                 :: https://pixabay.com/sound-effects/search/ghost%20cry/?pagi=2 (u_6dbry9y6qd 10 ghost screaming)
 - watcher.scream                         :: Tortured distorted scream by jhumbucker -- https://freesound.org/s/250543/
+- void_twin.damage                       :: blade of darkness (herida-caballero[12].wav)
+- void_twin.death                        :: blade of darkness (muerte-caballero[12].wav)
 
 ** Textures
 - Corrupted mobs black skin :: https://modrinth.com/mod/intothevoid
