@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.balamah.voiddim.entity.client.renderFeature.GlowFeatureRenderer;
 import net.minecraft.resources.Identifier;
 
 public class VoidTwinRenderer
@@ -17,6 +18,10 @@ public class VoidTwinRenderer
 {
 	public VoidTwinRenderer(EntityRendererProvider.Context context) {
 		super(context, new VoidTwinModel(context.bakeLayer(VoidTwinModel.VOID_TWIN)), 0.9f);
+		
+		this.addLayer(
+			new GlowFeatureRenderer<>(this, "textures/entity/glow/void_twin.png")
+		);
 	}
 
 	@Override
