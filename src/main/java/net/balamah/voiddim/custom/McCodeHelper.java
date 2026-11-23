@@ -3,6 +3,7 @@ package net.balamah.voiddim.custom;
 import net.balamah.voiddim.entity.ModEntities;
 import net.balamah.voiddim.entity.custom.VoidSphereEntity;
 import net.balamah.voiddim.entity.custom.base.BossEntity;
+import net.balamah.voiddim.item.ModItems;
 import net.balamah.voiddim.effect.ModDamageSources;
 import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -69,6 +70,10 @@ import java.util.List;
 import java.util.Map;
 
 public class McCodeHelper {
+	public static final Item[] littingItems = {
+		Items.FLINT_AND_STEEL, Items.FIRE_CHARGE, ModItems.CORRUPTED_FIRE_CHARGE
+	};
+
 	public static final Map<EntityType<?>, EntityType<?>> entityCorruptionMap =
 		new HashMap<EntityType<?>, EntityType<?>>();
 

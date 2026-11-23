@@ -1,12 +1,7 @@
 package net.balamah.voiddim.block;
 
 import com.google.common.base.Function;
-import net.balamah.voiddim.block.custom.WindManipulationBlock;
-import net.balamah.voiddim.block.custom.CorruptedFireBlock;
-import net.balamah.voiddim.block.custom.CorruptionAscensionBlock;
-import net.balamah.voiddim.block.custom.BedrockBombBlock;
-import net.balamah.voiddim.block.custom.CorruptOreBlock;
-import net.balamah.voiddim.block.custom.CorruptBlock;
+import net.balamah.voiddim.block.custom.*;
 import net.balamah.voiddim.particle.ModParticleTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -151,6 +146,26 @@ public class ModBlocks {
 			),
 			copyLootTable(CORRUPTED_TORCH, true).noCollision().instabreak()
 			.lightLevel(state -> 14).sound(SoundType.WOOD)
+			.pushReaction(PushReaction.POPPED),
+			false, false
+		);
+
+	public static final Block DIMMED_TORCH =
+		register(
+			"dimmed_torch",
+			settings -> new DimmedTorchBlock(settings),
+			BlockBehaviour.Properties.of().noCollision().instabreak()
+			.lightLevel(state -> 0).sound(SoundType.WOOD)
+			.pushReaction(PushReaction.POPPED),
+			false, false
+		);
+
+	public static final Block DIMMED_WALL_TORCH =
+		register(
+			"dimmed_wall_torch",
+			settings -> new WallDimmedTorchBlock(settings),
+			copyLootTable(DIMMED_TORCH, true).noCollision().instabreak()
+			.lightLevel(state -> 0).sound(SoundType.WOOD)
 			.pushReaction(PushReaction.POPPED),
 			false, false
 		);

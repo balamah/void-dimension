@@ -190,6 +190,16 @@ public class ModItems {
 			Item.Properties::new
 		);
 
+	public static final Item DIMMED_TORCH =
+		registerBlockItem(
+			ModBlocks.DIMMED_TORCH,
+			(BiFunction<Block, Item.Properties, Item>)(
+				(block, settings) -> new StandingAndWallBlockItem(
+					block, ModBlocks.DIMMED_WALL_TORCH, Direction.DOWN, settings
+				)),
+			Item.Properties::new
+		);
+
 	public static final Item CORRUPTED_FIRE_CHARGE =
 		register("corrupted_fire_charge", CorruptedFireChargeItem::new, Item.Properties::new);
 
