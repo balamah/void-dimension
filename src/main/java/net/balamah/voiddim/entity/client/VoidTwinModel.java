@@ -11,6 +11,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.balamah.voiddim.VoidDimension;
 
 public class VoidTwinModel extends EntityModel<VoidTwinRenderState> {
@@ -125,5 +126,11 @@ public class VoidTwinModel extends EntityModel<VoidTwinRenderState> {
 		this.attack1Animation.apply(state.attack1AnimationState, state.ageInTicks);
 		this.attack2Animation.apply(state.attack2AnimationState, state.ageInTicks);
 		this.attack3Animation.apply(state.attack3AnimationState, state.ageInTicks);
+
+		this.left_head.yRot = state.yRot * Mth.DEG_TO_RAD;
+		this.left_head.xRot = state.xRot * Mth.DEG_TO_RAD;
+
+		this.right_head.yRot = state.yRot * Mth.DEG_TO_RAD;
+		this.right_head.xRot = state.xRot * Mth.DEG_TO_RAD * -1;
 	}
 }
