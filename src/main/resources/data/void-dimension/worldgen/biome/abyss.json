@@ -31,7 +31,7 @@
           "monster": [
             {
               "type": "void-dimension:hollow_knight",
-              "weight": 2,
+              "weight": 12,
               "count": 1
             },
             {

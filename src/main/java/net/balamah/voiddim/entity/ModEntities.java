@@ -526,7 +526,6 @@ public class ModEntities {
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				(type, level, reason, pos, random) ->
 					level.getBlockState(pos.below()).is(ModBlocks.ABYSSIUM)
-						&& canSpawnOnSolidGround(type, level, reason, pos, random)
 			);
 		}
 	}
