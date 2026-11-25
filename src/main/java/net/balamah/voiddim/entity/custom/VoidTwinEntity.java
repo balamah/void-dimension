@@ -5,8 +5,11 @@ import org.jetbrains.annotations.Nullable;
 import net.balamah.voiddim.block.ModBlocks;
 import net.balamah.voiddim.block.custom.WallDimmedTorchBlock;
 import net.balamah.voiddim.entity.custom.base.CorruptedHostileEntity;
+import net.balamah.voiddim.sound.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Monster;
@@ -68,5 +71,15 @@ public class VoidTwinEntity extends CorruptedHostileEntity {
 		}
 
 		return null;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.VOID_TWIN_DEATH;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.VOID_TWIN_DAMAGE;
 	}
 }

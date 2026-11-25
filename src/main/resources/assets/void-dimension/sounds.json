@@ -543,5 +543,18 @@
 		"sounds": [
 			"void-dimension:watcher/scream"
 		]
+	},
+	"void_twin.damage": {
+		"subtitle": "sound.void-dimension.void_twin.damage",
+		"sounds": [
+			"void-dimension:void_twin/damage_1",
+			"void-dimension:void_twin/damage_2"
+		]
+	},
+	"void_twin.death": {
+		"subtitle": "sound.void-dimension.void_twin.death",
+		"sounds": [
+			"void-dimension:void_twin/death"
+		]
 	}
 }

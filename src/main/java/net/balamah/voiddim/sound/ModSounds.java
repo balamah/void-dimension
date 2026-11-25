@@ -178,6 +178,9 @@ public class ModSounds {
 
 	public static final SoundEvent WATCHER_SCREAM = register("watcher.scream");
 
+	public static final SoundEvent VOID_TWIN_DAMAGE = register("void_twin.damage");
+	public static final SoundEvent VOID_TWIN_DEATH = register("void_twin.death");
+
 	public static void registerModSounds() {
 		VoidDimension.LOGGER.info("Registering mod sounds for " + VoidDimension.MOD_ID);
 	}
