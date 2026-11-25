@@ -33,7 +33,6 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	public final AnimationState magnettedAttackAnimationState = new AnimationState();
 
 	protected int idleAnimationTimeout;
-	protected int attackInterval;
 
 	protected int shootCoooldown = 60;
 	protected int shootTicks = this.random.nextInt(30);
@@ -97,10 +96,6 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 	public void tick() {
 		super.tick();
 
-		if (this.attackInterval > 0) {
-			this.attackInterval--;
-		}
-
 		if (this.shootTicks > 0) {
 			this.shootTicks--;
 		}
@@ -121,24 +116,6 @@ public class EyeBrightEntity extends CorruptedHostileEntity
 		if (this.level().isClientSide()) {
 			this.setupAnimationStates();
 		}
-
-		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
-		}
-	}
-
-	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
-		boolean result = super.doHurtTarget(world, target);
-		
-		if (result) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
-
-			// A magic number, don't touch
-			this.attackInterval = 8;
-		}
-
-		return result;
 	}
 
 	@Override

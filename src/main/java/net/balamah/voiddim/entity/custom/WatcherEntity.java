@@ -27,8 +27,6 @@ public class WatcherEntity extends CorruptedHostileEntity implements RoarUser {
 
 	protected boolean isScreaming;
 
-	protected int attackInterval;
-
 	protected AnimationState[] normalAttackAnimations = {
 		this.attack1AnimationState,
 		this.attack2AnimationState,
@@ -150,5 +148,10 @@ public class WatcherEntity extends CorruptedHostileEntity implements RoarUser {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.CORRUPTED_ENTITY_DEATH;
+	}
+
+	@Override
+	protected int getAttackAnimationTicksInterval() {
+		return 14;
 	}
 }

@@ -45,8 +45,6 @@ public class HollowKnightEntity extends ModHostileEntity {
 		this.attack1State, this.attack2State, this.attack3State, this.attack4State
 	};
 
-	protected int attackInterval;
-
 	public HollowKnightEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
 	}
@@ -120,19 +118,6 @@ public class HollowKnightEntity extends ModHostileEntity {
 	public void aiStep() {
 		this.updateNoActionTime();
 		super.aiStep();
-	}
-
-	@Override
-	protected void customServerAiStep(ServerLevel world) {
-		super.customServerAiStep(world);
-
-		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
-		}
-
-		if (this.attackInterval > 0) {
-			this.attackInterval--;
-		}
 	}
 
 	@Override

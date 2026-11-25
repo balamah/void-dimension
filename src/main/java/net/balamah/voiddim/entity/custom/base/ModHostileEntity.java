@@ -21,6 +21,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import java.util.Random;
 
+import net.balamah.voiddim.entity.ModEntityStatuses;
 import net.balamah.voiddim.entity.custom.ai.goal.NearestPlayerTargetGoal;
 import net.balamah.voiddim.entity.custom.ai.goal.VoidHostileEntityAttackGoal;
 import net.balamah.voiddim.custom.McCodeHelper;
@@ -30,6 +31,7 @@ public abstract class ModHostileEntity extends Monster {
 	public int attackCount;
 
 	protected boolean stopAttacks = false;
+	protected int attackInterval;
 
 	public ModHostileEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -72,7 +74,26 @@ public abstract class ModHostileEntity extends Monster {
 			McCodeHelper.disableShield(playerEntity);
 		}
 
+		if (hit) {
+			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
+
+			this.attackInterval = this.getAttackAnimationTicksInterval();
+		}
+
 		return hit;
+	}
+
+	@Override
+	protected void customServerAiStep(ServerLevel world) {
+		super.customServerAiStep(world);
+
+		if (this.getTarget() == null || this.attackInterval == 0) {
+			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
+		}
+
+		if (this.attackInterval > 0) {
+			this.attackInterval--;
+		}
 	}
 
 	public void setStopAttacks(boolean stopAttacks) {
@@ -168,19 +189,29 @@ public abstract class ModHostileEntity extends Monster {
 	protected boolean isSunBurnTick() {
 		Level world = this.level();
 		Boolean doMonstersBurn = world.environmentAttributes()
-			.getValue(
-				EnvironmentAttributes.MONSTERS_BURN, this.position()
-			);
+				.getValue(
+						EnvironmentAttributes.MONSTERS_BURN, this.position());
 
 		if (!world.isClientSide() && doMonstersBurn) {
 			float lightLevel = this.getLightLevelDependentMagicValue();
 			BlockPos blockPos = BlockPos.containing(this.getX(), this.getEyeY(), this.getZ());
 			boolean isWet = this.isInWaterOrRain() || this.isInPowderSnow || this.wasInPowderSnow;
-			if (lightLevel > 0.5F && this.random.nextFloat() * 30.0F < (lightLevel - 0.4F) * 2.0F && !isWet && this.level().canSeeSky(blockPos)) {
+			if (lightLevel > 0.5F && this.random.nextFloat() * 30.0F < (lightLevel - 0.4F) * 2.0F && !isWet
+					&& this.level().canSeeSky(blockPos)) {
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	/*
+	 * NOTE: Override according to attack animation tick length.
+	 * 1) Get animation length in seconds
+	 * 2) Multiply it by 20
+	 * 3) Floor the multiplied value
+	 */
+	protected int getAttackAnimationTicksInterval() {
+		return 8;
 	}
 }

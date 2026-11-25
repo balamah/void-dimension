@@ -45,7 +45,6 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 
 	protected int shieldDisabledTicks = 0;
 	protected boolean isDefending;
-	protected int attackInterval;
 
 	protected final AnimationState[] attackAnimations = {
 		this.attack1AnimationState,
@@ -219,19 +218,6 @@ public class VoidBoundServantEntity extends CorruptedHostileEntity {
 		super.setItemSlot(slot, itemStack);
 		
 		this.setAnimationArray(this.getMainHandItem());
-	}
-
-	@Override
-	protected void customServerAiStep(ServerLevel world) {
-		super.customServerAiStep(world);
-
-		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
-		}
-
-		if (this.attackInterval > 0) {
-			this.attackInterval--;
-		}
 	}
 
 	@Override

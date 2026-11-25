@@ -11,7 +11,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.Entity;
@@ -50,7 +49,6 @@ public class CorruptedWarriorEntity extends BossEntity
 	protected final int teleportCooldown = 150;
 	protected final int strongAttackCooldown = 90;
 
-	protected int attackInterval;
 	protected int darkGraspTicks;
 	protected int multipleProjectilesShootTicks = 25;
 	protected int teleportTicks;
@@ -155,20 +153,6 @@ public class CorruptedWarriorEntity extends BossEntity
 			default: super.handleEntityEvent(status);
 				break;
 		}
-	}
-
-	@Override
-	public boolean doHurtTarget(ServerLevel world, Entity target) {
-		boolean result = super.doHurtTarget(world, target);
-		
-		if (result) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.ATTACK);
-
-			// A magic number, don't touch
-			this.attackInterval = 8;
-		}
-
-		return result;
 	}
 
 	@Override
@@ -286,19 +270,6 @@ public class CorruptedWarriorEntity extends BossEntity
 
 		this.goalSelector.addGoal(1, new TeleportTowardsPlayerGoal<>(this));
 		this.goalSelector.addGoal(2, shootingGoal);
-	}
-
-	@Override
-	protected void customServerAiStep(ServerLevel world) {
-		super.customServerAiStep(world);
-
-		if (this.getTarget() == null || this.attackInterval == 0) {
-			world.broadcastEntityEvent(this, ModEntityStatuses.STOP_ATTACK);
-		}
-
-		if (this.attackInterval > 0) {
-			this.attackInterval--;
-		}
 	}
 
 	@Override
