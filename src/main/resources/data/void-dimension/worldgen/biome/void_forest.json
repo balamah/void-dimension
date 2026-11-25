@@ -16,7 +16,128 @@
 				},
 				"probability": 0.118093334
 			}
-		]
+		],
+		"minecraft:gameplay/natural_mob_spawns": {
+			"argument": {
+				"spawn_costs": {
+					"void-dimension:void_maw": {
+						"energy_budget": 1.0,
+						"charge": 1.0
+					},
+					"void-dimension:werewolf": {
+						"energy_budget": 5.0,
+						"charge": 2.0
+					},
+					"void-dimension:hollowed_beast": {
+						"energy_budget": 3.0,
+						"charge": 2.0
+					},
+					"void-dimension:corrupted_creeper": {
+						"energy_budget": 1.0,
+						"charge": 1.0
+					},
+					"void-dimension:corrupted_stalker": {
+						"energy_budget": 4.0,
+						"charge": 2.0
+					},
+					"void-dimension:staring_dog": {
+						"energy_budget": 2.0,
+						"charge": 1.0
+					},
+					"void-dimension:staring_cat": {
+						"energy_budget": 2.0,
+						"charge": 1.0
+					},
+					"void-dimension:hollowed_alpha_steve": {
+						"energy_budget": 3.5,
+						"charge": 1.5
+					},
+					"void-dimension:zombified_alpha_steve": {
+						"energy_budget": 3.0,
+						"charge": 1.2
+					},
+					"void-dimension:null": {
+						"energy_budget": 5.0,
+						"charge": 2.0
+					},
+					"void-dimension:eye_bright": {
+						"energy_budget": 7.0,
+						"charge": 3.0
+					}
+				},
+				"spawns_by_category": {
+					"monster": [
+						{
+							"type": "void-dimension:void_maw",
+							"weight": 20,
+							"count": 1
+						},
+						{
+							"type": "void-dimension:werewolf",
+							"weight": 60,
+							"count": {
+								"type": "minecraft:uniform",
+								"min_inclusive": 1,
+								"max_inclusive": 2
+							}
+						},
+						{
+							"type": "void-dimension:hollowed_beast",
+							"weight": 50,
+							"count": 1
+						},
+						{
+							"type": "void-dimension:corrupted_stalker",
+							"weight": 55,
+							"count": {
+								"type": "minecraft:uniform",
+								"min_inclusive": 1,
+								"max_inclusive": 2
+							}
+						},
+						{
+							"type": "void-dimension:staring_dog",
+							"weight": 35,
+							"count": {
+								"type": "minecraft:uniform",
+								"min_inclusive": 1,
+								"max_inclusive": 2
+							}
+						},
+						{
+							"type": "void-dimension:staring_cat",
+							"weight": 10,
+							"count": 1
+						},
+						{
+							"type": "void-dimension:hollowed_alpha_steve",
+							"weight": 35,
+							"count": 1
+						},
+						{
+							"type": "void-dimension:zombified_alpha_steve",
+							"weight": 25,
+							"count": {
+								"type": "minecraft:uniform",
+								"min_inclusive": 1,
+								"max_inclusive": 2
+							}
+						},
+						{
+							"type": "void-dimension:null",
+							"weight": 30,
+							"count": 1
+						},
+						{
+							"type": "void-dimension:eye_bright",
+							"weight": 8,
+							"count": 1
+						}
+					]
+				}
+			},
+			"modifier": "overlay"
+		}
 	},
 	"has_precipitation": false,
 	"temperature": 1,
@@ -52,116 +173,6 @@
 			"void-dimension:corrupted_fire"
 		]
 	],
-	"spawners": {
-		"monster": [
-			{
-				"type": "void-dimension:void_maw",
-				"weight": 20,
-				"minCount": 1,
-				"maxCount": 1
-			},
-			{
-				"type": "void-dimension:werewolf",
-				"weight": 60,
-				"minCount": 1,
-				"maxCount": 2
-			},
-			{
-				"type": "void-dimension:hollowed_beast",
-				"weight": 50,
-				"minCount": 1,
-				"maxCount": 1
-			},
-			{
-				"type": "void-dimension:corrupted_stalker",
-				"weight": 55,
-				"minCount": 1,
-				"maxCount": 2
-			},
-			{
-				"type": "void-dimension:staring_dog",
-				"weight": 35,
-				"minCount": 1,
-				"maxCount": 2
-			},
-			{
-				"type": "void-dimension:staring_cat",
-				"weight": 10,
-				"minCount": 1,
-				"maxCount": 1
-			},
-			{
-				"type": "void-dimension:hollowed_alpha_steve",
-				"weight": 35,
-				"minCount": 1,
-				"maxCount": 1
-			},
-			{
-				"type": "void-dimension:zombified_alpha_steve",
-				"weight": 25,
-				"minCount": 1,
-				"maxCount": 2
-			},
-			{
-				"type": "void-dimension:null",
-				"weight": 30,
-				"minCount": 1,
-				"maxCount": 1
-			},
-			{
-				"type": "void-dimension:eye_bright",
-				"weight": 8,
-				"minCount": 1,
-				"maxCount": 1
-			}
-		]
-	},
-	"spawn_costs": {
-		"void-dimension:void_maw": {
-			"energy_budget": 1.0,
-			"charge": 1.0
-		},
-		"void-dimension:werewolf": {
-			"energy_budget": 5.0,
-			"charge": 2.0
-		},
-		"void-dimension:hollowed_beast": {
-			"energy_budget": 3.0,
-			"charge": 2.0
-		},
-		"void-dimension:corrupted_creeper": {
-			"energy_budget": 1.0,
-			"charge": 1.0
-		},
-		"void-dimension:corrupted_stalker": {
-			"energy_budget": 4.0,
-			"charge": 2.0
-		},
-		"void-dimension:staring_dog": {
-			"energy_budget": 2.0,
-			"charge": 1.0
-		},
-		"void-dimension:staring_cat": {
-			"energy_budget": 2.0,
-			"charge": 1.0
-		},
-		"void-dimension:hollowed_alpha_steve": {
-			"energy_budget": 3.5,
-			"charge": 1.5
-		},
-		"void-dimension:zombified_alpha_steve": {
-			"energy_budget": 3.0,
-			"charge": 1.2
-		},
-		"void-dimension:null": {
-			"energy_budget": 5.0,
-			"charge": 2.0
-		},
-		"void-dimension:eye_bright": {
-			"energy_budget": 7.0,
-			"charge": 3.0
-		}
-	},
 	"effects": {
 		"foliage_color": "#272625",
 		"grass_color": "#eae9e9",

@@ -3,6 +3,7 @@ package net.balamah.voiddim.entity;
 import net.balamah.voiddim.entity.custom.*;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -464,6 +465,7 @@ public class ModEntities {
 	@SuppressWarnings("unchecked")
 	protected static final EntityType<? extends Mob>[] spawnRestrictedEntities =
 		new EntityType[] {
+			ModEntities.VOID_MAW,
 			ModEntities.CORRUPTED_STALKER,
 			ModEntities.SHATTERED_SENTINEL,
 			ModEntities.WEREWOLF,
@@ -507,7 +509,7 @@ public class ModEntities {
 				entityType,
 				SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				Mob::checkMobSpawnRules
+				ModEntities::canSpawnOnSolidGround
 			);
 		}
 	}
@@ -524,8 +526,26 @@ public class ModEntities {
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				(type, level, reason, pos, random) ->
 					level.getBlockState(pos.below()).is(ModBlocks.ABYSSIUM)
+						&& canSpawnOnSolidGround(type, level, reason, pos, random)
 			);
 		}
+	}
+
+	/**
+	 * The 26.3 port changed the default {@link net.minecraft.world.level.block.state.BlockBehaviour.Properties}
+	 * spawn predicate used by {@link Mob#checkMobSpawnRules}.  The void's generated terrain is made from
+	 * custom blocks, so that predicate rejects every otherwise-valid natural spawn.  The placement type still
+	 * checks that the mob has clear space; this predicate only requires a solid surface beneath it.
+	 */
+	private static boolean canSpawnOnSolidGround(
+		EntityType<? extends Mob> type,
+		net.minecraft.world.level.ServerLevelAccessor level,
+		net.minecraft.world.entity.EntitySpawnReason reason,
+		net.minecraft.core.BlockPos pos,
+		net.minecraft.util.RandomSource random
+	) {
+		var groundPos = pos.below();
+		return level.getBlockState(groundPos).isFaceSturdy(level, groundPos, Direction.UP);
 	}
 
 	protected static <T extends Entity> EntityType<T>
